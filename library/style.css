@@ -1,0 +1,78 @@
+@font-face {
+    font-family: Forum;
+    src: url("assets/fonts/Forum-Regular.ttf");
+}
+
+@font-face {
+    font-family: Inter;
+    src: url("assets/fonts/Inter-Regular.ttf");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+}
+
+h1 {
+    color: #FFF;
+    font-family: Forum;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 50px;
+    letter-spacing: 0.6px;
+    margin: 0;
+}
+
+.header {
+    background: #0C0C0E;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    line-height: 50px;
+}
+
+.header>div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav {
+    line-height: 50px;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 30px;
+}
+
+.nav-item {
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.nav-link {
+    color: #FFF;
+    transition: .3s;
+    text-decoration: none;
+}
+
+.icon-profile {
+    margin-left: 40px;
+}
