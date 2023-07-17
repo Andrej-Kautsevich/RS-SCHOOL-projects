@@ -1,51 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <link rel="stylesheet" href="style.css" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1440, initial-scale=1.0" />
-  <title>Brooklyn Public Library</title>
-  <link rel="icon" href="assets/img/favicon.ico" />
- </head>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1440, initial-scale=1.0" />
+    <title>Brooklyn Public Library</title>
+    <link rel="icon" href="assets/img/favicon.ico" />
+  </head>
 
- <body>
-  <header class="header container">
-   <div>
-    <h1 class="header__title">Brooklyn Public Library</h1>
-   </div>
-   <div class="header__menu">
-    <nav class="nav">
-     <ul class="nav__list">
-      <li class="nav__list-item">
-       <a href="#about" class="nav__link">About</a>
-      </li>
-      <li class="nav__list-item">
-       <a href="#favorites" class="nav__link">Favorites</a>
-      </li>
-      <li class="nav__list-item">
-       <a href="#coffee-shop" class="nav__link">Coffee shop</a>
-      </li>
-      <li class="nav__list-item">
-       <a href="#contacts" class="nav__link">Contacts</a>
-      </li>
-      <li class="nav__list-item">
-       <a href="#library-Card" class="nav__link">Library Card</a>
-      </li>
-     </ul>
-    </nav>
-    <img class="header__icon" alt src="assets/img/icon_profile.svg" />
-   </div>
-  </header>
+  <body>
+    <header class="header container">
+      <div>
+        <h1 class="header__title">Brooklyn Public Library</h1>
+      </div>
+      <div class="header__menu">
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__list-item">
+              <a href="#about" class="nav__link">About</a>
+            </li>
+            <li class="nav__list-item">
+              <a href="#favorites" class="nav__link">Favorites</a>
+            </li>
+            <li class="nav__list-item">
+              <a href="#coffee-shop" class="nav__link">Coffee shop</a>
+            </li>
+            <li class="nav__list-item">
+              <a href="#contacts" class="nav__link">Contacts</a>
+            </li>
+            <li class="nav__list-item">
+              <a href="#library-Card" class="nav__link">Library Card</a>
+            </li>
+          </ul>
+        </nav>
+        <img class="header__icon" alt src="assets/img/icon_profile.svg" />
+      </div>
+    </header>
 
-  <main class="main container">
-   <section class="welcome">
-    <div class="container">
-     <div class="welcome__overlay"></div>
-     <div class="welcome__wg">
-      <h2 class="welcome__wg-title">WELCOME<br />TO THE BROOKLYN LIBRARY</h2>
-     </div>
-    </div>
-   </section>
-  </main>
- </body>
+    <main class="main container">
+      <section class="welcome">
+        <div class="container">
+          <div class="welcome__overlay"></div>
+          <div class="welcome__wg">
+            <h2 class="welcome__wg-title">
+              WELCOME<br>TO THE BROOKLYN LIBRARY
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="about" id="about">
+        <div class="container about__inner">
+          <h3 class="section-title">about</h3>
+          <p class="section-text">
+            The Brooklyn Library is a free workspace, a large number of books
+            and a cozy coffee shop inside
+          </p>
+          <div class="about__slider">
+            <img
+              class="about__slider-image"
+              src="assets/img/about-image1.jpg"
+              alt=""
+            />
+            <img
+              class="about__slider-image"
+              src="assets/img/about-image2.jpg"
+              alt=""
+            />
+            <img
+              class="about__slider-image"
+              src="assets/img/about-image3.jpg"
+              alt=""
+            />
+          </div>
+          <ul class="slider__pagination-wrapper">
+            <li class="slider__pagination-button slider__pagination-button_active"></li>
+            <li class="slider__pagination-button"></li>
+            <li class="slider__pagination-button"></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
