@@ -43,15 +43,15 @@
           <div class="welcome__overlay"></div>
           <div class="welcome__wg">
             <h2 class="welcome__wg-title">
-              WELCOME<br>TO THE BROOKLYN LIBRARY
+              WELCOME<br />TO THE BROOKLYN LIBRARY
             </h2>
           </div>
         </div>
       </section>
       <section class="about" id="about">
         <div class="container about__inner">
-          <h3 class="section-title">about</h3>
-          <p class="section-text">
+          <h3 class="section__title">about</h3>
+          <p class="about__text">
             The Brooklyn Library is a free workspace, a large number of books
             and a cozy coffee shop inside
           </p>
@@ -73,10 +73,36 @@
             />
           </div>
           <ul class="slider__pagination-wrapper">
-            <li class="slider__pagination-button slider__pagination-button_active"></li>
+            <li
+              class="slider__pagination-button slider__pagination-button_active"
+            ></li>
             <li class="slider__pagination-button"></li>
             <li class="slider__pagination-button"></li>
           </ul>
+        </div>
+      </section>
+      <section class="favorites" id="favorites">
+        <div class="container favorites__inner">
+          <h3 class="section__title">favorites</h3>
+          <p class="favorites__text">Pick favorites of season</p>
+          <form class="seasons-form">
+            <label class="seasons-form__label">
+              <input type="radio" name="seasons" checked />
+              <span>Winter</span>
+            </label>
+            <label class="seasons-form__label">
+              <input type="radio" name="seasons" />
+              <span>Spring</span>
+            </label>
+            <label class="seasons-form__label">
+              <input type="radio" name="seasons" />
+              <span>Summer</span>
+            </label>
+            <label class="seasons-form__label">
+              <input type="radio" name="seasons" />
+              <span>Autumn</span>
+            </label>
+          </form>
         </div>
       </section>
     </main>
