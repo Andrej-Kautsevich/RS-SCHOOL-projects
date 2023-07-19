@@ -199,7 +199,6 @@ body {
 
 .favorites__inner {
   flex-direction: column;
-  height: 500px;
 }
 
 .favorites__text {
@@ -225,7 +224,7 @@ body {
   line-height: normal;
 }
 
-.seasons-form input[type=radio] {
+.seasons-form input[type="radio"] {
   margin: 0 20px 0 0;
   appearance: none;
   border: 2px solid #000;
@@ -250,4 +249,117 @@ body {
   align-items: center;
   cursor: pointer;
   margin: 0;
+}
+
+.favorites__items {
+  margin: 40px 60px 40px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 260px;
+  row-gap: 40px;
+}
+
+.favorites__item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 550px;
+  height: 555px;
+  border: 1px solid #000;
+}
+
+.favorites__item-stuff {
+  margin: 15px 0 0 20px;
+  color: #000;
+  font-family: Forum;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+}
+
+.favorites__item-stuff::after {
+  display: block;
+  content: "";
+  width: 60px;
+  height: 1px;
+  background-color: #bb945f;
+}
+
+.favorites__item-name {
+  margin: 20px 0 0 20px;
+  color: #000;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.favorites__item-author {
+  margin: 0 0 0 20px;
+  color: #000;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: 2px;
+}
+
+.favorites__item-text {
+  width: 355px;
+  margin: 20px 0 0 20px;
+  color: #000;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.favorites__item-button {
+  width: 75px;
+  height: 30px;
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+  border-radius: 2px;
+  border: 1px solid #0c0c0e;
+  background-color: transparent;
+  padding: 0;
+  color: #0c0c0e;
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 250ms;
+}
+
+.favorites__item-button:hover:enabled {
+  border-color: #BB945F;
+  background-color: #BB945F;
+}
+
+.favorites__item-button_own {
+  cursor: default;
+  border-color: #BB945F;
+  color: #BB945F;
+}
+
+.favorites__item-img {
+  width: 200px;
+  height: 300px;
+  position: absolute;
+  bottom: -1px;
+  left: 390px;
 }
