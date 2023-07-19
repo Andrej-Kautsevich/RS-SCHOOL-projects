@@ -346,14 +346,14 @@ body {
 }
 
 .favorites__item-button:hover:enabled {
-  border-color: #BB945F;
-  background-color: #BB945F;
+  border-color: #bb945f;
+  background-color: #bb945f;
 }
 
 .favorites__item-button_own {
   cursor: default;
-  border-color: #BB945F;
-  color: #BB945F;
+  border-color: #bb945f;
+  color: #bb945f;
 }
 
 .favorites__item-img {
@@ -362,4 +362,94 @@ body {
   position: absolute;
   bottom: -1px;
   left: 390px;
+}
+
+.shop__inner {
+  flex-direction: column;
+  padding: 0 20px 40px;
+}
+
+.shop__text {
+  margin: 0;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.menu__title {
+  margin: 0;
+  color: #bb945f;
+  font-family: Forum;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+}
+
+.menu__coffee {
+  max-width: 50%;
+}
+
+.menu__desserts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 50%;
+}
+
+.menu__desserts .menu__item {
+  justify-content: end;
+}
+
+.menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.menu__price {
+  display: flex;
+  color: #000;
+  font-family: Forum;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.menu__price::before {
+  margin: auto 60px;
+  content: "";
+  width: 100px;
+  height: 1px;
+  background-color: #bb945f;
 }
