@@ -453,3 +453,45 @@ body {
   height: 1px;
   background-color: #bb945f;
 }
+
+.contacts__inner {
+  flex-direction: column;
+  padding: 0 20px 40px;
+}
+
+.contacts__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contacts__info {
+  max-width: 50%;
+}
+
+.contacts__phone-info {
+  margin: 40px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contacts__link {
+  color: #000;
+  text-decoration: none;
+}
+
+.contacts__text {
+  margin: 0;
+  margin-bottom: 20px;
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.contacts__text_bold {
+  font-weight: 700;
+}
