@@ -29,7 +29,7 @@
               <a href="#contacts" class="nav__link">Contacts</a>
             </li>
             <li class="nav__list-item">
-              <a href="#library-Card" class="nav__link">Library Card</a>
+              <a href="#library-card" class="nav__link">Library Card</a>
             </li>
           </ul>
         </nav>
@@ -307,6 +307,106 @@
           </div>
         </div>
       </section>
+      <section class="library-card" id="library-card">
+        <div class="container library-card__inner">
+          <h3 class="section__title">Digital Library Cards</h3>
+          <div class="library-card__wrapper">
+            <div class="card">
+              <p>Find your Library card</p>
+              <div class="card__border">
+                <form>
+                  <div class="card__body">
+                    <p class="card__text">Brooklyn Public Library</p>
+                    <input
+                      class="card__input"
+                      type="text"
+                      placeholder="Reader's name"
+                      inputmode="verbatim"
+                      pattern="\w+"
+                    />
+                    <input
+                      class="card__input"
+                      type="text"
+                      placeholder="Card number"
+                      inputmode="verbatim"
+                      pattern="\w+"
+                    />
+                  </div>
+                  <button class="card__button" type="submit">
+                    Check the card
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="login">
+              <p class="login__title">Get a reader card</p>
+              <p class="login__text">
+                You will be able to see a reader card after logging into account
+                or you can register a new account
+              </p>
+              <div class="login__buttons">
+                <button class="login__button">Sign Up</button>
+                <button class="login__button">Log in</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="footer container">
+        <div class="footer__contacts">
+          <a
+            class="footer__link"
+            href="https://goo.gl/maps/tKbqm6WghJcuWBaw6"
+            target="_blank"
+            >286 Cadman Plaza, New York, NY 11238, United States</a
+          >
+          <ul class="footer__socials">
+            <li class="footer__socials-item">
+              <a href="http://www.twitter.com/bklynlibrary" class="footer__link"
+                ><img
+                  src="assets/img/u_twitter-alt.svg"
+                  alt="twitter"
+              /></a>
+            </li>
+            <li class="footer__socials-item">
+              <a
+                href="http://www.instagram.com/bklynlibrary"
+                class="footer__link"
+                ><img
+                  src="assets/img/u_instagram.svg"
+                  alt="instagram"
+              /></a>
+            </li>
+            <li class="footer__socials-item">
+              <a
+                href="http://www.facebook.com/brooklynpubliclibrary"
+                class="footer__link"
+                ><img
+                  src="assets/img/u_facebook-f.svg"
+                  alt="facebook"
+              /></a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__working-hours">
+          <p>Mon - Fri<br />08:00 am - 07:00 pm</p>
+          <p>Sat - Sun<br />10:00 am - 06:00 pm</p>
+        </div>
+        <hr>
+        <div class="footer-rsschool">
+          <p class="footer-rsschool__date">2023</p>
+          <p class="footer-rsschool__rsschool">
+            <a href="https://rs.school/js-stage0" class="footer__link"
+              >The Rolling Scopes School</a
+            >
+          </p>
+          <p class="footer-rsschool__github">
+            <a href="https://github.com/Andrej-Kautsevich" class="footer__link"
+              >Andrej-Kautsevich</a
+            >
+          </p>
+        </div>
+      </footer>
     </main>
   </body>
 </html>
