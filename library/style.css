@@ -625,7 +625,6 @@ p {
 }
 
 .footer {
-  width: 100%;
   background: #0c0c0e;
   justify-content: space-between;
   flex-wrap: wrap;
