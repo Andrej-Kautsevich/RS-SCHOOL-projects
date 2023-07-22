@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth; 
+}
+
 body {
   min-height: 100vh;
   display: flex;
@@ -86,6 +90,10 @@ p {
   color: #fff;
   transition: 0.3s;
   text-decoration: none;
+}
+
+.nav__link:hover {
+  color: #BB945F;
 }
 
 .header__icon {
