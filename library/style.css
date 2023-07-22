@@ -166,7 +166,6 @@ p {
 }
 
 .welcome__wg-title {
-  margin-block: 0;
   color: #fff;
   text-align: center;
   font-family: Forum;
@@ -178,7 +177,7 @@ p {
   text-transform: uppercase;
 }
 
-.about__inner {
+.about {
   flex-direction: column;
   align-items: center;
 }
@@ -192,7 +191,6 @@ p {
 }
 
 .about__text {
-  margin: 0;
   color: #000;
   font-family: Inter;
   font-size: 20px;
@@ -201,7 +199,7 @@ p {
   line-height: 40px;
 }
 
-.favorites__inner {
+.favorites {
   flex-direction: column;
 }
 
@@ -349,7 +347,7 @@ p {
   transition: 250ms;
 }
 
-.favorites__item-button:hover {
+.favorites__item-button:hover:enabled {
   border-color: #bb945f;
   background-color: #bb945f;
 }
@@ -368,7 +366,7 @@ p {
   left: 390px;
 }
 
-.shop__inner {
+.shop {
   flex-direction: column;
   padding: 0 20px 40px;
 }
@@ -458,7 +456,7 @@ p {
   background-color: #bb945f;
 }
 
-.contacts__inner {
+.contacts {
   flex-direction: column;
   padding: 0 20px 40px;
 }
@@ -500,7 +498,7 @@ p {
   font-weight: 700;
 }
 
-.library-card__inner {
+.library-card {
   flex-direction: column;
   padding: 0 20px 40px;
 }

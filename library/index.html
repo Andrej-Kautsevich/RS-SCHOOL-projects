@@ -38,157 +38,146 @@
     </header>
 
     <main class="main container">
-      <section class="welcome">
-        <div class="container">
-          <div class="welcome__overlay"></div>
-          <div class="welcome__wg">
-            <!-- TODO: change heading numeration -->
-            <h2 class="welcome__wg-title">
-              WELCOME<br />TO THE BROOKLYN LIBRARY
-            </h2>
+      <section class="welcome container">
+        <div class="welcome__overlay"></div>
+        <div class="welcome__wg">
+          <!-- TODO: change heading numeration -->
+          <p class="welcome__wg-title">Welcome<br />to the Brooklyn Library</p>
+        </div>
+      </section>
+      <section class="about container" id="about">
+        <h2 class="section__title">about</h2>
+        <p class="about__text">
+          The Brooklyn Library is a free workspace, a large number of books and
+          a cozy coffee shop inside
+        </p>
+        <div class="about__slider">
+          <img
+            class="about__slider-image"
+            src="assets/img/about-image1.jpg"
+            alt=""
+          />
+          <img
+            class="about__slider-image"
+            src="assets/img/about-image2.jpg"
+            alt=""
+          />
+          <img
+            class="about__slider-image"
+            src="assets/img/about-image3.jpg"
+            alt=""
+          />
+        </div>
+        <!-- TODO: redo with radio buttons -->
+        <ul class="slider__pagination-wrapper">
+          <li
+            class="slider__pagination-button slider__pagination-button_active"
+          ></li>
+          <li class="slider__pagination-button"></li>
+          <li class="slider__pagination-button"></li>
+        </ul>
+      </section>
+      <section class="favorites container" id="favorites">
+        <h2 class="section__title">favorites</h2>
+        <p class="favorites__text">Pick favorites of season</p>
+        <!-- TODO: add interactive area 5px -->
+        <form class="seasons-form">
+          <label class="seasons-form__label">
+            <input type="radio" name="seasons" checked />
+            <span>Winter</span>
+          </label>
+          <label class="seasons-form__label">
+            <input type="radio" name="seasons" />
+            <span>Spring</span>
+          </label>
+          <label class="seasons-form__label">
+            <input type="radio" name="seasons" />
+            <span>Summer</span>
+          </label>
+          <label class="seasons-form__label">
+            <input type="radio" name="seasons" />
+            <span>Autumn</span>
+          </label>
+        </form>
+        <div class="favorites__items">
+          <div class="favorites__item">
+            <p class="favorites__item-stuff">Staff Picks</p>
+            <p class="favorites__item-name">The Book Eaters</p>
+            <p class="favorites__item-author">By Sunyi Dean</p>
+            <p class="favorites__item-text">
+              An unusual sci-fi story about a book eater woman who tries
+              desperately to save her dangerous mind-eater son from tradition
+              and certain death. Complete with dysfunctional family values,
+              light Sapphic romance, and a strong, complex protagonist. Not for
+              the faint of heart.
+            </p>
+            <button class="favorites__item-button">Buy</button>
+            <img
+              src="assets/img/The-Book-Eaters.jpg"
+              alt="The Book Eaters By Sunyi Dean"
+              class="favorites__item-img"
+            />
+          </div>
+          <div class="favorites__item">
+            <p class="favorites__item-stuff">Staff Picks</p>
+            <p class="favorites__item-name">Cackle</p>
+            <p class="favorites__item-author">By Rachel Harrison</p>
+            <p class="favorites__item-text">
+              Are your Halloween movies of choice The Witches of Eastwick and
+              Practical Magic? Look no further than here - where a woman
+              recovering from a breakup moves to a quaint town in upstate New
+              York and befriends a beautiful witch.
+            </p>
+            <button class="favorites__item-button">Buy</button>
+            <img
+              src="assets/img/Cackle.jpg"
+              alt="Cackle By Rachel Harrison"
+              class="favorites__item-img"
+            />
+          </div>
+          <div class="favorites__item">
+            <p class="favorites__item-stuff">Staff Picks</p>
+            <p class="favorites__item-name">Dante: Poet of the Secular World</p>
+            <p class="favorites__item-author">By Erich Auerbach</p>
+            <p class="favorites__item-text">
+              Auerbach's engaging book places the 'Comedy' within the tradition
+              of epic, tragedy, and philosophy in general, arguing for Dante's
+              uniqueness as one who raised the individual and his drama of soul
+              into something of divine significance—an inspired introduction to
+              Dante's main themes.
+            </p>
+            <button class="favorites__item-button">Buy</button>
+            <img
+              src="assets/img/Dante-Poet-of-the-Secular-World.jpg"
+              alt="Dante: Poet of the Secular World By Erich Auerbach"
+              class="favorites__item-img"
+            />
+          </div>
+          <div class="favorites__item">
+            <p class="favorites__item-stuff">Staff Picks</p>
+            <p class="favorites__item-name">The Last Queen</p>
+            <p class="favorites__item-author">By Clive Irving</p>
+            <p class="favorites__item-text">
+              A timely and revelatory new biography of Queen Elizabeth (and her
+              family) exploring how the Windsors have evolved and thrived as the
+              modern world has changed around them.
+            </p>
+            <button
+              class="favorites__item-button favorites__item-button_own"
+              disabled
+            >
+              Own
+            </button>
+            <img
+              src="assets/img/The-Last-Queen.jpg"
+              alt="The Last Queen By Clive Irving"
+              class="favorites__item-img"
+            />
           </div>
         </div>
       </section>
-      <section class="about" id="about">
-        <div class="container about__inner">
-          <h3 class="section__title">about</h3>
-          <p class="about__text">
-            The Brooklyn Library is a free workspace, a large number of books
-            and a cozy coffee shop inside
-          </p>
-          <div class="about__slider">
-            <img
-              class="about__slider-image"
-              src="assets/img/about-image1.jpg"
-              alt=""
-            />
-            <img
-              class="about__slider-image"
-              src="assets/img/about-image2.jpg"
-              alt=""
-            />
-            <img
-              class="about__slider-image"
-              src="assets/img/about-image3.jpg"
-              alt=""
-            />
-          </div>
-          <!-- TODO: redo with radio buttons -->
-          <ul class="slider__pagination-wrapper">
-            <li
-              class="slider__pagination-button slider__pagination-button_active"
-            ></li>
-            <li class="slider__pagination-button"></li>
-            <li class="slider__pagination-button"></li>
-          </ul>
-        </div>
-      </section>
-      <section class="favorites" id="favorites">
-        <div class="container favorites__inner">
-          <h3 class="section__title">favorites</h3>
-          <p class="favorites__text">Pick favorites of season</p>
-          <!-- TODO: add interactive area 5px -->
-          <form class="seasons-form">
-            <label class="seasons-form__label">
-              <input type="radio" name="seasons" checked />
-              <span>Winter</span>
-            </label>
-            <label class="seasons-form__label">
-              <input type="radio" name="seasons" />
-              <span>Spring</span>
-            </label>
-            <label class="seasons-form__label">
-              <input type="radio" name="seasons" />
-              <span>Summer</span>
-            </label>
-            <label class="seasons-form__label">
-              <input type="radio" name="seasons" />
-              <span>Autumn</span>
-            </label>
-          </form>
-          <div class="favorites__items">
-            <div class="favorites__item">
-              <p class="favorites__item-stuff">Staff Picks</p>
-              <p class="favorites__item-name">The Book Eaters</p>
-              <p class="favorites__item-author">By Sunyi Dean</p>
-              <p class="favorites__item-text">
-                An unusual sci-fi story about a book eater woman who tries
-                desperately to save her dangerous mind-eater son from tradition
-                and certain death. Complete with dysfunctional family values,
-                light Sapphic romance, and a strong, complex protagonist. Not
-                for the faint of heart.
-              </p>
-              <button class="favorites__item-button">Buy</button>
-              <img
-                src="assets/img/The Book Eaters.jpg"
-                alt="The Book Eaters By Sunyi Dean"
-                class="favorites__item-img"
-              />
-            </div>
-            <div class="favorites__item">
-              <p class="favorites__item-stuff">Staff Picks</p>
-              <p class="favorites__item-name">Cackle</p>
-              <p class="favorites__item-author">By Rachel Harrison</p>
-              <p class="favorites__item-text">
-                Are your Halloween movies of choice The Witches of Eastwick and
-                Practical Magic? Look no further than here - where a woman
-                recovering from a breakup moves to a quaint town in upstate New
-                York and befriends a beautiful witch.
-              </p>
-              <button class="favorites__item-button">Buy</button>
-              <img
-                src="assets/img/Cackle.jpg"
-                alt="Cackle By Rachel Harrison"
-                class="favorites__item-img"
-              />
-            </div>
-            <div class="favorites__item">
-              <p class="favorites__item-stuff">Staff Picks</p>
-              <p class="favorites__item-name">
-                Dante: Poet of the Secular World
-              </p>
-              <p class="favorites__item-author">By Erich Auerbach</p>
-              <p class="favorites__item-text">
-                Auerbach's engaging book places the 'Comedy' within the
-                tradition of epic, tragedy, and philosophy in general, arguing
-                for Dante's uniqueness as one who raised the individual and his
-                drama of soul into something of divine significance—an inspired
-                introduction to Dante's main themes.
-              </p>
-              <button class="favorites__item-button">Buy</button>
-              <img
-                src="assets/img/Dante Poet of the Secular World.jpg"
-                alt="Dante: Poet of the Secular World By Erich Auerbach"
-                class="favorites__item-img"
-              />
-            </div>
-            <div class="favorites__item">
-              <p class="favorites__item-stuff">Staff Picks</p>
-              <p class="favorites__item-name">The Last Queen</p>
-              <p class="favorites__item-author">By Clive Irving</p>
-              <p class="favorites__item-text">
-                A timely and revelatory new biography of Queen Elizabeth (and
-                her family) exploring how the Windsors have evolved and thrived
-                as the modern world has changed around them.
-              </p>
-              <button
-                class="favorites__item-button favorites__item-button_own"
-                disabled
-              >
-                Own
-              </button>
-              <img
-                src="assets/img/The Last Queen.jpg"
-                alt="The Last Queen By Clive Irving"
-                class="favorites__item-img"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="shop" id="coffee-shop">
-        <div class="container shop__inner">
-          <h3 class="section__title">coffee shop</h3>
+      <section class="shop container" id="coffee-shop">
+          <h2 class="section__title">coffee shop</h2>
           <p class="shop__text">
             In our library, we have of cozy coffee shop, welcoming in customers
             with frothy cappuccinos and friendly conversation. You can get a
@@ -255,11 +244,9 @@
               </ul>
             </div>
           </div>
-        </div>
       </section>
-      <section class="contacts" id="contacts">
-        <div class="container contacts__inner">
-          <h3 class="section__title">Our Contacts</h3>
+      <section class="contacts container" id="contacts">
+          <h2 class="section__title">Our Contacts</h2>
           <div class="contacts__wrapper">
             <div class="contacts__info">
               <p class="contacts__text contacts__text_bold">
@@ -305,11 +292,9 @@
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1024.1603604595846!2d-73.99128361999561!3d40.69570096546504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a49b649b8c3%3A0x6342a2291cea2e!2s286%20Cadman%20Plaza%20W%2C%20Brooklyn%2C%20NY%2011201%2C%20USA!5e0!3m2!1sen!2sby!4v1689796235854!5m2!1sen!2sby"
             ></iframe>
           </div>
-        </div>
       </section>
-      <section class="library-card" id="library-card">
-        <div class="container library-card__inner">
-          <h3 class="section__title">Digital Library Cards</h3>
+      <section class="library-card container" id="library-card">
+          <h2 class="section__title">Digital Library Cards</h2>
           <div class="library-card__wrapper">
             <div class="card">
               <p>Find your Library card</p>
@@ -350,63 +335,54 @@
               </div>
             </div>
           </div>
-        </div>
       </section>
-      <footer class="footer container">
-        <div class="footer__contacts">
-          <a
-            class="footer__link"
-            href="https://goo.gl/maps/tKbqm6WghJcuWBaw6"
-            target="_blank"
-            >286 Cadman Plaza, New York, NY 11238, United States</a
-          >
-          <ul class="footer__socials">
-            <li class="footer__socials-item">
-              <a href="http://www.twitter.com/bklynlibrary" class="footer__link"
-                ><img
-                  src="assets/img/u_twitter-alt.svg"
-                  alt="twitter"
-              /></a>
-            </li>
-            <li class="footer__socials-item">
-              <a
-                href="http://www.instagram.com/bklynlibrary"
-                class="footer__link"
-                ><img
-                  src="assets/img/u_instagram.svg"
-                  alt="instagram"
-              /></a>
-            </li>
-            <li class="footer__socials-item">
-              <a
-                href="http://www.facebook.com/brooklynpubliclibrary"
-                class="footer__link"
-                ><img
-                  src="assets/img/u_facebook-f.svg"
-                  alt="facebook"
-              /></a>
-            </li>
-          </ul>
-        </div>
-        <div class="footer__working-hours">
-          <p>Mon - Fri<br />08:00 am - 07:00 pm</p>
-          <p>Sat - Sun<br />10:00 am - 06:00 pm</p>
-        </div>
-        <hr>
-        <div class="footer-rsschool">
-          <p class="footer-rsschool__date">2023</p>
-          <p class="footer-rsschool__rsschool">
-            <a href="https://rs.school/js-stage0" class="footer__link"
-              >The Rolling Scopes School</a
-            >
-          </p>
-          <p class="footer-rsschool__github">
-            <a href="https://github.com/Andrej-Kautsevich" class="footer__link"
-              >Andrej-Kautsevich</a
-            >
-          </p>
-        </div>
-      </footer>
     </main>
+    <footer class="footer container">
+      <div class="footer__contacts">
+        <a
+          class="footer__link"
+          href="https://goo.gl/maps/tKbqm6WghJcuWBaw6"
+          target="_blank"
+          >286 Cadman Plaza, New York, NY 11238, United States</a
+        >
+        <ul class="footer__socials">
+          <li class="footer__socials-item">
+            <a href="http://www.twitter.com/bklynlibrary" class="footer__link"
+              ><img src="assets/img/u_twitter-alt.svg" alt="twitter"
+            /></a>
+          </li>
+          <li class="footer__socials-item">
+            <a href="http://www.instagram.com/bklynlibrary" class="footer__link"
+              ><img src="assets/img/u_instagram.svg" alt="instagram"
+            /></a>
+          </li>
+          <li class="footer__socials-item">
+            <a
+              href="http://www.facebook.com/brooklynpubliclibrary"
+              class="footer__link"
+              ><img src="assets/img/u_facebook-f.svg" alt="facebook"
+            /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer__working-hours">
+        <p>Mon - Fri<br />08:00 am - 07:00 pm</p>
+        <p>Sat - Sun<br />10:00 am - 06:00 pm</p>
+      </div>
+      <hr />
+      <div class="footer-rsschool">
+        <p class="footer-rsschool__date">2023</p>
+        <p class="footer-rsschool__rsschool">
+          <a href="https://rs.school/js-stage0" class="footer__link"
+            >The Rolling Scopes School</a
+          >
+        </p>
+        <p class="footer-rsschool__github">
+          <a href="https://github.com/Andrej-Kautsevich" class="footer__link"
+            >Andrej-Kautsevich</a
+          >
+        </p>
+      </div>
+    </footer>
   </body>
 </html>
