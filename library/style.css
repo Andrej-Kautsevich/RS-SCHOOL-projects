@@ -21,7 +21,7 @@
 }
 
 html {
-  scroll-behavior: smooth; 
+  scroll-behavior: smooth;
 }
 
 body {
@@ -35,9 +35,30 @@ p {
   margin: 0;
 }
 
+.button {
+  border-radius: 2px;
+  border: 1px solid #0c0c0e;
+  background-color: transparent;
+  color: #0c0c0e;
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 250ms;
+}
+
+.button:hover:enabled {
+  border-color: #bb945f;
+  background-color: #bb945f;
+}
+
 .container {
   display: flex;
-  max-width: 1440px;
+  width: 1440px;
   margin: 0 auto;
 }
 
@@ -93,7 +114,7 @@ p {
 }
 
 .nav__link:hover {
-  color: #BB945F;
+  color: #bb945f;
 }
 
 .header__icon {
@@ -296,6 +317,7 @@ p {
 }
 
 .favorites__item-stuff::after {
+  margin-top: -1px;
   display: block;
   content: "";
   width: 60px;
@@ -345,25 +367,7 @@ p {
   position: absolute;
   left: 20px;
   bottom: 15px;
-  border-radius: 2px;
-  border: 1px solid #0c0c0e;
-  background-color: transparent;
   padding: 0;
-  color: #0c0c0e;
-  text-align: center;
-  font-family: Inter;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: 250ms;
-}
-
-.favorites__item-button:hover:enabled {
-  border-color: #bb945f;
-  background-color: #bb945f;
 }
 
 .favorites__item-button_own {
@@ -579,24 +583,7 @@ p {
 .card__button {
   margin: 20px 0 30px;
   padding: 10px 40px;
-  border-radius: 2px;
-  border: 1px solid #0c0c0e;
-  color: #0c0c0e;
-  background-color: transparent;
-  text-align: center;
-  font-family: Inter;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: 250ms;
-}
-
-.card__button:hover {
-  border-color: #bb945f;
-  background-color: #bb945f;
 }
 
 .login {
@@ -635,24 +622,6 @@ p {
 .login__button {
   width: 75px;
   height: 30px;
-  background-color: transparent;
-  border-radius: 2px;
-  border: 1px solid #0c0c0e;
-  color: #0c0c0e;
-  text-align: center;
-  font-family: Inter;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: 250ms;
-}
-
-.login__button:hover {
-  border-color: #bb945f;
-  background-color: #bb945f;
 }
 
 .footer {
