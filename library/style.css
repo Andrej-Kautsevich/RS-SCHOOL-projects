@@ -21,6 +21,7 @@
 }
 
 body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,12 +33,15 @@ p {
 
 .container {
   display: flex;
-  width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
 .header {
   background: #0c0c0e;
+}
+
+.header__wrapper {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
@@ -90,6 +94,7 @@ p {
 
 .main {
   flex-direction: column;
+  margin-bottom: auto;
 }
 
 .section__title {
@@ -166,6 +171,7 @@ p {
 }
 
 .welcome__wg-title {
+  margin: 0;
   color: #fff;
   text-align: center;
   font-family: Forum;
@@ -642,6 +648,7 @@ p {
 }
 
 .footer {
+  width: 100%;
   background: #0c0c0e;
   justify-content: space-between;
   flex-wrap: wrap;

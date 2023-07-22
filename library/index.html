@@ -9,40 +9,45 @@
   </head>
 
   <body>
-    <header class="header container">
-      <div>
-        <h1 class="header__title">Brooklyn Public Library</h1>
-      </div>
-      <div class="header__menu">
-        <nav class="nav">
-          <ul class="nav__list">
-            <li class="nav__list-item">
-              <a href="#about" class="nav__link">About</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#favorites" class="nav__link">Favorites</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#coffee-shop" class="nav__link">Coffee shop</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#contacts" class="nav__link">Contacts</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#library-card" class="nav__link">Library Card</a>
-            </li>
-          </ul>
-        </nav>
-        <img class="header__icon" alt src="assets/img/icon_profile.svg" />
+    <header class="header">
+      <div class="header__wrapper container">
+        <div>
+          <h1 class="header__title">Brooklyn Public Library</h1>
+        </div>
+        <div class="header__menu">
+          <nav class="nav">
+            <ul class="nav__list">
+              <li class="nav__list-item">
+                <a href="#about" class="nav__link">About</a>
+              </li>
+              <li class="nav__list-item">
+                <a href="#favorites" class="nav__link">Favorites</a>
+              </li>
+              <li class="nav__list-item">
+                <a href="#coffee-shop" class="nav__link">Coffee shop</a>
+              </li>
+              <li class="nav__list-item">
+                <a href="#contacts" class="nav__link">Contacts</a>
+              </li>
+              <li class="nav__list-item">
+                <a href="#library-card" class="nav__link">Library Card</a>
+              </li>
+            </ul>
+          </nav>
+          <img class="header__icon" alt src="assets/img/icon_profile.svg" />
+        </div>
       </div>
     </header>
 
-    <main class="main container">
-      <section class="welcome container">
+    <main class="main">
+      <section class="welcome">
         <div class="welcome__overlay"></div>
-        <div class="welcome__wg">
-          <!-- TODO: change heading numeration -->
-          <p class="welcome__wg-title">Welcome<br />to the Brooklyn Library</p>
+        <div class="container">
+          <div class="welcome__wg">
+            <h2 class="welcome__wg-title">
+              Welcome<br />to the Brooklyn Library
+            </h2>
+          </div>
         </div>
       </section>
       <section class="about container" id="about">
@@ -177,164 +182,162 @@
         </div>
       </section>
       <section class="shop container" id="coffee-shop">
-          <h2 class="section__title">coffee shop</h2>
-          <p class="shop__text">
-            In our library, we have of cozy coffee shop, welcoming in customers
-            with frothy cappuccinos and friendly conversation. You can get a
-            favorite book and read in coffee shop. Our barista to cook you best
-            coffee, and also you can try desserts from bakery.
-          </p>
-          <div class="menu">
-            <div class="menu__coffee">
-              <h4 class="menu__title">Coffee & Tea</h4>
-              <ul class="menu__list">
-                <li class="menu__item">
-                  Cold Brew Coffee
-                  <span class="menu__price">$3</span>
-                </li>
-                <li class="menu__item">
-                  French Press Pot
-                  <span class="menu__price">$5</span>
-                </li>
-                <li class="menu__item">
-                  Espresso
-                  <span class="menu__price">$2</span>
-                </li>
-                <li class="menu__item">
-                  Cappuccino
-                  <span class="menu__price">$4</span>
-                </li>
-                <li class="menu__item">
-                  Hot tea
-                  <span class="menu__price">$2</span>
-                </li>
-                <li class="menu__item">
-                  Cold tea
-                  <span class="menu__price">$3</span>
-                </li>
-              </ul>
-            </div>
-            <div class="menu__desserts">
-              <h4 class="menu__title">Desserts & Cakes</h4>
-              <ul class="menu__list">
-                <li class="menu__item">
-                  Forest Gateau
-                  <span class="menu__price">$16</span>
-                </li>
-                <li class="menu__item">
-                  Blue Moon
-                  <span class="menu__price">$16</span>
-                </li>
-                <li class="menu__item">
-                  Truffle Cake
-                  <span class="menu__price">$15</span>
-                </li>
-                <li class="menu__item">
-                  Chocolate Cake
-                  <span class="menu__price">$18</span>
-                </li>
-                <li class="menu__item">
-                  Poet’s Dream Cake
-                  <span class="menu__price">$16</span>
-                </li>
-                <li class="menu__item">
-                  Pineapple Cake
-                  <span class="menu__price">$14</span>
-                </li>
-              </ul>
-            </div>
+        <h2 class="section__title">coffee shop</h2>
+        <p class="shop__text">
+          In our library, we have of cozy coffee shop, welcoming in customers
+          with frothy cappuccinos and friendly conversation. You can get a
+          favorite book and read in coffee shop. Our barista to cook you best
+          coffee, and also you can try desserts from bakery.
+        </p>
+        <div class="menu">
+          <div class="menu__coffee">
+            <h4 class="menu__title">Coffee & Tea</h4>
+            <ul class="menu__list">
+              <li class="menu__item">
+                Cold Brew Coffee
+                <span class="menu__price">$3</span>
+              </li>
+              <li class="menu__item">
+                French Press Pot
+                <span class="menu__price">$5</span>
+              </li>
+              <li class="menu__item">
+                Espresso
+                <span class="menu__price">$2</span>
+              </li>
+              <li class="menu__item">
+                Cappuccino
+                <span class="menu__price">$4</span>
+              </li>
+              <li class="menu__item">
+                Hot tea
+                <span class="menu__price">$2</span>
+              </li>
+              <li class="menu__item">
+                Cold tea
+                <span class="menu__price">$3</span>
+              </li>
+            </ul>
           </div>
+          <div class="menu__desserts">
+            <h4 class="menu__title">Desserts & Cakes</h4>
+            <ul class="menu__list">
+              <li class="menu__item">
+                Forest Gateau
+                <span class="menu__price">$16</span>
+              </li>
+              <li class="menu__item">
+                Blue Moon
+                <span class="menu__price">$16</span>
+              </li>
+              <li class="menu__item">
+                Truffle Cake
+                <span class="menu__price">$15</span>
+              </li>
+              <li class="menu__item">
+                Chocolate Cake
+                <span class="menu__price">$18</span>
+              </li>
+              <li class="menu__item">
+                Poet’s Dream Cake
+                <span class="menu__price">$16</span>
+              </li>
+              <li class="menu__item">
+                Pineapple Cake
+                <span class="menu__price">$14</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </section>
       <section class="contacts container" id="contacts">
-          <h2 class="section__title">Our Contacts</h2>
-          <div class="contacts__wrapper">
-            <div class="contacts__info">
-              <p class="contacts__text contacts__text_bold">
-                For all Library inquiries:
-              </p>
-              <ul class="contacts__phone-info">
-                <li class="contacts__text">
-                  Please call
-                  <a class="contacts__link" href="tel:+6177302370"
-                    >(617) 730-2370</a
-                  >
-                </li>
-                <li class="contacts__text">
-                  For TTY service, please call
-                  <a class="contacts__link" href="tel:+6177302370"
-                    >(617) 730-2370</a
-                  >
-                </li>
-                <li class="contacts__text">
-                  Putterham Library:
-                  <a class="contacts__link" href="tel:+6177302385"
-                    >(617) 730-2385</a
-                  >
-                </li>
-              </ul>
-              <p class="contacts__text contacts__text_bold">Senior Staff</p>
-              <p class="contacts__text">
-                Library Director:
-                <a
-                  class="contacts__link contacts__text_bold"
-                  href="mailto:AmandaHirst@gmail.com"
-                  >Amanda Hirst</a
+        <h2 class="section__title">Our Contacts</h2>
+        <div class="contacts__wrapper">
+          <div class="contacts__info">
+            <p class="contacts__text contacts__text_bold">
+              For all Library inquiries:
+            </p>
+            <ul class="contacts__phone-info">
+              <li class="contacts__text">
+                Please call
+                <a class="contacts__link" href="tel:+6177302370"
+                  >(617) 730-2370</a
                 >
-              </p>
-            </div>
-            <iframe
-              width="696"
-              height="414"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1024.1603604595846!2d-73.99128361999561!3d40.69570096546504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a49b649b8c3%3A0x6342a2291cea2e!2s286%20Cadman%20Plaza%20W%2C%20Brooklyn%2C%20NY%2011201%2C%20USA!5e0!3m2!1sen!2sby!4v1689796235854!5m2!1sen!2sby"
-            ></iframe>
+              </li>
+              <li class="contacts__text">
+                For TTY service, please call
+                <a class="contacts__link" href="tel:+6177302370"
+                  >(617) 730-2370</a
+                >
+              </li>
+              <li class="contacts__text">
+                Putterham Library:
+                <a class="contacts__link" href="tel:+6177302385"
+                  >(617) 730-2385</a
+                >
+              </li>
+            </ul>
+            <p class="contacts__text contacts__text_bold">Senior Staff</p>
+            <p class="contacts__text">
+              Library Director:
+              <a
+                class="contacts__link contacts__text_bold"
+                href="mailto:AmandaHirst@gmail.com"
+                >Amanda Hirst</a
+              >
+            </p>
           </div>
+          <iframe
+            width="696"
+            height="414"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1024.1603604595846!2d-73.99128361999561!3d40.69570096546504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a49b649b8c3%3A0x6342a2291cea2e!2s286%20Cadman%20Plaza%20W%2C%20Brooklyn%2C%20NY%2011201%2C%20USA!5e0!3m2!1sen!2sby!4v1689796235854!5m2!1sen!2sby"
+          ></iframe>
+        </div>
       </section>
       <section class="library-card container" id="library-card">
-          <h2 class="section__title">Digital Library Cards</h2>
-          <div class="library-card__wrapper">
-            <div class="card">
-              <p>Find your Library card</p>
-              <div class="card__border">
-                <form>
-                  <div class="card__body">
-                    <p class="card__text">Brooklyn Public Library</p>
-                    <input
-                      class="card__input"
-                      type="text"
-                      placeholder="Reader's name"
-                      inputmode="verbatim"
-                      pattern="\w+"
-                    />
-                    <input
-                      class="card__input"
-                      type="text"
-                      placeholder="Card number"
-                      inputmode="verbatim"
-                      pattern="\w+"
-                    />
-                  </div>
-                  <button class="card__button" type="submit">
-                    Check the card
-                  </button>
-                </form>
-              </div>
-            </div>
-            <div class="login">
-              <p class="login__title">Get a reader card</p>
-              <p class="login__text">
-                You will be able to see a reader card after logging into account
-                or you can register a new account
-              </p>
-              <div class="login__buttons">
-                <button class="login__button">Sign Up</button>
-                <button class="login__button">Log in</button>
-              </div>
+        <h2 class="section__title">Digital Library Cards</h2>
+        <div class="library-card__wrapper">
+          <div class="card">
+            <p>Find your Library card</p>
+            <div class="card__border">
+              <form>
+                <div class="card__body">
+                  <p class="card__text">Brooklyn Public Library</p>
+                  <input
+                    class="card__input"
+                    type="text"
+                    placeholder="Reader's name"
+                    pattern="\w+"
+                  />
+                  <input
+                    class="card__input"
+                    type="text"
+                    placeholder="Card number"
+                    pattern="\w+"
+                  />
+                </div>
+                <button class="card__button" type="submit">
+                  Check the card
+                </button>
+              </form>
             </div>
           </div>
+          <div class="login">
+            <p class="login__title">Get a reader card</p>
+            <p class="login__text">
+              You will be able to see a reader card after logging into account
+              or you can register a new account
+            </p>
+            <div class="login__buttons">
+              <button class="login__button">Sign Up</button>
+              <button class="login__button">Log in</button>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
     <footer class="footer container">
