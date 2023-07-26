@@ -285,7 +285,8 @@ p {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  margin: 0;
+  margin: -5px;
+  padding: 5px;
 }
 
 .favorites__items {
