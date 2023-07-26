@@ -64,9 +64,6 @@ p {
 
 .header {
   background: #0c0c0e;
-}
-
-.header__wrapper {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
