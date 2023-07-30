@@ -48,7 +48,7 @@ p {
   line-height: normal;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: 250ms;
+  transition: 0.3s;
 }
 
 .button:hover:enabled {
@@ -495,6 +495,11 @@ p {
 .contacts__link {
   color: #000;
   text-decoration: none;
+  transition: 0.3s;
+}
+
+.contacts__link:hover {
+  color: #BB945F;
 }
 
 .contacts__text {
@@ -658,6 +663,10 @@ p {
   color: #fff;
   transition: 0.3s;
   text-decoration: none;
+}
+
+.footer__link:hover {
+  color: #BB945F;
 }
 
 .footer__working-hours {
