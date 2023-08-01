@@ -26,6 +26,7 @@ html {
 
 body {
   min-height: 100vh;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -58,11 +59,12 @@ p {
 
 .container {
   display: flex;
-  width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
 .header {
+  width: 100%;
   background: #0c0c0e;
   align-items: center;
   justify-content: space-between;
@@ -119,6 +121,7 @@ p {
 }
 
 .main {
+  width: 100%;
   flex-direction: column;
   margin-bottom: auto;
 }
@@ -220,6 +223,10 @@ p {
   gap: 25px;
   width: 100%;
   padding: 0 20px;
+}
+
+.about__slider-image {
+  max-width: 450px;
 }
 
 .about__text {
@@ -641,6 +648,7 @@ p {
 }
 
 .footer {
+  width: 100%;
   background: #0c0c0e;
   justify-content: space-between;
   flex-wrap: wrap;
