@@ -1,18 +1,18 @@
 @font-face {
   font-family: "Forum";
-  src: url("assets/fonts/Forum-Regular.ttf");
+  src: url("../assets/fonts/Forum-Regular.ttf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Inter";
-  src: url("assets/fonts/Inter-Regular.ttf");
+  src: url("../assets/fonts/Inter-Regular.ttf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Inter";
-  src: url("assets/fonts/Inter-Bold.ttf");
+  src: url("../assets/fonts/Inter-Bold.ttf");
   font-weight: 700;
 }
 
@@ -169,7 +169,7 @@ p {
 .welcome {
   position: relative;
   height: 600px;
-  background: url(assets/img/welcome-background.jpg) lightgrey 50% / cover
+  background: url(../assets/img/welcome-background.jpg) lightgrey 50% / cover
     no-repeat;
 }
 
