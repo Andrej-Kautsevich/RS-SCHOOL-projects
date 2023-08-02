@@ -225,10 +225,6 @@ p {
   padding: 0 20px;
 }
 
-.about__slider-image {
-  max-width: 450px;
-}
-
 .about__text {
   color: #000;
   font-family: Inter;
