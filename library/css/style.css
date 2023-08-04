@@ -65,10 +65,10 @@ p {
 
 .header {
   width: 100%;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  line-height: 50px;
   background: #0c0c0e;
 }
 
@@ -85,6 +85,42 @@ p {
 
 .header__menu {
   display: flex;
+  align-items: center;
+}
+
+.header__menu-buttons {
+  order: 1;
+  display: inline-flex;
+}
+
+.header__menu-btn {
+  margin-left: 40px;
+  width: 45px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header__menu-btn:hover {
+  cursor: pointer;
+}
+
+.header__menu-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  transition-duration: 0.5s;
+}
+
+.header__menu-icon {
+  margin-left: 40px;
+  width: 28px;
+  height: 28px;
 }
 
 .nav {
@@ -114,10 +150,6 @@ p {
 
 .nav__link:hover {
   color: #bb945f;
-}
-
-.header__icon {
-  margin-left: 40px;
 }
 
 .main {
@@ -173,9 +205,9 @@ p {
   height: 600px;
   background: url(../assets/img/welcome-background.jpg) lightgrey 50% / cover
     no-repeat;
-  }
-  
-  .welcome__overlay {
+}
+
+.welcome__overlay {
   width: 100%;
   height: 300px;
   background: linear-gradient(
@@ -228,14 +260,13 @@ p {
   display: flex;
 }
 
-.about__slider div:nth-child(n+4) {
+.about__slider div:nth-child(n + 4) {
   display: none;
 }
 
 .about__slider-image {
   max-width: 450px;
 }
-
 
 .slider__pagination-wrapper {
   display: flex;
@@ -550,7 +581,7 @@ p {
 }
 
 .contacts__link:hover {
-  color: #BB945F;
+  color: #bb945f;
 }
 
 .contacts__text {
@@ -718,7 +749,7 @@ p {
 }
 
 .footer__link:hover {
-  color: #BB945F;
+  color: #bb945f;
 }
 
 .footer__working-hours {
