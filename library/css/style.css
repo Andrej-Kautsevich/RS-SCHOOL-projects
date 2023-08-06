@@ -191,27 +191,6 @@ p {
   background-color: #0c0c0e;
 }
 
-.slider__pagination-wrapper {
-  display: flex;
-  padding: 0;
-  margin: 35px;
-}
-
-.slider__pagination-button {
-  display: block;
-  cursor: pointer;
-  width: 26px;
-  height: 26px;
-  background-color: #0c0c0e;
-  border: 5px solid transparent;
-  background-clip: padding-box;
-  border-radius: 26px;
-}
-
-.slider__pagination-button_active {
-  background-color: #bb945f;
-}
-
 .welcome {
   position: relative;
   height: 600px;
@@ -260,6 +239,15 @@ p {
   align-items: center;
 }
 
+.about__text {
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+}
+
 .about__slider {
   width: 100%;
   display: flex;
@@ -299,15 +287,6 @@ p {
 
 .slider__pagination-button_active {
   background-color: #bb945f;
-}
-
-.about__text {
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 40px;
 }
 
 .favorites {
