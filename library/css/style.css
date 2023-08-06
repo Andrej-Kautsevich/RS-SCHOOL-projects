@@ -32,6 +32,10 @@ body {
   justify-content: space-between;
 }
 
+.noscroll {
+  overflow: hidden;
+}
+
 p {
   margin: 0;
 }
@@ -70,6 +74,7 @@ p {
   justify-content: space-between;
   padding: 20px;
   background: #0c0c0e;
+  overflow-x: clip;
 }
 
 .header__title {
@@ -86,23 +91,24 @@ p {
 .header__menu {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .header__menu-buttons {
   order: 1;
   display: inline-flex;
+  z-index: 5;
 }
 
 .header__menu-btn {
+  position: relative;
   margin-left: 40px;
   width: 45px;
-  height: 20px;
+  height: 45px;
   padding: 0;
   border: none;
   background-color: transparent;
   display: none;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .header__menu-btn:hover {
@@ -111,10 +117,19 @@ p {
 
 .header__menu-btn span {
   display: block;
+  position: absolute;
   width: 100%;
   height: 2px;
   background-color: #ffffff;
   transition-duration: 0.5s;
+}
+
+.header__menu-btn span:first-child{
+  transform: translateY(-10px);
+}
+
+.header__menu-btn span:last-child{
+  transform: translateY(10px);
 }
 
 .header__menu-icon {
@@ -123,16 +138,13 @@ p {
   height: 28px;
 }
 
-.nav {
-  line-height: 50px;
-}
-
 .nav__list {
   display: flex;
   list-style: none;
   padding: 0;
   margin: 0;
   gap: 30px;
+  line-height: 50px;
 }
 
 .nav__list-item {
