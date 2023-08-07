@@ -93,14 +93,13 @@
             />
           </div>
         </div>
-        <!-- TODO: redo with radio buttons -->
-        <ul class="slider__pagination-wrapper">
-          <li
-            class="slider__pagination-button slider__pagination-button_active"
-          ></li>
-          <li class="slider__pagination-button"></li>
-          <li class="slider__pagination-button"></li>
-        </ul>
+        <div class="slider__pagination-wrapper">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button" checked>
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+        </div>
       </section>
       <section class="favorites container" id="favorites">
         <h2 class="section__title">favorites</h2>
@@ -234,7 +233,7 @@
               </li>
               <li class="menu__item">
                 Cold tea
-                <span class="menu__price">$3</span>
+                <span class="menu__price">$2</span>
               </li>
             </ul>
           </div>
@@ -307,6 +306,7 @@
             </p>
           </div>
           <iframe
+          class="contacts__map"
             width="696"
             height="414"
             style="border: 0"

@@ -100,6 +100,7 @@ p {
   z-index: 5;
 }
 
+/* Burger menu button */
 .header__menu-btn {
   position: relative;
   margin-left: 40px;
@@ -130,6 +131,18 @@ p {
 
 .header__menu-btn span:last-child{
   transform: translateY(10px);
+}
+
+.header__menu-btn_active span:first-child {
+  transform: translate(7px, 0) rotate(45deg);
+}
+
+.header__menu-btn_active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header__menu-btn_active span:last-child {
+  transform: translate(7px, 0) rotate(-45deg);
 }
 
 .header__menu-icon {
@@ -237,6 +250,7 @@ p {
 .about {
   flex-direction: column;
   align-items: center;
+  margin: 0 20px;
 }
 
 .about__text {
@@ -246,13 +260,13 @@ p {
   font-style: normal;
   font-weight: 400;
   line-height: 40px;
+  text-align: center;
 }
 
 .about__slider {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
   margin-top: 20px;
 }
 
@@ -268,6 +282,7 @@ p {
   max-width: 450px;
 }
 
+/* slider pagination buttons */
 .slider__pagination-wrapper {
   display: flex;
   padding: 0;
@@ -275,7 +290,9 @@ p {
 }
 
 .slider__pagination-button {
-  display: block;
+  display: none;
+  appearance: none;
+  margin: 0;
   cursor: pointer;
   width: 26px;
   height: 26px;
@@ -283,19 +300,23 @@ p {
   border: 5px solid transparent;
   background-clip: padding-box;
   border-radius: 26px;
+  transition: 0.3s;
 }
 
-.slider__pagination-button_active {
+.slider__pagination-button:nth-child(-n+3) {
+  display: block;
+}
+
+.slider__pagination-button:checked {
   background-color: #bb945f;
 }
 
 .favorites {
   flex-direction: column;
+  padding: 0 20px;
 }
 
 .favorites__text {
-  margin: 0 0 0 20px;
-  margin-left: 20px;
   color: #000;
   font-family: Inter;
   font-size: 20px;
@@ -305,7 +326,6 @@ p {
 
 .seasons-form {
   margin-top: 40px;
-  margin-left: 20px;
   display: flex;
   gap: 90px;
   color: #000;
@@ -316,6 +336,7 @@ p {
   line-height: normal;
 }
 
+/* seasons radio buttons */
 .seasons-form input[type="radio"] {
   margin: 0 20px 0 0;
   appearance: none;
@@ -358,10 +379,8 @@ p {
 }
 
 .favorites__items {
-  margin: 40px 60px 40px 20px;
+  margin: 40px 40px 40px 0;
   display: flex;
-  /* grid-template-columns: 1fr 1fr; */
-  /* column-gap: 260px; */
   row-gap: 40px;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -461,7 +480,6 @@ p {
 }
 
 .shop__text {
-  margin: 0;
   color: #000;
   text-align: center;
   font-family: Inter;
