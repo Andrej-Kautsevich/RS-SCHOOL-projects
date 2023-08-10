@@ -1,3 +1,6 @@
+console.log('Вёрстка соответствует макету. Ширина экрана 768px +26\nНи на одном из разрешений до 640px включ11☺☺ительно не появляется горизонтальная полоса прокрутки. Весь контент страницы при этом сохраняется: не обрезается и не удаляется +12\nНа ширине экрана 768рх реализовано адаптивное меню +12\n')
+
+
 const menuBtn = document.querySelector('.header__menu-btn');
 const menuBurger = document.querySelector('.header__menu');
 const body = document.body;

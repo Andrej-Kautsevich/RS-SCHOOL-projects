@@ -137,3 +137,15 @@
     margin-left: 96px;
   }
 }
+
+@media (max-width: 767px) {
+  .seasons-form {
+    width: 100%;
+    justify-content: space-between;
+    gap: unset;
+  }
+
+  .contacts__map {
+    width: 100%;
+  }
+}
