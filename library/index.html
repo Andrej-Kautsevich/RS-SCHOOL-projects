@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/media.css" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1440, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brooklyn Public Library</title>
     <link rel="icon" href="assets/img/favicon.ico" />
   </head>
 
   <body>
     <header class="header container">
-      <div>
         <h1 class="header__title">Brooklyn Public Library</h1>
-      </div>
-      <div class="header__menu">
-        <nav class="nav">
+        <div class="header__menu-buttons">
+          <img class="header__menu-icon" alt src="assets/img/icon_profile.svg" />
+          <button class="header__menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav class="header__menu">
           <ul class="nav__list">
             <li class="nav__list-item">
               <a href="#about" class="nav__link">About</a>
@@ -33,8 +39,6 @@
             </li>
           </ul>
         </nav>
-        <img class="header__icon" alt src="assets/img/icon_profile.svg" />
-      </div>
     </header>
 
     <main class="main">
@@ -53,30 +57,61 @@
           a cozy coffee shop inside
         </p>
         <div class="about__slider">
-          <img
-            class="about__slider-image"
-            src="assets/img/about-image1.jpg"
-            alt=""
-          />
-          <img
-            class="about__slider-image"
-            src="assets/img/about-image2.jpg"
-            alt=""
-          />
-          <img
-            class="about__slider-image"
-            src="assets/img/about-image3.jpg"
-            alt=""
-          />
+          <button class="slider__btn-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+            <path d="M15 7.5L9 12.5L15 17.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+          <div class="slider__items">
+          <div class="slider__item">
+            <img
+              class="slider__image slider__image_1"
+              src="assets/img/about-image1.jpg"
+              alt=""
+            />
+          </div>
+          <div class="slider__item">
+            <img
+              class="slider__image slider__image_2"
+              src="assets/img/about-image2.jpg"
+              alt=""
+            />
+          </div>
+          <div class="slider__item">
+            <img
+              class="slider__image slider__image_3"
+              src="assets/img/about-image3.jpg"
+              alt=""
+            />
+          </div>
+          <div class="slider__item">
+            <img
+              class="slider__image slider__image_4"
+              src="assets/img/about-image4.jpg"
+              alt=""
+            />
+          </div>
+          <div class="slider__item">
+            <img
+              class="slider__image slider__image_5"
+              src="assets/img/about-image5.jpg"
+              alt=""
+            />
+          </div>
         </div>
-        <!-- TODO: redo with radio buttons -->
-        <ul class="slider__pagination-wrapper">
-          <li
-            class="slider__pagination-button slider__pagination-button_active"
-          ></li>
-          <li class="slider__pagination-button"></li>
-          <li class="slider__pagination-button"></li>
-        </ul>
+        <button class="slider__btn-next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+            <path d="M9 17.5L15 12.5L9 7.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        </div>
+        <div class="slider__pagination-wrapper">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button" checked>
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+        </div>
       </section>
       <section class="favorites container" id="favorites">
         <h2 class="section__title">favorites</h2>
@@ -210,7 +245,7 @@
               </li>
               <li class="menu__item">
                 Cold tea
-                <span class="menu__price">$3</span>
+                <span class="menu__price">$2</span>
               </li>
             </ul>
           </div>
@@ -283,6 +318,7 @@
             </p>
           </div>
           <iframe
+          class="contacts__map"
             width="696"
             height="414"
             style="border: 0"
