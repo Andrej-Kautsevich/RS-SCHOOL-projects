@@ -1,0 +1,151 @@
+@media (max-width: 1260px) {
+  .about__slider {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slider__items {
+    max-width: 1065px;
+    gap: 20px;
+  }
+
+  .slider__items div:nth-of-type(n + 3) {
+    display: none;
+  }
+
+  .slider__btn-prev,
+  .slider__btn-next {
+    display: flex;
+  }
+
+  .slider__pagination-button:nth-child(-n + 4) {
+    display: block;
+  }
+
+  .favorites__items {
+    flex-direction: column;
+    margin: 40px auto;
+  }
+
+  .favorites__item {
+    margin-right: 40px;
+  }
+
+  .contacts__wrapper {
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .contacts__info {
+    max-width: 100%;
+  }
+
+  .contacts__map {
+    align-self: center;
+  }
+
+  .library-card__wrapper {
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .login__title,
+  .login__text {
+    text-align: center;
+  }
+
+  .login__text {
+    margin: 40px 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .header__menu {
+    position: absolute;
+    top: 0;
+    /* TODO: use % in right property */
+    right: -331px;
+    padding: 100px 107px;
+    z-index: 1;
+    transition: transform 0.75s cubic-bezier(0.5, -0.8, 0.5, 1.8),
+      background-color 0.75s linear;
+  }
+
+  .header__menu.header__menu_open {
+    background-color: #0C0C0E;
+    transform: translateX(-100%);
+  }
+
+  .header__menu-buttons {
+    align-items: center;
+  }
+
+  .header__menu-btn {
+    display: block;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slider__items {
+    width: fit-content;
+  }
+
+  .slider__items div:nth-of-type(n + 2) {
+    display: none;
+  }
+
+  .slider__pagination-button:nth-child(-n + 5) {
+    display: block;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .menu__coffee {
+    max-width: fit-content;
+  }
+
+  .menu__desserts {
+    max-width: 100%;
+    align-self: flex-end;
+  }
+
+  .footer-rsschool {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-rsschool__rsschool {
+    margin-left: 96px;
+  }
+}
+
+@media (max-width: 767px) {
+  .seasons-form {
+    width: 100%;
+    justify-content: space-between;
+    gap: unset;
+  }
+
+  .contacts__map {
+    width: 100%;
+  }
+}
