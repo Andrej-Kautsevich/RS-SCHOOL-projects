@@ -11,34 +11,34 @@
 
   <body>
     <header class="header container">
-        <h1 class="header__title">Brooklyn Public Library</h1>
-        <div class="header__menu-buttons">
-          <img class="header__menu-icon" alt src="assets/img/icon_profile.svg" />
-          <button class="header__menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <nav class="header__menu">
-          <ul class="nav__list">
-            <li class="nav__list-item">
-              <a href="#about" class="nav__link">About</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#favorites" class="nav__link">Favorites</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#coffee-shop" class="nav__link">Coffee shop</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#contacts" class="nav__link">Contacts</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#library-card" class="nav__link">Library Card</a>
-            </li>
-          </ul>
-        </nav>
+      <h1 class="header__title">Brooklyn Public Library</h1>
+      <div class="header__menu-buttons">
+        <img class="header__menu-icon" alt src="assets/img/icon_profile.svg" />
+        <button class="header__menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <nav class="header__menu">
+        <ul class="nav__list">
+          <li class="nav__list-item">
+            <a href="#about" class="nav__link">About</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#favorites" class="nav__link">Favorites</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#coffee-shop" class="nav__link">Coffee shop</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#contacts" class="nav__link">Contacts</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#library-card" class="nav__link">Library Card</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <main class="main">
@@ -58,59 +58,84 @@
         </p>
         <div class="about__slider">
           <button class="slider__btn-prev">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
             <path d="M15 7.5L9 12.5L15 17.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
-          <div class="slider__items">
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_1"
-              src="assets/img/about-image1.jpg"
-              alt=""
-            />
+          </button>
+          <div class="slider__wrapper">
+            <div class="slider__items">
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_1"
+                  src="assets/img/about-image1.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_2"
+                  src="assets/img/about-image2.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_3"
+                  src="assets/img/about-image3.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_4"
+                  src="assets/img/about-image4.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_5"
+                  src="assets/img/about-image5.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
           </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_2"
-              src="assets/img/about-image2.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_3"
-              src="assets/img/about-image3.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_4"
-              src="assets/img/about-image4.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_5"
-              src="assets/img/about-image5.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <button class="slider__btn-next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+          <button class="slider__btn-next">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
             <path d="M9 17.5L15 12.5L9 7.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
+          </button>
         </div>
         <div class="slider__pagination-wrapper">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button" checked>
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+            checked
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
         </div>
       </section>
       <section class="favorites container" id="favorites">
@@ -318,7 +343,7 @@
             </p>
           </div>
           <iframe
-          class="contacts__map"
+            class="contacts__map"
             width="696"
             height="414"
             style="border: 0"
