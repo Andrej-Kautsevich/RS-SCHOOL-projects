@@ -426,10 +426,21 @@ p {
 
 .favorites__items {
   margin: 40px 40px 40px 0;
-  display: flex;
+}
+
+.favorites__tab {
+  display: none;
   row-gap: 40px;
   justify-content: space-between;
   flex-wrap: wrap;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.favorites__tab_active {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .favorites__item {
