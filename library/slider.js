@@ -76,6 +76,13 @@ const checkBtn = () => {
   console.log(`position ${position}`);
 }
 
+const resetSlider = () => {
+  slideIndex = 0;
+  paginationButtons[slideIndex].checked = true;
+  position = 0;
+  setPosition();
+}
+
 checkBtn();
 
 window.addEventListener('DOMContentLoaded', updateSlidesPerView,);
@@ -83,3 +90,4 @@ window.addEventListener('DOMContentLoaded', setItemWidth);
 
 window.addEventListener('resize', updateSlidesPerView);
 window.addEventListener('resize', setItemWidth);
+window.addEventListener('resize', resetSlider);
