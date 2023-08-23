@@ -313,6 +313,12 @@ p {
   margin-top: 40px;
 }
 
+.slider__btn-prev:disabled,
+.slider__btn-next:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
 .slider__btn-prev {
   margin-right: 53px;
 }
