@@ -1,12 +1,24 @@
 let position = 0;
+let slidesPerView;
 
-const slidesPerView = 3;
 const spaceBetweenSlides = 25; //gap between slides
 const container = document.querySelector('.slider__container');
 const track = document.querySelector('.slider__items');
 const btnNext = document.querySelector('.slider__btn-next');
 const items = document.querySelectorAll('.slider__item');
 const itemsCount = document.querySelectorAll('.slider__items').length;
+
+//number of slides per view
+function updateSlidesPerView() {
+  if (window.matchMedia('(max-width: 1024px)').matches) {
+    slidesPerView = 1;
+  } else if (window.matchMedia('(max-width: 1260px)').matches) {
+    slidesPerView = 2;
+  } else {
+    slidesPerView = 3;
+  }
+}
+
 
 //set the width of each slide depending on the size of the container
 const setItemWidth = () => {
@@ -16,8 +28,6 @@ const setItemWidth = () => {
   })
   track.style.width = itemWidth * itemsCount + (spaceBetweenSlides * (itemsCount - 1)) + 'px';
 }
-
-setItemWidth();
 
 const paginationButtons = document.querySelectorAll('.slider__pagination-button');
 
@@ -36,8 +46,8 @@ const setPosition = () => {
 
 
 
+window.addEventListener('DOMContentLoaded', updateSlidesPerView);
+window.addEventListener('DOMContentLoaded', setItemWidth);
 
-
-
-
+window.addEventListener('resize', updateSlidesPerView);
 window.addEventListener('resize', setItemWidth);
