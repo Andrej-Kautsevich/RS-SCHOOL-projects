@@ -2,6 +2,7 @@ const menuBtn = document.querySelector('.header__menu-btn');
 const menuBurger = document.querySelector('.header__menu');
 const body = document.body;
 
+//open burger menu
 menuBtn.addEventListener('click', () => {
   menuBtn.classList.toggle('header__menu-btn_active');
   menuBurger.classList.toggle('header__menu_open');
@@ -15,6 +16,8 @@ menuBtn.addEventListener('click', () => {
   }
 });
 
+
+//close burger menu
 document.addEventListener('click', (event) => {
   if (
     !menuBtn.contains(event.target) &&
@@ -27,7 +30,7 @@ document.addEventListener('click', (event) => {
   }
 });
 
-
+//calc width of the vertical scroll bar
 function calcScroll() {
   let div = document.createElement('div');
 
