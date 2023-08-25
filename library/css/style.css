@@ -434,13 +434,11 @@ p {
   justify-content: space-between;
   flex-wrap: wrap;
   opacity: 0;
-  visibility: hidden;
 }
 
 .favorites__tab_active {
   display: flex;
   opacity: 1;
-  visibility: visible;
 }
 
 .favorites__item {

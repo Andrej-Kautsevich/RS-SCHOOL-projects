@@ -143,19 +143,19 @@
         <p class="favorites__text">Pick favorites of season</p>
         <form class="seasons-form">
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" checked />
+            <input type="radio" name="seasons" data-season="winter" checked />
             <a title="Winter">Winter</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="spring" />
             <a title="Spring">Spring</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="summer" />
             <a title="Summer">Summer</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="autumn"/>
             <a title="Autumn">Autumn</a>
           </label>
         </form>
@@ -665,5 +665,6 @@
     </footer>
     <script src="index.js"></script>
     <script src="slider.js"></script>
+    <script src="tabs.js"></script>
   </body>
 </html>
