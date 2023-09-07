@@ -1,6 +1,6 @@
 @media (max-width: 1260px) {
   .about__slider {
-   align-items: center;
+    align-items: center;
   }
 
   .slider__items {
@@ -11,13 +11,28 @@
     display: block;
   }
 
+  .favorites {
+    position: relative;
+  }
+
+  .seasons-form {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+  }
+
   .favorites__items {
     flex-direction: column;
-    margin: 40px auto;
+    margin: 0 auto 40px;
   }
 
   .favorites__item {
     margin-right: 40px;
+  }
+
+  .favorites__tab {
+    justify-content: center;
   }
 
   .contacts__wrapper {
@@ -74,7 +89,7 @@
   }
 
   .header__menu.header__menu_open {
-    background-color: #0C0C0E;
+    background-color: #0c0c0e;
     transform: translateX(-100%);
   }
 
