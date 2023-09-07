@@ -97,6 +97,10 @@
     align-items: center;
   }
 
+  .drop-menu{
+    top: 37px;
+  }
+
   .header__menu-btn {
     display: block;
   }
