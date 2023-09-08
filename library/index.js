@@ -5,6 +5,9 @@ const userBtn = document.querySelector('.header__menu-icon');
 const dropMenu = document.querySelector('.drop-menu');
 const modals = document.querySelectorAll('.modal__content')
 const modalOverlay = document.querySelector('.modal__overlay');
+const registerForm = document.getElementById('register-form');
+const loginForm = document.getElementById('login-form');
+
 
 //open burger menu
 menuBtn.addEventListener('click', () => {
@@ -69,13 +72,47 @@ modalBtnsClose.forEach((btn) => {
 })
 
 modalOverlay.addEventListener('click', (e) => {
-  console.log(e.target);
   if (e.target.classList.contains('modal__overlay')) {
     const modalActive = document.querySelector('.modal__active')
     modalActive.classList.remove('modal__active');
     modalOverlay.classList.remove('modal__overlay_active');
   }
 })
+
+
+//User registration
+function serializeForm(formNode) {
+  const { elements } = formNode;
+
+  const userArray = Array.from(elements)
+    .filter((item) => !!item.dataset.user)
+    .map((element) => {
+      const dataUser = element.dataset.user;
+      const { value } = element;
+      return { dataUser, value };
+    })
+
+  const userObject = userArray.reduce((obj, item) => {
+    obj[item.dataUser] = item.value;
+    return obj;
+  }, {});
+
+  localStorage.setItem("user", JSON.stringify(userObject));
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  serializeForm(registerForm);
+  location.reload();
+}
+
+registerForm.addEventListener('submit', handleFormSubmit)
+
+
+
+
+
+
 
 
 
