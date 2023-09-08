@@ -81,33 +81,60 @@ modalOverlay.addEventListener('click', (e) => {
 
 
 //User registration
-function serializeForm(formNode) {
+function serializeRegistrationForm(formNode) {
   const { elements } = formNode;
 
   const userArray = Array.from(elements)
     .filter((item) => !!item.dataset.user)
     .map((element) => {
-      const dataUser = element.dataset.user;
+      const data = element.dataset.user;
       const { value } = element;
-      return { dataUser, value };
+      return { data, value };
     })
 
-  const userObject = userArray.reduce((obj, item) => {
-    obj[item.dataUser] = item.value;
+  const userRegister = userArray.reduce((obj, item) => {
+    obj[item.data] = item.value;
     return obj;
   }, {});
 
-  localStorage.setItem("user", JSON.stringify(userObject));
+  userRegister['isRegistered'] = 'true';
+  userRegister['isAuthorized'] = 'true';
+  userRegister['cardNumber'] = generateCardNumber();
+  localStorage.setItem("user", JSON.stringify(userRegister));
 }
 
-function handleFormSubmit(event) {
+function generateCardNumber() {
+  let result = '';
+  for (let i = 0; i < 8; i++) {
+    result += Math.floor(Math.random() * 16).toString(16).toUpperCase();
+  }
+  return result;
+}
+
+//Handle registration submit button
+registerForm.addEventListener('submit', function (event) {
   event.preventDefault();
-  serializeForm(registerForm);
+  serializeRegistrationForm(registerForm);
   location.reload();
+})
+
+const userData = localStorage.getItem('user');
+const userObject = JSON.parse(userData);
+
+// After registration 
+
+//change profile icon and drop menu
+if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
+  userBtn.innerHTML = userObject['firstName'][0].toUpperCase() + userObject['lastName'][0].toUpperCase();
+  userBtn.classList.add('header__menu-icon_authorized');
+  userBtn.setAttribute('title', `${userObject['firstName']} ${userObject['lastName']}`)
+  dropMenu.innerHTML = `
+    <li class="drop-menu__item">${userObject['cardNumber']}</li>
+    <li class="drop-menu__item" data-modal-Btn="profile">My Profile</li>
+    <li class="drop-menu__item" data-modal-Btn="logout">Log Out</li>
+  `
+  dropMenu.classList.add('drop-menu_authorized')
 }
-
-registerForm.addEventListener('submit', handleFormSubmit)
-
 
 
 

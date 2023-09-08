@@ -13,7 +13,9 @@
     <header class="header container">
       <h1 class="header__title">Brooklyn Public Library</h1>
       <div class="header__menu-buttons">
-        <img class="header__menu-icon" alt src="assets/img/icon_profile.svg" />
+        <div class="header__menu-icon">
+          <img alt src="assets/img/icon_profile.svg" />
+        </div>
         <ul class="drop-menu">
           <li class="drop-menu__item">Profile</li>
           <li class="drop-menu__item" data-modal-Btn="login">Log In</li>
@@ -630,6 +632,7 @@
                 class="modal__input"
                 data-user="firstName"
                 name="firstName"
+                required
               />
             </label>
             <label class="modal__label"
@@ -638,6 +641,7 @@
                 type="text"
                 class="modal__input"
                 data-user="lastName"
+                required
               />
             </label>
             <label class="modal__label"
@@ -646,6 +650,7 @@
                 type="email"
                 class="modal__input"
                 data-user="email"
+                required
               />
             </label>
             <label class="modal__label"
@@ -654,6 +659,8 @@
                 type="password"
                 class="modal__input"
                 data-user="password"
+                minlength="8"
+                required
               />
             </label>
             <button class="button modal__button" type="submit">Sign Up</button>
@@ -675,11 +682,7 @@
           <form action="" class="modal__form" id="login-form">
             <label class="modal__label"
               >E-mail or readers card
-              <input
-                class="modal__input"
-                type="text"
-                data-user="userLogin"
-              />
+              <input class="modal__input" type="text" data-user="userLogin" />
             </label>
             <label class="modal__label"
               >Password
