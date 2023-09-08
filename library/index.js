@@ -18,8 +18,7 @@ menuBtn.addEventListener('click', () => {
   }
 });
 
-
-//close burger menu
+//close open menu
 document.addEventListener('click', (event) => {
   if (
     !menuBtn.contains(event.target) &&
@@ -35,24 +34,12 @@ document.addEventListener('click', (event) => {
     dropMenu.classList.contains('drop-menu_open')
   ) {
     dropMenu.classList.remove('drop-menu_open');
-    body.classList.remove('noscroll');
-    body.style.marginRight = '0px';
   }
 });
-
 
 //User authorization
 userBtn.addEventListener('click', () => {
   dropMenu.classList.toggle('drop-menu_open')
-  body.classList.toggle('noscroll')
-  // remove vertical scroll bar when noscroll applied
-  if (body.classList.contains('noscroll')) {
-    const marginRight = calcScroll() + 'px';
-    body.style.marginRight = marginRight;
-  } else {
-    body.style.marginRight = '0px';
-  }
-
 });
 
 
