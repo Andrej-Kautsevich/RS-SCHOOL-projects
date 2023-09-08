@@ -4,6 +4,7 @@ const body = document.body;
 const userBtn = document.querySelector('.header__menu-icon');
 const dropMenu = document.querySelector('.drop-menu');
 const modals = document.querySelectorAll('.modal__content')
+const modalOverlay = document.querySelector('.modal__overlay');
 
 //open burger menu
 menuBtn.addEventListener('click', () => {
@@ -46,7 +47,6 @@ userBtn.addEventListener('click', () => {
 
 //Open modal window
 const modalBtn = document.querySelectorAll('[data-modal-Btn]');
-const modalOverlay = document.querySelector('.modal__overlay');
 
 modalBtn.forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -69,8 +69,8 @@ modalBtnsClose.forEach((btn) => {
 })
 
 modalOverlay.addEventListener('click', (e) => {
-  console.log(e);
-  if (!e.target.classList.contains('modal__content')) {
+  console.log(e.target);
+  if (e.target.classList.contains('modal__overlay')) {
     const modalActive = document.querySelector('.modal__active')
     modalActive.classList.remove('modal__active');
     modalOverlay.classList.remove('modal__overlay_active');
