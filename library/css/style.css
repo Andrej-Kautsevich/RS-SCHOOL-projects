@@ -185,10 +185,12 @@ p {
   font-weight: 400;
   line-height: 20px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .drop-menu__item:first-child {
   font-weight: 700;
+  cursor: unset;
 }
 
 .drop-menu__item:first-child::after {
@@ -927,6 +929,10 @@ p {
   visibility: hidden;
 }
 
+.modal__overlay_active {
+  visibility: visible;
+}
+
 .modal__content {
   position: relative;
   color: #000;
@@ -1027,4 +1033,9 @@ p {
   background: #fff;
   visibility: hidden;
   opacity: 0;
+}
+
+.modal__active {
+  visibility: visible;
+  opacity: 1;
 }

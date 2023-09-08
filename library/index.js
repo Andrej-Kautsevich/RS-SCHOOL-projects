@@ -3,6 +3,7 @@ const menuBurger = document.querySelector('.header__menu');
 const body = document.body;
 const userBtn = document.querySelector('.header__menu-icon');
 const dropMenu = document.querySelector('.drop-menu');
+const modals = document.querySelectorAll('.modal__content')
 
 //open burger menu
 menuBtn.addEventListener('click', () => {
@@ -18,7 +19,7 @@ menuBtn.addEventListener('click', () => {
   }
 });
 
-//close open menu
+//close menu
 document.addEventListener('click', (event) => {
   if (
     !menuBtn.contains(event.target) &&
@@ -37,13 +38,45 @@ document.addEventListener('click', (event) => {
   }
 });
 
-//User authorization
+//User drop menu
 userBtn.addEventListener('click', () => {
   dropMenu.classList.toggle('drop-menu_open')
 });
 
 
-console.log(userBtn);
+//Open modal window
+const modalBtn = document.querySelectorAll('[data-modal-Btn]');
+const modalOverlay = document.querySelector('.modal__overlay');
+
+modalBtn.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.modalBtn;
+    const modalActive = document.querySelector('.modal__' + target);
+    modalActive.classList.add('modal__active');
+    modalOverlay.classList.add('modal__overlay_active');
+  })
+})
+
+//close modal window
+const modalBtnsClose = document.querySelectorAll('.modal__btn-close');
+
+modalBtnsClose.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const modalActive = document.querySelector('.modal__active')
+    modalActive.classList.remove('modal__active');
+    modalOverlay.classList.remove('modal__overlay_active');
+  })
+})
+
+modalOverlay.addEventListener('click', (e) => {
+  console.log(e);
+  if (!e.target.classList.contains('modal__content')) {
+    const modalActive = document.querySelector('.modal__active')
+    modalActive.classList.remove('modal__active');
+    modalOverlay.classList.remove('modal__overlay_active');
+  }
+})
+
 
 
 
