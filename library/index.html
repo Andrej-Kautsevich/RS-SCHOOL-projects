@@ -612,6 +612,96 @@
           </div>
         </div>
       </section>
+      <div class="modal__overlay">
+        <div class="modal__content modal__register">
+          <div class="modal__title">Register</div>
+          <button class="modal__btn-close">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="#0C0C0E" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="#0C0C0E" stroke-width="3"/>
+            </svg>
+          </button>
+          <form action="" class="modal__form" id="register-form">
+            <label class="modal__label"
+              >First name
+              <input
+                class="modal__input"
+                type="text"
+                class="modal__input"
+                data-user="firstName"
+              />
+            </label>
+            <label class="modal__label"
+              >Last name
+              <input
+                class="modal__input"
+                type="text"
+                class="modal__input"
+                data-user="lastName"
+              />
+            </label>
+            <label class="modal__label"
+              >E-mail
+              <input
+                class="modal__input"
+                type="email"
+                class="modal__input"
+                data-user="email"
+              />
+            </label>
+            <label class="modal__label"
+              >Password
+              <input
+                class="modal__input"
+                type="password"
+                class="modal__input"
+                data-user="Password"
+              />
+            </label>
+            <button class="button modal__button" type="submit">Sign Up</button>
+          </form>
+          <span class="modal__info"
+            >Already have an account?
+            <button class="modal__info-button">Login</button>
+          </span>
+        </div>
+        <div class="modal__content modal__login">
+          <div class="modal__title">Login</div>
+          <button class="modal__btn-close">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="#0C0C0E" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="#0C0C0E" stroke-width="3"/>
+            </svg>
+          </button>
+          <form action="" class="modal__form" id="login-form">
+            <label class="modal__label"
+              >E-mail or readers card
+              <input
+                class="modal__input"
+                type="text"
+                class="modal__input"
+                data-user="userLogin"
+              />
+            </label>
+            <label class="modal__label"
+              >Password
+              <input
+                class="modal__input"
+                type="password"
+                class="modal__input"
+                data-user="Password"
+              />
+            </label>
+            <button class="button modal__button" type="submit">Log In</button>
+          </form>
+          <span class="modal__info"
+            >Don’t have an account?
+            <button class="modal__info-button">Register</button>
+          </span>
+        </div>
+      </div>
     </main>
     <footer class="footer container">
       <div class="footer__contacts">
