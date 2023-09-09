@@ -49,9 +49,9 @@ userBtn.addEventListener('click', () => {
 
 
 //Open modal window
-const modalBtn = document.querySelectorAll('[data-modal-Btn]');
+const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in modal window
 
-modalBtn.forEach((btn) => {
+modalBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     const target = btn.dataset.modalBtn;
     const modalActive = document.querySelector('.modal__' + target);
@@ -129,7 +129,7 @@ if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'tru
   userBtn.classList.add('header__menu-icon_authorized');
   userBtn.setAttribute('title', `${userObject['firstName']} ${userObject['lastName']}`)
   dropMenu.innerHTML = `
-    <li class="drop-menu__item">${userObject['cardNumber']}</li>
+    <li class="drop-menu__title">${userObject['cardNumber']}</li>
     <li class="drop-menu__item" data-modal-Btn="profile">My Profile</li>
     <li class="drop-menu__item" data-modal-Btn="logout">Log Out</li>
   `

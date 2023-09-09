@@ -205,16 +205,22 @@ p {
   cursor: pointer;
 }
 
-.drop-menu__item:first-child {
+.drop-menu__title {
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
   font-weight: 700;
-  cursor: unset;
+  line-height: 20px;
+  margin-bottom: 10px;
 }
 
-.drop-menu_authorized .drop-menu__item:first-child {
+.drop-menu_authorized .drop-menu__title {
   font-size: 12px;
 }
 
-.drop-menu__item:first-child::after {
+.drop-menu__title::after {
   display: block;
   margin: 5px auto 15px;
   content: "";
