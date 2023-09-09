@@ -1000,11 +1000,20 @@ p {
   gap: 10px;
 }
 
+.modal__label {
+  display: block;
+}
+
 .modal__input {
   border: 1px solid #bb945f;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.modal__input_small {
+  width: 45px;
+  margin-right: 10px;
 }
 
 /* .modal__form input {
@@ -1019,6 +1028,11 @@ p {
   width: 75px;
   height: 30px;
   margin: 10px 0;
+}
+
+.modal__button:disabled {
+  cursor: default;
+  opacity: 0.7;
 }
 
 .modal__info {
@@ -1071,9 +1085,12 @@ p {
 }
 
 .modal__profile {
+  position: absolute;
   display: flex;
   width: 600px;
   height: 400px;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .modal__profile-user {
@@ -1259,13 +1276,75 @@ p {
   cursor: pointer;
 }
 
+.modal__buy {
+  position: absolute;
+  width: 640px;
+  height: 540px;
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modal__buy-title {
+  color: #fff;
+  text-align: center;
+  font-family: Forum;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 20px 0;
+  height: 60px;
+  width: 100%;
+  background: #0c0c0e;
+}
+
+.modal__buy-content {
+  display: flex;
+  padding: 40px 30px 30px;
+}
+
+.modal__buy-form {
+  width: 200px;
+  margin-right: 40px;
+  flex-shrink: 0;
+  /* height: 540px; */
+}
+
+.modal__buy-submit {
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal__buy-price {
+  color: #0c0c0e;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-left: 25px;
+  margin-bottom: 10px;
+}
+
+.modal__buy-text-info {
+  color: #8e8e8e;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 133.333% */
+  letter-spacing: 2px;
+}
+
 .modal__active {
   visibility: visible;
   opacity: 1;
 }
-
-
-
 
 .visible {
   visibility: visible;

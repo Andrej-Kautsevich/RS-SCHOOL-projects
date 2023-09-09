@@ -7,6 +7,8 @@ const modals = document.querySelectorAll('.modal__content')
 const modalOverlay = document.querySelector('.modal__overlay');
 const registerForm = document.getElementById('register-form');
 const loginForm = document.getElementById('login-form');
+const buyForm = document.getElementById('buy-form');
+const buyBtn = document.querySelectorAll('.favorites__item-button');
 
 
 //open burger menu
@@ -69,6 +71,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['cardNumber'] = generateCardNumber();
   userRegister['visits'] = 1;
   userRegister['booksNumber'] = 0;
+  userRegister['hasLibraryCard'] = 'false'
   localStorage.setItem("user", JSON.stringify(userRegister));
 }
 
@@ -152,6 +155,100 @@ if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'tru
 }
 
 
+//buy button
+buyBtn.forEach((btn) => {
+  btn.addEventListener('click', () => {
+
+    //not authorized
+    if (!localStorage.getItem('user') || userObject['isAuthorized'] === 'false') {
+      modalOverlay.classList.add('modal__overlay_active');
+      document.querySelector('.modal__login').classList.add('modal__active');
+    };
+
+    //is authorized
+    if (userObject['isAuthorized'] === 'true' && userObject['hasLibraryCard'] === 'false') {
+      //open buyCard modal
+      modalOverlay.classList.add('modal__overlay_active');
+      document.querySelector('.modal__buy').classList.add('modal__active');
+    }
+  })
+})
+
+buyForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  if (validateBuyForm(buyForm)) {
+    userObject['hasLibraryCard'] = 'true';
+    localStorage.setItem("user", JSON.stringify(userObject));
+    modalOverlay.classList.remove('modal__overlay_active');
+    document.querySelector('.modal__buy').classList.remove('modal__active');
+  }
+})
+
+
+function validateBuyForm(e) {
+  const cardNumberInput = document.querySelector('[data-buy="card-number"]');
+  const cardMonthInput = document.querySelector('[data-buy="card-month"]');
+  const cardYearInput = document.querySelector('[data-buy="card-year"]');
+  const cardCvvInput = document.querySelector('[data-buy="card-cvv"]')
+
+  const cardNumber = cardNumberInput.value.replace(/\s+/g, '');
+  const cardMonth = cardMonthInput.value;
+  const cardYear = cardYearInput.value;
+  const cardCvv = cardCvvInput.value;
+
+
+  if (!/^\d{16}$/.test(cardNumber)) {
+    return false;
+  }
+
+  if (!/^\d{2}$/.test(cardMonth) || !/^\d{2}$/.test(cardYear)) {
+    return false;
+  }
+
+  if (!/^\d{3}$/.test(cardCvv)) {
+    return false;
+  }
+
+  return true;
+}
+
+//disable buy button when has empty inputs
+const buyInputs = buyForm.querySelectorAll('[data-buy]');
+const buySubmitBtn = buyForm.querySelector('[type="submit"]');
+
+function updateBuySubmitBtnState() {
+  const areInputsEmpty = Array.from(buyInputs).some(input => input.value.trim() === '');
+  buySubmitBtn.disabled = areInputsEmpty;
+}
+
+buyInputs.forEach((input) => {
+  input.addEventListener('input', updateBuySubmitBtnState);
+})
+
+
+
+//formate bank card number value
+const cardNumInput = document.querySelector('[data-buy="card-number"]');
+
+cardNumInput.addEventListener('input', (event) => {
+  let inputValue = event.target.value.replace(/\s/g, '').replace(/[^\d]/g, '');
+  let blocks = inputValue.match(/\d{1,4}/g) || [];
+  let formattedValue = blocks.join(' ');
+  event.target.value = formattedValue;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -187,10 +284,6 @@ modalOverlay.addEventListener('click', (e) => {
     modalOverlay.classList.remove('modal__overlay_active');
   }
 })
-
-
-
-
 
 
 //Copy card number

@@ -772,6 +772,103 @@
             </div>
           </div>
         </div>
+        <div class="modal__content modal__buy">
+          <button class="modal__btn-close">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="white" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="white" stroke-width="3"/>
+            </svg>
+          </button>
+          <div class="modal__buy-title">Buy a library card</div>
+          <div class="modal__buy-content">
+            <form action="" class="modal__buy-form" id="buy-form">
+              <label class="modal__label"
+                >Bank card number
+                <input
+                  class="modal__input"
+                  type="text"
+                  inputmode="numeric"
+                  data-buy="card-number"
+                  maxlength="19"
+                  placeholder="XXXX XXXX XXXX XXXX"
+                  required
+                />
+              </label>
+              <label class="modal__label" for="card-month card-year"
+                >Expiration code
+              </label>
+              <input
+                class="modal__input modal__input_small"
+                id="card-month"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-month"
+                pattern="^\d{2}$"
+                maxlength="2"
+                required
+              />
+              <input
+                class="modal__input modal__input_small"
+                id="card-year"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-year"
+                pattern="^\d{2}$"
+                maxlength="2"
+                required
+              />
+              <label class="modal__label" for="card-cvc">CVC</label>
+              <input
+                class="modal__input modal__input_small"
+                id="card-cvc"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-cvv"
+                pattern="^\d{3}$"
+                maxlength="3"
+                required
+              />
+              <label class="modal__label"
+                >Cardholder name
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-name"
+                  required
+                />
+              </label>
+              <label class="modal__label"
+                >Postal code
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-postal"
+                  required
+                />
+              </label>
+              <label class="modal__label"
+                >City / Town
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-city"
+                  required
+                />
+              </label>
+              <div class="modal__buy-submit">
+                <button class="button modal__button" type="submit" disabled>Buy</button>
+                <span class="modal__buy-price">$ 25.00</span>
+              </div>
+            </form>
+            <div class="modal__buy-text-info">
+              If you are live, work, attend school, or pay property taxes in New
+              York State, you can get a $25 digital library card right now using
+              this online form. Visitors to New York State can also use this
+              form to apply for a temporary card.
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <footer class="footer container">
