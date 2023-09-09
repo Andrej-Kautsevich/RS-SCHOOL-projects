@@ -47,39 +47,6 @@ userBtn.addEventListener('click', () => {
   dropMenu.classList.toggle('drop-menu_open')
 });
 
-
-//Open modal window
-const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in modal window
-
-modalBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.modalBtn;
-    const modalActive = document.querySelector('.modal__' + target);
-    modalActive.classList.add('modal__active');
-    modalOverlay.classList.add('modal__overlay_active');
-  })
-})
-
-//close modal window
-const modalBtnsClose = document.querySelectorAll('.modal__btn-close');
-
-modalBtnsClose.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const modalActive = document.querySelector('.modal__active')
-    modalActive.classList.remove('modal__active');
-    modalOverlay.classList.remove('modal__overlay_active');
-  })
-})
-
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target.classList.contains('modal__overlay')) {
-    const modalActive = document.querySelector('.modal__active')
-    modalActive.classList.remove('modal__active');
-    modalOverlay.classList.remove('modal__overlay_active');
-  }
-})
-
-
 //User registration
 function serializeRegistrationForm(formNode) {
   const { elements } = formNode;
@@ -101,6 +68,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
   userRegister['visits'] = 1;
+  userRegister['booksNumber'] = 0;
   localStorage.setItem("user", JSON.stringify(userRegister));
 }
 
@@ -137,9 +105,7 @@ if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'tru
   dropMenu.classList.add('drop-menu_authorized')
 }
 
-
 //Logout
-
 const logoutBtns = document.querySelectorAll('[data-modal-btn="logout"]');
 
 logoutBtns.forEach((btn) => {
@@ -150,9 +116,7 @@ logoutBtns.forEach((btn) => {
   })
 })
 
-
 //User login
-
 loginForm.addEventListener('submit', function (event) {
   event.preventDefault();
   checkLoginForm(loginForm);
@@ -181,12 +145,68 @@ function checkLoginForm(formNode) {
   }
 }
 
+//Update profile statistics
+if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
+  document.querySelector('.profile-visits-number').innerHTML = userObject['visits'];
+  document.querySelector('.profile-books-number').innerHTML = userObject['booksNumber'];
+}
 
 
 
 
 
 
+
+//Open modal window
+const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in modal window
+
+modalBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.modalBtn;
+    const modalActive = document.querySelector('.modal__' + target);
+    modalActive.classList.add('modal__active');
+    modalOverlay.classList.add('modal__overlay_active');
+  })
+})
+
+//close modal window
+const modalBtnsClose = document.querySelectorAll('.modal__btn-close');
+
+modalBtnsClose.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const modalActive = document.querySelector('.modal__active')
+    modalActive.classList.remove('modal__active');
+    modalOverlay.classList.remove('modal__overlay_active');
+  })
+})
+
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal__overlay')) {
+    const modalActive = document.querySelector('.modal__active')
+    modalActive.classList.remove('modal__active');
+    modalOverlay.classList.remove('modal__overlay_active');
+  }
+})
+
+
+
+
+
+
+//Copy card number
+const copyTextBtn = document.querySelector('.profile-card-number__copy-button');
+const textToCopy = document.querySelector('.profile-card-number');
+const tooltip = document.querySelector('.profile-card-number_tooltip');
+
+copyTextBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(textToCopy.textContent)
+    .then(() => {
+      tooltip.classList.toggle('visible');
+      setTimeout(() => {
+        tooltip.classList.toggle('visible')
+      }, 1500);
+    })
+});
 
 //calc width of the vertical scroll bar
 function calcScroll() {
