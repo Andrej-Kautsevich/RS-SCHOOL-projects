@@ -100,6 +100,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['isRegistered'] = 'true';
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
+  userRegister['visits'] = 1;
   localStorage.setItem("user", JSON.stringify(userRegister));
 }
 
@@ -150,7 +151,35 @@ logoutBtns.forEach((btn) => {
 })
 
 
+//User login
 
+loginForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  checkLoginForm(loginForm);
+})
+
+function checkLoginForm(formNode) {
+
+  const email = formNode.querySelector('[data-user="userLogin"]')
+  const password = formNode.querySelector('[data-user="password"]')
+
+  const localEmail = userObject['email'];
+  const localCardNumber = userObject['cardNumber'];
+  const localPassword = userObject['password'];
+
+  //Check login and password
+  if ((email.value === localEmail && password.value === localPassword) ||
+    (email.value === localCardNumber && password.value === localPassword)
+  ) {
+    userObject['isAuthorized'] = 'true';
+    userObject['visits'] = userObject['visits'] + 1;
+    localStorage.setItem("user", JSON.stringify(userObject));
+    location.reload();
+  } else {
+    //user is not exist
+    // console.log('not match!');
+  }
+}
 
 
 

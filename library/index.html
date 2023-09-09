@@ -682,7 +682,12 @@
           <form action="" class="modal__form" id="login-form">
             <label class="modal__label"
               >E-mail or readers card
-              <input class="modal__input" type="text" data-user="userLogin" />
+              <input
+                class="modal__input"
+                type="text"
+                data-user="userLogin"
+                required
+              />
             </label>
             <label class="modal__label"
               >Password
@@ -690,6 +695,8 @@
                 class="modal__input"
                 type="password"
                 data-user="password"
+                required
+                minlength="8"
               />
             </label>
             <button class="button modal__button" type="submit">Log In</button>
