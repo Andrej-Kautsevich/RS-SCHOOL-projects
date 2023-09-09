@@ -137,6 +137,18 @@ if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'tru
 }
 
 
+//Logout
+
+const logoutBtns = document.querySelectorAll('[data-modal-btn="logout"]');
+
+logoutBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    userObject['isAuthorized'] = 'false';
+    localStorage.setItem("user", JSON.stringify(userObject));
+    location.reload();
+  })
+})
+
 
 
 
