@@ -15,7 +15,6 @@ const paginationButtons = document.querySelectorAll('.slider__pagination-button'
 const btnLeft = document.querySelector('.slider__btn-prev');
 const btnRight = document.querySelector('.slider__btn-next');
 
-
 //number of slides per view
 function updateSlidesPerView() {
   if (window.matchMedia('(max-width: 1024px)').matches) {
@@ -27,7 +26,6 @@ function updateSlidesPerView() {
   }
 }
 
-
 //set the width of each slide depending on the size of the container
 const setItemWidth = () => {
   itemWidth = (container.clientWidth - (spaceBetweenSlides * (slidesPerView - 1))) / slidesPerView;
@@ -36,8 +34,7 @@ const setItemWidth = () => {
   })
 }
 
-
-//switching slides by pagination buttons
+//switch slides by pagination buttons
 paginationButtons.forEach((elements, index) => {
   elements.addEventListener('click', function () {
     slideIndex = index;

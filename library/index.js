@@ -10,7 +10,6 @@ const loginForm = document.getElementById('login-form');
 const buyForm = document.getElementById('buy-form');
 const buyBtn = document.querySelectorAll('.favorites__item-button');
 
-
 //open burger menu
 menuBtn.addEventListener('click', () => {
   menuBtn.classList.toggle('header__menu-btn_active');
@@ -51,6 +50,21 @@ userBtn.addEventListener('click', () => {
 
 //User registration
 function serializeRegistrationForm(formNode) {
+  //check valid email input
+  const emailInput = formNode.querySelector('[data-user="email"]');
+  if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(emailInput.value)) {
+    spanError(emailInput, 'Incorrect email!')
+    return false;
+  }
+
+  //check valid password input
+  const passwordInput = formNode.querySelector('[data-user="password"]')
+  if (!/^.{8,}$/.test(passwordInput.value)) {
+    spanError(passwordInput, 'Password must contain be at least 8 characters');
+    return false;
+  }
+
+  //create user
   const { elements } = formNode;
 
   const userArray = Array.from(elements)
@@ -66,6 +80,12 @@ function serializeRegistrationForm(formNode) {
     return obj;
   }, {});
 
+  if (localStorage.getItem('user') && userObject['email'] === userRegister['email']) {
+    const email = formNode.querySelector('[data-user="email"]')
+    spanError(email, 'This user is already registered!')
+    return;
+  }
+
   userRegister['isRegistered'] = 'true';
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
@@ -74,6 +94,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['booksCount'] = 0;
   userRegister['rentBooks'] = [];
   localStorage.setItem("user", JSON.stringify(userRegister));
+  location.reload();
 }
 
 function generateCardNumber() {
@@ -88,7 +109,6 @@ function generateCardNumber() {
 registerForm.addEventListener('submit', function (event) {
   event.preventDefault();
   serializeRegistrationForm(registerForm);
-  location.reload();
 })
 
 const userData = localStorage.getItem('user');
@@ -157,10 +177,7 @@ if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && use
   `
 }
 
-
-
-
-//Logout
+//User logout
 const logoutBtns = document.querySelectorAll('[data-modal-btn="logout"]');
 
 logoutBtns.forEach((btn) => {
@@ -194,11 +211,34 @@ function checkLoginForm(formNode) {
       userObject['visits'] = userObject['visits'] + 1;
       localStorage.setItem('user', JSON.stringify(userObject));
       location.reload();
-    } else {
-      //user is not exist
-      // console.log('not match!');
+    }
+    else {
+      //wrong email or password
+      if (email.value !== localEmail && email.value !== localCardNumber) {
+        spanError(email, 'User not found!')
+      };
+      //wrong password
+      if (email.value === localEmail && password.value !== localPassword) {
+        spanError(password, 'wrong password')
+      };
+      if (email.value === localCardNumber && password.value !== localPassword) {
+        spanError(password, 'wrong password')
+      };
     }
   }
+}
+
+//Show error message
+function spanError(input, message) {
+  const span = document.createElement('span');
+
+  span.classList.add('modal__input-tooltip');
+  span.textContent = message;
+
+  input.parentNode.appendChild(span);
+  setTimeout(() => {
+    span.remove()
+  }, 1500);
 }
 
 //Update profile statistics
@@ -227,7 +267,6 @@ function updateProfileStatistics() {
   }
 }
 
-
 //buy button
 buyBtn.forEach((btn) => {
   btn.addEventListener('click', function (event) {
@@ -243,9 +282,12 @@ buyBtn.forEach((btn) => {
       //open buyCard modal
       modalOverlay.classList.add('modal__overlay_active');
       document.querySelector('.modal__buy').classList.add('modal__active');
+      buyBook(event);
+      btn.disabled = 'true';
+      btn.innerHTML = 'Own';
     }
 
-    //is authorized and has library card
+    //is authorized and have library card
     if (localStorage.getItem('user') && userObject['isAuthorized'] === 'true' && userObject['hasLibraryCard'] === 'true') {
       buyBook(event);
 
@@ -256,7 +298,7 @@ buyBtn.forEach((btn) => {
   })
 })
 
-
+//Buy book when have library card
 function buyBook(e) {
   const selectedBook = e.target.closest('.favorites__item');
   const bookName = selectedBook.querySelector('.favorites__item-name').textContent;
@@ -272,7 +314,6 @@ function buyBook(e) {
 
   updateProfileStatistics();
 }
-
 
 //Disable buttons for rented books
 function checkRentedBook() {
@@ -296,11 +337,6 @@ function checkRentedBook() {
   })
 }
 
-
-
-
-
-
 //handle buy library card form
 buyForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -311,7 +347,6 @@ buyForm.addEventListener('submit', function (event) {
     document.querySelector('.modal__buy').classList.remove('modal__active');
   }
 })
-
 
 function validateBuyForm(e) {
   const cardNumberInput = document.querySelector('[data-buy="card-number"]');
@@ -324,23 +359,37 @@ function validateBuyForm(e) {
   const cardYear = cardYearInput.value;
   const cardCvv = cardCvvInput.value;
 
-
+  //validate bank card number
   if (!/^\d{16}$/.test(cardNumber)) {
+    spanError(cardNumberInput, 'Must contain 16 digits')
     return false;
   }
 
+  //validate bank card exp
   if (!/^\d{2}$/.test(cardMonth) || !/^\d{2}$/.test(cardYear)) {
     return false;
   }
 
+  //validate bank card CVV
   if (!/^\d{3}$/.test(cardCvv)) {
+    spanError(cardCvvInput, 'CVC must contain 3 digits')
     return false;
   }
 
   return true;
 }
 
-//disable buy button when has empty inputs
+//formate bank card number value
+const bankCardNumberInput = document.querySelector('[data-buy="card-number"]');
+
+bankCardNumberInput.addEventListener('input', (event) => {
+  let inputValue = event.target.value.replace(/\s/g, '').replace(/[^\d]/g, '');
+  let blocks = inputValue.match(/\d{1,4}/g) || [];
+  let formattedValue = blocks.join(' ');
+  event.target.value = formattedValue;
+});
+
+//disable buy button when have empty inputs
 const buyInputs = buyForm.querySelectorAll('[data-buy]');
 const buySubmitBtn = buyForm.querySelector('[type="submit"]');
 
@@ -352,16 +401,6 @@ function updateBuySubmitBtnState() {
 buyInputs.forEach((input) => {
   input.addEventListener('input', updateBuySubmitBtnState);
 })
-
-//formate bank card number value
-const bankCardNumberInput = document.querySelector('[data-buy="card-number"]');
-
-bankCardNumberInput.addEventListener('input', (event) => {
-  let inputValue = event.target.value.replace(/\s/g, '').replace(/[^\d]/g, '');
-  let blocks = inputValue.match(/\d{1,4}/g) || [];
-  let formattedValue = blocks.join(' ');
-  event.target.value = formattedValue;
-});
 
 //Open modal window
 const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in modal window
@@ -397,7 +436,6 @@ modalOverlay.addEventListener('click', (e) => {
   }
 })
 
-
 //Copy card number
 const copyTextBtn = document.querySelector('.profile-card-number__copy-button');
 const textToCopy = document.querySelector('.profile-card-number');
@@ -429,7 +467,6 @@ function calcScroll() {
   return scrollWidth;
 }
 
-
 //update profile after login
 document.addEventListener('DOMContentLoaded', function () {
   if (localStorage.getItem('user') && userObject['isAuthorized'] === 'true') {
@@ -437,7 +474,6 @@ document.addEventListener('DOMContentLoaded', function () {
     checkRentedBook();
   }
 });
-
 
 //check library card
 const checkCardForm = document.querySelector('.card__find-form');
@@ -475,10 +511,12 @@ checkCardForm.addEventListener('submit', function (event) {
         <span class="profile-books-number">2</span>
       </div>
      `
-     setTimeout(function () {
+    setTimeout(function () {
       cardInfo.innerHTML = `<button class="button card__button" type="submit">Check the card</button>`
       cardReaderNameInput.value = "";
       cardNumberInput.value = "";
-     }, 10000)
+    }, 10000)
+  } else {
+    spanError(cardReaderNameInput, 'The user was not found. Please enter first name then last name')
   }
 })

@@ -783,6 +783,7 @@ p {
   background-color: #bb945f;
   margin: 17px 17px 0;
   padding: 20px 20px 0;
+  position: relative;
 }
 
 .card__text {
@@ -1038,6 +1039,7 @@ p {
 
 .modal__label {
   display: block;
+  position: relative;
 }
 
 .modal__input {
@@ -1052,8 +1054,39 @@ p {
   margin-right: 10px;
 }
 
-.modal__input_gap {
+#card-cvv {
   margin-bottom: 20px;
+  margin-right: 100%;
+}
+
+.modal__input-tooltip {
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+}
+
+.modal__input-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
 }
 
 /* .modal__form input {
@@ -1113,6 +1146,9 @@ p {
   background: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__login {
@@ -1124,6 +1160,9 @@ p {
   background: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__profile {
@@ -1133,6 +1172,9 @@ p {
   height: 400px;
   visibility: hidden;
   opacity: 0;
+  /* transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s; */
 }
 
 .modal__profile-user {
@@ -1178,7 +1220,7 @@ p {
 }
 
 .modal__profile-info {
-  width: 100%;
+  width: 430px;
   padding: 40px 60px 40px 20px;
   background: #fff;
   display: flex;
@@ -1242,10 +1284,20 @@ p {
   line-height: 20px; /* 100% */
   letter-spacing: 2px;
   text-transform: capitalize;
-  height: 50px;
-  overflow: auto;
+  height: 60px;
+  white-space: nowrap;
+  overflow: scroll;
   padding-left: 32px;
-  margin: 30px 0 40px;
+  margin: 30px 0 30px;
+}
+
+.modal__profile-rented-books-list::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.modal__profile-rented-books-list::-webkit-scrollbar-thumb {
+  background: rgb(165, 164, 164);
 }
 
 .modal__profile-rented-books-item {
@@ -1257,6 +1309,10 @@ p {
   line-height: 20px; /* 100% */
   letter-spacing: 2px;
   text-transform: capitalize;
+}
+
+.modal__profile-rented-books-item:not(:last-child) {
+  margin-bottom: 10px;
 }
 
 .modal__profile-rented-books-item_none {
@@ -1325,6 +1381,9 @@ p {
   background-color: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__buy-title {
@@ -1352,7 +1411,6 @@ p {
   width: 200px;
   margin-right: 40px;
   flex-shrink: 0;
-  /* height: 540px; */
 }
 
 .modal__buy-submit {
@@ -1386,6 +1444,7 @@ p {
 .modal__active {
   visibility: visible;
   opacity: 1;
+  transform: rotateX(0deg);
 }
 
 .visible {
