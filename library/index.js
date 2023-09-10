@@ -51,6 +51,21 @@ userBtn.addEventListener('click', () => {
 
 //User registration
 function serializeRegistrationForm(formNode) {
+  //check valid email input
+  const emailInput = formNode.querySelector('[data-user="email"]');
+  if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(emailInput.value)) {
+    spanError(emailInput, 'Incorrect email!')
+    return false;
+  }
+
+  //check valid password input
+  const passwordInput = formNode.querySelector('[data-user="password"]')
+  if (!/^.{8,}$/.test(passwordInput.value)) {
+    spanError(passwordInput, 'Password must contain be at least 8 characters');
+    return false;
+  }
+
+  //create user
   const { elements } = formNode;
 
   const userArray = Array.from(elements)
@@ -66,6 +81,12 @@ function serializeRegistrationForm(formNode) {
     return obj;
   }, {});
 
+  if (localStorage.getItem('user') && userObject['email'] === userRegister['email']) {
+    const email = formNode.querySelector('[data-user="email"]')
+    spanError(email, 'This user is already registered!')
+    return;
+  }
+
   userRegister['isRegistered'] = 'true';
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
@@ -74,6 +95,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['booksCount'] = 0;
   userRegister['rentBooks'] = [];
   localStorage.setItem("user", JSON.stringify(userRegister));
+  location.reload();
 }
 
 function generateCardNumber() {
@@ -88,7 +110,6 @@ function generateCardNumber() {
 registerForm.addEventListener('submit', function (event) {
   event.preventDefault();
   serializeRegistrationForm(registerForm);
-  location.reload();
 })
 
 const userData = localStorage.getItem('user');
@@ -157,9 +178,6 @@ if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && use
   `
 }
 
-
-
-
 //Logout
 const logoutBtns = document.querySelectorAll('[data-modal-btn="logout"]');
 
@@ -194,11 +212,34 @@ function checkLoginForm(formNode) {
       userObject['visits'] = userObject['visits'] + 1;
       localStorage.setItem('user', JSON.stringify(userObject));
       location.reload();
-    } else {
-      //user is not exist
-      // console.log('not match!');
+    }
+    else {
+      //wrong email or password
+      if (email.value !== localEmail && email.value !== localCardNumber) {
+        spanError(email, 'User not find!')
+      };
+      //wrong password
+      if (email.value === localEmail && password.value !== localPassword) {
+        spanError(password, 'wrong password')
+      };
+      if (email.value === localCardNumber && password.value !== localPassword) {
+        spanError(password, 'wrong password')
+      };
     }
   }
+}
+
+//Show error message
+function spanError(input, message) {
+  const span = document.createElement('span');
+
+  span.classList.add('modal__input-tooltip');
+  span.textContent = message;
+
+  input.parentNode.appendChild(span);
+  setTimeout(() => {
+    span.remove()
+  }, 1500);
 }
 
 //Update profile statistics
@@ -243,6 +284,9 @@ buyBtn.forEach((btn) => {
       //open buyCard modal
       modalOverlay.classList.add('modal__overlay_active');
       document.querySelector('.modal__buy').classList.add('modal__active');
+      buyBook(event);
+      btn.disabled = 'true';
+      btn.innerHTML = 'Own';
     }
 
     //is authorized and has library card
@@ -326,6 +370,7 @@ function validateBuyForm(e) {
 
 
   if (!/^\d{16}$/.test(cardNumber)) {
+    spanError(cardNumberInput, 'Must contain 16 digits')
     return false;
   }
 
@@ -334,6 +379,7 @@ function validateBuyForm(e) {
   }
 
   if (!/^\d{3}$/.test(cardCvv)) {
+    spanError(cardCvvInput, 'CVC must contain 3 digits')
     return false;
   }
 
@@ -475,10 +521,10 @@ checkCardForm.addEventListener('submit', function (event) {
         <span class="profile-books-number">2</span>
       </div>
      `
-     setTimeout(function () {
+    setTimeout(function () {
       cardInfo.innerHTML = `<button class="button card__button" type="submit">Check the card</button>`
       cardReaderNameInput.value = "";
       cardNumberInput.value = "";
-     }, 10000)
+    }, 10000)
   }
 })

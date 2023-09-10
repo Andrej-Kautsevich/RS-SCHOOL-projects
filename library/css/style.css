@@ -1038,6 +1038,7 @@ p {
 
 .modal__label {
   display: block;
+  position: relative;
 }
 
 .modal__input {
@@ -1052,8 +1053,39 @@ p {
   margin-right: 10px;
 }
 
-.modal__input_gap {
+#card-cvv{
   margin-bottom: 20px;
+  margin-right: 100%;
+}
+
+.modal__input-tooltip {
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+}
+
+.modal__input-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
 }
 
 /* .modal__form input {
