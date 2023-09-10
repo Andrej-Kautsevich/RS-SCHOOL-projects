@@ -123,6 +123,7 @@ if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && use
   cardNumberInput.disabled = true;
   cardNumberInput.setAttribute('value', `${userObject['cardNumber']}`);
 
+  document.querySelector('.card__title').textContent = 'Your Library card';
   document.querySelector('.login__title').textContent = 'Visit your profile';
   document.querySelector('.login__text').textContent = 'With a digital library card you get free access to the Library’s wide array of digital resources including e-books, databases, educational resources, and more.';
   document.querySelector('.login__buttons').innerHTML = `

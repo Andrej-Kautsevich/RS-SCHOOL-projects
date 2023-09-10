@@ -1026,6 +1026,11 @@ p {
   cursor: pointer;
 }
 
+.modal__btn-close_big {
+  right: 25px;
+  top: 25px;
+}
+
 .modal__form {
   margin-top: 20px;
   gap: 10px;
@@ -1047,6 +1052,10 @@ p {
   margin-right: 10px;
 }
 
+.modal__input_gap {
+  margin-bottom: 20px;
+}
+
 /* .modal__form input {
   border: 1px solid currentColor;
 }
@@ -1058,7 +1067,8 @@ p {
 .modal__button {
   width: 75px;
   height: 30px;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .modal__button:disabled {
@@ -1074,6 +1084,7 @@ p {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  letter-spacing: normal;
 }
 
 .modal__info-button {
@@ -1269,7 +1280,7 @@ p {
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  margin: 0 15px;
+  margin: 0 7px;
 }
 
 .profile-card-number_tooltip {
@@ -1334,7 +1345,7 @@ p {
 
 .modal__buy-content {
   display: flex;
-  padding: 40px 30px 30px;
+  padding: 30px 30px 30px;
 }
 
 .modal__buy-form {
@@ -1359,7 +1370,7 @@ p {
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-left: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .modal__buy-text-info {
