@@ -324,6 +324,9 @@ const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in mo
 
 modalBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
+    if (document.querySelector('.modal__active')) {
+      document.querySelector('.modal__active').classList.remove('modal__active')
+    };
     const target = btn.dataset.modalBtn;
     const modalActive = document.querySelector('.modal__' + target);
     modalActive.classList.add('modal__active');
