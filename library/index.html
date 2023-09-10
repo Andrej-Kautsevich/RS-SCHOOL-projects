@@ -587,14 +587,12 @@
                     type="text"
                     id="card-reader-name"
                     placeholder="Reader's name"
-                    pattern="^[a-zA-Z\s]+$"
                   />
                   <input
                     class="card__input"
                     type="text"
                     id="card-number"
                     placeholder="Card number"
-                    pattern="\w+"
                   />
                 </div>
                 <div class="card__info">
@@ -604,9 +602,6 @@
                 </div>
               </form>
             </div>
-            <!--             <div class="card__body">
-              <p class="card__text">Brooklyn Public Library</p>
-            </div> -->
           </div>
           <div class="login">
             <p class="login__title">Get a reader card</p>
@@ -658,7 +653,8 @@
             <label class="modal__label"
               >E-mail
               <input
-                type="email"
+                type="text"
+                inputmode="email"
                 class="modal__input"
                 data-user="email"
                 required
@@ -670,7 +666,6 @@
                 type="password"
                 class="modal__input"
                 data-user="password"
-                minlength="8"
                 required
               />
             </label>
@@ -774,7 +769,9 @@
             <div class="modal__profile-card-number">
               Card number
               <span class="profile-card-number">F00234030</span>
-              <span class="profile-card-number_tooltip">Card number copied!</span>
+              <span class="profile-card-number_tooltip"
+                >Card number copied!</span
+              >
               <!-- prettier-ignore -->
               <svg class="profile-card-number__copy-button" xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">
                 <rect x="2.46826" y="0.25" width="10.5917" height="9.5" rx="0.75" stroke="black" stroke-width="0.5"/>
@@ -815,7 +812,6 @@
                 type="text"
                 inputmode="numeric"
                 data-buy="card-month"
-                pattern="^\d{2}$"
                 maxlength="2"
                 required
               />
@@ -825,21 +821,20 @@
                 type="text"
                 inputmode="numeric"
                 data-buy="card-year"
-                pattern="^\d{2}$"
                 maxlength="2"
                 required
               />
-              <label class="modal__label" for="card-cvc">CVC</label>
-              <input
-                class="modal__input modal__input_small modal__input_gap"
-                id="card-cvc"
-                type="text"
-                inputmode="numeric"
-                data-buy="card-cvv"
-                pattern="^\d{3}$"
-                maxlength="3"
-                required
-              />
+              <label class="modal__label"
+                >CVC<input
+                  class="modal__input modal__input_small"
+                  id="card-cvv"
+                  type="text"
+                  inputmode="numeric"
+                  data-buy="card-cvv"
+                  maxlength="3"
+                  required
+                />
+              </label>
               <label class="modal__label"
                 >Cardholder name
                 <input
