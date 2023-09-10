@@ -11,34 +11,41 @@
 
   <body>
     <header class="header container">
-        <h1 class="header__title">Brooklyn Public Library</h1>
-        <div class="header__menu-buttons">
-          <img class="header__menu-icon" alt src="assets/img/icon_profile.svg" />
-          <button class="header__menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+      <h1 class="header__title">Brooklyn Public Library</h1>
+      <div class="header__menu-buttons">
+        <div class="header__menu-icon">
+          <img alt src="assets/img/icon_profile.svg" />
         </div>
-        <nav class="header__menu">
-          <ul class="nav__list">
-            <li class="nav__list-item">
-              <a href="#about" class="nav__link">About</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#favorites" class="nav__link">Favorites</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#coffee-shop" class="nav__link">Coffee shop</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#contacts" class="nav__link">Contacts</a>
-            </li>
-            <li class="nav__list-item">
-              <a href="#library-card" class="nav__link">Library Card</a>
-            </li>
-          </ul>
-        </nav>
+        <ul class="drop-menu">
+          <li class="drop-menu__title">Profile</li>
+          <li class="drop-menu__item" data-modal-Btn="login">Log In</li>
+          <li class="drop-menu__item" data-modal-Btn="register">Register</li>
+        </ul>
+        <button class="header__menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <nav class="header__menu">
+        <ul class="nav__list">
+          <li class="nav__list-item">
+            <a href="#about" class="nav__link">About</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#favorites" class="nav__link">Favorites</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#coffee-shop" class="nav__link">Coffee shop</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#contacts" class="nav__link">Contacts</a>
+          </li>
+          <li class="nav__list-item">
+            <a href="#library-card" class="nav__link">Library Card</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <main class="main">
@@ -58,59 +65,84 @@
         </p>
         <div class="about__slider">
           <button class="slider__btn-prev">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
             <path d="M15 7.5L9 12.5L15 17.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
-          <div class="slider__items">
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_1"
-              src="assets/img/about-image1.jpg"
-              alt=""
-            />
+          </button>
+          <div class="slider__container">
+            <div class="slider__items">
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_1"
+                  src="assets/img/about-image1.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_2"
+                  src="assets/img/about-image2.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_3"
+                  src="assets/img/about-image3.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_4"
+                  src="assets/img/about-image4.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="slider__item">
+                <img
+                  class="slider__image slider__image_5"
+                  src="assets/img/about-image5.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
           </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_2"
-              src="assets/img/about-image2.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_3"
-              src="assets/img/about-image3.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_4"
-              src="assets/img/about-image4.jpg"
-              alt=""
-            />
-          </div>
-          <div class="slider__item">
-            <img
-              class="slider__image slider__image_5"
-              src="assets/img/about-image5.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <button class="slider__btn-next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
+          <button class="slider__btn-next">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25" fill="none">
             <path d="M9 17.5L15 12.5L9 7.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
+          </button>
         </div>
         <div class="slider__pagination-wrapper">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button" checked>
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
-          <input type="radio" name="slider__pagination" class="slider__pagination-button">
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+            checked
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
+          <input
+            type="radio"
+            name="slider__pagination"
+            class="slider__pagination-button"
+          />
         </div>
       </section>
       <section class="favorites container" id="favorites">
@@ -118,96 +150,308 @@
         <p class="favorites__text">Pick favorites of season</p>
         <form class="seasons-form">
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" checked />
+            <input type="radio" name="seasons" data-season="winter" checked />
             <a title="Winter">Winter</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="spring" />
             <a title="Spring">Spring</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="summer" />
             <a title="Summer">Summer</a>
           </label>
           <label class="seasons-form__label">
-            <input type="radio" name="seasons" />
+            <input type="radio" name="seasons" data-season="autumn" />
             <a title="Autumn">Autumn</a>
           </label>
         </form>
         <div class="favorites__items">
-          <div class="favorites__item">
-            <p class="favorites__item-stuff">Staff Picks</p>
-            <p class="favorites__item-name">The Book Eaters</p>
-            <p class="favorites__item-author">By Sunyi Dean</p>
-            <p class="favorites__item-text">
-              An unusual sci-fi story about a book eater woman who tries
-              desperately to save her dangerous mind-eater son from tradition
-              and certain death. Complete with dysfunctional family values,
-              light Sapphic romance, and a strong, complex protagonist. Not for
-              the faint of heart.
-            </p>
-            <button class="button favorites__item-button">Buy</button>
-            <img
-              src="assets/img/The-Book-Eaters.jpg"
-              alt="The Book Eaters By Sunyi Dean"
-              class="favorites__item-img"
-            />
+          <div
+            class="favorites__tab favorites__tab_active"
+            data-season="winter"
+          >
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">The Book Eaters</p>
+              <p class="favorites__item-author">By Sunyi Dean</p>
+              <p class="favorites__item-text">
+                An unusual sci-fi story about a book eater woman who tries
+                desperately to save her dangerous mind-eater son from tradition
+                and certain death. Complete with dysfunctional family values,
+                light Sapphic romance, and a strong, complex protagonist. Not
+                for the faint of heart.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/The-Book-Eaters.jpg"
+                alt="The Book Eaters By Sunyi Dean"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Cackle</p>
+              <p class="favorites__item-author">By Rachel Harrison</p>
+              <p class="favorites__item-text">
+                Are your Halloween movies of choice The Witches of Eastwick and
+                Practical Magic? Look no further than here - where a woman
+                recovering from a breakup moves to a quaint town in upstate New
+                York and befriends a beautiful witch.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Cackle.jpg"
+                alt="Cackle By Rachel Harrison"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">
+                Dante: Poet of the Secular World
+              </p>
+              <p class="favorites__item-author">By Erich Auerbach</p>
+              <p class="favorites__item-text">
+                Auerbach's engaging book places the 'Comedy' within the
+                tradition of epic, tragedy, and philosophy in general, arguing
+                for Dante's uniqueness as one who raised the individual and his
+                drama of soul into something of divine significance—an inspired
+                introduction to Dante's main themes.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Dante-Poet-of-the-Secular-World.jpg"
+                alt="Dante: Poet of the Secular World By Erich Auerbach"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">The Last Queen</p>
+              <p class="favorites__item-author">By Clive Irving</p>
+              <p class="favorites__item-text">
+                A timely and revelatory new biography of Queen Elizabeth (and
+                her family) exploring how the Windsors have evolved and thrived
+                as the modern world has changed around them.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/The-Last-Queen.jpg"
+                alt="The Last Queen By Clive Irving"
+                class="favorites__item-img"
+              />
+            </div>
           </div>
-          <div class="favorites__item">
-            <p class="favorites__item-stuff">Staff Picks</p>
-            <p class="favorites__item-name">Cackle</p>
-            <p class="favorites__item-author">By Rachel Harrison</p>
-            <p class="favorites__item-text">
-              Are your Halloween movies of choice The Witches of Eastwick and
-              Practical Magic? Look no further than here - where a woman
-              recovering from a breakup moves to a quaint town in upstate New
-              York and befriends a beautiful witch.
-            </p>
-            <button class="button favorites__item-button">Buy</button>
-            <img
-              src="assets/img/Cackle.jpg"
-              alt="Cackle By Rachel Harrison"
-              class="favorites__item-img"
-            />
+          <div class="favorites__tab" data-season="spring">
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">The Body</p>
+              <p class="favorites__item-author">By Stephen King</p>
+              <p class="favorites__item-text">
+                Powerful novel that takes you back to a nostalgic time,
+                exploring both the beauty and danger and loss of innocence that
+                is youth.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/The-Body.jpg"
+                alt="TThe Body By Stephen King"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">
+                Carry: A Memoir of Survival on Stolen Land
+              </p>
+              <p class="favorites__item-author">By Toni Jenson</p>
+              <p class="favorites__item-text">
+                This memoir about the author's relationship with gun violence
+                feels both expansive and intimate, resulting in a lyrical
+                indictment of the way things are.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Carry-A-Memoir-of-Survival-on-Stolen-Land.jpg"
+                alt="Carry: A Memoir of Survival on Stolen Land By Toni Jenson"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Days of Distraction</p>
+              <p class="favorites__item-author">By Alexandra Chang</p>
+              <p class="favorites__item-text">
+                A sardonic view of Silicon Valley culture, a meditation on race,
+                and a journal of displacement and belonging, all in one
+                form-defying package of spare prose.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Days-of-Distraction.jpg"
+                alt="Days of Distraction By Alexandra Chang"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Dominicana</p>
+              <p class="favorites__item-author">By Angie Cruz</p>
+              <p class="favorites__item-text">
+                A timely and revelatory new biography of Queen Elizabeth (and
+                her family) exploring how the Windsors have evolved and thrived
+                as the modern world has changed around them.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Dominicana.jpg"
+                alt="Dominicana By Angie Cruz"
+                class="favorites__item-img"
+              />
+            </div>
           </div>
-          <div class="favorites__item">
-            <p class="favorites__item-stuff">Staff Picks</p>
-            <p class="favorites__item-name">Dante: Poet of the Secular World</p>
-            <p class="favorites__item-author">By Erich Auerbach</p>
-            <p class="favorites__item-text">
-              Auerbach's engaging book places the 'Comedy' within the tradition
-              of epic, tragedy, and philosophy in general, arguing for Dante's
-              uniqueness as one who raised the individual and his drama of soul
-              into something of divine significance—an inspired introduction to
-              Dante's main themes.
-            </p>
-            <button class="button favorites__item-button">Buy</button>
-            <img
-              src="assets/img/Dante-Poet-of-the-Secular-World.jpg"
-              alt="Dante: Poet of the Secular World By Erich Auerbach"
-              class="favorites__item-img"
-            />
+          <div class="favorites__tab" data-season="summer">
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Crude: A Memoir</p>
+              <p class="favorites__item-author">
+                By Pablo Fajardo & ​​Sophie Tardy-Jouberts
+              </p>
+              <p class="favorites__item-text">
+                Drawing and color by Damien Roudeau | This book illustrates the
+                struggles of a group of indigenous Ecuadoreans as they try to
+                sue the ChevronTexaco company for damage their oil fields did to
+                the Amazon and her people
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Crude-A-Memoir.jpg"
+                alt="Crude: A Memoir By Pablo Fajardo & ​​Sophie Tardy-Joubert"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Let My People Go Surfing</p>
+              <p class="favorites__item-author">By Yvon Chouinard</p>
+              <p class="favorites__item-text">
+                Chouinard—climber, businessman, environmentalist—shares tales of
+                courage and persistence from his experience of founding and
+                leading Patagonia, Inc. Full title: Let My People Go Surfing:
+                The Education of a Reluctant Businessman, Including 10 More
+                Years of Business Unusual.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Let-My-People-Go-Surfing.jpg"
+                alt="Let My People Go Surfing By Yvon Chouinard"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">The Octopus Museum: Poems</p>
+              <p class="favorites__item-author">By Brenda Shaughnessy</p>
+              <p class="favorites__item-text">
+                This collection of bold and scathingly beautiful feminist poems
+                imagines what comes after our current age of environmental
+                destruction, racism, sexism, and divisive politics.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/The-Octopus-Museum-Poems.jpg"
+                alt="The Octopus Museum: Poems By Brenda Shaughnessy"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Shark Dialogues: A Novel</p>
+              <p class="favorites__item-author">By Kiana Davenport</p>
+              <p class="favorites__item-text">
+                An epic saga of seven generations of one family encompasses the
+                tumultuous history of Hawaii as a Hawaiian woman gathers her
+                four granddaughters together in an erotic tale of villains and
+                dreamers, queens and revolutionaries, lepers and healers.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Shark-Dialogues-A-Novel.jpg"
+                alt="Shark Dialogues: A Novel By Kiana Davenport"
+                class="favorites__item-img"
+              />
+            </div>
           </div>
-          <div class="favorites__item">
-            <p class="favorites__item-stuff">Staff Picks</p>
-            <p class="favorites__item-name">The Last Queen</p>
-            <p class="favorites__item-author">By Clive Irving</p>
-            <p class="favorites__item-text">
-              A timely and revelatory new biography of Queen Elizabeth (and her
-              family) exploring how the Windsors have evolved and thrived as the
-              modern world has changed around them.
-            </p>
-            <button
-              class="button favorites__item-button favorites__item-button_own"
-              disabled
-            >
-              Own
-            </button>
-            <img
-              src="assets/img/The-Last-Queen.jpg"
-              alt="The Last Queen By Clive Irving"
-              class="favorites__item-img"
-            />
+          <div class="favorites__tab" data-season="autumn">
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Casual Conversation</p>
+              <p class="favorites__item-author">By Renia White</p>
+              <p class="favorites__item-text">
+                White's impressive debut collection takes readers through and
+                beyond the concepts of conversation and the casual - both what
+                we say to each other and what we don't, examining the
+                possibilities around how we construct and communicate identity.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Casual-Conversation.jpg"
+                alt="Casual Conversation By Renia White"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">The Great Fire</p>
+              <p class="favorites__item-author">By Lou Ureneck</p>
+              <p class="favorites__item-text">
+                The harrowing story of an ordinary American and a principled
+                Naval officer who, horrified by the burning of Smyrna, led an
+                extraordinary rescue effort that saved a quarter of a million
+                refugees from the Armenian Genocide
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/The-Great-Fire.jpg"
+                alt="The Great Fire By Lou Ureneck"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Rickey: The Life and Legend</p>
+              <p class="favorites__item-author">By Howard Bryant</p>
+              <p class="favorites__item-text">
+                Auerbach's engaging book places the 'Comedy' within the
+                tradition of epic, tragedy, and philosophy in general, arguing
+                for Dante's uniqueness as one who raised the individual and his
+                drama of soul into something of divine significance—an inspired
+                introduction to Dante's main themes.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Rickey-The-Life-and-Legend.jpg"
+                alt="Rickey: The Life and Legend By Howard Bryant"
+                class="favorites__item-img"
+              />
+            </div>
+            <div class="favorites__item">
+              <p class="favorites__item-stuff">Staff Picks</p>
+              <p class="favorites__item-name">Slug: And Other Stories</p>
+              <p class="favorites__item-author">By Megan Milks</p>
+              <p class="favorites__item-text">
+                Exes Tegan and Sara find themselves chained together by
+                hairballs of codependency. A father and child experience the
+                shared trauma of giving birth to gods from their wounds.
+              </p>
+              <button class="button favorites__item-button">Buy</button>
+              <img
+                src="assets/img/Slug-And-Other-Stories.jpg"
+                alt="Slug: And Other Stories By Megan Milks"
+                class="favorites__item-img"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -318,7 +562,7 @@
             </p>
           </div>
           <iframe
-          class="contacts__map"
+            class="contacts__map"
             width="696"
             height="414"
             style="border: 0"
@@ -333,29 +577,36 @@
         <h2 class="section__title">Digital Library Cards</h2>
         <div class="library-card__wrapper">
           <div class="card">
-            <p>Find your Library card</p>
+            <p class="card__title">Find your Library card</p>
             <div class="card__border">
-              <form>
+              <form class="card__find-form">
                 <div class="card__body">
                   <p class="card__text">Brooklyn Public Library</p>
                   <input
                     class="card__input"
                     type="text"
+                    id="card-reader-name"
                     placeholder="Reader's name"
-                    pattern="\w+"
+                    pattern="^[a-zA-Z\s]+$"
                   />
                   <input
                     class="card__input"
                     type="text"
+                    id="card-number"
                     placeholder="Card number"
                     pattern="\w+"
                   />
                 </div>
-                <button class="button card__button" type="submit">
-                  Check the card
-                </button>
+                <div class="card__info">
+                  <button class="button card__button" type="submit">
+                    Check the card
+                  </button>
+                </div>
               </form>
             </div>
+            <!--             <div class="card__body">
+              <p class="card__text">Brooklyn Public Library</p>
+            </div> -->
           </div>
           <div class="login">
             <p class="login__title">Get a reader card</p>
@@ -364,12 +615,278 @@
               or you can register a new account
             </p>
             <div class="login__buttons">
-              <button class="button login__button">Sign Up</button>
-              <button class="button login__button">Log in</button>
+              <button class="button login__button" data-modal-Btn="register">
+                Sign Up
+              </button>
+              <button class="button login__button" data-modal-Btn="login">
+                Log in
+              </button>
             </div>
           </div>
         </div>
       </section>
+      <div class="modal__overlay">
+        <div class="modal__content modal__register">
+          <div class="modal__title">Register</div>
+          <button class="modal__btn-close">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="#0C0C0E" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="#0C0C0E" stroke-width="3"/>
+            </svg>
+          </button>
+          <form action="" class="modal__form" id="register-form">
+            <label class="modal__label"
+              >First name
+              <input
+                type="text"
+                class="modal__input"
+                data-user="firstName"
+                name="firstName"
+                required
+              />
+            </label>
+            <label class="modal__label"
+              >Last name
+              <input
+                type="text"
+                class="modal__input"
+                data-user="lastName"
+                required
+              />
+            </label>
+            <label class="modal__label"
+              >E-mail
+              <input
+                type="email"
+                class="modal__input"
+                data-user="email"
+                required
+              />
+            </label>
+            <label class="modal__label"
+              >Password
+              <input
+                type="password"
+                class="modal__input"
+                data-user="password"
+                minlength="8"
+                required
+              />
+            </label>
+            <button class="button modal__button" type="submit">Sign Up</button>
+          </form>
+          <span class="modal__info"
+            >Already have an account?
+            <button class="modal__info-button" data-modal-Btn="login">
+              Login
+            </button>
+          </span>
+        </div>
+        <div class="modal__content modal__login">
+          <div class="modal__title">Login</div>
+          <button class="modal__btn-close">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="#0C0C0E" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="#0C0C0E" stroke-width="3"/>
+            </svg>
+          </button>
+          <form action="" class="modal__form" id="login-form">
+            <label class="modal__label"
+              >E-mail or readers card
+              <input
+                class="modal__input"
+                type="text"
+                data-user="userLogin"
+                required
+              />
+            </label>
+            <label class="modal__label"
+              >Password
+              <input
+                class="modal__input"
+                type="password"
+                data-user="password"
+                required
+                minlength="8"
+              />
+            </label>
+            <button class="button modal__button" type="submit">Log In</button>
+          </form>
+          <span class="modal__info"
+            >Don’t have an account?
+            <button class="modal__info-button" data-modal-Btn="register">
+              Register
+            </button>
+          </span>
+        </div>
+        <div class="modal__content modal__profile">
+          <button class="modal__btn-close modal__btn-close_big">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="#0C0C0E" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="#0C0C0E" stroke-width="3"/>
+            </svg>
+          </button>
+          <div class="modal__profile-user">
+            <div class="modal__profile-initials"></div>
+            <div class="modal__profile-name"></div>
+          </div>
+          <div class="modal__profile-info">
+            <div class="modal__profile-title">My profile</div>
+            <div class="modal__profile-cards">
+              <div class="modal__profile-cards-info">
+                <span>Visits</span>
+                <!-- prettier-ignore -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 21" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 10C13.2614 10 15.5 7.76143 15.5 5C15.5 2.23857 13.2614 0 10.5 0C7.73857 0 5.5 2.23857 5.5 5C5.5 7.76143 7.73857 10 10.5 10ZM17.5711 13.9289C19.4464 15.8043 20.5 18.3478 20.5 21H10.5H0.5C0.5 18.3478 1.55357 15.8043 3.42894 13.9289C5.30429 12.0536 7.84784 11 10.5 11C13.1522 11 15.6957 12.0536 17.5711 13.9289Z" fill="#BB945F"/>
+                </svg>
+                <span class="profile-visits-number">23</span>
+              </div>
+              <div class="modal__profile-cards-info">
+                <span>Bonuses</span>
+                <!-- prettier-ignore -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
+                  <path d="M10 0L12.2249 3.31001L15.8779 2.00532L15.8249 6.05634L19.5106 7.25532L17.2 10.5L19.5106 13.7447L15.8249 14.9437L15.8779 18.9947L12.2249 17.69L10 21L7.77508 17.69L4.12215 18.9947L4.17508 14.9437L0.489435 13.7447L2.8 10.5L0.489435 7.25532L4.17508 6.05634L4.12215 2.00532L7.77508 3.31001L10 0Z" fill="#BB945F"/>
+                </svg>
+                <span class="profile-bonuses-number">0</span>
+              </div>
+              <div class="modal__profile-cards-info">
+                <span>Books</span>
+                <!-- prettier-ignore -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
+                  <rect width="20" height="21" fill="#BB945F"/>
+                  <rect x="2" width="1" height="19" fill="#826844"/>
+                  <rect x="1" width="1" height="21" fill="white"/>
+                </svg>
+                <span class="profile-books-number">2</span>
+              </div>
+            </div>
+            <div class="modal__profile-rented-books">
+              <span>Rented books</span>
+              <ul class="modal__profile-rented-books-list">
+                <li class="modal__profile-rented-books-item">
+                  Your rented book will be here!
+                </li>
+              </ul>
+            </div>
+            <div class="modal__profile-card-number">
+              Card number
+              <span class="profile-card-number"
+                >F00234030
+                <span class="profile-card-number_tooltip"
+                  >Card number copied!</span
+                >
+              </span>
+              <!-- prettier-ignore -->
+              <svg class="profile-card-number__copy-button" xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">
+                <rect x="2.46826" y="0.25" width="10.5917" height="9.5" rx="0.75" stroke="black" stroke-width="0.5"/>
+                <rect x="0.25" y="2.25" width="10.5917" height="9.5" rx="0.75" fill="white" stroke="black" stroke-width="0.5"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="modal__content modal__buy">
+          <button class="modal__btn-close modal__btn-close_big">
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19" fill="none">
+              <path d="M2 16.8507L17 2.00003" stroke="white" stroke-width="3"/>
+              <path d="M2 2.14926L17 17" stroke="white" stroke-width="3"/>
+            </svg>
+          </button>
+          <div class="modal__buy-title">Buy a library card</div>
+          <div class="modal__buy-content">
+            <form action="" class="modal__buy-form" id="buy-form">
+              <label class="modal__label"
+                >Bank card number
+                <input
+                  class="modal__input"
+                  type="text"
+                  inputmode="numeric"
+                  data-buy="card-number"
+                  maxlength="19"
+                  placeholder="XXXX XXXX XXXX XXXX"
+                  required
+                />
+              </label>
+              <label class="modal__label" for="card-month card-year"
+                >Expiration code
+              </label>
+              <input
+                class="modal__input modal__input_small"
+                id="card-month"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-month"
+                pattern="^\d{2}$"
+                maxlength="2"
+                required
+              />
+              <input
+                class="modal__input modal__input_small"
+                id="card-year"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-year"
+                pattern="^\d{2}$"
+                maxlength="2"
+                required
+              />
+              <label class="modal__label" for="card-cvc">CVC</label>
+              <input
+                class="modal__input modal__input_small modal__input_gap"
+                id="card-cvc"
+                type="text"
+                inputmode="numeric"
+                data-buy="card-cvv"
+                pattern="^\d{3}$"
+                maxlength="3"
+                required
+              />
+              <label class="modal__label"
+                >Cardholder name
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-name"
+                  required
+                />
+              </label>
+              <label class="modal__label"
+                >Postal code
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-postal"
+                  required
+                />
+              </label>
+              <label class="modal__label"
+                >City / Town
+                <input
+                  class="modal__input"
+                  type="text"
+                  data-buy="card-city"
+                  required
+                />
+              </label>
+              <div class="modal__buy-submit">
+                <button class="button modal__button" type="submit" disabled>
+                  Buy
+                </button>
+                <span class="modal__buy-price">$ 25.00</span>
+              </div>
+            </form>
+            <div class="modal__buy-text-info">
+              If you are live, work, attend school, or pay property taxes in New
+              York State, you can get a $25 digital library card right now using
+              this online form. Visitors to New York State can also use this
+              form to apply for a temporary card.
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <footer class="footer container">
       <div class="footer__contacts">
@@ -419,5 +936,7 @@
       </div>
     </footer>
     <script src="index.js"></script>
+    <script src="slider.js"></script>
+    <script src="tabs.js"></script>
   </body>
 </html>
