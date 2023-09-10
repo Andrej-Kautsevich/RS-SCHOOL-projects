@@ -1411,7 +1411,6 @@ p {
   width: 200px;
   margin-right: 40px;
   flex-shrink: 0;
-  /* height: 540px; */
 }
 
 .modal__buy-submit {
