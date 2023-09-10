@@ -96,8 +96,8 @@ const userObject = JSON.parse(userData);
 
 // After registration 
 
-//change profile icon and drop menu
 if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
+  //change profile icon and drop menu
   userBtn.innerHTML = userObject['firstName'][0].toUpperCase() + userObject['lastName'][0].toUpperCase();
   userBtn.classList.add('header__menu-icon_authorized');
   userBtn.setAttribute('title', `${userObject['firstName']} ${userObject['lastName']}`)
@@ -107,6 +107,10 @@ if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && use
     <li class="drop-menu__item" data-modal-Btn="logout">Log Out</li>
   `
   dropMenu.classList.add('drop-menu_authorized')
+
+  //change modal profile initials and name
+  document.querySelector('.modal__profile-initials').innerHTML = userObject['firstName'][0].toUpperCase() + userObject['lastName'][0].toUpperCase();
+  document.querySelector('.modal__profile-name').innerHTML = `${userObject['firstName']} ${userObject['lastName']}`;
 
   //Library card after login in account
   const cardInfo = document.querySelector('.card__info');
