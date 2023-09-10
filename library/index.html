@@ -579,7 +579,7 @@
           <div class="card">
             <p>Find your Library card</p>
             <div class="card__border">
-              <form>
+              <form class="card__find-form">
                 <div class="card__body">
                   <p class="card__text">Brooklyn Public Library</p>
                   <input
@@ -587,7 +587,7 @@
                     type="text"
                     id="card-reader-name"
                     placeholder="Reader's name"
-                    pattern="\w+"
+                    pattern="^[a-zA-Z\s]+$"
                   />
                   <input
                     class="card__input"
