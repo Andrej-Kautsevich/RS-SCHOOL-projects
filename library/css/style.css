@@ -354,6 +354,7 @@ p {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  position: relative;
 }
 
 .slider__container {
@@ -396,6 +397,7 @@ p {
   height: 34px;
   background-color: transparent;
   margin-top: 40px;
+  z-index: 1;
 }
 
 .slider__btn-prev:disabled,
@@ -405,11 +407,13 @@ p {
 }
 
 .slider__btn-prev {
-  margin-right: 53px;
+  left: 7%;
+  position: absolute;
 }
 
 .slider__btn-next {
-  margin-left: 53px;
+  right: 7%;
+  position: absolute;
 }
 
 /* slider pagination buttons */
@@ -835,7 +839,6 @@ p {
   line-height: 20px; /* 200% */
   letter-spacing: 0.2px;
   text-transform: capitalize;
-
 }
 
 .card__button {

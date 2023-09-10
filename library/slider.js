@@ -72,8 +72,6 @@ const checkBtn = () => {
   btnLeft.disabled = position === 0;
   btnRight.disabled = position >= ((itemsCount - 1) * itemWidth);
   paginationButtons[slideIndex].checked = true;
-  console.log(slideIndex);
-  console.log(`position ${position}`);
 }
 
 const resetSlider = () => {
