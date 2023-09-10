@@ -1145,6 +1145,9 @@ p {
   background: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__login {
@@ -1156,6 +1159,9 @@ p {
   background: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__profile {
@@ -1165,6 +1171,9 @@ p {
   height: 400px;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__profile-user {
@@ -1357,6 +1366,9 @@ p {
   background-color: #fff;
   visibility: hidden;
   opacity: 0;
+  transform: rotateX(-90deg);
+  transform-origin: 0 0;
+  transition: all 0.7s;
 }
 
 .modal__buy-title {
@@ -1418,6 +1430,7 @@ p {
 .modal__active {
   visibility: visible;
   opacity: 1;
+  transform: rotateX(0deg);
 }
 
 .visible {
