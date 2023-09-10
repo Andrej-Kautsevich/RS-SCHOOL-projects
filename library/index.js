@@ -476,6 +476,8 @@ checkCardForm.addEventListener('submit', function (event) {
      `
      setTimeout(function () {
       cardInfo.innerHTML = `<button class="button card__button" type="submit">Check the card</button>`
+      cardReaderNameInput.value = "";
+      cardNumberInput.value = "";
      }, 10000)
   }
 })
