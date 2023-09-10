@@ -585,21 +585,28 @@
                   <input
                     class="card__input"
                     type="text"
+                    id="card-reader-name"
                     placeholder="Reader's name"
                     pattern="\w+"
                   />
                   <input
                     class="card__input"
                     type="text"
+                    id="card-number"
                     placeholder="Card number"
                     pattern="\w+"
                   />
                 </div>
-                <button class="button card__button" type="submit">
-                  Check the card
-                </button>
+                <div class="card__info">
+                  <button class="button card__button" type="submit">
+                    Check the card
+                  </button>
+                </div>
               </form>
             </div>
+            <!--             <div class="card__body">
+              <p class="card__text">Brooklyn Public Library</p>
+            </div> -->
           </div>
           <div class="login">
             <p class="login__title">Get a reader card</p>
@@ -608,8 +615,12 @@
               or you can register a new account
             </p>
             <div class="login__buttons">
-              <button class="button login__button" data-modal-Btn="register">Sign Up</button>
-              <button class="button login__button" data-modal-Btn="login">Log in</button>
+              <button class="button login__button" data-modal-Btn="register">
+                Sign Up
+              </button>
+              <button class="button login__button" data-modal-Btn="login">
+                Log in
+              </button>
             </div>
           </div>
         </div>
@@ -667,7 +678,9 @@
           </form>
           <span class="modal__info"
             >Already have an account?
-            <button class="modal__info-button" data-modal-Btn="login">Login</button>
+            <button class="modal__info-button" data-modal-Btn="login">
+              Login
+            </button>
           </span>
         </div>
         <div class="modal__content modal__login">
@@ -703,7 +716,9 @@
           </form>
           <span class="modal__info"
             >Don’t have an account?
-            <button class="modal__info-button" data-modal-Btn="register">Register</button>
+            <button class="modal__info-button" data-modal-Btn="register">
+              Register
+            </button>
           </span>
         </div>
         <div class="modal__content modal__profile">
@@ -857,7 +872,9 @@
                 />
               </label>
               <div class="modal__buy-submit">
-                <button class="button modal__button" type="submit" disabled>Buy</button>
+                <button class="button modal__button" type="submit" disabled>
+                  Buy
+                </button>
                 <span class="modal__buy-price">$ 25.00</span>
               </div>
             </form>

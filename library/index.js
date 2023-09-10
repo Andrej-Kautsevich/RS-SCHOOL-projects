@@ -107,7 +107,53 @@ if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && use
     <li class="drop-menu__item" data-modal-Btn="logout">Log Out</li>
   `
   dropMenu.classList.add('drop-menu_authorized')
+
+  //Library card after login in account
+  const cardInfo = document.querySelector('.card__info');
+  const cardReaderNameInput = document.getElementById('card-reader-name');
+  const cardNumberInput = document.getElementById('card-number');
+
+  cardReaderNameInput.disabled = true;
+  cardReaderNameInput.setAttribute('value', `${userObject['firstName']} ${userObject['lastName']}`)
+
+  cardNumberInput.disabled = true;
+  cardNumberInput.setAttribute('value', `${userObject['cardNumber']}`);
+
+  document.querySelector('.login__title').textContent = 'Visit your profile';
+  document.querySelector('.login__text').textContent = 'With a digital library card you get free access to the Library’s wide array of digital resources including e-books, databases, educational resources, and more.';
+  document.querySelector('.login__buttons').innerHTML = `
+    <button class="button login__button" data-modal-btn="profile">Profile</button>
+  `
+
+  cardInfo.innerHTML = `
+    <div class="card__info-stats">
+      <span>Visits</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 21" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 10C13.2614 10 15.5 7.76143 15.5 5C15.5 2.23857 13.2614 0 10.5 0C7.73857 0 5.5 2.23857 5.5 5C5.5 7.76143 7.73857 10 10.5 10ZM17.5711 13.9289C19.4464 15.8043 20.5 18.3478 20.5 21H10.5H0.5C0.5 18.3478 1.55357 15.8043 3.42894 13.9289C5.30429 12.0536 7.84784 11 10.5 11C13.1522 11 15.6957 12.0536 17.5711 13.9289Z" fill="#BB945F"/>
+      </svg>
+      <span class="profile-visits-number">23</span>
+    </div>
+    <div class="card__info-stats">
+      <span>Bonuses</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
+        <path d="M10 0L12.2249 3.31001L15.8779 2.00532L15.8249 6.05634L19.5106 7.25532L17.2 10.5L19.5106 13.7447L15.8249 14.9437L15.8779 18.9947L12.2249 17.69L10 21L7.77508 17.69L4.12215 18.9947L4.17508 14.9437L0.489435 13.7447L2.8 10.5L0.489435 7.25532L4.17508 6.05634L4.12215 2.00532L7.77508 3.31001L10 0Z" fill="#BB945F"/>
+      </svg>
+      <span class="profile-bonuses-number">0</span>
+    </div>
+    <div class="card__info-stats">
+      <span>Books</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
+        <rect width="20" height="21" fill="#BB945F"/>
+        <rect x="2" width="1" height="19" fill="#826844"/>
+        <rect x="1" width="1" height="21" fill="white"/>
+      </svg>
+      <span class="profile-books-number">2</span>
+    </div>
+  `
 }
+
+
+
 
 //Logout
 const logoutBtns = document.querySelectorAll('[data-modal-btn="logout"]');
@@ -152,8 +198,12 @@ function checkLoginForm(formNode) {
 //Update profile statistics
 function updateProfileStatistics() {
   if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
-    document.querySelector('.profile-visits-number').innerHTML = userObject['visits'];
-    document.querySelector('.profile-books-number').innerHTML = userObject['booksCount'];
+    document.querySelectorAll('.profile-visits-number').forEach((element) => {
+      element.innerHTML = userObject['visits'];
+    })
+    document.querySelectorAll('.profile-books-number').forEach((element) => {
+      element.innerHTML = userObject['booksCount'];
+    })
 
     const bookList = document.querySelector('.modal__profile-rented-books-list');
     if (userObject['rentBooks'].length !== 0) {
@@ -298,9 +348,9 @@ buyInputs.forEach((input) => {
 })
 
 //formate bank card number value
-const cardNumInput = document.querySelector('[data-buy="card-number"]');
+const bankCardNumberInput = document.querySelector('[data-buy="card-number"]');
 
-cardNumInput.addEventListener('input', (event) => {
+bankCardNumberInput.addEventListener('input', (event) => {
   let inputValue = event.target.value.replace(/\s/g, '').replace(/[^\d]/g, '');
   let blocks = inputValue.match(/\d{1,4}/g) || [];
   let formattedValue = blocks.join(' ');
