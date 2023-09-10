@@ -526,5 +526,7 @@ checkCardForm.addEventListener('submit', function (event) {
       cardReaderNameInput.value = "";
       cardNumberInput.value = "";
     }, 10000)
+  } else {
+    spanError(cardReaderNameInput, 'The user was not found. Please enter first name then last name')
   }
 })
