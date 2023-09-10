@@ -70,7 +70,7 @@ function serializeRegistrationForm(formNode) {
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
   userRegister['visits'] = 1;
-  userRegister['hasLibraryCard'] = 'true';
+  userRegister['hasLibraryCard'] = 'false';
   userRegister['booksCount'] = 0;
   userRegister['rentBooks'] = [];
   localStorage.setItem("user", JSON.stringify(userRegister));
@@ -177,25 +177,26 @@ loginForm.addEventListener('submit', function (event) {
 })
 
 function checkLoginForm(formNode) {
+  if (localStorage.getItem('user')) {
+    const email = formNode.querySelector('[data-user="userLogin"]')
+    const password = formNode.querySelector('[data-user="password"]')
 
-  const email = formNode.querySelector('[data-user="userLogin"]')
-  const password = formNode.querySelector('[data-user="password"]')
+    const localEmail = userObject['email'];
+    const localCardNumber = userObject['cardNumber'];
+    const localPassword = userObject['password'];
 
-  const localEmail = userObject['email'];
-  const localCardNumber = userObject['cardNumber'];
-  const localPassword = userObject['password'];
-
-  //Check login and password
-  if ((email.value === localEmail && password.value === localPassword) ||
-    (email.value === localCardNumber && password.value === localPassword)
-  ) {
-    userObject['isAuthorized'] = 'true';
-    userObject['visits'] = userObject['visits'] + 1;
-    localStorage.setItem('user', JSON.stringify(userObject));
-    location.reload();
-  } else {
-    //user is not exist
-    // console.log('not match!');
+    //Check login and password
+    if ((email.value === localEmail && password.value === localPassword) ||
+      (email.value === localCardNumber && password.value === localPassword)
+    ) {
+      userObject['isAuthorized'] = 'true';
+      userObject['visits'] = userObject['visits'] + 1;
+      localStorage.setItem('user', JSON.stringify(userObject));
+      location.reload();
+    } else {
+      //user is not exist
+      // console.log('not match!');
+    }
   }
 }
 
@@ -360,18 +361,6 @@ bankCardNumberInput.addEventListener('input', (event) => {
   let formattedValue = blocks.join(' ');
   event.target.value = formattedValue;
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Open modal window
 const modalBtns = document.querySelectorAll('[data-modal-Btn]'); //Buttons in modal window
