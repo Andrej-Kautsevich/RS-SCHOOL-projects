@@ -56,6 +56,12 @@ p {
   transition: 0.3s;
 }
 
+.button:disabled {
+  cursor: default;
+  border-color: #bb945f;
+  color: #bb945f;
+}
+
 .button:hover:enabled {
   border-color: #bb945f;
   background-color: #bb945f;
@@ -594,12 +600,6 @@ p {
   left: 20px;
   bottom: 15px;
   padding: 0;
-}
-
-.favorites__item-button_own {
-  cursor: default;
-  border-color: #bb945f;
-  color: #bb945f;
 }
 
 .favorites__item-img {

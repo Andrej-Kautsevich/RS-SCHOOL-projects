@@ -70,8 +70,9 @@ function serializeRegistrationForm(formNode) {
   userRegister['isAuthorized'] = 'true';
   userRegister['cardNumber'] = generateCardNumber();
   userRegister['visits'] = 1;
-  userRegister['booksNumber'] = 0;
-  userRegister['hasLibraryCard'] = 'false'
+  userRegister['hasLibraryCard'] = 'true';
+  userRegister['booksCount'] = 0;
+  userRegister['rentBooks'] = [];
   localStorage.setItem("user", JSON.stringify(userRegister));
 }
 
@@ -96,7 +97,7 @@ const userObject = JSON.parse(userData);
 // After registration 
 
 //change profile icon and drop menu
-if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
+if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
   userBtn.innerHTML = userObject['firstName'][0].toUpperCase() + userObject['lastName'][0].toUpperCase();
   userBtn.classList.add('header__menu-icon_authorized');
   userBtn.setAttribute('title', `${userObject['firstName']} ${userObject['lastName']}`)
@@ -140,7 +141,7 @@ function checkLoginForm(formNode) {
   ) {
     userObject['isAuthorized'] = 'true';
     userObject['visits'] = userObject['visits'] + 1;
-    localStorage.setItem("user", JSON.stringify(userObject));
+    localStorage.setItem('user', JSON.stringify(userObject));
     location.reload();
   } else {
     //user is not exist
@@ -149,15 +150,31 @@ function checkLoginForm(formNode) {
 }
 
 //Update profile statistics
-if (userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
-  document.querySelector('.profile-visits-number').innerHTML = userObject['visits'];
-  document.querySelector('.profile-books-number').innerHTML = userObject['booksNumber'];
+function updateProfileStatistics() {
+  if (localStorage.getItem('user') && userObject['isRegistered'] === 'true' && userObject['isAuthorized'] === 'true') {
+    document.querySelector('.profile-visits-number').innerHTML = userObject['visits'];
+    document.querySelector('.profile-books-number').innerHTML = userObject['booksCount'];
+
+    const bookList = document.querySelector('.modal__profile-rented-books-list');
+    if (userObject['rentBooks'].length !== 0) {
+
+      //remove placeholder
+      bookList.firstElementChild.remove();
+
+      for (let i = 0; i < userObject['rentBooks'].length; i++) {
+        const item = document.createElement('li');;
+        item.textContent = userObject['rentBooks'][i];
+        item.classList.add('modal__profile-rented-books-item');
+        bookList.append(item);
+      }
+    }
+  }
 }
 
 
 //buy button
 buyBtn.forEach((btn) => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', function (event) {
 
     //not authorized
     if (!localStorage.getItem('user') || userObject['isAuthorized'] === 'false') {
@@ -166,14 +183,69 @@ buyBtn.forEach((btn) => {
     };
 
     //is authorized
-    if (userObject['isAuthorized'] === 'true' && userObject['hasLibraryCard'] === 'false') {
+    if (localStorage.getItem('user') && userObject['isAuthorized'] === 'true' && userObject['hasLibraryCard'] === 'false') {
       //open buyCard modal
       modalOverlay.classList.add('modal__overlay_active');
       document.querySelector('.modal__buy').classList.add('modal__active');
     }
+
+    //is authorized and has library card
+    if (localStorage.getItem('user') && userObject['isAuthorized'] === 'true' && userObject['hasLibraryCard'] === 'true') {
+      buyBook(event);
+
+      //disable button
+      btn.disabled = 'true';
+      btn.innerHTML = 'Own';
+    }
   })
 })
 
+
+function buyBook(e) {
+  const selectedBook = e.target.closest('.favorites__item');
+  const bookName = selectedBook.querySelector('.favorites__item-name').textContent;
+  const bookAuthor = selectedBook.querySelector('.favorites__item-author').textContent;
+
+  const book = [];
+
+  book.push(bookName, bookAuthor);
+
+  userObject['rentBooks'].push(book);
+  userObject['booksCount'] = userObject['booksCount'] + 1;
+  localStorage.setItem('user', JSON.stringify(userObject));
+
+  updateProfileStatistics();
+}
+
+
+//Disable buttons for rented books
+function checkRentedBook() {
+  const rentedBooksByName = [];
+  if (localStorage.getItem('user')) {
+    userObject['rentBooks'].forEach((element) => {
+      for (let i = 0; i < element.length; i++) {
+        if (i % 2 === 0) {
+          rentedBooksByName.push(element[i]);
+        }
+      }
+    })
+  }
+  buyBtn.forEach((btn) => {
+    const book = btn.closest('.favorites__item');
+    const bookName = book.querySelector('.favorites__item-name').textContent;
+    if (rentedBooksByName.includes(bookName)) {
+      btn.disabled = 'true';
+      btn.innerHTML = 'Own';
+    }
+  })
+}
+
+
+
+
+
+
+//handle buy library card form
 buyForm.addEventListener('submit', function (event) {
   event.preventDefault();
   if (validateBuyForm(buyForm)) {
@@ -225,8 +297,6 @@ buyInputs.forEach((input) => {
   input.addEventListener('input', updateBuySubmitBtnState);
 })
 
-
-
 //formate bank card number value
 const cardNumInput = document.querySelector('[data-buy="card-number"]');
 
@@ -236,11 +306,6 @@ cardNumInput.addEventListener('input', (event) => {
   let formattedValue = blocks.join(' ');
   event.target.value = formattedValue;
 });
-
-
-
-
-
 
 
 
@@ -317,3 +382,11 @@ function calcScroll() {
   return scrollWidth;
 }
 
+
+//update profile after login
+document.addEventListener('DOMContentLoaded', function () {
+  if (localStorage.getItem('user') && userObject['isAuthorized'] === 'true') {
+    updateProfileStatistics();
+    checkRentedBook();
+  }
+});
