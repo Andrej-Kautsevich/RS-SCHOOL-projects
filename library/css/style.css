@@ -1053,7 +1053,7 @@ p {
   margin-right: 10px;
 }
 
-#card-cvv{
+#card-cvv {
   margin-bottom: 20px;
   margin-right: 100%;
 }
@@ -1171,9 +1171,9 @@ p {
   height: 400px;
   visibility: hidden;
   opacity: 0;
-  transform: rotateX(-90deg);
+  /* transform: rotateX(-90deg);
   transform-origin: 0 0;
-  transition: all 0.7s;
+  transition: all 0.7s; */
 }
 
 .modal__profile-user {
@@ -1219,7 +1219,7 @@ p {
 }
 
 .modal__profile-info {
-  width: 100%;
+  width: 430px;
   padding: 40px 60px 40px 20px;
   background: #fff;
   display: flex;
@@ -1283,10 +1283,20 @@ p {
   line-height: 20px; /* 100% */
   letter-spacing: 2px;
   text-transform: capitalize;
-  height: 50px;
-  overflow: auto;
+  height: 60px;
+  white-space: nowrap;
+  overflow: scroll;
   padding-left: 32px;
-  margin: 30px 0 40px;
+  margin: 30px 0 30px;
+}
+
+.modal__profile-rented-books-list::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.modal__profile-rented-books-list::-webkit-scrollbar-thumb {
+  background: rgb(165, 164, 164);
 }
 
 .modal__profile-rented-books-item {
@@ -1298,6 +1308,10 @@ p {
   line-height: 20px; /* 100% */
   letter-spacing: 2px;
   text-transform: capitalize;
+}
+
+.modal__profile-rented-books-item:not(:last-child) {
+  margin-bottom: 10px;
 }
 
 .modal__profile-rented-books-item_none {
