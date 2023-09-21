@@ -5,7 +5,10 @@ body {
   background-color: rgb(192 31 31);
   width: 100vw;
   height: 100vh;
-  background-image: -webkit-linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.6) 80%);
+  background-image: -webkit-linear-gradient(
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.6) 80%
+  );
   margin: 0;
 }
 
@@ -54,7 +57,27 @@ body {
 }
 
 .progress-bar {
-  width: 90%;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+  background: gray;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 25%;
+  background-color: white;
+  margin-top: -3px;
 }
 
 .controls {
