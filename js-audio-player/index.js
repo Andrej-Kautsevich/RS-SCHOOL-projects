@@ -84,13 +84,18 @@ audio.addEventListener('loadeddata', () => {
   progressBar.setAttribute('max', audio.duration)
 })
 
-audio.addEventListener('timeupdate', () => {
-  progressBar.value = audio.currentTime;
-})
+audio.addEventListener('timeupdate', updateProgress)
 
 progressBar.addEventListener('change', () => {
   audio.currentTime = progressBar.value;
 })
+
+function updateProgress() {
+  progressBar.value = audio.currentTime;
+  const value = audio.currentTime;
+  const progress = (value / audio.duration) * 100;
+  progressBar.style.setProperty('--progress', `${progress}%`);
+}
 
 
 
