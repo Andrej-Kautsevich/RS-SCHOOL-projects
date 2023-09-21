@@ -1,4 +1,4 @@
-const audio = document.getElementById('audio');
+const audio = new Audio();
 const playBtn = document.getElementById('play-pause');
 let songIndex = 0;
 let isPlay = false;
@@ -32,7 +32,8 @@ function playSong(song) {
   cover.setAttribute('src', song.cover);
   songName.innerText = song.name;
   artistName.innerText = song.artist;
-  audio.setAttribute('src', song.audio);
+  audio.src = song.audio;
+  audio.currentTime = 0;
   isPlay = false;
   playPause();
 }
@@ -74,3 +75,31 @@ function skipSong(direction) {
     playSong(songsList[songIndex]);
   }
 }
+
+//progress Bar 
+const progressBar = document.getElementById('progress-bar');
+
+audio.addEventListener('loadeddata', () => {
+  progressBar.value = audio.currentTime;
+  progressBar.setAttribute('max', audio.duration)
+})
+
+audio.addEventListener('timeupdate', () => {
+  progressBar.value = audio.currentTime;
+})
+
+progressBar.addEventListener('change', () => {
+  audio.currentTime = progressBar.value;
+})
+
+
+
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  audio.src = songsList[0].audio;
+  cover.setAttribute('src', songsList[0].cover);
+  songName.innerText = songsList[0].name;
+  artistName.innerText = songsList[0].artist;
+})
