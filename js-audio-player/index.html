@@ -14,9 +14,14 @@
       <div class="song-name"></div>
       <div class="artist-name"></div>
       <div class="progress">
-        <input type="range" name="progress-bar" class="progress-bar" id="progress-bar" />
-        <div class="current-time">2:22</div>
-        <div class="duration-time">4:30</div>
+        <input
+          type="range"
+          name="progress-bar"
+          class="progress-bar"
+          id="progress-bar"
+        />
+        <div class="current-time"></div>
+        <div class="duration-time"></div>
       </div>
       <div class="controls">
         <button class="control-btn" id="backward">
@@ -28,6 +33,16 @@
         <button class="control-btn" id="forward">
           <img src="assets/svg/forward.png" alt="" />
         </button>
+      </div>
+      <div class="volume">
+        <img class="volume-ico" src="assets/svg/volume-down.png" alt="" />
+        <input
+          type="range"
+          name="volume-bar"
+          id="volume-bar"
+          class="volume-bar"
+        />
+        <img class="volume-ico" src="assets/svg/volume-up.png" alt="" />
       </div>
     </div>
     <script src="index.js"></script>

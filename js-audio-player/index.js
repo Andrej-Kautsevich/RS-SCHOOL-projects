@@ -78,6 +78,12 @@ function skipSong(direction) {
   }
 }
 
+//sound control
+const volumeBar = document.getElementById('volume-bar');
+volumeBar.addEventListener("change", () => {
+  audio.volume = volumeBar.value / 100;
+});
+
 //progress Bar 
 const progressBar = document.getElementById('progress-bar');
 
@@ -124,4 +130,6 @@ window.addEventListener('DOMContentLoaded', () => {
   cover.setAttribute('src', songsList[0].cover);
   songName.innerText = songsList[0].name;
   artistName.innerText = songsList[0].artist;
+  audio.volume = 0.75;
+  volumeBar.value = audio.volume * 100;
 })
