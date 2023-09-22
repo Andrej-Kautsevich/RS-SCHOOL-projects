@@ -27,7 +27,9 @@ playBtn.addEventListener('click', () => {
 //Play song
 const cover = document.querySelector('.cover img');
 const songName = document.querySelector('.song-name');
-const artistName = document.querySelector('.artist-name')
+const artistName = document.querySelector('.artist-name');
+const playTime = document.querySelector('.current-time');
+const endTime = document.querySelector('.duration-time');
 function playSong(song) {
   cover.setAttribute('src', song.cover);
   songName.innerText = song.name;
@@ -82,6 +84,8 @@ const progressBar = document.getElementById('progress-bar');
 audio.addEventListener('loadeddata', () => {
   progressBar.value = audio.currentTime;
   progressBar.setAttribute('max', audio.duration)
+  playTime.innerText = `${timeFormat(audio.currentTime)}`;
+  endTime.innerText = `${timeFormat(audio.duration)}`;
 })
 
 audio.addEventListener('timeupdate', updateProgress)
@@ -90,11 +94,24 @@ progressBar.addEventListener('change', () => {
   audio.currentTime = progressBar.value;
 })
 
+//Disable music progress update when progress bar is used
+progressBar.addEventListener('mousedown', () => {
+  audio.removeEventListener('timeupdate', updateProgress);
+});
+progressBar.addEventListener('mouseup', () => {
+  audio.addEventListener('timeupdate', updateProgress);
+});
+
 function updateProgress() {
   progressBar.value = audio.currentTime;
   const value = audio.currentTime;
   const progress = (value / audio.duration) * 100;
-  progressBar.style.setProperty('--progress', `${progress}%`);
+  progressBar.style.setProperty('--progress', `${progress}%`); //add custom progress bar
+  playTime.innerText = `${timeFormat(audio.currentTime)}`;
+}
+
+function timeFormat (time) {
+  return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2);
 }
 
 
