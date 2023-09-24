@@ -38,6 +38,7 @@ function playSong(song) {
   audio.currentTime = 0;
   isPlay = false;
   playPause();
+  setBg();
 }
 
 function playPause() {
@@ -116,10 +117,18 @@ function updateProgress() {
   playTime.innerText = `${timeFormat(audio.currentTime)}`;
 }
 
-function timeFormat (time) {
+function timeFormat(time) {
   return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2);
 }
 
+const backgroundImage = document.getElementById('background');
+function setBg() {
+  const img = new Image();
+  img.src = songsList[songIndex].cover;
+  img.onload = () => {
+    backgroundImage.setAttribute('src', img.src);
+  };
+}
 
 
 
@@ -132,4 +141,5 @@ window.addEventListener('DOMContentLoaded', () => {
   artistName.innerText = songsList[0].artist;
   audio.volume = 0.75;
   volumeBar.value = audio.volume * 100;
+  setBg();
 })
