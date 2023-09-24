@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Audio Plater</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <img src="" class="background" id="background">
+    <div class="wrapper">
+      <div class="player">
+        <div class="cover">
+          <img src="" />
+        </div>
+        <div class="song-name"></div>
+        <div class="artist-name"></div>
+        <div class="progress">
+          <input
+            type="range"
+            name="progress-bar"
+            class="progress-bar"
+            id="progress-bar"
+          />
+          <div class="current-time"></div>
+          <div class="duration-time"></div>
+        </div>
+        <div class="controls">
+          <button class="control-btn" id="backward">
+            <img src="assets/svg/backward.png" alt="" />
+          </button>
+          <button class="control-btn" id="play-pause">
+            <img src="assets/svg/play.png" alt="" />
+          </button>
+          <button class="control-btn" id="forward">
+            <img src="assets/svg/forward.png" alt="" />
+          </button>
+        </div>
+        <div class="volume">
+          <img class="volume-ico" src="assets/svg/volume-down.png" alt="" />
+          <input
+            type="range"
+            name="volume-bar"
+            id="volume-bar"
+            class="volume-bar"
+          />
+          <img class="volume-ico" src="assets/svg/volume-up.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <a href="https://github.com/Andrej-Kautsevich">My GitHub</a>
+      <a href="https://rs.school/js/">
+        <img
+          src="assets/svg/rs_school_js.svg"
+          alt="Rsschool icon"
+          height="30"
+        />
+      </a>
+      <time datetime="2023-07-09">2023</time>
+    </footer>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

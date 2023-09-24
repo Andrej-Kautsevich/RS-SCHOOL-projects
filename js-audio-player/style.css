@@ -1,0 +1,205 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.wrapper {
+  backdrop-filter: blur(10px);
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  height: 75vh;
+  max-height: 600px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  overflow: hidden;
+  margin: auto;
+  border-radius: 20px;
+  background: linear-gradient(rgb(197, 185, 185), rgb(31, 29, 29));
+  box-shadow: 0px 0px 15px 7px #000000b3;
+}
+
+.cover {
+  width: 100%;
+  height: 50%;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.song-name {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.artist-name {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.progress {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    #0088cc 0%,
+    #0088cc var(--progress, 0%),
+    gray var(--progress, 0%),
+    gray 100%
+  );
+  height: 10px;
+  border-radius: 10px;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 25%;
+  background-color: white;
+  margin-top: -3px;
+}
+
+.volume {
+  display: flex;
+  width: 80%;
+  margin-top: 20px;
+  align-self: center;
+  justify-content: center;
+}
+
+.volume-ico {
+  width: 24px;
+  height: 24px;
+  filter: invert(1);
+}
+
+.volume-bar {
+  width: 60%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.volume-bar::-webkit-slider-runnable-track {
+  background-color: gray;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.volume-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 25%;
+  background-color: white;
+  margin-top: -3px;
+}
+
+.current-time {
+  position: absolute;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(197, 185, 185);
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.duration-time {
+  position: absolute;
+  right: 0;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(197, 185, 185);
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-btn {
+  height: 50px;
+  width: 50px;
+  filter: invert(1);
+  cursor: pointer;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.control-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  background-image: linear-gradient(to top, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  font-size: 24px;
+  padding: 15px 50px;
+  line-height: 30px;
+  color: whitesmoke;
+}
+
+.footer a {
+  text-decoration: none;
+  transition: .3s;
+  color: whitesmoke;
+}
+
+.footer a img {
+  filter: invert(1);
+}
+
+.footer a:hover {
+  color: red;
+}
