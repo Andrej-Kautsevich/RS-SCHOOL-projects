@@ -10,7 +10,14 @@
     <img src="" class="background" id="background" />
     <div class="wrapper">
       <div class="player">
-        <h2>Some Belorusian Independent Music</h2>
+        <h2>Some Belarusian Local Music</h2>
+        <button class="info-button">
+          <svg height="35" width="35" aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M4.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm15 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-7.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+            ></path>
+          </svg>
+        </button>
         <div class="cover">
           <img src="" />
         </div>
@@ -47,16 +54,20 @@
           />
           <img class="volume-ico" src="assets/svg/volume-up.png" alt="" />
         </div>
-        <div class="modal">
-          <iframe
-            width="100%"
-            height="150"
-            src="https://odesli.co/embed/?url=https%3A%2F%2Fsong.link%2Fs%2F5IO8WL9wZwQ5Bvxrtc3Vjs&theme=dark"
-            frameborder="0"
-            allowfullscreen
-            sandbox="allow-same-origin allow-scripts allow-presentation allow-popups allow-popups-to-escape-sandbox"
-            allow="clipboard-read; clipboard-write"
-          ></iframe>
+        <div class="overlay">
+          <div class="info">
+            <iframe
+              id="infoEmbed"
+              style="position: absolute; top: 0; left: 0"
+              width="100%"
+              height="100%"
+              src=""
+              frameborder="0"
+              allowfullscreen
+              sandbox="allow-same-origin allow-scripts allow-presentation allow-popups allow-popups-to-escape-sandbox"
+              allow="clipboard-read; clipboard-write"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>

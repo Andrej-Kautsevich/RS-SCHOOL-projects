@@ -17,8 +17,11 @@ const songName = document.querySelector('.song-name');
 const artistName = document.querySelector('.artist-name');
 const playTime = document.querySelector('.current-time');
 const endTime = document.querySelector('.duration-time');
+const info = document.getElementById('infoEmbed')
+
 function playSong(song) {
   cover.setAttribute('src', song.cover);
+  info.setAttribute('src', song.info);
   songName.innerText = song.name;
   artistName.innerText = song.artist;
   audio.src = song.audio;
@@ -117,6 +120,29 @@ function setBg() {
   };
 }
 
+//Info section
+const modalOverlay = document.querySelector('.overlay');
+const infoBtn = document.querySelector('.info-button');
+
+//Info open
+infoBtn.addEventListener('click', () => {
+  if (document.querySelector('.overlay_active')) {
+    document.querySelector('.overlay_active').classList.remove('overlay_active')
+  };
+  modalOverlay.classList.add('overlay_active');
+})
+
+//Info close
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target.classList.contains('overlay')) {
+    modalOverlay.classList.remove('overlay_active');
+  }
+})
+
+
+
+
+
 
 
 
@@ -124,6 +150,7 @@ function setBg() {
 window.addEventListener('DOMContentLoaded', () => {
   audio.src = songsList[0].audio;
   cover.setAttribute('src', songsList[0].cover);
+  info.setAttribute('src', songsList[0].info);
   songName.innerText = songsList[0].name;
   artistName.innerText = songsList[0].artist;
   audio.volume = 0.75;
