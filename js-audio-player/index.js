@@ -87,9 +87,10 @@ audio.addEventListener('loadeddata', () => {
 
 audio.addEventListener('timeupdate', updateProgress)
 
-progressBar.addEventListener('change', () => {
+progressBar.addEventListener('input', () => {
   audio.currentTime = progressBar.value;
-})
+  updateProgressBar();
+});
 
 //Disable music progress update when progress bar is used
 progressBar.addEventListener('mousedown', () => {
@@ -101,6 +102,10 @@ progressBar.addEventListener('mouseup', () => {
 
 function updateProgress() {
   progressBar.value = audio.currentTime;
+  updateProgressBar();
+}
+
+function updateProgressBar() {
   const value = audio.currentTime;
   const progress = (value / audio.duration) * 100;
   progressBar.style.setProperty('--progress', `${progress}%`); //add custom progress bar
