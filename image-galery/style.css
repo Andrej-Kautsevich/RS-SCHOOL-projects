@@ -1,0 +1,17 @@
+.gallery {
+  column-width: 300px;
+	column-gap: 15px;
+  width: 90%;
+	margin: 50px auto;
+}
+
+.gallery-img {
+  width: 100%; 
+  height: auto;
+  margin-bottom: 15px;
+  transition: 400ms; 
+}
+
+.gallery:hover .gallery-img:not(:hover) {
+	opacity: 0.4;
+}

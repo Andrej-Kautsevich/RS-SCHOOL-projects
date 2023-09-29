@@ -17,7 +17,7 @@ function showData(data) {
 
 
 //generate DOMelements
-const container = document.querySelector('.container');
+const gallery = document.querySelector('.gallery');
 
 function showImages(images) {
 	images.map((imageObj) => {
@@ -25,6 +25,6 @@ function showImages(images) {
 		img.classList.add('gallery-img')
 		img.src = imageObj.urls.regular;
 		img.alt = `image`;
-		container.append(img);
+		gallery.append(img);
 	})
 }
