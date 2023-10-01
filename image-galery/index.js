@@ -1,13 +1,19 @@
-let url = new URL("https://api.unsplash.com/search/photos")
+let url = new URL("https://api.unsplash.com")
 let params = new URLSearchParams(url.search); //api request parameters
-let request = 'null';
+let request
 const apiKey = 'WsxvXatvQCJuWcNE8EtNMRIKN8Ym6IB_zau0qKUDAN8'
 params.set("client_id", apiKey);
 url.search = params.toString();
 
 async function apiRequest(request) {
-	params.set("query", request);
-	url.search = params.toString();
+	//if there are no request, show random photos
+	if (request !== undefined) {
+		params.set("query", request);
+		url.search = params.toString();
+		url.pathname = "/search/photos";
+	} else {
+		url.pathname = "/photos";
+	}
 	try {
 		const res = await fetch(url);
 		const data = await res.json();
@@ -16,6 +22,7 @@ async function apiRequest(request) {
 		} else {
 			showImages(data);
 		}
+		console.log(data, url)
 	} catch (error) {
 		alert("Server is not response");
 	}
@@ -26,7 +33,6 @@ const searchInput = document.querySelector('.search');
 
 searchInput.addEventListener('keydown', (e) => {
 	if (e.key === 'Enter') {
-		console.log('Enter')
 		request = searchInput.value;
 		apiRequest(request)
 	}
