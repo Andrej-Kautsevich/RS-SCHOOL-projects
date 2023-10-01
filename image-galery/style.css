@@ -4,6 +4,7 @@
   border-bottom: 5px solid black;
   gap: 1em;
   align-items: center;
+  position: relative;
 }
 
 .search {
@@ -15,6 +16,32 @@
   border: 2px solid transparent;
   background-color: #eee;
   outline: none;
+}
+
+.search-error {
+  font-size: 2em;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+}
+
+.search-error::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
 }
 
 .search:hover {

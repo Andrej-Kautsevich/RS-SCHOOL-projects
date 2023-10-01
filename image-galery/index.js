@@ -16,7 +16,18 @@ async function apiRequest(request) {
 		const res = await fetch(url);
 		const data = await res.json();
 		if (data.results) {
-			showImages(data.results)
+			if (data.total === 0) {
+				//show error message
+				const span = document.createElement('span');
+				span.classList.add('search-error');
+				span.textContent = "Your search did not match any images.";
+				searchInput.parentNode.appendChild(span);
+				setTimeout(() => {
+					span.remove()
+				}, 2000);
+			} else {
+				showImages(data.results)
+			}
 		} else {
 			showImages(data);
 		}
@@ -25,7 +36,6 @@ async function apiRequest(request) {
 		alert("Server is not response");
 	}
 }
-apiRequest();
 
 async function apiRequestPhoto(id) {
 	try {
@@ -34,12 +44,10 @@ async function apiRequestPhoto(id) {
 		const stats = await res.json();
 
 		updateImageCard(stats);
-
 	} catch (error) {
 		console.error("Error:", error);
 	}
 }
-
 
 function showImageCard() {
 	overlay.classList.add('overlay_visible');
@@ -83,14 +91,6 @@ function updateImageCard(image) {
 	newImg.src = image.urls.regular;
 }
 
-const searchInput = document.querySelector('.search');
-
-searchInput.addEventListener('keydown', (e) => {
-	if (e.key === 'Enter') {
-		request = searchInput.value;
-		apiRequest(request)
-	}
-})
 
 function downloadImage(url) {
 	fetch(url).then((res) => {
@@ -109,7 +109,6 @@ document.querySelector(".card__download").addEventListener("click", function (ev
 	downloadImage(url);
 });
 
-
 //generate DOMelements
 const gallery = document.querySelector('.gallery');
 
@@ -126,7 +125,15 @@ function showImages(images) {
 	})
 }
 
+const searchInput = document.querySelector('.search');
+searchInput.addEventListener('keydown', (e) => {
+	if (e.key === 'Enter') {
+		request = searchInput.value;
+		apiRequest(request)
+	}
+})
 
-
-
-document.addEventListener("DOMContentLoaded", () => searchInput.focus());
+document.addEventListener("DOMContentLoaded", () => {
+	searchInput.focus()
+	apiRequest();
+});
