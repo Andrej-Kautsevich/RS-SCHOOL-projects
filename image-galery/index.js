@@ -1,5 +1,6 @@
 const apiKey = 'WsxvXatvQCJuWcNE8EtNMRIKN8Ym6IB_zau0qKUDAN8'
 const overlay = document.querySelector('.overlay');
+const card = document.querySelector('.card');
 
 let request
 
@@ -41,6 +42,7 @@ async function apiRequestPhoto(id) {
 
 
 function showImageCard() {
+	overlay.classList.add('overlay_visible');
 	const id = this.dataset.id;
 	apiRequestPhoto(id);
 }
@@ -49,8 +51,7 @@ function showImageCard() {
 overlay.addEventListener('click', (e) => {
 	if (e.target.classList.contains('overlay')) {
 		overlay.classList.remove('overlay_visible');
-		const photo = document.querySelector('.card__image');
-		photo.setAttribute('src', "");
+		card.classList.remove('card_visible');
 	}
 })
 
@@ -77,7 +78,7 @@ function updateImageCard(image) {
 	const newImg = new Image();
 	newImg.onload = function () {
 		photo.setAttribute('src', this.src);
-		overlay.classList.add('overlay_visible')
+		card.classList.add('card_visible')
 	}
 	newImg.src = image.urls.regular;
 }

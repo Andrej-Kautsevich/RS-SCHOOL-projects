@@ -73,11 +73,22 @@
   visibility: visible;
 }
 
+.spinner {
+  position: absolute;
+  color: white;
+  transform: scale(3);
+}
+
 .card {
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: white;
   padding: 20px;
+  z-index: 15;
+}
+
+.card_visible {
+  display: flex;
 }
 
 .card__header {
