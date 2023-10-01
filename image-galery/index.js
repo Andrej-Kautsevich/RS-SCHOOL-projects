@@ -1,19 +1,23 @@
-let url = new URL ("https://api.unsplash.com/search/photos")
+let url = new URL("https://api.unsplash.com/search/photos")
 let params = new URLSearchParams(url.search); //api request parameters
 let request = 'null';
 const apiKey = 'WsxvXatvQCJuWcNE8EtNMRIKN8Ym6IB_zau0qKUDAN8'
 params.set("client_id", apiKey);
-url.search = params.toString(); 
+url.search = params.toString();
 
 async function apiRequest(request) {
 	params.set("query", request);
-	url.search = params.toString(); 
-	const res = await fetch(url);
-	const data = await res.json();
-	if (data.results) {
-		showImages(data.results)
-	} else {
-		showImages(data);
+	url.search = params.toString();
+	try {
+		const res = await fetch(url);
+		const data = await res.json();
+		if (data.results) {
+			showImages(data.results)
+		} else {
+			showImages(data);
+		}
+	} catch (error) {
+		alert("Server is not response");
 	}
 }
 apiRequest();

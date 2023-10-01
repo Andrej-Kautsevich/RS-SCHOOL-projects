@@ -18,38 +18,42 @@
 }
 
 .search:hover {
-  border: 2px solid #DDDDDD;
+  border: 2px solid #dddddd;
 }
 
 .search:focus {
-  border: 2px solid #DDDDDD;
+  border: 2px solid #dddddd;
   background-color: transparent;
 }
 
-
-
-
-
+.search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg)
+    no-repeat 50% 50%;
+  background-size: contain;
+  cursor: pointer;
+}
 
 .gallery {
   column-width: 300px;
-	column-gap: 15px;
+  column-gap: 15px;
   width: 90%;
-	margin: 50px auto;
+  margin: 50px auto;
 }
 
 .gallery-img {
-  width: 100%; 
+  width: 100%;
   height: auto;
   margin-bottom: 15px;
-  transition: 400ms; 
+  transition: 400ms;
 }
 
 .gallery-img:hover {
   filter: brightness(0.8);
   cursor: zoom-in;
 }
-
 
 .footer {
   background-color: black;
