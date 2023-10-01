@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Image Gallery</title>
+  </head>
+  <body>
+    <header class="header">
+      <svg width="32" height="32" class="UP8CN" viewBox="0 0 32 32">
+        <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
+      </svg>
+      <h1>Unsplash API</h1>
+      <input
+        type="search"
+        class="search"
+        placeholder="Search..."
+        autocomplete="off"
+      />
+    </header>
+    <div class="gallery"></div>
+    <div class="overlay">
+      <div class="spinner">
+        <i class="fa-solid fa-spinner fa-spin fa-2xl"></i>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <div class="card__user">
+            <a href="" class="card__user-link" target="_blank">
+              <img class="card__user-avatar" src="" alt="" />
+              <span class="card__user-name">GRAB</span>
+            </a>
+          </div>
+          <button class="card__download">Download</button>
+        </div>
+        <img class="card__image" src="" alt="" />
+        <div class="card__stats">
+          <i id="views" class="fa-solid fa-eye fa-lg"></i>
+          <i id="downloads" class="fa-solid fa-download fa-lg"></i>
+          <i id="likes" class="fa-solid fa-heart fa-lg"></i>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <a href="https://github.com/Andrej-Kautsevich">My GitHub</a>
+      <a href="https://rs.school/js/">
+        <img src="assets/rs_school_js.svg" alt="Rsschool icon" height="30" />
+      </a>
+      <time datetime="2023-01-10">2023</time>
+    </footer>
+    <script src="index.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bc939de89e.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+.header {
+  display: flex;
+  padding: 1em;
+  border-bottom: 5px solid black;
+  gap: 1em;
+  align-items: center;
+  position: relative;
+}
+
+.search {
+  border-radius: 15px;
+  flex-grow: 1;
+  margin-left: 2em;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border: 2px solid transparent;
+  background-color: #eee;
+  outline: none;
+}
+
+.search-error {
+  font-size: 2em;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+}
+
+.search-error::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.search:hover {
+  border: 2px solid #dddddd;
+}
+
+.search:focus {
+  border: 2px solid #dddddd;
+  background-color: transparent;
+}
+
+.search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg)
+    no-repeat 50% 50%;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.gallery {
+  column-width: 300px;
+  column-gap: 15px;
+  width: 90%;
+  margin: 50px auto;
+}
+
+.gallery-img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  transition: 400ms;
+}
+
+.gallery-img:hover {
+  filter: brightness(0.8);
+  cursor: zoom-in;
+}
+
+.overlay {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+}
+
+.overlay_visible {
+  visibility: visible;
+}
+
+.spinner {
+  position: absolute;
+  color: white;
+  transform: scale(3);
+}
+
+.card {
+  display: none;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  z-index: 15;
+}
+
+.card_visible {
+  display: flex;
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card__user-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card__user-avatar {
+  border-radius: 50%;
+}
+
+.card__user-name {
+  font-size: 2em;
+  font-weight: bold;
+  color: black;
+}
+
+.card__download {
+  border-radius: 10px;
+  border: transparent;
+  background-color: rgb(176, 239, 176);
+  color: #0c0c0e;
+  text-align: center;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.card__image-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card__image {
+  max-height: 70vh;
+  max-width: 90vw;
+  margin: 25px 0;
+  object-fit: contain;
+}
+
+.card__stats {
+  display: inline-flex;
+  gap: 20px;
+}
+
+.card__stats i::before {
+  margin-right: 10px;
+}
+
+.footer {
+  background-color: black;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  font-size: 18px;
+  padding: 15px 50px;
+  line-height: 30px;
+  color: whitesmoke;
+}
+
+.footer a {
+  text-decoration: none;
+  transition: 0.3s;
+  color: whitesmoke;
+}
+
+.footer a img {
+  filter: invert(1);
+}
+
+.footer a:hover {
+  color: red;
+}
+
+
+@media (max-width: 768px) {
+  .search {
+    margin-left: 0.5em;
+    font-size: 1em;
+  }
+
+  .header h1 {
+    font-size: 1.5em;
+  }
+}
