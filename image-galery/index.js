@@ -6,9 +6,9 @@ let request
 async function apiRequest(request) {
 	let url;
 	if (request !== undefined) {
-		url = `https://api.unsplash.com/search/photos?query=${request}&client_id=${apiKey}`;
+		url = `https://api.unsplash.com/search/photos?query=${request}&client_id=${apiKey}&per_page=20`;
 	} else {
-		url = `https://api.unsplash.com/photos?client_id=${apiKey}`;
+		url = `https://api.unsplash.com/photos?client_id=${apiKey}&per_page=20`;
 	}
 
 	try {
@@ -34,7 +34,6 @@ async function apiRequestPhoto(id) {
 
 		updateImageCard(stats);
 
-		console.log(stats, url)
 	} catch (error) {
 		console.error("Error:", error);
 	}
@@ -43,10 +42,7 @@ async function apiRequestPhoto(id) {
 
 function showImageCard() {
 	const id = this.dataset.id;
-	overlay.classList.add('overlay_visible')
 	apiRequestPhoto(id);
-
-	console.log(id)
 }
 
 //close imageCard
@@ -74,8 +70,16 @@ function updateImageCard(image) {
 	views.innerText = image.views;
 	downloads.innerText = image.downloads;
 	likes.innerText = image.likes;
-	photo.setAttribute('src', image.urls.regular);
 	download.dataset.download = image.urls.full;
+
+	//show card when image is loaded
+	//TODO: catch error when image unavailable
+	const newImg = new Image();
+	newImg.onload = function () {
+		photo.setAttribute('src', this.src);
+		overlay.classList.add('overlay_visible')
+	}
+	newImg.src = image.urls.regular;
 }
 
 const searchInput = document.querySelector('.search');
@@ -99,7 +103,7 @@ function downloadImage(url) {
 		console.log('Error:', error);
 	});
 }
-document.querySelector(".card__download").addEventListener("click", function(event) {
+document.querySelector(".card__download").addEventListener("click", function (event) {
 	const url = this.getAttribute("data-download");
 	downloadImage(url);
 });
@@ -114,7 +118,7 @@ function showImages(images) {
 		const img = document.createElement('img');
 		img.classList.add('gallery-img')
 		img.src = imageObj.urls.small;
-		img.alt = `image`;
+		img.alt = imageObj.alt_description;
 		img.dataset.id = imageObj.id;
 		img.onclick = showImageCard;
 		gallery.append(img);
