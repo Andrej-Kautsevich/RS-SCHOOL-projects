@@ -1,25 +1,38 @@
-const url = 'https://api.unsplash.com/photos/?client_id=WsxvXatvQCJuWcNE8EtNMRIKN8Ym6IB_zau0qKUDAN8'
+let url = new URL ("https://api.unsplash.com/search/photos")
+let params = new URLSearchParams(url.search); //api request parameters
+let request = 'null';
+const apiKey = 'WsxvXatvQCJuWcNE8EtNMRIKN8Ym6IB_zau0qKUDAN8'
+params.set("client_id", apiKey);
+url.search = params.toString(); 
 
-
-
-
-async function getData() {
+async function apiRequest(request) {
+	params.set("query", request);
+	url.search = params.toString(); 
 	const res = await fetch(url);
 	const data = await res.json();
-	console.log(data);
-	showImages(data);
+	if (data.results) {
+		showImages(data.results)
+	} else {
+		showImages(data);
+	}
 }
-getData();
+apiRequest();
 
-function showData(data) {
+const searchInput = document.querySelector('.search');
 
-}
-
+searchInput.addEventListener('keydown', (e) => {
+	if (e.key === 'Enter') {
+		console.log('Enter')
+		request = searchInput.value;
+		apiRequest(request)
+	}
+})
 
 //generate DOMelements
 const gallery = document.querySelector('.gallery');
 
 function showImages(images) {
+	gallery.innerHTML = ""; //remove previous result
 	images.map((imageObj) => {
 		const img = document.createElement('img');
 		img.classList.add('gallery-img')
@@ -28,3 +41,5 @@ function showImages(images) {
 		gallery.append(img);
 	})
 }
+
+document.addEventListener("DOMContentLoaded", () => searchInput.focus());
