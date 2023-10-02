@@ -24,7 +24,7 @@ async function apiRequest(request) {
         searchInput.parentNode.appendChild(span);
         setTimeout(() => {
           span.remove()
-        }, 20000);
+        }, 2000);
       } else {
         showImages(data.results)
       }
