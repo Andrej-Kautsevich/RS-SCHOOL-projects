@@ -8,16 +8,38 @@
   </head>
   <body>
     <header class="header">
-      <svg width="32" height="32" class="UP8CN" viewBox="0 0 32 32">
-        <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
-      </svg>
-      <h1>Unsplash API</h1>
-      <input
-        type="search"
-        class="search"
-        placeholder="Search..."
-        autocomplete="off"
-      />
+      <div class="search-wrapper">
+        <svg width="32" height="32" class="UP8CN" viewBox="0 0 32 32">
+          <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
+        </svg>
+        <h1>Unsplash API</h1>
+        <input
+          type="search"
+          class="search"
+          placeholder="Search..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="filter">
+        <ul class="color-list">
+          <li class="color" style="background-color: black" aria-label="black"></li>
+          <li class="color" style="background-color: white; border: 1px solid black;" aria-label="white"></li>
+          <li class="color" style="background-color: yellow" aria-label="yellow"></li>
+          <li class="color" style="background-color: orange" aria-label="orange"></li>
+          <li class="color" style="background-color: red" aria-label="red"></li>
+          <li class="color" style="background-color: purple" aria-label="purple"></li>
+          <li class="color" style="background-color: magenta" aria-label="magenta"></li>
+          <li class="color" style="background-color: green" aria-label="green"></li>
+          <li class="color" style="background-color: teal" aria-label="teal"></li>
+          <li class="color" style="background-color: blue" aria-label="blue"></li>
+        </ul>
+        <label for="per-page">Per page:</label>
+        <select class="per-page-select" id="per-page">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
     </header>
     <div class="gallery"></div>
     <div class="overlay">
