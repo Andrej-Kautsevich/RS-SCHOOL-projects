@@ -159,6 +159,14 @@ searchInput.addEventListener('keydown', (e) => {
   }
 })
 
+const searchIcon = document.querySelector('.search-icon');
+searchIcon.addEventListener('click', (e) => {
+  if (searchInput.value) {
+    request = searchInput.value;
+    apiRequest(request)
+  }
+})
+
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.focus()
   apiRequest();
