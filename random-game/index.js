@@ -161,104 +161,134 @@ function createOilPolygons() {
   const numPolygons = 4;       // Количество многоугольников
   const polygonGap = Math.floor(canvasWidth / numPolygons);
 
-  ctx.translate(0, background.height) //translate to ground start
 
   for (let i = 0; i < numPolygons; i++) {
-    const shiftX = (polygonGap * i) + Math.floor(Math.random() * (polygonGap - polygonSize));
-    console.log(shiftX)
-  }
+    const originX = (polygonGap * i) + Math.floor(Math.random() * (polygonGap - polygonSize));
+    const originY = 300 + Math.floor(Math.random() * (canvasHeight - polygonSize));
 
-
+    const polygonSideNumber = Math.floor(Math.random() * 6 + 5)
+    const points = generatePolygon(polygonSideNumber, originX, originY);
+    console.log(points) 
+    polygons.push({points: points});
 
   // Рисование многоугольников
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);  // Очистка холста
-
-  polygons.forEach((polygon) => {
-
-
     ctx.beginPath();
-    ctx.moveTo(polygon[0].x, polygon[0].y);
+    ctx.moveTo(points[0].x, points[0].y);
 
-    for (let i = 1; i < polygon.length; i++) {
-      ctx.lineTo(polygon[i].x, polygon[i].y);
+    for (let i = 1; i < points.length; i++) {
+      ctx.lineTo(points[i].x, points[i].y)
     }
-
     ctx.closePath();
     ctx.fillStyle = "#211b15";
+    ctx.strokeStyle = "#9a4c25";
+    ctx.lineWidth = 5;
     ctx.fill();
-  });
+    ctx.stroke();
+  }
 }
 
-// background.addEventListener('load', drawBackground);
-
-// createOilPolygons();
-
-//based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
-function generatePolygon(numPoints = 10) {
-  // Step 1: generate two list of random X and Y coordinates
-  const points = [];
-  for (let i = 0; i < numPoints; i++) {
-    points.push({
-      x: Math.floor(Math.random() * polygonSize),
-      y: Math.floor(Math.random() * polygonSize),
-    });
-  }
-  console.log(points)
-
-  // Step 2: sort them (here by x coordinate for starting point in Graham scan algorithm)
-  const sortedPoints = points.sort((a, b) => a.x - b.x);
-
-  // Step 3: isolate the extreme points
-  const minXPoint = sortedPoints[0]; // leftmost
-  const maxXPoint = sortedPoints[sortedPoints.length - 1]; // rightmost
-
-  // Step 4: randomly divide the interior points into two chains (not sure the purpose here)
-  let leftChain = [];
-  let rightChain = [];
-  for (let i = 1; i < sortedPoints.length - 1; i++) {
-    if (Math.random() > 0.5) {
-      leftChain.push(sortedPoints[i]);
-    } else {
-      rightChain.push(sortedPoints[i]);
-    }
-  }
-
-  // Steps 5-7: seems to be about mixing coordinates, not applicable in this simplified context
-
-  // Step 8: Sort the vectors by angle
-  // No 'vectors' yet, we can sort points by angle from the starting point
-  const pointsSortedByAngle = sortedPoints.slice(1).sort((a, b) => {
-    const angleA = Math.atan2(a.y - minXPoint.y, a.x - minXPoint.x);
-    const angleB = Math.atan2(b.y - minXPoint.y, b.x - minXPoint.x);
-
-    return angleA - angleB;
-  });
-  pointsSortedByAngle.unshift(minXPoint); // add starting point in front
-
-  // Step 9: Lay them end-to-end to form a polygon (simple convex polygon)
-  let polygon = [pointsSortedByAngle[0], pointsSortedByAngle[1]];
-  for (let i = 2; i < pointsSortedByAngle.length; i++) {
-    while (polygon.length >= 2 && crossProduct(polygon[polygon.length - 2], polygon[polygon.length - 1], pointsSortedByAngle[i]) <= 0) {
-      polygon.pop();
-    }
-    polygon.push(pointsSortedByAngle[i]);
-  }
-
-  // Step 10: Move the polygon to the original min and max coordinates (here I just translate them)
-  const shiftX = minXPoint.x;
-  const shiftY = minXPoint.y;
-  const shiftedPolygon = polygon.map(point => ({ x: point.x - shiftX, y: point.y - shiftY }));
-
-  polygons.push(shiftedPolygon);
-
-  return shiftedPolygon;
-
-}
-
-function crossProduct(point1, point2, point3) {
-  return (point2.x - point1.x) * (point3.y - point1.y) - (point2.y - point1.y) * (point3.x - point1.x);
-}
-
-console.log(generatePolygon());
+background.addEventListener('load', drawBackground);
 
 createOilPolygons();
+
+//based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
+function generatePolygon(n = 10, originX = 0, originY = 0) {
+  // Step 1: generate two list of random X and Y coordinates
+  const xPool = [];
+  const yPool = [];
+  for (let i = 0; i < n; i++) {
+    xPool.push(Math.floor(Math.random() * polygonSize))
+    yPool.push(Math.floor(Math.random() * polygonSize))
+  }
+
+  // Step 2: sort them (here by x coordinate for starting point in Graham scan algorithm)
+  const sortedPointsX = xPool.sort((a, b) => a - b);
+  const sortedPointsY = yPool.sort((a, b) => a - b);
+
+  // Step 3: isolate the extreme points
+  const minX = sortedPointsX[0];
+  const maxX = sortedPointsX.at(-1);
+  const minY = sortedPointsY[0];
+  const maxY = sortedPointsY.at(-1);
+
+  // Step 4-5: Divide the interior points into two chains & Extract the vector components
+  let xVec = [], yVec = [];
+
+  let lastTop = minX, lastBot = minX;
+
+  for (let i = 1; i < n - 1; i++) {
+    let x = xPool[i];
+
+    if (Math.random() < 0.5) {
+      xVec.push(x - lastTop);
+      lastTop = x;
+    } else {
+      xVec.push(lastBot - x);
+      lastBot = x;
+    }
+  }
+
+  xVec.push(maxX - lastTop);
+  xVec.push(lastBot - maxX);
+
+  let lastLeft = minY, lastRight = minY;
+
+  for (let i = 1; i < n - 1; i++) {
+    let y = yPool[i];
+
+    if (Math.random() < 0.5) {
+      yVec.push(y - lastLeft);
+      lastLeft = y;
+    } else {
+      yVec.push(lastRight - y);
+      lastRight = y;
+    }
+  }
+
+  yVec.push(maxY - lastLeft);
+  yVec.push(lastRight - maxY);
+
+  // Steps 6: Randomly pair up the X- and Y-components
+  shuffle(yVec);
+
+  //Steps 7: Combine the paired up components into vectors
+  let vec = [];
+
+  for (let i = 0; i < n; i++) {
+    vec.push({ x: xVec[i], y: yVec[i] });
+  }
+
+  //Steps 8: Sort the vectors by angle
+  vec.sort((a, b) => Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x));
+
+  // Step 9: Lay them end-to-end to form a polygon
+  let x = 0, y = 0;
+  let minPolygonX = 0;
+  let minPolygonY = 0;
+  let points = [];
+
+  for (let i = 0; i < n; i++) {
+    points.push({ x: x, y: y });
+
+    x += vec[i].x;
+    y += vec[i].y;
+
+    minPolygonX = Math.min(minPolygonX, x);
+    minPolygonY = Math.min(minPolygonY, y);
+  }
+
+  // // Step 10: Move the polygon to the original min and max coordinates
+  for (let i = 0; i < n; i++) {
+    let p = points[i];
+    points[i] = { x: p.x + originX, y: p.y + originY };
+  }
+
+  return points
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let t = array[i]; array[i] = array[j]; array[j] = t
+  }
+}
