@@ -3,14 +3,28 @@
   margin: 0;
 }
 
-.game {
-  background: #eee;
-  margin: 0 auto;
+.container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
   /* backdrop-filter: blur(10px); */
   display: flex;
-  height: 100vh;
-  align-items: center;
+  width: 1024px;
+  height: 700px;
+  position: relative;
+}
+
+.game {
+  background: #eee;
+  margin: 0 auto;
+}
+
+.top-menu {
+  background: bisque;
+  position: absolute;
+  right: 162px;
 }
