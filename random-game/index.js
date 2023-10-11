@@ -29,7 +29,8 @@ function drawNewPipe(event) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawBackground();
-  drawGroundBackground()
+  drawGroundOverlay();
+  drawGroundBackground();
   drawPipeLines(); // draw existing pipes
 
   if (mouseY < groundLevel) {
@@ -70,6 +71,7 @@ function createNewPipeLine(event) {
   if (!canCreate) {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //remove drawn line
     drawBackground();
+    drawGroundOverlay();
     drawGroundBackground();
     drawPipeLines(); // draw existing pipes
   } else {
@@ -80,6 +82,9 @@ function createNewPipeLine(event) {
       endX: mouseX,
       endY: mouseY
     })
+    drawBackground();
+    drawGroundOverlay();
+    drawGroundBackground();
     drawPipeLines(); // draw existing pipes
     // drawGroundOverlay();
   }
@@ -305,10 +310,14 @@ function drawBackground() {
 }
 
 function drawGroundBackground() {
-  let squarePath = new Path2D();
-  squarePath.rect(85, 510, 130, 130);
-   ctx.save(); // Сохранение текущего состояния
-  ctx.clip(squarePath);
+  let clipPath = new Path2D();
+  if (pipeLines.length) {
+    for (let pipe of pipeLines) {
+      clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
+    }
+  }
+  ctx.save(); // Сохранение текущего состояния
+  ctx.clip(clipPath);
   //ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
@@ -319,17 +328,55 @@ function drawGroundBackground() {
   ctx.restore(); // Восстановление состояния до clip()
 }
 
-function drawGround() {
-  ctx.beginPath();
-  const soilPattern = ctx.createPattern(soil, "repeat");
-  ctx.fillStyle = soilPattern;
-  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height);
-  ctx.closePath();
-}
-
 function drawGroundOverlay() {
   ctx.drawImage(overlay, 0, groundLevel)
 }
+
+function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
+  // Вычисление вектора направления
+  const dx = endX - startX;
+  const dy = endY - startY;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  const directionX = dx / length;
+  const directionY = dy / length;
+
+  // Вычисление перпендикулярного вектора
+  const perpendicularX = -directionY;
+  const perpendicularY = directionX;
+
+  // Вычисление точек пути
+  const startPointLeft = {
+    x: startX + perpendicularX * lineWidth / 2,
+    y: startY + perpendicularY * lineWidth / 2
+  };
+  const endPointLeft = {
+    x: endX + perpendicularX * lineWidth / 2,
+    y: endY + perpendicularY * lineWidth / 2
+  };
+  const endPointRight = {
+    x: endX - perpendicularX * lineWidth / 2,
+    y: endY - perpendicularY * lineWidth / 2
+  };
+  const startPointRight = {
+    x: startX - perpendicularX * lineWidth / 2,
+    y: startY - perpendicularY * lineWidth / 2
+  };
+
+  let path = new Path2D();
+  
+  path.moveTo(startPointLeft.x, startPointLeft.y);
+  path.lineTo(endPointLeft.x, endPointLeft.y);
+  path.lineTo(endPointRight.x, endPointRight.y);
+  path.lineTo(startPointRight.x, startPointRight.y);
+  path.closePath();
+
+  return path;
+}
+
+
+
+
+
 
 
 
@@ -341,8 +388,6 @@ const background = new Image();
 //Source
 overlay.src = "assets/soil.jpg"
 background.src = "assets/background.jpg";
-
-
 
 function loadImg(src) {
   return new Promise((resolve, reject) => {
