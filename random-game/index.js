@@ -1,27 +1,6 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-//Images
-const soil = new Image();
-const background = new Image();
-
-//Source
-soil.src = "assets/soil.jpg"
-background.src = "assets/background.jpg";
-
-function drawBackground() {
-  ctx.drawImage(background, 0, 0);
-  ctx.translate(0, background.height)
-
-  //road background
-  ctx.beginPath();
-  ctx.fillStyle = "#d68b53";
-  ctx.fillRect(0, 0, canvas.width, 13)
-  ctx.closePath();
-
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-}
-
 // draw new pipe
 let isDrawing = false;
 let canCreate = true;
@@ -32,25 +11,25 @@ let groundLevel;
 canvas.addEventListener("mousedown", (event) => {
   startX = event.offsetX;
   startY = event.offsetY;
-  if (startY < groundLevel) {
-    return;
-  } // above ground 
-  isDrawing = true;
+  if (startY > groundLevel) {
+    isDrawing = true;; // pipe is below ground 
+  }
   console.log(startX, startY);
 });
 
-canvas.addEventListener("mousemove", (event) => {
+function drawNewPipe(event) {
   if (!isDrawing) return;
 
+  ctx.save();
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
-
   ctx.setLineDash([]); // возвращает обратно к сплошной линии
   ctx.strokeStyle = "white"; // возвращаем начальный цвет
   canCreate = true;
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   drawBackground();
+  drawGroundBackground()
   drawPipeLines(); // draw existing pipes
 
   if (mouseY < groundLevel) {
@@ -60,6 +39,7 @@ canvas.addEventListener("mousemove", (event) => {
   } // can not create pipes above ground 
 
   pipeLines.forEach((pipe) => {
+    // if new line intersect with old existing pipes
     if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, startX, startY, mouseX, mouseY)) {
       ctx.setLineDash([5, 15]);
       ctx.strokeStyle = "red";
@@ -74,16 +54,23 @@ canvas.addEventListener("mousemove", (event) => {
   ctx.lineTo(mouseX, mouseY);
   ctx.stroke();
   ctx.restore();
-});
+}
 
-canvas.addEventListener("mouseup", (event) => {
+canvas.addEventListener("mousemove", drawNewPipe);
+
+canvas.addEventListener("mouseup", createNewPipeLine);
+
+function createNewPipeLine(event) {
+  if (!isDrawing) return;
+
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
-  if (!isDrawing) return;
   isDrawing = false;
+
   if (!canCreate) {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //remove drawn line
     drawBackground();
+    drawGroundBackground();
     drawPipeLines(); // draw existing pipes
   } else {
     ctx.closePath();
@@ -94,11 +81,13 @@ canvas.addEventListener("mouseup", (event) => {
       endY: mouseY
     })
     drawPipeLines(); // draw existing pipes
+    // drawGroundOverlay();
   }
-});
+}
 
 function drawPipeLines() {
   pipeLines.forEach((pipe) => {
+    ctx.save();
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.strokeStyle = "#7b8688"
@@ -106,6 +95,7 @@ function drawPipeLines() {
     ctx.moveTo(pipe.startX, pipe.startY);
     ctx.lineTo(pipe.endX, pipe.endY);
     ctx.stroke();
+    ctx.restore();
   })
 }
 
@@ -144,21 +134,6 @@ function createOilPolygons() {
   const canvasHeight = 400;    // Высота холста
   const numPolygons = 4;       // Количество многоугольников
   const polygonGap = Math.floor((canvasWidth - polygonSize * 2) / numPolygons);
-
-  // for (let i = 0; i < numPolygons; i++) {
-  //   const originX = polygonSize + (polygonGap * i) + Math.floor(Math.random() * (polygonGap - polygonSize));
-  //   // const originX = polygonSize + polygonGap * i + Math.floor(Math.random() * polygonGap);
-  //   const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
-  //   console.log(originX);
-
-  //   const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
-  //   const points = generatePolygon(polygonSideNumber, originX, originY);
-  //   const oilVolume = calculatePolygonArea(points);
-  //   polygons.push({
-  //     points: points,
-  //     oilVolume: oilVolume,
-  //   });
-  // }
 
   let originX = polygonSize;
   while (originX < (canvasWidth - polygonSize)) {
@@ -298,6 +273,8 @@ function drawOilPolygons(polygons) {
   polygons.forEach((polygon) => {
 
     const points = polygon.points;
+
+    ctx.save();
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
@@ -310,22 +287,36 @@ function drawOilPolygons(polygons) {
     ctx.lineWidth = 5;
     ctx.fill();
     ctx.stroke();
+    ctx.restore();
   })
 }
 
+function drawBackground() {
+  ctx.drawImage(background, 0, 0);
+  ctx.translate(0, background.height)
 
-function drawGroundBackground() {
-  ctx.translate(0, groundLevel)
-  //ground background
+  //road background
   ctx.beginPath();
-  ctx.fillStyle = "#714031";
-  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height)
+  ctx.fillStyle = "#d68b53";
+  ctx.fillRect(0, 0, canvas.width, 13)
   ctx.closePath();
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
 
+function drawGroundBackground() {
+  let squarePath = new Path2D();
+  squarePath.rect(85, 510, 130, 130);
+   ctx.save(); // Сохранение текущего состояния
+  ctx.clip(squarePath);
+  //ground background
+  ctx.beginPath();
+  ctx.fillStyle = "#714031";
+  ctx.fillRect(0, groundLevel, canvas.width, canvas.height - background.height)
+  ctx.closePath();
   //oil polygons
   drawOilPolygons(polygons);
+  ctx.restore(); // Восстановление состояния до clip()
 }
 
 function drawGround() {
@@ -336,16 +327,47 @@ function drawGround() {
   ctx.closePath();
 }
 
+function drawGroundOverlay() {
+  ctx.drawImage(overlay, 0, groundLevel)
+}
 
 
 
 
+//Images
+const overlay = new Image();
+const background = new Image();
+
+//Source
+overlay.src = "assets/soil.jpg"
+background.src = "assets/background.jpg";
 
 
 
-background.addEventListener('load', () => {
-  groundLevel = background.height + 13; // background + road
-  drawBackground()
-  createOilPolygons();
-  drawGroundBackground();
-});
+function loadImg(src) {
+  return new Promise((resolve, reject) => {
+    let img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+async function initGame() {
+  try {
+    // Wait until images are loaded
+    const background = await loadImg('assets/background.jpg');
+    const overlay = await loadImg('assets/soil.jpg');
+
+    groundLevel = background.height + 13; // background + road
+    drawBackground()
+    drawGroundOverlay();
+    createOilPolygons();
+    drawGroundBackground();
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+initGame();
