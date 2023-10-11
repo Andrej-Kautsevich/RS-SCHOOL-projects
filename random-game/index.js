@@ -168,10 +168,13 @@ function createOilPolygons() {
 
     const polygonSideNumber = Math.floor(Math.random() * 6 + 5)
     const points = generatePolygon(polygonSideNumber, originX, originY);
-    console.log(points) 
-    polygons.push({points: points});
+    const oilVolume = calculatePolygonArea(points);
+    polygons.push({
+      points: points,
+      oilVolume: oilVolume,
+    });
 
-  // Рисование многоугольников
+    // Рисование многоугольников
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
@@ -292,3 +295,19 @@ function shuffle(array) {
     let t = array[i]; array[i] = array[j]; array[j] = t
   }
 }
+
+//calculate oil volume in polygon
+function calculatePolygonArea(polygon) {
+  let area = 0;
+  const numVertices = polygon.length;
+
+  for (let i = 0; i < numVertices; i++) {
+    const currentVertex = polygon[i];
+    const nextVertex = polygon[(i + 1) % numVertices];
+
+    area += (currentVertex.x * nextVertex.y) - (currentVertex.y * nextVertex.x);
+  }
+
+  return Math.abs(area / 2);
+}
+
