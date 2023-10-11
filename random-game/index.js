@@ -3,31 +3,15 @@ const ctx = canvas.getContext("2d");
 
 //Images
 const soil = new Image();
-
 const background = new Image();
-
 
 //Source
 soil.src = "assets/soil.jpg"
-
 background.src = "assets/background.jpg";
-
 
 function drawBackground() {
   ctx.drawImage(background, 0, 0);
   ctx.translate(0, background.height)
-
-  //ground background
-  ctx.beginPath();
-  ctx.fillStyle = "#714031";
-  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height)
-  ctx.closePath();
-
-  ctx.beginPath();
-  const soilPattern = ctx.createPattern(soil, "repeat");
-  ctx.fillStyle = soilPattern;
-  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height);
-  ctx.closePath();
 
   //road background
   ctx.beginPath();
@@ -39,16 +23,16 @@ function drawBackground() {
 }
 
 // draw new pipe
-
 let isDrawing = false;
 let canCreate = true;
 let startX, startY;
 let pipeLines = [];
+let groundLevel;
 
 canvas.addEventListener("mousedown", (event) => {
   startX = event.offsetX;
   startY = event.offsetY;
-  if (startY < 300) {
+  if (startY < groundLevel) {
     return;
   } // above ground 
   isDrawing = true;
@@ -69,7 +53,7 @@ canvas.addEventListener("mousemove", (event) => {
   drawBackground();
   drawPipeLines(); // draw existing pipes
 
-  if (mouseY < 300) {
+  if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
     ctx.strokeStyle = "red";
     canCreate = false;
@@ -159,40 +143,37 @@ function createOilPolygons() {
   const canvasWidth = 1024;    // Ширина холста
   const canvasHeight = 400;    // Высота холста
   const numPolygons = 4;       // Количество многоугольников
-  const polygonGap = Math.floor(canvasWidth / numPolygons);
+  const polygonGap = Math.floor((canvasWidth - polygonSize * 2) / numPolygons);
 
+  // for (let i = 0; i < numPolygons; i++) {
+  //   const originX = polygonSize + (polygonGap * i) + Math.floor(Math.random() * (polygonGap - polygonSize));
+  //   // const originX = polygonSize + polygonGap * i + Math.floor(Math.random() * polygonGap);
+  //   const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
+  //   console.log(originX);
 
-  for (let i = 0; i < numPolygons; i++) {
-    const originX = (polygonGap * i) + Math.floor(Math.random() * (polygonGap - polygonSize));
-    const originY = 300 + Math.floor(Math.random() * (canvasHeight - polygonSize));
+  //   const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
+  //   const points = generatePolygon(polygonSideNumber, originX, originY);
+  //   const oilVolume = calculatePolygonArea(points);
+  //   polygons.push({
+  //     points: points,
+  //     oilVolume: oilVolume,
+  //   });
+  // }
 
-    const polygonSideNumber = Math.floor(Math.random() * 6 + 5)
+  let originX = polygonSize;
+  while (originX < (canvasWidth - polygonSize)) {
+    console.log(originX);
+    const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
+    const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
     const points = generatePolygon(polygonSideNumber, originX, originY);
     const oilVolume = calculatePolygonArea(points);
     polygons.push({
       points: points,
       oilVolume: oilVolume,
     });
-
-    // Рисование многоугольников
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-
-    for (let i = 1; i < points.length; i++) {
-      ctx.lineTo(points[i].x, points[i].y)
-    }
-    ctx.closePath();
-    ctx.fillStyle = "#211b15";
-    ctx.strokeStyle = "#9a4c25";
-    ctx.lineWidth = 5;
-    ctx.fill();
-    ctx.stroke();
+    originX += polygonSize + Math.floor(Math.random() * polygonGap);
   }
 }
-
-background.addEventListener('load', drawBackground);
-
-createOilPolygons();
 
 //based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
 function generatePolygon(n = 10, originX = 0, originY = 0) {
@@ -280,10 +261,11 @@ function generatePolygon(n = 10, originX = 0, originY = 0) {
     minPolygonY = Math.min(minPolygonY, y);
   }
 
-  // // Step 10: Move the polygon to the original min and max coordinates
+  // Step 10: Move the polygon
+  let offsetX = originX - minPolygonX;
   for (let i = 0; i < n; i++) {
     let p = points[i];
-    points[i] = { x: p.x + originX, y: p.y + originY };
+    points[i] = { x: p.x + offsetX, y: p.y + originY };
   }
 
   return points
@@ -311,3 +293,59 @@ function calculatePolygonArea(polygon) {
   return Math.abs(area / 2);
 }
 
+// Рисование многоугольников
+function drawOilPolygons(polygons) {
+  polygons.forEach((polygon) => {
+
+    const points = polygon.points;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length; i++) {
+      ctx.lineTo(points[i].x, points[i].y)
+    }
+    ctx.closePath();
+    ctx.fillStyle = "#211b15";
+    ctx.strokeStyle = "#9a4c25";
+    ctx.lineWidth = 5;
+    ctx.fill();
+    ctx.stroke();
+  })
+}
+
+
+function drawGroundBackground() {
+  ctx.translate(0, groundLevel)
+  //ground background
+  ctx.beginPath();
+  ctx.fillStyle = "#714031";
+  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height)
+  ctx.closePath();
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+  //oil polygons
+  drawOilPolygons(polygons);
+}
+
+function drawGround() {
+  ctx.beginPath();
+  const soilPattern = ctx.createPattern(soil, "repeat");
+  ctx.fillStyle = soilPattern;
+  ctx.fillRect(0, 0, canvas.width, canvas.height - background.height);
+  ctx.closePath();
+}
+
+
+
+
+
+
+
+
+background.addEventListener('load', () => {
+  groundLevel = background.height + 13; // background + road
+  drawBackground()
+  createOilPolygons();
+  drawGroundBackground();
+});
