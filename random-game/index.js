@@ -23,9 +23,7 @@ canvas.addEventListener("mousedown", (event) => {
   currentValve = valve;
   if (valve) {
     isDrawing = true;
-    console.log('inValve');
   }
-  console.log(mouseX, mouseY);
 });
 
 canvas.addEventListener("mousemove", (event) => {
@@ -69,7 +67,7 @@ function drawNewPipe(event) {
 
   // draw new pipe
   ctx.beginPath();
-  ctx.lineWidth = 5;
+  ctx.lineWidth = 8;
   ctx.moveTo(currentValve.x, currentValve.y);
   ctx.lineTo(mouseX, mouseY);
   ctx.stroke();
@@ -88,7 +86,6 @@ function createNewPipeLine(event) {
     ctx.clearRect(0, groundLevel, canvas.width, canvas.height); //remove drawn line
 
     updateState();
-
   } else {
     ctx.closePath();
     pipeLines.push({
@@ -99,15 +96,39 @@ function createNewPipeLine(event) {
     })
 
     //create new valve on pipe end
-    let path = new Path2D();
-    path.arc(mouseX, mouseY, valveImg.width / 2, 0, 2 * Math.PI)
+    let pathArc = new Path2D();
+    pathArc.arc(mouseX, mouseY, valveImg.width / 2, 0, 2 * Math.PI);
+
+    let newPathToValve = currentValve.pathToValve.slice();
+
+    newPathToValve.push(valves.length + 1);
+
     valves.push({
       id: valves.length + 1,
-      toOilRig: oilRigs.length,//!!!
-      path: path,
+      pathToValve: newPathToValve,
+      toOilRig: currentValve.toOilRig,
+      pathArc: pathArc,
       x: mouseX,
       y: mouseY,
+    });
+
+    polygons.forEach((polygon) => {
+      const path = polygon.path;
+      if (ctx.isPointInPath(path, mouseX, mouseY)) {
+        console.log(polygon.id)
+        polygon.isActive = true;
+
+        //add new active pipe
+        pipes.push({
+          endValveId: valves.length,
+          isActive: true,
+          path: newPathToValve,
+          polygon: polygon.id,
+        })
+      }
     })
+
+
 
     updateState();
   }
@@ -117,7 +138,7 @@ function drawPipeLines() {
   pipeLines.forEach((pipe) => {
     ctx.save();
     ctx.beginPath();
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = "#7b8688"
     ctx.setLineDash([]);
     ctx.moveTo(pipe.startX, pipe.startY);
@@ -136,8 +157,6 @@ function drawNewOilRig(event) {
   ctx.restore();
 
   updateState();
-  /*   drawBackground();
-    drawOilRigs(); //draw existing oil rigs */
   ctx.drawImage(oilRigImg, mouseX - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
 }
 
@@ -146,25 +165,31 @@ function createNewOilRig(event) {
 
   const mouseX = event.offsetX;
   isOilRigDrawing = false;
-  // drawBackground();
   oilRigs.push({
     valve: mouseX,
     id: oilRigs.length + 1,
   });
 
-  let path = new Path2D();
-  path.arc(mouseX, groundLevel - valveImg.height / 2, valveImg.width / 2, 0, 2 * Math.PI)
+  let pathArc = new Path2D();
+  pathArc.arc(mouseX, groundLevel - valveImg.height / 2, valveImg.width / 2, 0, 2 * Math.PI)
   valves.push({
     id: valves.length + 1,
+    pathToValve: [valves.length + 1],
     toOilRig: oilRigs.length,
-    path: path,
+    pathArc: pathArc,
     x: mouseX,
     y: groundLevel - valveImg.height / 2,
   })
+
+  // pipes.push({
+  //   id: pipes.length + 1,
+  //   // pathToRig: pathToRig,
+  //   isActive: false,
+  //   toRigId: oilRigs.length,
+  // })
+
+
   updateState();
-  /*   drawOilRigs(); //draw existing oil rigs
-    drawValves(); */
-  console.log(mouseX)
 }
 
 function drawOilRigs() {
@@ -172,14 +197,12 @@ function drawOilRigs() {
     ctx.drawImage(oilRigImg, oilRig.valve - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
     // ctx.drawImage(valveImg, oilRig.valve - (valveImg.width / 2), groundLevel - valveImg.height / 2 - 10);
   })
-  valves.forEach((valve) => {
-    ctx.stroke(valve.path);
-  })
 }
 
 function drawValves() {
   valves.forEach((valve) => {
     ctx.drawImage(valveImg, valve.x - (valveImg.width / 2), valve.y - (valveImg.height / 2))
+    ctx.stroke(valve.pathArc);
   })
 }
 
@@ -221,17 +244,63 @@ function createOilPolygons() {
 
   let originX = polygonSize;
   while (originX < (canvasWidth - polygonSize)) {
-    console.log(originX);
     const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
     const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
     const points = generatePolygon(polygonSideNumber, originX, originY);
     const oilVolume = calculatePolygonArea(points);
+    let path = new Path2D();
+
+    path.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length; i++) {
+      path.lineTo(points[i].x, points[i].y)
+    }
+
+    path.closePath();
+
     polygons.push({
+      id: polygons.length + 1,
+      path: path,
       points: points,
       oilVolume: oilVolume,
+      isActive: false,
     });
     originX += polygonSize + Math.floor(Math.random() * polygonGap);
   }
+}
+
+function drawActivePipe() {
+  pipes.forEach((pipe) => {
+    if (pipe.isActive) {
+      ctx.save();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#272016";
+      ctx.stroke(getPathFromPipe(pipe));
+      ctx.restore();
+    }
+  })
+}
+
+function getPathFromPipe(pipe) {
+  let pathToRig = new Path2D();
+
+  let valvesId = pipe.path
+  let points = [];
+
+  for (let id of valvesId) {
+    for (let i = 0; i < valves.length; i++) {
+      if (valves[i].id === id) {
+        points.push({ x: valves[i].x, y: valves[i].y });
+        break;
+      }
+    }
+  }
+
+  pathToRig.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) {
+    pathToRig.lineTo(points[i].x, points[i].y)
+  }
+  return pathToRig;
 }
 
 //based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
@@ -356,21 +425,14 @@ function calculatePolygonArea(polygon) {
 function drawOilPolygons(polygons) {
   polygons.forEach((polygon) => {
 
-    const points = polygon.points;
+    const path = polygon.path;
 
     ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-
-    for (let i = 1; i < points.length; i++) {
-      ctx.lineTo(points[i].x, points[i].y)
-    }
-    ctx.closePath();
     ctx.fillStyle = "#211b15";
     ctx.strokeStyle = "#9a4c25";
     ctx.lineWidth = 5;
-    ctx.fill();
-    ctx.stroke();
+    ctx.fill(path);
+    ctx.stroke(path);
     ctx.restore();
   })
 }
@@ -459,7 +521,7 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
 
 function isMouseInValve(mouseX, mouseY) {
   for (let i = 0; i < valves.length; i++) {
-    if (ctx.isPointInPath(valves[i].path, mouseX, mouseY)) {
+    if (ctx.isPointInPath(valves[i].pathArc, mouseX, mouseY)) {
       return valves[i];  // точка внутри path
     }
   }
@@ -472,6 +534,7 @@ function updateState() {
   drawGroundBackground();
   drawPipeLines(); // draw existing pipes
   drawOilRigs(); //draw existing oil rigs
+  drawActivePipe();
   drawValves();
 }
 
@@ -533,5 +596,4 @@ let isOilRigDrawing = false;
 
 oilRigIcon.addEventListener('click', () => {
   isOilRigDrawing = true;
-  console.log(isOilRigDrawing);
 })
