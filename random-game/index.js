@@ -134,14 +134,15 @@ function createNewPipeLine(event) {
       if (ctx.isPointInPath(path, mouseX, mouseY)) {
         console.log(polygon.id)
         polygon.isActive = true;
+        polygon.activePipeCount += 1,
 
-        //add new active pipe
-        pipes.push({
-          endValveId: valves.length,
-          isActive: true,
-          path: newPathToValve,
-          polygon: polygon.id,
-        })
+          //add new active pipe
+          pipes.push({
+            endValveId: valves.length,
+            isActive: true,
+            path: newPathToValve,
+            polygonID: polygon.id,
+          })
       }
     })
     updateState();
@@ -235,9 +236,10 @@ function drawOilPolygons(polygons) {
   polygons.forEach((polygon) => {
 
     const path = polygon.path;
+    const fillLevel = polygon.oilVolume / polygon.maxOilVolume;
 
     ctx.save();
-    ctx.fillStyle = "#211b15";
+    ctx.fillStyle = `rgba(33, 27, 21, ${fillLevel})`;
     ctx.strokeStyle = "#9a4c25";
     ctx.lineWidth = 5;
     ctx.fill(path);
@@ -290,8 +292,55 @@ function updateState() {
   drawOilRigs(); //draw existing oil rigs
   drawActivePipe();
   drawValves();
+  manageInterval();
 }
 
+function updatePolygons(pipes, polygons) {
+  polygons.forEach((polygon) => {
+    if (polygon.isActive) {
+      const decreaseValue = 100 * polygon.activePipeCount;
+      polygon.oilVolume -= decreaseValue;
+      console.log(polygon.oilVolume, polygon.activePipeCount);
+
+      if (polygon.oilVolume <= 0) {
+        polygon.oilVolume = 0;
+        polygon.isActive = false;
+        updateState();
+        updatePipes(pipes, polygons);
+      }
+    }
+  })
+}
+
+setInterval(() => updatePolygons(pipes, polygons), 1000); //decrease Oil Volume by 100 in second
+
+let interval = null;
+
+function manageInterval() {
+  if (!isOilRigDrawing && !isDrawing) {
+    if (interval === null) {
+      interval = setInterval(() => {
+        updateState();
+      }, 100);
+    }
+  } else {
+    if (interval !== null) {
+      clearInterval(interval);
+      interval = null;
+    }
+  }
+}
+
+function updatePipes(pipes, polygons) {
+  for (let i = 0; i < pipes.length; i++) {
+    const pipe = pipes[i];
+    const polygon = polygons.find(p => p.id === pipe.polygonID);
+    if (polygon && polygon.oilVolume === 0) {
+      pipe.isActive = false;
+      updateState();
+    }
+  }
+}
 
 
 
@@ -333,6 +382,7 @@ async function initGame() {
     drawGroundOverlay();
     createOilPolygons(groundLevel, polygons);
     drawGroundBackground();
+    // manageInterval();
   }
   catch (err) {
     console.error(err);
@@ -351,3 +401,5 @@ let isOilRigDrawing = false;
 oilRigIcon.addEventListener('click', () => {
   isOilRigDrawing = true;
 })
+
+console.log(polygons)
