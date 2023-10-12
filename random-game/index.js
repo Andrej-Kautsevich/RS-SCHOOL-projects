@@ -4,18 +4,28 @@ const ctx = canvas.getContext("2d");
 // draw new pipe
 let isDrawing = false;
 let canCreate = true;
-let startX, startY;
 let pipeLines = [];
 let oilRigs = [];
+let valves = [];
 let groundLevel;
+let currentValve;
+let pipes = [];
 
 canvas.addEventListener("mousedown", (event) => {
-  startX = event.offsetX;
-  startY = event.offsetY;
-  if (startY > groundLevel && !isOilRigDrawing) {
-    isDrawing = true;; // pipe is below ground 
+  mouseX = event.offsetX;
+  mouseY = event.offsetY;
+  if (isOilRigDrawing) return;
+  /*   if (!isOilRigDrawing && isMouseInValve(mouseX, mouseY)) {
+      isDrawing = true;
+    } */
+
+  const valve = isMouseInValve(mouseX, mouseY);
+  currentValve = valve;
+  if (valve) {
+    isDrawing = true;
+    console.log('inValve');
   }
-  console.log(startX, startY);
+  console.log(mouseX, mouseY);
 });
 
 canvas.addEventListener("mousemove", (event) => {
@@ -28,22 +38,19 @@ canvas.addEventListener("mouseup", (event) => {
 });
 
 function drawNewPipe(event) {
+  const mouseX = event.offsetX;
+  const mouseY = event.offsetY;
+
   if (!isDrawing) return;
   if (isOilRigDrawing) return;
 
   ctx.save();
-  const mouseX = event.offsetX;
-  const mouseY = event.offsetY;
   ctx.setLineDash([]); // возвращает обратно к сплошной линии
   ctx.strokeStyle = "white"; // возвращаем начальный цвет
   canCreate = true;
   ctx.clearRect(0, groundLevel, canvas.width, canvas.height);
 
-  drawBackground();
-  drawGroundOverlay();
-  drawGroundBackground();
-  drawPipeLines(); // draw existing pipes
-  drawOilRigs(); //draw existing oil rigs
+  updateState();
 
   if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
@@ -53,7 +60,7 @@ function drawNewPipe(event) {
 
   pipeLines.forEach((pipe) => {
     // if new line intersect with old existing pipes
-    if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, startX, startY, mouseX, mouseY)) {
+    if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, currentValve.x, currentValve.y, mouseX, mouseY)) {
       ctx.setLineDash([5, 15]);
       ctx.strokeStyle = "red";
       canCreate = false;
@@ -63,7 +70,7 @@ function drawNewPipe(event) {
   // draw new pipe
   ctx.beginPath();
   ctx.lineWidth = 5;
-  ctx.moveTo(startX, startY);
+  ctx.moveTo(currentValve.x, currentValve.y);
   ctx.lineTo(mouseX, mouseY);
   ctx.stroke();
   ctx.restore();
@@ -79,25 +86,30 @@ function createNewPipeLine(event) {
 
   if (!canCreate) {
     ctx.clearRect(0, groundLevel, canvas.width, canvas.height); //remove drawn line
-    drawBackground();
-    drawGroundOverlay();
-    drawGroundBackground();
-    drawPipeLines(); // draw existing pipes
-    drawOilRigs(); //draw existing oil rigs
+
+    updateState();
+
   } else {
     ctx.closePath();
     pipeLines.push({
-      startX: startX,
-      startY: startY,
+      startX: currentValve.x,
+      startY: currentValve.y,
       endX: mouseX,
-      endY: mouseY
+      endY: mouseY,
     })
-    drawBackground();
-    drawGroundOverlay();
-    drawGroundBackground();
-    drawPipeLines(); // draw existing pipes
-    drawOilRigs(); //draw existing oil rigs
-    // drawGroundOverlay();
+
+    //create new valve on pipe end
+    let path = new Path2D();
+    path.arc(mouseX, mouseY, valveImg.width / 2, 0, 2 * Math.PI)
+    valves.push({
+      id: valves.length + 1,
+      toOilRig: oilRigs.length,//!!!
+      path: path,
+      x: mouseX,
+      y: mouseY,
+    })
+
+    updateState();
   }
 }
 
@@ -115,7 +127,6 @@ function drawPipeLines() {
   })
 }
 
-
 function drawNewOilRig(event) {
   if (!isOilRigDrawing) return;
 
@@ -123,8 +134,10 @@ function drawNewOilRig(event) {
   const mouseX = event.offsetX;
   ctx.clearRect(0, 0, canvas.width, groundLevel);
   ctx.restore();
-  drawBackground();
-  drawOilRigs(); //draw existing oil rigs
+
+  updateState();
+  /*   drawBackground();
+    drawOilRigs(); //draw existing oil rigs */
   ctx.drawImage(oilRigImg, mouseX - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
 }
 
@@ -133,19 +146,40 @@ function createNewOilRig(event) {
 
   const mouseX = event.offsetX;
   isOilRigDrawing = false;
-  drawBackground();
+  // drawBackground();
   oilRigs.push({
     valve: mouseX,
     id: oilRigs.length + 1,
   });
-  drawOilRigs(); //draw existing oil rigs
+
+  let path = new Path2D();
+  path.arc(mouseX, groundLevel - valveImg.height / 2, valveImg.width / 2, 0, 2 * Math.PI)
+  valves.push({
+    id: valves.length + 1,
+    toOilRig: oilRigs.length,
+    path: path,
+    x: mouseX,
+    y: groundLevel - valveImg.height / 2,
+  })
+  updateState();
+  /*   drawOilRigs(); //draw existing oil rigs
+    drawValves(); */
   console.log(mouseX)
 }
 
 function drawOilRigs() {
   oilRigs.forEach((oilRig) => {
     ctx.drawImage(oilRigImg, oilRig.valve - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
-    ctx.drawImage(valveImg, oilRig.valve - (valveImg.width / 2), groundLevel - valveImg.height / 2 - 10);
+    // ctx.drawImage(valveImg, oilRig.valve - (valveImg.width / 2), groundLevel - valveImg.height / 2 - 10);
+  })
+  valves.forEach((valve) => {
+    ctx.stroke(valve.path);
+  })
+}
+
+function drawValves() {
+  valves.forEach((valve) => {
+    ctx.drawImage(valveImg, valve.x - (valveImg.width / 2), valve.y - (valveImg.height / 2))
   })
 }
 
@@ -385,6 +419,11 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
   const directionX = dx / length;
   const directionY = dy / length;
 
+  // Добавить 10px к концу линии
+  const extension = 25;
+  endX += directionX * extension;
+  endY += directionY * extension;
+
   // Вычисление перпендикулярного вектора
   const perpendicularX = -directionY;
   const perpendicularY = directionX;
@@ -418,6 +457,23 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
   return path;
 }
 
+function isMouseInValve(mouseX, mouseY) {
+  for (let i = 0; i < valves.length; i++) {
+    if (ctx.isPointInPath(valves[i].path, mouseX, mouseY)) {
+      return valves[i];  // точка внутри path
+    }
+  }
+  return false; // точка не внутри любого path
+}
+
+function updateState() {
+  drawBackground();
+  drawGroundOverlay();
+  drawGroundBackground();
+  drawPipeLines(); // draw existing pipes
+  drawOilRigs(); //draw existing oil rigs
+  drawValves();
+}
 
 
 
