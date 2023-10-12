@@ -6,19 +6,30 @@ let isDrawing = false;
 let canCreate = true;
 let startX, startY;
 let pipeLines = [];
+let oilRigs = [];
 let groundLevel;
 
 canvas.addEventListener("mousedown", (event) => {
   startX = event.offsetX;
   startY = event.offsetY;
-  if (startY > groundLevel) {
+  if (startY > groundLevel && !isOilRigDrawing) {
     isDrawing = true;; // pipe is below ground 
   }
   console.log(startX, startY);
 });
 
+canvas.addEventListener("mousemove", (event) => {
+  drawNewPipe(event);
+  drawNewOilRig(event);
+});
+canvas.addEventListener("mouseup", (event) => {
+  createNewPipeLine(event);
+  createNewOilRig(event);
+});
+
 function drawNewPipe(event) {
   if (!isDrawing) return;
+  if (isOilRigDrawing) return;
 
   ctx.save();
   const mouseX = event.offsetX;
@@ -26,12 +37,13 @@ function drawNewPipe(event) {
   ctx.setLineDash([]); // возвращает обратно к сплошной линии
   ctx.strokeStyle = "white"; // возвращаем начальный цвет
   canCreate = true;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, groundLevel, canvas.width, canvas.height);
 
   drawBackground();
   drawGroundOverlay();
   drawGroundBackground();
   drawPipeLines(); // draw existing pipes
+  drawOilRigs(); //draw existing oil rigs
 
   if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
@@ -57,23 +69,21 @@ function drawNewPipe(event) {
   ctx.restore();
 }
 
-canvas.addEventListener("mousemove", drawNewPipe);
-
-canvas.addEventListener("mouseup", createNewPipeLine);
-
 function createNewPipeLine(event) {
   if (!isDrawing) return;
+  if (isOilRigDrawing) return;
 
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
   isDrawing = false;
 
   if (!canCreate) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); //remove drawn line
+    ctx.clearRect(0, groundLevel, canvas.width, canvas.height); //remove drawn line
     drawBackground();
     drawGroundOverlay();
     drawGroundBackground();
     drawPipeLines(); // draw existing pipes
+    drawOilRigs(); //draw existing oil rigs
   } else {
     ctx.closePath();
     pipeLines.push({
@@ -86,6 +96,7 @@ function createNewPipeLine(event) {
     drawGroundOverlay();
     drawGroundBackground();
     drawPipeLines(); // draw existing pipes
+    drawOilRigs(); //draw existing oil rigs
     // drawGroundOverlay();
   }
 }
@@ -101,6 +112,40 @@ function drawPipeLines() {
     ctx.lineTo(pipe.endX, pipe.endY);
     ctx.stroke();
     ctx.restore();
+  })
+}
+
+
+function drawNewOilRig(event) {
+  if (!isOilRigDrawing) return;
+
+  ctx.save();
+  const mouseX = event.offsetX;
+  ctx.clearRect(0, 0, canvas.width, groundLevel);
+  ctx.restore();
+  drawBackground();
+  drawOilRigs(); //draw existing oil rigs
+  ctx.drawImage(oilRigImg, mouseX - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
+}
+
+function createNewOilRig(event) {
+  if (!isOilRigDrawing) return;
+
+  const mouseX = event.offsetX;
+  isOilRigDrawing = false;
+  drawBackground();
+  oilRigs.push({
+    valve: mouseX,
+    id: oilRigs.length + 1,
+  });
+  drawOilRigs(); //draw existing oil rigs
+  console.log(mouseX)
+}
+
+function drawOilRigs() {
+  oilRigs.forEach((oilRig) => {
+    ctx.drawImage(oilRigImg, oilRig.valve - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
+    ctx.drawImage(valveImg, oilRig.valve - (valveImg.width / 2), groundLevel - valveImg.height / 2 - 10);
   })
 }
 
@@ -363,7 +408,7 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
   };
 
   let path = new Path2D();
-  
+
   path.moveTo(startPointLeft.x, startPointLeft.y);
   path.lineTo(endPointLeft.x, endPointLeft.y);
   path.lineTo(endPointRight.x, endPointRight.y);
@@ -384,10 +429,14 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
 //Images
 const overlay = new Image();
 const background = new Image();
+const oilRigImg = new Image();
+const valveImg = new Image();
 
 //Source
-overlay.src = "assets/soil.jpg"
+overlay.src = "assets/soil.jpg";
 background.src = "assets/background.jpg";
+oilRigImg.src = "assets/oil-rig.png";
+valveImg.src = "assets/valve.png";
 
 function loadImg(src) {
   return new Promise((resolve, reject) => {
@@ -403,6 +452,8 @@ async function initGame() {
     // Wait until images are loaded
     const background = await loadImg('assets/background.jpg');
     const overlay = await loadImg('assets/soil.jpg');
+    const oilRigImg = await loadImg('assets/oil-rig.png');
+    const valveImg = await loadImg('assets/valve.png');
 
     groundLevel = background.height + 13; // background + road
     drawBackground()
@@ -416,3 +467,15 @@ async function initGame() {
 }
 
 initGame();
+
+
+const menu = document.querySelector('.top-menu');
+
+const oilRigIcon = document.getElementById('oil-rig');
+
+let isOilRigDrawing = false;
+
+oilRigIcon.addEventListener('click', () => {
+  isOilRigDrawing = true;
+  console.log(isOilRigDrawing);
+})
