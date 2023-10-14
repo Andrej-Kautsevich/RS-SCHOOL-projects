@@ -75,8 +75,7 @@ function createOilPolygons(groundLevel, polygons) {
       oilVolume: oilVolume,
       maxOilVolume: oilVolume,
       isActive: false,
-      activePipesId: [],
-      toOilRig: [],
+      activePipeCount: 0,
     });
     originX += polygonSize + Math.floor(Math.random() * polygonGap);
   }

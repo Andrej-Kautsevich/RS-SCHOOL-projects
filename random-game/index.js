@@ -21,6 +21,9 @@ const oilRigCapacity = 1000; //max oil in rig
 const oilPumpSpeed = 10; // Oil volume decrease per 0.1 second
 const polygons = [];         // Массив для хранения координат многоугольников
 
+ctx.lineWidth
+
+
 canvas.addEventListener("mousedown", (event) => {
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
@@ -62,12 +65,11 @@ function drawNewPipe(event) {
   if (isOilRigDrawing) return;
 
   ctx.save();
-  ctx.setLineDash([]); // возвращает обратно к сплошной линии
-  ctx.strokeStyle = "white"; // возвращаем начальный цвет
+  ctx.strokeStyle = "white"; // возвращаем начальный цвет */
   canCreate = true;
   ctx.clearRect(0, groundLevel, canvas.width, canvas.height);
 
-  updateState();
+  updateDrawing();
 
   if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
@@ -104,7 +106,7 @@ function createNewPipeLine(event) {
   if (!canCreate) {
     ctx.clearRect(0, groundLevel, canvas.width, canvas.height); //remove drawn line
 
-    updateState();
+    updateDrawing();
   } else {
     ctx.closePath();
     pipeLines.push({
@@ -153,7 +155,7 @@ function createNewPipeLine(event) {
         })
       }
     })
-    updateState();
+    updateDrawing();
   }
 }
 
@@ -179,7 +181,7 @@ function drawNewOilRig(event) {
   ctx.clearRect(0, 0, canvas.width, groundLevel);
   ctx.restore();
 
-  updateState();
+  updateDrawing();
   ctx.drawImage(oilRigImg, mouseX - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
 }
 
@@ -205,11 +207,24 @@ function createNewOilRig(event) {
     y: groundLevel - valveImg.height / 2,
   })
 
-  updateState(); 
+  updateDrawing();
 }
 
 function drawOilRigs() {
   oilRigs.forEach((oilRig) => {
+    const maxLineHeight = 86 //line height in pixels
+    const oilVolume = oilRig.oilVolume;
+
+    const lineHeight = oilVolume / oilRigCapacity * maxLineHeight
+
+    ctx.save();
+    ctx.moveTo(oilRig.valve, groundLevel - 13 - 8);
+    ctx.lineTo(oilRig.valve, groundLevel - 13 - 8 - lineHeight);
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = "#221c15";
+    ctx.stroke();
+    ctx.restore();
+
     ctx.drawImage(oilRigImg, oilRig.valve - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
   })
 }
@@ -252,13 +267,18 @@ function drawOilPolygons(polygons) {
 
 function drawBackground() {
   ctx.drawImage(background, 0, 0);
+  ctx.drawImage(rightInc, canvas.width - rightInc.width, groundLevel - rightInc.width - 11);
+  ctx.drawImage(leftInc, 0, groundLevel - leftInc.width - 11);
+
   ctx.translate(0, background.height)
 
   //road background
+  ctx.save();
   ctx.beginPath();
   ctx.fillStyle = "#d68b53";
   ctx.fillRect(0, 0, canvas.width, 13)
   ctx.closePath();
+  ctx.restore();
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
@@ -286,34 +306,56 @@ function drawGroundOverlay() {
   ctx.drawImage(overlay, 0, groundLevel)
 }
 
-function updateState() {
+function drawWagonFrame(frameX, frameY, canvasX, canvasY) {
+  const width = 114; //frame width
+  const height = 55; //frame height
+  ctx.drawImage(wagonImg, frameX * width, frameY * height, width, height, canvasX, canvasY, width, height);
+  console.log(frameX);
+}
+
+const cycleLoop = [0, 1, 2, 3, 4, 5, 6,];
+let currentLoopIndex = 0;
+let frameCount = 0;
+
+function drawWagon() {
+  frameCount++;
+  if (frameCount <= 60) {
+    window.requestAnimationFrame(drawWagon);
+    return;
+  }
+  frameCount = 0;
+  updateDrawing();
+  drawWagonFrame(cycleLoop[currentLoopIndex], 0, 400, 400);
+  currentLoopIndex++;
+  if (currentLoopIndex >= cycleLoop.length) {
+    currentLoopIndex = 0;
+  }
+  window.requestAnimationFrame(drawWagon);
+}
+
+
+
+
+
+
+
+
+
+
+function updateDrawing() {
   drawBackground();
   drawGroundOverlay();
   drawGroundBackground();
-  drawPipeLines(); // draw existing pipes
   drawOilRigs(); //draw existing oil rigs
-  updateOilRigs()
-
+  drawPipeLines(); // draw existing pipes
   drawActivePipe();
   drawValves();
-  manageInterval();
+  // manageInterval()
 }
 
-let interval = null;
+function updateState() {
+  updateOilRigs()
 
-function manageInterval() {
-  if (!isOilRigDrawing && !isDrawing) {
-    if (interval === null) {
-      interval = setInterval(() => {
-        updateState();
-      }, 100);
-    }
-  } else {
-    if (interval !== null) {
-      clearInterval(interval);
-      interval = null;
-    }
-  }
 }
 
 function updateOilRigs() {
@@ -341,6 +383,24 @@ function updatePipe(pipe, oilRig, polygon) {
   }
 }
 
+let interval = null;
+
+// function manageInterval() {
+//   if (!isOilRigDrawing && !isDrawing) {
+//     if (interval === null) {
+//       interval = setInterval(() => {
+//         updateDrawing();
+//       }, 100);
+//     }
+//   } else {
+//     if (interval !== null) {
+//       clearInterval(interval);
+//       interval = null;
+//     }
+//   }
+// }
+
+setInterval(updateState, 100);
 
 
 
@@ -352,12 +412,20 @@ const overlay = new Image();
 const background = new Image();
 const oilRigImg = new Image();
 const valveImg = new Image();
+const rightInc = new Image();
+const leftInc = new Image();
+const wagonImg = new Image();
+
 
 //Source
 overlay.src = "assets/soil.jpg";
 background.src = "assets/background.jpg";
 oilRigImg.src = "assets/oil-rig.png";
 valveImg.src = "assets/valve.png";
+rightInc.src = "assets/right.png";
+leftInc.src = "assets/left.png";
+wagonImg.src = "assets/Wagon114x55.png";
+
 
 function loadImg(src) {
   return new Promise((resolve, reject) => {
@@ -375,12 +443,16 @@ async function initGame() {
     const overlay = await loadImg('assets/soil.jpg');
     const oilRigImg = await loadImg('assets/oil-rig.png');
     const valveImg = await loadImg('assets/valve.png');
+    const rightInc = await loadImg('assets/right.png');
+    const leftInc = await loadImg('assets/left.png');
+    const wagonImg = await loadImg('assets/Wagon114x55.png');
 
     groundLevel = background.height + 13; // background + road
     drawBackground()
     drawGroundOverlay();
     createOilPolygons(groundLevel, polygons);
     drawGroundBackground();
+    window.requestAnimationFrame(drawWagon);
     // manageInterval();
   }
   catch (err) {
