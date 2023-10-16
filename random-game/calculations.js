@@ -249,9 +249,17 @@ function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   return true;
 }
 
+function calculateLineLength(x1, y1, x2, y2) {
+  var deltaX = x2 - x1;
+  var deltaY = y2 - y1;
+  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  return length;
+}
+
 export {
   getPathAlongLine,
   getPathFromPipe,
   checkLinesIntersect,
   createOilPolygons,
+  calculateLineLength,
 }

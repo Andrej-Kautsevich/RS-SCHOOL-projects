@@ -60,6 +60,10 @@
   letter-spacing: 4px;
 }
 
+.menu-price_red {
+  color: red;
+}
+
 .menu-money {
   display: flex;
   height: 100%;
@@ -69,6 +73,7 @@
   align-content: center;
   align-items: center;
   justify-content: center;
+  cursor: default;
 }
 
 .sell-button {

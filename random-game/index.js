@@ -29,6 +29,7 @@ const OIL_PUMP_SPEED = 10; // Oil volume decrease per 0.1 second
 const WAGON_WIDTH = 114;
 const MOVEMENT_SPEED = 0.5;
 const WAGON_CYCLE_LOOP = [0, 1, 2, 3, 4, 5, 6];
+const PIPE_COST_PER_LENGTH = 2;
 
 
 function isMouseInValve(mouseX, mouseY) {
@@ -48,6 +49,7 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
   if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
     ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
     canCreatePipe = false;   // can not create pipes above ground 
   }
 
@@ -56,9 +58,15 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
     if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, currentValve.x, currentValve.y, mouseX, mouseY)) {
       ctx.setLineDash([5, 15]);
       ctx.strokeStyle = "red";
+      ctx.fillStyle = "red";
       canCreatePipe = false;
     }
   })
+
+  checkPipeLineLength(startX, startY, mouseX, mouseY, money);
+
+  const length = calculateLineLength(currentValve.x, currentValve.y, mouseX, mouseY);
+  const pipeCost = Math.round(length * PIPE_COST_PER_LENGTH);
 
   // draw new pipe
   ctx.beginPath();
@@ -66,6 +74,10 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.moveTo(startX, startY);
   ctx.lineTo(mouseX, mouseY);
   ctx.stroke();
+
+  // draw price
+  ctx.font = "36px Smokum"
+  ctx.fillText(`$${pipeCost}`, mouseX + 10, mouseY - 10)
   ctx.restore();
 }
 
@@ -79,6 +91,10 @@ function createNewPipeLine(event) {
 
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
+  const length = calculateLineLength(currentValve.x, currentValve.y, mouseX, mouseY);
+  const pipeCost = Math.round(length * PIPE_COST_PER_LENGTH);
+  money -= pipeCost;
+
   isPipeDrawing = false;
 
   ctx.closePath();
@@ -570,6 +586,23 @@ function updateWagonState(wagon) {
   checkWagonState(wagon)
 }
 
+function checkPipeLineLength(startX, startY, endX, endY) {
+  const length = calculateLineLength(startX, startY, endX, endY);
+  console.log(length);
+  if (length < 50) {
+    ctx.setLineDash([5, 15]);
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+
+  const pipeCost = length * PIPE_COST_PER_LENGTH;
+  if (pipeCost >= money) {
+    ctx.setLineDash([5, 15]);
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+}
+
 
 
 
@@ -659,7 +692,7 @@ async function initGame() {
     createOilPolygons(groundLevel, polygons);
     drawGroundBackground();
     window.requestAnimationFrame(render)
-    alert ('Привет, это не законченная работа, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
+    // alert ('Привет, это не законченная работа, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
 
   }
   catch (err) {
@@ -978,9 +1011,17 @@ function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   return true;
 }
 
+function calculateLineLength(x1, y1, x2, y2) {
+  var deltaX = x2 - x1;
+  var deltaY = y2 - y1;
+  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  return length;
+}
+
 // export {
 //   getPathAlongLine,
 //   getPathFromPipe,
 //   checkLinesIntersect,
 //   createOilPolygons,
+//   calculateLineLength
 // }
