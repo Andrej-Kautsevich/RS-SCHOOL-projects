@@ -11,19 +11,78 @@
       <div class="wrapper">
         <canvas class="game" id="myCanvas" width="1024" height="700"></canvas>
         <div class="top-menu">
-          <div class="menu-item"  id="oil-rig">
-            <img src="assets/oil-rig.png" alt="">
+          <div class="menu-item menu-date" id="date">JAN</div>
+          <div class="menu-item menu-money" id="money"></div>
+          <div class="menu-item" id="oil-rig">
+            <img src="assets/oil-rig.png" alt="" />
             <div class="menu-price" id="rig-price">$350</div>
           </div>
-          <div class="menu-item menu-money" id="money"></div>
-          <div class="menu-item"  id="wagon">
-            <img src="assets/horse.png" alt="">
+          <div class="menu-item" id="wagon">
+            <img src="assets/horse.png" alt="" />
             <div class="menu-price" id="wagon-price">$200</div>
+          </div>
         </div>
-      </div>
         <button class="sell-button sell-right" id="sellRight">SELL</button>
         <button class="sell-button sell-left" id="sellLeft">SELL</button>
+      </div>
+    </div>
+    <div class="overlay-wrapper active">
+      <div class="game-over">
+        <form class="tabs">
+          <label class="tab-label">
+            <input
+              type="radio"
+              name="tabs"
+              class="tab-input"
+              data-tab="stats"
+              checked
+            />
+            <h2>Summary</h2>
+          </label>
+          <label class="tab-label">
+            <input
+              type="radio"
+              name="tabs"
+              class="tab-input"
+              data-tab="lastGames"
+            />
+            <h2>Last Games</h2>
+          </label>
+        </form>
+        <div class="game-over-tab game-over-tab_active" data-tab="stats">
+          <ul class="stats">
+            <li class="stats-item" id="earnings"></li>
+            <li class="stats-item" id="spendings"></li>
+            <li class="stats-item" id="total"></li>
+          </ul>
+        </div>
+        <div class="game-over-tab" data-tab="lastGames">
+          <ol class="last-games">
+            <li class="last-games-item">
+              <div class="last-games-user">
+                <span class="user-name">Prakapro</span>
+                <span class="last-games-result">2500$</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <button class="restart" id="restart">Start New Game</button>
+      </div>
+      <div class="new-game active">
+        <p>
+          Hi! You have rented an oil site in the wild west for oil production.
+          Your task is to earn as much money as you can. The land lease expires
+          in a year.
+        </p>
+        <form action class="user-name-form">
+          <label class="user-name-label">Enter your name:
+            <input type="text" class="user-name-input" required autocomplete="nickname">
+          </label>
+          <button type="submit" class="start-game">Let's go!</button>
+        </form>
+      </div>
     </div>
     <script src="index.js"></script>
+    <script src="tabs.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .container {
@@ -17,7 +18,6 @@
 }
 
 .wrapper {
-  /* backdrop-filter: blur(10px); */
   display: flex;
   width: 1024px;
   height: 700px;
@@ -35,15 +35,14 @@
   align-items: center;
   width: 700px;
   height: 100px;
-  border: solid 1px red;
   background: bisque;
   position: absolute;
   right: 162px;
+  font-family: "Smokum";
 }
 
 .menu-item {
   height: 100%;
-  /* border: solid 1px rgb(253, 174, 79); */
   cursor: pointer;
 }
 
@@ -54,7 +53,6 @@
 
 .menu-price {
   height: 30%;
-  font-family: "Smokum";
   font-size: 24px;
   text-align: center;
   letter-spacing: 4px;
@@ -68,7 +66,6 @@
   display: flex;
   height: 100%;
   width: 30%;
-  font-family: "Smokum";
   font-size: 70px;
   align-content: center;
   align-items: center;
@@ -76,20 +73,28 @@
   cursor: default;
 }
 
+.menu-date {
+  display: flex;
+  flex-basis: 15%;
+  font-size: 70px;
+  align-items: center;
+}
+
 .sell-button {
   font-family: "Smokum";
-  font-size: 20px;
+  font-size: 26px;
   position: absolute;
-  top: 180px;
+  top: 175px;
   border-radius: 2px;
   border: 1px solid #0c0c0e;
   background-color: lightgray;
-  padding: 5px;
+  padding: 5px 10px;
+  letter-spacing: 2px;
 }
 
 .sell-button_active {
-  background-color: darkgray; 
-  top: 182px; 
+  background-color: darkgray;
+  top: 177px;
 }
 
 .sell-right {
@@ -98,4 +103,182 @@
 
 .sell-left {
   left: 85px;
+}
+
+.overlay-wrapper {
+  display: none;
+  backdrop-filter: blur(10px);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.game-over {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  border-radius: 25px;
+  font-family: "Smokum";
+  background-image: url("assets/modal-background.jpg");
+}
+
+.game-over h2 {
+  font-size: 64px;
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+}
+
+.tab-label {
+  align-items: center;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tab-input {
+  display: none;
+}
+
+.tab-input:checked ~ h2 {
+  background-color: #f6d5a6;
+  border-radius: 25px;
+}
+
+.game-over-tab {
+  display: none;
+  justify-content: center;
+  position: relative;
+  background-color: #f6d5a6;
+  margin: 0 250px;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: -8px 8px 0px 0px #e7bc77;
+}
+
+.game-over-tab_active {
+  display: flex;
+}
+
+.stats {
+  font-size: 48px;
+  letter-spacing: 1px;
+  list-style: none;
+  text-align: center;
+}
+
+.stats-item:last-child {
+  font-size: 64px;
+}
+
+.stats-item:last-child::before {
+  display: block;
+  margin: 20px auto 20px;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #0c0c0e;
+}
+
+.last-games {
+  font-size: 24px;
+  text-align: center;
+  width: 80%;
+}
+
+.last-games-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.restart {
+  font-family: "Smokum";
+  border-radius: 25px;
+  border: 1px solid #0c0c0e;
+  background-color: #f6d5a6;
+  color: #0c0c0e;
+  margin: 20px 0 30px;
+  padding: 9px 39px;
+  font-size: 40px;
+  cursor: pointer;
+  width: 50%;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50%;
+}
+
+.new-game {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  border-radius: 25px;
+  font-family: "Smokum";
+  background-image: url("assets/modal-background.jpg");
+  padding: 50px 100px;
+}
+
+.new-game p {
+  font-size: 48px;
+  text-align: justify;
+  margin-bottom: 24px;
+}
+
+.user-name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 48px;
+  gap: 24px;
+}
+
+.user-name-label {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.user-name-input {
+  text-align: center;
+  width: 100%;
+  border-radius: 15px;
+  font-size: 48px;
+  padding: 10px;
+  border: 2px solid transparent;
+  background-color: #f7d7aa;
+  outline: none;
+}
+
+.start-game {
+  font-family: "Smokum";
+  border-radius: 25px;
+  border: 1px solid #0c0c0e;
+  background-color: #f6d5a6;
+  color: #0c0c0e;
+  margin: 20px 0 30px;
+  padding: 9px 39px;
+  font-size: 40px;
+  cursor: pointer;
+  width: 50%;
+  align-items: center;
+}
+
+.active {
+  display: flex;
 }
