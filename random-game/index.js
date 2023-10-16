@@ -628,8 +628,8 @@ overlay.src = "assets/soil.jpg";
 background.src = "assets/background.jpg";
 oilRigImg.src = "assets/oil-rig.png";
 valveImg.src = "assets/valve.png";
-rightInc.src = "assets/right.png";
-leftInc.src = "assets/left.png";
+rightInc.src = "assets/Right.png";
+leftInc.src = "assets/Left.png";
 wagonImg.src = "assets/Wagon114x55.png";
 
 
