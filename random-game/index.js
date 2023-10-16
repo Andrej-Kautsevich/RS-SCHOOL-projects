@@ -649,8 +649,8 @@ async function initGame() {
     const overlay = await loadImg('assets/soil.jpg');
     const oilRigImg = await loadImg('assets/oil-rig.png');
     const valveImg = await loadImg('assets/valve.png');
-    const rightInc = await loadImg('assets/right.png');
-    const leftInc = await loadImg('assets/left.png');
+    const rightInc = await loadImg('assets/Right.png');
+    const leftInc = await loadImg('assets/Left.png');
     const wagonImg = await loadImg('assets/Wagon114x55.png');
 
     groundLevel = background.height + 13; // background + road
