@@ -18,9 +18,12 @@ let groundLevel;
 let currentValve;
 let pipes = [];
 let polygons = [];         // Массив для хранения координат многоугольников
-let rightFactory = {};
-let leftFactory = {};
+let leftFactory = { price: 0.95 };
+let rightFactory = { price: 0.95 };
 let money = 2000;
+let earnings = 0;
+let spendings = 0;
+
 
 
 const OIL_RIG_CAPACITY = 1000; //max oil in rig
@@ -29,6 +32,7 @@ const OIL_PUMP_SPEED = 10; // Oil volume decrease per 0.1 second
 const WAGON_WIDTH = 114;
 const MOVEMENT_SPEED = 0.5;
 const WAGON_CYCLE_LOOP = [0, 1, 2, 3, 4, 5, 6];
+const PIPE_COST_PER_LENGTH = 2;
 
 
 function isMouseInValve(mouseX, mouseY) {
@@ -48,6 +52,7 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
   if (mouseY < groundLevel) {
     ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
     ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
     canCreatePipe = false;   // can not create pipes above ground 
   }
 
@@ -56,9 +61,15 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
     if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, currentValve.x, currentValve.y, mouseX, mouseY)) {
       ctx.setLineDash([5, 15]);
       ctx.strokeStyle = "red";
+      ctx.fillStyle = "red";
       canCreatePipe = false;
     }
   })
+
+  checkPipeLineLength(startX, startY, mouseX, mouseY, money);
+
+  const length = calculateLineLength(currentValve.x, currentValve.y, mouseX, mouseY);
+  const pipeCost = Math.round(length * PIPE_COST_PER_LENGTH);
 
   // draw new pipe
   ctx.beginPath();
@@ -66,6 +77,10 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.moveTo(startX, startY);
   ctx.lineTo(mouseX, mouseY);
   ctx.stroke();
+
+  // draw price
+  ctx.font = "36px Smokum"
+  ctx.fillText(`$${pipeCost}`, mouseX + 10, mouseY - 10)
   ctx.restore();
 }
 
@@ -79,6 +94,11 @@ function createNewPipeLine(event) {
 
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
+  const length = calculateLineLength(currentValve.x, currentValve.y, mouseX, mouseY);
+  const pipeCost = Math.round(length * PIPE_COST_PER_LENGTH);
+  money -= pipeCost;
+  spendings += pipeCost;
+
   isPipeDrawing = false;
 
   ctx.closePath();
@@ -116,8 +136,6 @@ function createNewPipeLine(event) {
         polygon.toOilRig = toOilRig;
       }
 
-      console.log(polygon.id, toNewOilRig);
-
       //add new active pipe
       pipes.push({
         isActive: false,
@@ -150,7 +168,8 @@ function drawNewOilRig(mouseX) {
 
 function createNewOilRig(event) {
   if (!isOilRigDrawing) return;
-  money -= 350
+  money -= 350;
+  spendings += 350;
 
   const mouseX = event.offsetX;
   isOilRigDrawing = false;
@@ -180,6 +199,7 @@ function drawNewWagon(mouseX) {
 function createNewWagon(event) {
   if (!isWagonDrawing) return;
   money -= 200;
+  spendings += 200;
 
   const mouseX = event.offsetX;
   isWagonDrawing = false;
@@ -315,9 +335,6 @@ function drawWagons() {
     updateWagonState(wagon)
 
     if (wagon.isActive) {
-      // if (wagon.canvasX < 0 || wagon.canvasX + WAGON_WIDTH > canvas.width) {
-      //   wagon.direction *= -1;
-      // }
 
       const direction = wagon.direction;
 
@@ -344,6 +361,8 @@ function render() {
   drawPipeLines(); // draw existing pipes
   drawActivePipe();
 
+  drawOilPrice();
+
   drawWagons();
 
   if (isOilRigDrawing) {
@@ -359,12 +378,11 @@ function render() {
   }
 
   drawValves();
-  window.requestAnimationFrame(render)
+  if (!isGameOver) window.requestAnimationFrame(render)
 }
 
 function updateOilRigs() {
   oilRigs.forEach((oilRig) => {
-    // checkOilRigState(oilRig);
     updateOilRig(oilRig);
   })
 }
@@ -413,9 +431,6 @@ function updateState() {
   updateOilRigs();
   updateMoneyBox();
 }
-
-setInterval(updateState, 100);
-
 
 function updateWagonOil(wagon) {
   const position = wagon.canvasX + WAGON_WIDTH / 2;
@@ -480,17 +495,6 @@ function checkWagonState(wagon) {
   }
 }
 
-// function checkOilRigState(oilRig) {
-//   if (oilRig.oilVolume >= OIL_RIG_CAPACITY) {
-//     oilRig.isActive = false;
-//     return oilRig.isActive;
-//   }
-
-//   oilRig.isActive = pipes.some(pipe => pipe.toOilRig === oilRig.id && pipe.isActive);
-
-//   return oilRig.isActive;
-// }
-
 function checkOilRigInDirection(wagon) {
   if (wagon.isMovingToFactory === true) {
     return;
@@ -542,14 +546,13 @@ function checkWagonFactory(wagon) {
   }
 }
 
-leftFactory.price = 0.95;
-rightFactory.price = 0.50;
 
 function sellWagonOil(wagon, factory) {
   if (wagon.oilVolume > 0) {
     wagon.isActive = false;
     wagon.oilVolume -= OIL_PUMP_SPEED / 10;
-    money += (OIL_PUMP_SPEED / 10) * factory.price
+    money += (OIL_PUMP_SPEED / 10) * factory.price;
+    earnings += (OIL_PUMP_SPEED / 10) * factory.price;
   } else {
     wagon.oilVolume = 0;
     wagon.isActive = true;
@@ -570,6 +573,70 @@ function updateWagonState(wagon) {
   checkWagonState(wagon)
 }
 
+function checkPipeLineLength(startX, startY, endX, endY) {
+  const length = calculateLineLength(startX, startY, endX, endY);
+  console.log(length);
+  if (length < 50) {
+    ctx.setLineDash([5, 15]);
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+
+  const pipeCost = length * PIPE_COST_PER_LENGTH;
+  if (pipeCost >= money) {
+    ctx.setLineDash([5, 15]);
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+}
+
+function updateOilPrice() {
+
+}
+
+function drawOilPrice() {
+  ctx.save();
+  ctx.font = "48px Smokum";
+  ctx.fillText(`$${leftFactory.price.toFixed(2)}`, 40, groundLevel - 180);
+  ctx.textAlign = "end";
+  ctx.fillText(`$${rightFactory.price.toFixed(2)}`, canvas.width - 40, groundLevel - 180);
+  ctx.restore();
+}
+
+
+
+function changePrice(startPrice, changeCallback) {
+  let price = startPrice;
+  let targetPrice = getRandomFloat(0.40, 1.40);
+  let duration = getRandomInt(15000, 80000);
+  let interval = 2000;
+  console.log(`${startPrice} target: ${targetPrice} time: ${duration / 1000}`)
+  let change = (targetPrice - price) / (duration / interval);
+
+  let timer = setInterval(function () {
+    price += change;
+    changeCallback(price);
+
+    if (Math.abs(price - targetPrice) <= Math.abs(change)) {
+      clearInterval(timer);
+      changeCallback(targetPrice);
+      //start new price change
+      changePrice(targetPrice, changeCallback);
+    }
+  }, interval);
+}
+
+// Генерация случайного вещественного числа в заданном диапазоне
+function getRandomFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// Генерация случайного целого числа в заданном диапазоне
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Запускаем анимацию плавного изменения цены для каждого объекта
 
 
 
@@ -642,6 +709,9 @@ function loadImg(src) {
   });
 }
 
+
+let gameUpdateInterval;
+
 async function initGame() {
   try {
     // Wait until images are loaded
@@ -654,20 +724,40 @@ async function initGame() {
     const wagonImg = await loadImg('assets/Wagon114x55.png');
 
     groundLevel = background.height + 13; // background + road
-    drawBackground()
+    resetVariables();
+    drawBackground();
     drawGroundOverlay();
     createOilPolygons(groundLevel, polygons);
     drawGroundBackground();
-    window.requestAnimationFrame(render)
-    alert ('Привет, это не законченная работа, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
+    window.requestAnimationFrame(render);
+    // Изменяем месяц каждую минуту
+    dateInterval = setInterval(changeMonth, 30 * 1000);
+    gameUpdateInterval = setInterval(updateState, 100);
 
+    changePrice(leftFactory.price, newPrice => leftFactory.price = newPrice);
+    changePrice(rightFactory.price, newPrice => rightFactory.price = newPrice);
   }
   catch (err) {
     console.error(err);
   }
 }
 
-initGame();
+function resetVariables() {
+  isPipeDrawing = false;
+  canCreatePipe = false;
+  pipeLines = [];
+  oilRigs = [];
+  wagons = [];
+  valves = [];
+  currentValve = {};
+  pipes = [];
+  polygons = [];
+  leftFactory = { price: 0.95 };
+  rightFactory = { price: 0.95 };
+  money = 2000;
+  earnings = 0;
+  spendings = 0;
+}
 
 
 const menu = document.querySelector('.top-menu');
@@ -713,6 +803,66 @@ sellRightBtn.addEventListener('click', () => {
   sellRight = !sellRight;
   sellRightBtn.classList.toggle('sell-button_active');
 });
+
+
+let monthIndex = 0;
+const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC", "END"];
+let dateInterval;
+
+function changeMonth() {
+  const dateElement = document.getElementById("date");
+  monthIndex++;
+  if (monthIndex === 12) {
+    clearInterval(dateInterval);
+    gameOver();
+  }
+  dateElement.innerHTML = months[monthIndex];
+}
+
+
+const modalWrapper = document.querySelector('.overlay-wrapper');
+const gameOverTab = document.querySelector('.game-over');
+const newGameTab = document.querySelector('.new-game');
+const startGame = document.querySelector('.user-name-form');
+
+startGame.addEventListener('submit', (event) => {
+  event.preventDefault();
+  modalWrapper.classList.toggle('active');
+  newGameTab.classList.toggle('active');
+  initGame();
+})
+
+
+
+let isGameOver = false;
+
+function gameOver() {
+  console.log("game over!");
+  clearInterval("gameUpdateInterval");
+  isGameOver = true;
+
+  modalWrapper.classList.toggle('active');
+  gameOverTab.classList.toggle('active');
+  const earningsResult = document.getElementById('earnings');
+  const spendingsResult = document.getElementById('spendings');
+  const totalResult = document.getElementById('total');
+  const restartBtn = document.getElementById('restart')
+
+  earningsResult.innerText = `Earnings: $${earnings.toFixed(0)}`;
+  spendingsResult.innerText = `Spendings: -$${spendings.toFixed(0)}`;
+  totalResult.innerText = `Total: $${money.toFixed(0)}`;
+
+  restartBtn.addEventListener('click', reset)
+}
+
+function reset() {
+  isGameOver = false;
+  gameOverTab.classList.toggle('active');
+  newGameTab.classList.toggle('active');
+}
+
+
+alert ('Hi! Work in progress, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
 
 
 
@@ -978,9 +1128,17 @@ function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   return true;
 }
 
+function calculateLineLength(x1, y1, x2, y2) {
+  var deltaX = x2 - x1;
+  var deltaY = y2 - y1;
+  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  return length;
+}
+
 // export {
 //   getPathAlongLine,
 //   getPathFromPipe,
 //   checkLinesIntersect,
 //   createOilPolygons,
+//   calculateLineLength
 // }
