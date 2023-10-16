@@ -11,14 +11,19 @@
       <div class="wrapper">
         <canvas class="game" id="myCanvas" width="1024" height="700"></canvas>
         <div class="top-menu">
-          <div class="menu-item">
-            <img src="assets/oil-rig.png" alt="" id="oil-rig">
+          <div class="menu-item"  id="oil-rig">
+            <img src="assets/oil-rig.png" alt="">
+            <div class="menu-price">$350</div>
           </div>
-          <div class="menu-item">
-            <img src="assets/horse.png" alt="" id="wagon">
+          <div class="menu-item menu-money" id="money"></div>
+          <div class="menu-item"  id="wagon">
+            <img src="assets/horse.png" alt="">
+            <div class="menu-price">$200</div>
         </div>
       </div>
+        <button class="sell-button sell-right" id="sellRight">SELL</button>
+        <button class="sell-button sell-left" id="sellLeft">SELL</button>
     </div>
-    <script type="module" src="index.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
