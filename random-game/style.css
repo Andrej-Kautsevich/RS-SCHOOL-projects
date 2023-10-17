@@ -73,11 +73,48 @@
   cursor: default;
 }
 
+.menu-end {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.menu-end img {
+  height: 80%;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 140px;
+  font-size: 18px;
+  background-color: bisque;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -70px;
+  
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.menu-end:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
 .menu-date {
   display: flex;
   flex-basis: 15%;
   font-size: 70px;
   align-items: center;
+  cursor: default;
 }
 
 .sell-button {

@@ -1,3 +1,61 @@
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+const PIPE_COST_PER_LENGTH = 2;
+
+function isMouseInValve(mouseX, mouseY, valves) {
+  for (let i = 0; i < valves.length; i++) {
+    if (ctx.isPointInPath(valves[i].pathArc, mouseX, mouseY)) {
+      return valves[i];  // point inside a valve
+    }
+  }
+  return false; // point outside a valve
+}
+
+function checkPipeLineLength(startX, startY, endX, endY, canCreatePipe, money) {
+  const length = calculateLineLength(startX, startY, endX, endY);
+  if (length < 25) {
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+
+  const pipeCost = length * PIPE_COST_PER_LENGTH;
+  if (pipeCost >= money) {
+    ctx.setLineDash([5, 15]);
+    ctx.strokeStyle = "red";
+    canCreatePipe = false;
+  }
+  return canCreatePipe;
+}
+
+function calculateLineLength(x1, y1, x2, y2) {
+  var deltaX = x2 - x1;
+  var deltaY = y2 - y1;
+  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  return length;
+}
+
+function getPathFromPipe(pipe, valves) {
+  let pathToRig = new Path2D();
+
+  let valvesId = pipe.path
+  let points = [];
+
+  for (let id of valvesId) {
+    for (let i = 0; i < valves.length; i++) {
+      if (valves[i].id === id) {
+        points.push({ x: valves[i].x, y: valves[i].y });
+        break;
+      }
+    }
+  }
+
+  pathToRig.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) {
+    pathToRig.lineTo(points[i].x, points[i].y)
+  }
+  return pathToRig;
+}
+
 function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
   // Вычисление вектора направления
   const dx = endX - startX;
@@ -97,13 +155,6 @@ function calculatePolygonArea(polygon) {
   return Math.abs(area / 2);
 }
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let t = array[i]; array[i] = array[j]; array[j] = t
-  }
-}
-
 //based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
 function generatePolygon(n = 10, originX = 0, originY = 0) {
   // Step 1: generate two list of random X and Y coordinates
@@ -200,26 +251,11 @@ function generatePolygon(n = 10, originX = 0, originY = 0) {
   return points
 }
 
-function getPathFromPipe(pipe, valves) {
-  let pathToRig = new Path2D();
-
-  let valvesId = pipe.path
-  let points = [];
-
-  for (let id of valvesId) {
-    for (let i = 0; i < valves.length; i++) {
-      if (valves[i].id === id) {
-        points.push({ x: valves[i].x, y: valves[i].y });
-        break;
-      }
-    }
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let t = array[i]; array[i] = array[j]; array[j] = t
   }
-
-  pathToRig.moveTo(points[0].x, points[0].y);
-  for (let i = 1; i < points.length; i++) {
-    pathToRig.lineTo(points[i].x, points[i].y)
-  }
-  return pathToRig;
 }
 
 // check intersect with existing pipe
@@ -249,17 +285,14 @@ function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   return true;
 }
 
-function calculateLineLength(x1, y1, x2, y2) {
-  var deltaX = x2 - x1;
-  var deltaY = y2 - y1;
-  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  return length;
-}
-
 export {
-  getPathAlongLine,
-  getPathFromPipe,
-  checkLinesIntersect,
-  createOilPolygons,
+  isMouseInValve,
+  checkPipeLineLength,
   calculateLineLength,
+  getPathFromPipe,
+  getPathAlongLine,
+  createOilPolygons,
+  checkLinesIntersect,
+
+  PIPE_COST_PER_LENGTH,
 }
