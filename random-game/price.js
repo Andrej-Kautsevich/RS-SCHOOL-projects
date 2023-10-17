@@ -4,7 +4,6 @@ function changePrice(startPrice, changeCallback) {
   let targetPrice = getRandomFloat(0.40, 1.40);
   let duration = getRandomInt(15000, 80000);
   let interval = 2000;
-  console.log(`${startPrice} target: ${targetPrice} time: ${duration / 1000}`)
   let change = (targetPrice - price) / (duration / interval);
 
   let intervalID = setInterval(function () {
@@ -52,7 +51,6 @@ function updateMoneyBox(money) {
     wagonPrice.classList.remove('menu-price_red')
   }
 }
-
 
 export {
   changePrice,

@@ -1,6 +1,6 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-const PIPE_COST_PER_LENGTH = 2;
+const PIPE_COST_PER_LENGTH = 1;
 
 function isMouseInValve(mouseX, mouseY, valves) {
   for (let i = 0; i < valves.length; i++) {

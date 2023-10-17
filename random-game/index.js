@@ -18,7 +18,7 @@ import {
   drawPipeLines,
   drawOilRigs,
   drawValves,
-  drawActivePipe,
+  pumpingAnimation,
   drawOilPolygons,
   drawFrame,
   drawWagons,
@@ -30,6 +30,12 @@ import {
   updateMoneyBox,
   priceIntervals,
 } from "./price.js"
+
+import {
+  updateOilRigs,
+  OIL_RIG_CAPACITY,
+  OIL_PUMP_SPEED
+} from "./oilRigs.js"
 
 let isPipeDrawing = false;
 let canCreatePipe = false;
@@ -48,11 +54,12 @@ let money = 2000;
 let earnings = 0;
 let spendings = 0;
 
-const MONTH_DURATION = 30 * 1000 //0.5 minute
-const OIL_RIG_CAPACITY = 1000; //max oil in rig
-const OIL_PUMP_SPEED = 10; // Oil volume decrease per 0.1 second
-const WAGON_WIDTH = 114; //wagon animation
-const WAGON_CAPACITY = 500; // max oil in wagon
+const MONTH_DURATION = 20 * 1000 //0.5 minute
+
+const WAGON_CAPACITY = 150; // max oil in wagon
+const WAGON_WIDTH = 114;
+const OIL_PUMP_SPEED_TO_WAGON = 1; // Oil volume decrease per 0.1 second
+
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.save();
@@ -233,20 +240,20 @@ function drawGroundBackground() {
       clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
     }
   }
-  ctx.save(); // Сохранение текущего состояния
-  ctx.clip(clipPath);
-  //ground background
+  ctx.save(); 
+  if (!isGameOver) ctx.clip(clipPath);
+  //draw ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
   ctx.fillRect(0, groundLevel, canvas.width, canvas.height - background.height)
   ctx.closePath();
-  //oil polygons
+  //draw oil polygons
   drawOilPolygons(polygons);
-  ctx.restore(); // Восстановление состояния до clip()
+  ctx.restore(); 
 }
 
 function drawGroundOverlay() {
-  ctx.drawImage(overlay, 0, groundLevel)
+  if (!isGameOver) ctx.drawImage(overlay, 0, groundLevel)
 }
 
 function render() {
@@ -258,7 +265,8 @@ function render() {
 
   drawOilRigs(oilRigImg, oilRigs, OIL_RIG_CAPACITY); //draw existing oil rigs
   drawPipeLines(pipeLines); // draw existing pipes
-  drawActivePipe(pipes, valves);
+
+  pumpingAnimation(pipes, valves);
 
   drawOilPrice();
 
@@ -273,35 +281,9 @@ function render() {
 }
 
 function updateState() {
-  updateOilRigs();
+  updateOilRigs(oilRigs, pipes, polygons)
   updateMoneyBox(money);
 }
-
-function updateOilRigs() {
-  oilRigs.forEach((oilRig) => {
-    updateOilRig(oilRig);
-  })
-}
-
-function updateOilRig(oilRig) {
-  pipes.forEach((pipe) => {
-    if (pipe.toOilRig === oilRig.id) {
-      const polygon = polygons.find(p => p.id === pipe.polygonID);
-      updatePipe(pipe, oilRig, polygon);
-    }
-  })
-}
-
-function updatePipe(pipe, oilRig, polygon) {
-  if (oilRig.oilVolume < OIL_RIG_CAPACITY && polygon.oilVolume > 0) {
-    pipe.isActive = true;
-    oilRig.oilVolume += OIL_PUMP_SPEED;
-    polygon.oilVolume -= OIL_PUMP_SPEED;
-  } else {
-    pipe.isActive = false;
-  }
-}
-
 
 //wagons checks 
 function updateWagonState(wagon) {
@@ -318,8 +300,8 @@ function updateWagonOil(wagon) {
   oilRigs.forEach((oilRig) => {
     if (oilRig.valve === position && oilRig.oilVolume > 0 && wagon.oilVolume < WAGON_CAPACITY) {
       wagon.isActive = false;
-      wagon.oilVolume += OIL_PUMP_SPEED / 10;
-      oilRig.oilVolume -= OIL_PUMP_SPEED / 10;
+      wagon.oilVolume += OIL_PUMP_SPEED_TO_WAGON;
+      oilRig.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
       if (wagon.oilVolume >= WAGON_CAPACITY || oilRig.oilVolume <= 0) {
         wagon.isActive = true;
       }
@@ -357,10 +339,9 @@ function checkWagonFactory(wagon) {
 function sellWagonOil(wagon, factory) {
   if (wagon.oilVolume > 0) {
     wagon.isActive = false;
-    wagon.oilVolume -= OIL_PUMP_SPEED / 10;
-    money += (OIL_PUMP_SPEED / 10) * factory.price;
-    console.log(factory.price);
-    earnings += (OIL_PUMP_SPEED / 10) * factory.price;
+    wagon.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
+    money += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
+    earnings += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
   } else {
     wagon.oilVolume = 0;
     wagon.isActive = true;
@@ -417,23 +398,23 @@ function checkOilRigInDirection(wagon) {
       : oilRig.valve < position
   );
 
-  if (oilRigInDirection) { // Если есть OilRig в направлении `direction`
-    return true; // Завершить функцию, так как не нужно что-то менять
+  if (oilRigInDirection) { // If has OilRig in direction
+    return true; 
   }
 
-  // Проверить, есть ли OilRig в другом направлении
+  // is OilRig in other direction
   oilRigInDirection = activeOilRigs.find(
     oilRig => wagon.direction === 1
       ? oilRig.valve < position
       : oilRig.valve > position
   );
 
-  if (oilRigInDirection) { // Если есть OilRig в другом направлении
-    wagon.direction *= -1; // Изменить направление движения
+  if (oilRigInDirection) { 
+    wagon.direction *= -1; //change direction
     return true
   }
   else {
-    return false; // Если нет OilRigs ни в одном из направлений
+    return false; // if no active rigs in any direction
   }
 }
 
@@ -629,8 +610,17 @@ function gameOver() {
   clearInterval(dateInterval);
   isGameOver = true;
 
-  modalWrapper.classList.toggle('active');
-  gameOverTab.classList.toggle('active');
+  render();
+
+  ctx.save();
+  ctx.font = "36px Smokum"
+  ctx.fillText("The land lease has ended", canvas.width / 2, canvas.height / 2);
+  ctx.restore()
+
+  setTimeout(() => {
+    modalWrapper.classList.toggle('active');
+    gameOverTab.classList.toggle('active');
+  }, 2000)
   const earningsResult = document.getElementById('earnings');
   const spendingsResult = document.getElementById('spendings');
   const totalResult = document.getElementById('total');
@@ -650,7 +640,6 @@ function gameOver() {
   };
 
   if (userScores.length < 10) {
-    console.log(userScores);
     userScores.push(result);
     localStorage.setItem('userScores', JSON.stringify(userScores));
   } else {
@@ -728,12 +717,11 @@ function updateScoreTable(userScores) {
   }
 }
 
-// alert ('Hi! Work in progress, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
+alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
 
 
 export {
   updateWagonState,
-
   oilRigs,
   sellLeft,
   sellRight,

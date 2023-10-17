@@ -65,10 +65,22 @@ function drawActivePipe(pipes, valves) {
       ctx.save();
       ctx.lineWidth = 3;
       ctx.strokeStyle = "#272016";
+      ctx.setLineDash([100, 2]);
+      ctx.lineDashOffset = offset;
       ctx.stroke(getPathFromPipe(pipe, valves));
       ctx.restore();
     }
   })
+}
+
+let offset = 0;
+function pumpingAnimation(pipes, valves) {
+  offset++;
+  if (offset > 400) {
+    offset = 0;
+  }
+  drawActivePipe(pipes, valves);
+  // setTimeout(() => pumpingAnimation(pipes, valves), 10000)
 }
 
 function drawOilPolygons(polygons) {
@@ -135,20 +147,15 @@ function drawOilPrice() {
   ctx.restore();
 }
 
-
-
-
-
-
 export {
   drawPipeLines,
   drawNewOilRig,
   drawNewWagon,
   drawOilRigs,
   drawValves,
-  drawActivePipe,
   drawOilPolygons,
   drawFrame,
   drawWagons,
   drawOilPrice,
+  pumpingAnimation,
 }

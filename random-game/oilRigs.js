@@ -1,3 +1,6 @@
+const OIL_RIG_CAPACITY = 1000; //max oil in rig
+const OIL_PUMP_SPEED = 5; // Oil volume decrease per 0.1 second
+
 function updateOilRigs(oilRigs, pipes, polygons) {
   if (oilRigs) {
     oilRigs.forEach((oilRig) => {
@@ -29,4 +32,6 @@ function updatePipe(pipe, oilRig, polygon) {
 
 export {
   updateOilRigs,
+  OIL_RIG_CAPACITY,
+  OIL_PUMP_SPEED
 }
