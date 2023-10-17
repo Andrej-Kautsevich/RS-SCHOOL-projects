@@ -1,15 +1,45 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-// import {
-//   getPathAlongLine,
-//   getPathFromPipe,
-//   checkLinesIntersect,
-//   createOilPolygons,
-// } from "./calculations.js"
+import {
+  isMouseInValve,
+  checkPipeLineLength,
+  calculateLineLength,
+  getPathAlongLine,
+  createOilPolygons,
+  checkLinesIntersect,
+
+  PIPE_COST_PER_LENGTH,
+} from "./calculations.js"
+
+import {
+  drawNewOilRig,
+  drawNewWagon,
+  drawPipeLines,
+  drawOilRigs,
+  drawValves,
+  pumpingAnimation,
+  drawOilPolygons,
+  drawFrame,
+  drawWagons,
+  drawOilPrice,
+} from "./render.js"
+
+import {
+  changePrice,
+  updateMoneyBox,
+  priceIntervals,
+} from "./price.js"
+
+import {
+  updateOilRigs,
+  OIL_RIG_CAPACITY,
+  OIL_PUMP_SPEED
+} from "./oilRigs.js"
 
 let isPipeDrawing = false;
 let canCreatePipe = false;
+let isGameOver = false;
 let pipeLines = [];
 let oilRigs = [];
 let wagons = [];
@@ -17,47 +47,34 @@ let valves = [];
 let groundLevel;
 let currentValve;
 let pipes = [];
-let polygons = [];         // Массив для хранения координат многоугольников
+let polygons = [];
 let leftFactory = { price: 0.95 };
 let rightFactory = { price: 0.95 };
 let money = 2000;
 let earnings = 0;
 let spendings = 0;
 
+const MONTH_DURATION = 20 * 1000 //0.5 minute
 
-
-const OIL_RIG_CAPACITY = 1000; //max oil in rig
-const WAGON_CAPACITY = 500; // max oil in wagon
-const OIL_PUMP_SPEED = 10; // Oil volume decrease per 0.1 second
+const WAGON_CAPACITY = 150; // max oil in wagon
 const WAGON_WIDTH = 114;
-const MOVEMENT_SPEED = 0.5;
-const WAGON_CYCLE_LOOP = [0, 1, 2, 3, 4, 5, 6];
-const PIPE_COST_PER_LENGTH = 2;
+const OIL_PUMP_SPEED_TO_WAGON = 1; // Oil volume decrease per 0.1 second
 
-
-function isMouseInValve(mouseX, mouseY) {
-  for (let i = 0; i < valves.length; i++) {
-    if (ctx.isPointInPath(valves[i].pathArc, mouseX, mouseY)) {
-      return valves[i];  // точка внутри path
-    }
-  }
-  return false; // точка не внутри любого path
-}
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.save();
-  ctx.strokeStyle = "white"; // возвращаем начальный цвет */
+  ctx.strokeStyle = "white";
 
   canCreatePipe = true;
   if (mouseY < groundLevel) {
-    ctx.setLineDash([5, 15]); // создает пунктирный паттерн: 5px образующей линии, 15px промежутка
+    ctx.setLineDash([5, 15]);
     ctx.strokeStyle = "red";
     ctx.fillStyle = "red";
-    canCreatePipe = false;   // can not create pipes above ground 
+    canCreatePipe = false;  // disallow creating pipes above ground 
   }
 
   pipeLines.forEach((pipe) => {
-    // if new line intersect with old existing pipes
+    // disallow intersection with existing pipes
     if (checkLinesIntersect(pipe.startX, pipe.startY, pipe.endX, pipe.endY, currentValve.x, currentValve.y, mouseX, mouseY)) {
       ctx.setLineDash([5, 15]);
       ctx.strokeStyle = "red";
@@ -66,7 +83,8 @@ function drawNewPipe(startX, startY, mouseX, mouseY) {
     }
   })
 
-  checkPipeLineLength(startX, startY, mouseX, mouseY, money);
+  //calculate pipe cost
+  canCreatePipe = checkPipeLineLength(startX, startY, mouseX, mouseY, canCreatePipe, money);
 
   const length = calculateLineLength(currentValve.x, currentValve.y, mouseX, mouseY);
   const pipeCost = Math.round(length * PIPE_COST_PER_LENGTH);
@@ -125,6 +143,7 @@ function createNewPipeLine(event) {
     y: mouseY,
   });
 
+  //update oil polygon
   polygons.forEach((polygon) => {
     const path = polygon.path;
     if (ctx.isPointInPath(path, mouseX, mouseY)) {
@@ -146,24 +165,6 @@ function createNewPipeLine(event) {
     }
   })
   canCreatePipe = false;
-}
-
-function drawPipeLines() {
-  pipeLines.forEach((pipe) => {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = "#7b8688"
-    ctx.setLineDash([]);
-    ctx.moveTo(pipe.startX, pipe.startY);
-    ctx.lineTo(pipe.endX, pipe.endY);
-    ctx.stroke();
-    ctx.restore();
-  })
-}
-
-function drawNewOilRig(mouseX) {
-  ctx.drawImage(oilRigImg, mouseX - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
 }
 
 function createNewOilRig(event) {
@@ -192,10 +193,6 @@ function createNewOilRig(event) {
   })
 }
 
-function drawNewWagon(mouseX) {
-  ctx.drawImage(wagonImg, 0, 0, 114, 55, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 114, 55);
-}
-
 function createNewWagon(event) {
   if (!isWagonDrawing) return;
   money -= 200;
@@ -211,66 +208,11 @@ function createNewWagon(event) {
     frameY: 0,
     canvasX: mouseX - WAGON_WIDTH / 2,
     canvasY: groundLevel - wagonImg.height - 13 + 110,
-    direction: 1, //right
+    direction: 1, //to right
     frameCount: 0,
   });
 
-  drawWagonFrame(0, 0, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 1);
-}
-
-function drawOilRigs() {
-  oilRigs.forEach((oilRig) => {
-    const maxLineHeight = 86 //line height in pixels
-    const oilVolume = oilRig.oilVolume;
-
-    const lineHeight = oilVolume / OIL_RIG_CAPACITY * maxLineHeight
-
-    ctx.save();
-    ctx.moveTo(oilRig.valve, groundLevel - 13 - 8);
-    ctx.lineTo(oilRig.valve, groundLevel - 13 - 8 - lineHeight);
-    ctx.lineWidth = 7;
-    ctx.strokeStyle = "#221c15";
-    ctx.stroke();
-    ctx.restore();
-
-    ctx.drawImage(oilRigImg, oilRig.valve - oilRigImg.width / 2, groundLevel - oilRigImg.height - 13);
-  })
-}
-
-function drawValves() {
-  valves.forEach((valve) => {
-    ctx.drawImage(valveImg, valve.x - (valveImg.width / 2), valve.y - (valveImg.height / 2))
-    ctx.stroke(valve.pathArc);
-  })
-}
-
-function drawActivePipe() {
-  pipes.forEach((pipe) => {
-    if (pipe.isActive) {
-      ctx.save();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#272016";
-      ctx.stroke(getPathFromPipe(pipe, valves));
-      ctx.restore();
-    }
-  })
-}
-
-// Рисование многоугольников
-function drawOilPolygons(polygons) {
-  polygons.forEach((polygon) => {
-
-    const path = polygon.path;
-    const fillLevel = polygon.oilVolume / polygon.maxOilVolume;
-
-    ctx.save();
-    ctx.fillStyle = `rgba(33, 27, 21, ${fillLevel})`;
-    ctx.strokeStyle = "#9a4c25";
-    ctx.lineWidth = 5;
-    ctx.fill(path);
-    ctx.stroke(path);
-    ctx.restore();
-  })
+  drawFrame(wagonImg, 0, 0, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 1);
 }
 
 function drawBackground() {
@@ -298,57 +240,20 @@ function drawGroundBackground() {
       clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
     }
   }
-  ctx.save(); // Сохранение текущего состояния
-  ctx.clip(clipPath);
-  //ground background
+  ctx.save(); 
+  if (!isGameOver) ctx.clip(clipPath);
+  //draw ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
   ctx.fillRect(0, groundLevel, canvas.width, canvas.height - background.height)
   ctx.closePath();
-  //oil polygons
+  //draw oil polygons
   drawOilPolygons(polygons);
-  ctx.restore(); // Восстановление состояния до clip()
+  ctx.restore(); 
 }
 
 function drawGroundOverlay() {
-  ctx.drawImage(overlay, 0, groundLevel)
-}
-
-function drawWagonFrame(frameX, frameY, canvasX, canvasY, direction) {
-  const width = 114; //frame width
-  const height = 55; //frame height
-  ctx.save();
-  if (direction < 0) {
-    ctx.scale(-1, 1);
-    canvasX = -canvasX - width;
-  }
-  ctx.drawImage(wagonImg, frameX * width, frameY * height, width, height, canvasX, canvasY, width, height);
-  ctx.restore();
-}
-
-function drawWagons() {
-  if (wagons.length === 0) return;
-
-
-  wagons.forEach((wagon) => {
-    wagon.frameCount++;
-    updateWagonState(wagon)
-
-    if (wagon.isActive) {
-
-      const direction = wagon.direction;
-
-      wagon.canvasX += direction * MOVEMENT_SPEED;
-      if (wagon.frameCount > 30) {
-        wagon.frameX++;
-        wagon.frameCount = 0;
-      }
-      if (wagon.frameX >= WAGON_CYCLE_LOOP.length) {
-        wagon.frameX = 0;
-      }
-    }
-    drawWagonFrame(wagon.frameX, wagon.frameY, wagon.canvasX, wagon.canvasY, wagon.direction)
-  })
+  if (!isGameOver) ctx.drawImage(overlay, 0, groundLevel)
 }
 
 function render() {
@@ -357,79 +262,37 @@ function render() {
   drawBackground();
   drawGroundOverlay();
   drawGroundBackground();
-  drawOilRigs(); //draw existing oil rigs
-  drawPipeLines(); // draw existing pipes
-  drawActivePipe();
+
+  drawOilRigs(oilRigImg, oilRigs, OIL_RIG_CAPACITY); //draw existing oil rigs
+  drawPipeLines(pipeLines); // draw existing pipes
+
+  pumpingAnimation(pipes, valves);
 
   drawOilPrice();
 
-  drawWagons();
+  drawWagons(wagonImg, wagons);
 
-  if (isOilRigDrawing) {
-    drawNewOilRig(toDraw.mouseX);
-  }
+  if (isOilRigDrawing) drawNewOilRig(oilRigImg, toDraw.mouseX);
+  if (isWagonDrawing) drawNewWagon(wagonImg, toDraw.mouseX);
+  if (isPipeDrawing) drawNewPipe(toDraw.startX, toDraw.startY, toDraw.mouseX, toDraw.mouseY);
 
-  if (isWagonDrawing) {
-    drawNewWagon(toDraw.mouseX);
-  }
-
-  if (isPipeDrawing) {
-    drawNewPipe(toDraw.startX, toDraw.startY, toDraw.mouseX, toDraw.mouseY);
-  }
-
-  drawValves();
+  drawValves(valveImg, valves);
   if (!isGameOver) window.requestAnimationFrame(render)
 }
 
-function updateOilRigs() {
-  oilRigs.forEach((oilRig) => {
-    updateOilRig(oilRig);
-  })
-}
-
-function updateOilRig(oilRig) {
-  pipes.forEach((pipe) => {
-    if (pipe.toOilRig === oilRig.id) {
-      const polygon = polygons.find(p => p.id === pipe.polygonID);
-      updatePipe(pipe, oilRig, polygon);
-    }
-  })
-}
-
-function updatePipe(pipe, oilRig, polygon) {
-  if (oilRig.oilVolume < OIL_RIG_CAPACITY && polygon.oilVolume > 0) {
-    pipe.isActive = true;
-    oilRig.oilVolume += OIL_PUMP_SPEED;
-    polygon.oilVolume -= OIL_PUMP_SPEED;
-  } else {
-    pipe.isActive = false;
-  }
-}
-
-function updateMoneyBox() {
-  const moneyBox = document.getElementById('money');
-  const moneyToShow = Math.floor(money);
-  moneyBox.innerText = `$ ${moneyToShow}`
-
-  const rigPrice = document.getElementById('rig-price');
-  const wagonPrice = document.getElementById('wagon-price');
-
-  // if (money < 350) {
-  //   rigPrice.classList.add('menu-price_red')
-  // } else {
-  //   rigPrice.classList.remove('menu-price_red')
-  // }
-
-  // if (wagonPrice < 200) {
-  //   rigPrice.classList.add('menu-price_red')
-  // } else {
-  //   rigPrice.classList.remove('menu-price_red')
-  // }
-}
-
 function updateState() {
-  updateOilRigs();
-  updateMoneyBox();
+  updateOilRigs(oilRigs, pipes, polygons)
+  updateMoneyBox(money);
+}
+
+//wagons checks 
+function updateWagonState(wagon) {
+  wagon.isActive = true;
+  updateWagonOil(wagon);
+  if (wagon.isActive === false) return
+  checkWagonFactory(wagon)
+  if (wagon.isActive === false) return
+  checkWagonState(wagon)
 }
 
 function updateWagonOil(wagon) {
@@ -437,8 +300,8 @@ function updateWagonOil(wagon) {
   oilRigs.forEach((oilRig) => {
     if (oilRig.valve === position && oilRig.oilVolume > 0 && wagon.oilVolume < WAGON_CAPACITY) {
       wagon.isActive = false;
-      wagon.oilVolume += OIL_PUMP_SPEED / 10;
-      oilRig.oilVolume -= OIL_PUMP_SPEED / 10;
+      wagon.oilVolume += OIL_PUMP_SPEED_TO_WAGON;
+      oilRig.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
       if (wagon.oilVolume >= WAGON_CAPACITY || oilRig.oilVolume <= 0) {
         wagon.isActive = true;
       }
@@ -459,6 +322,33 @@ function checkWagonOilLevel(wagon) {
   }
 }
 
+function checkWagonFactory(wagon) {
+  if (!sellRight && !sellLeft) return;
+
+  const position = wagon.canvasX;
+
+  if ((position === (leftInc.width / 2)) && sellLeft) {
+    sellWagonOil(wagon, leftFactory)
+  }
+
+  if ((position + WAGON_WIDTH / 2 === (canvas.width - rightInc.width / 2)) && sellRight) {
+    sellWagonOil(wagon, rightFactory)
+  }
+}
+
+function sellWagonOil(wagon, factory) {
+  if (wagon.oilVolume > 0) {
+    wagon.isActive = false;
+    wagon.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
+    money += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
+    earnings += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
+  } else {
+    wagon.oilVolume = 0;
+    wagon.isActive = true;
+    wagon.isMovingToFactory = false;
+  }
+}
+
 function checkWagonState(wagon) {
   if (wagon.oilVolume >= WAGON_CAPACITY) {
     if (sellLeft) {
@@ -476,7 +366,6 @@ function checkWagonState(wagon) {
   if (checkOilRigInDirection(wagon)) {
     return;
   }
-
 
   if (wagon.oilVolume > 0) {
     if (sellLeft) {
@@ -509,142 +398,25 @@ function checkOilRigInDirection(wagon) {
       : oilRig.valve < position
   );
 
-  if (oilRigInDirection) { // Если есть OilRig в направлении `direction`
-    return true; // Завершить функцию, так как не нужно что-то менять
+  if (oilRigInDirection) { // If has OilRig in direction
+    return true; 
   }
 
-  // Проверить, есть ли OilRig в другом направлении
+  // is OilRig in other direction
   oilRigInDirection = activeOilRigs.find(
     oilRig => wagon.direction === 1
       ? oilRig.valve < position
       : oilRig.valve > position
   );
 
-  if (oilRigInDirection) { // Если есть OilRig в другом направлении
-    wagon.direction *= -1; // Изменить направление движения
+  if (oilRigInDirection) { 
+    wagon.direction *= -1; //change direction
     return true
   }
   else {
-    return false; // Если нет OilRigs ни в одном из направлений
+    return false; // if no active rigs in any direction
   }
 }
-
-
-
-
-function checkWagonFactory(wagon) {
-  if (!sellRight && !sellLeft) return;
-
-  const position = wagon.canvasX;
-
-  if ((position === (leftInc.width / 2)) && sellLeft) {
-    sellWagonOil(wagon, leftFactory)
-  }
-
-  if ((position + WAGON_WIDTH / 2 === (canvas.width - rightInc.width / 2)) && sellRight) {
-    sellWagonOil(wagon, rightFactory)
-  }
-}
-
-
-function sellWagonOil(wagon, factory) {
-  if (wagon.oilVolume > 0) {
-    wagon.isActive = false;
-    wagon.oilVolume -= OIL_PUMP_SPEED / 10;
-    money += (OIL_PUMP_SPEED / 10) * factory.price;
-    earnings += (OIL_PUMP_SPEED / 10) * factory.price;
-  } else {
-    wagon.oilVolume = 0;
-    wagon.isActive = true;
-    wagon.isMovingToFactory = false;
-  }
-}
-
-
-
-
-function updateWagonState(wagon) {
-  wagon.isActive = true;
-  updateWagonOil(wagon);
-  if (wagon.isActive === false) return
-  checkWagonFactory(wagon)
-  if (wagon.isActive === false) return
-
-  checkWagonState(wagon)
-}
-
-function checkPipeLineLength(startX, startY, endX, endY) {
-  const length = calculateLineLength(startX, startY, endX, endY);
-  console.log(length);
-  if (length < 50) {
-    ctx.setLineDash([5, 15]);
-    ctx.strokeStyle = "red";
-    canCreatePipe = false;
-  }
-
-  const pipeCost = length * PIPE_COST_PER_LENGTH;
-  if (pipeCost >= money) {
-    ctx.setLineDash([5, 15]);
-    ctx.strokeStyle = "red";
-    canCreatePipe = false;
-  }
-}
-
-function updateOilPrice() {
-
-}
-
-function drawOilPrice() {
-  ctx.save();
-  ctx.font = "48px Smokum";
-  ctx.fillText(`$${leftFactory.price.toFixed(2)}`, 40, groundLevel - 180);
-  ctx.textAlign = "end";
-  ctx.fillText(`$${rightFactory.price.toFixed(2)}`, canvas.width - 40, groundLevel - 180);
-  ctx.restore();
-}
-
-
-
-function changePrice(startPrice, changeCallback) {
-  let price = startPrice;
-  let targetPrice = getRandomFloat(0.40, 1.40);
-  let duration = getRandomInt(15000, 80000);
-  let interval = 2000;
-  console.log(`${startPrice} target: ${targetPrice} time: ${duration / 1000}`)
-  let change = (targetPrice - price) / (duration / interval);
-
-  let timer = setInterval(function () {
-    price += change;
-    changeCallback(price);
-
-    if (Math.abs(price - targetPrice) <= Math.abs(change)) {
-      clearInterval(timer);
-      changeCallback(targetPrice);
-      //start new price change
-      changePrice(targetPrice, changeCallback);
-    }
-  }, interval);
-}
-
-// Генерация случайного вещественного числа в заданном диапазоне
-function getRandomFloat(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// Генерация случайного целого числа в заданном диапазоне
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Запускаем анимацию плавного изменения цены для каждого объекта
-
-
-
-
-
-
-
-
 
 
 let toDraw = {};
@@ -653,7 +425,7 @@ canvas.addEventListener("mousedown", mouseDownListener);
 function mouseDownListener(event) {
   const startX = event.offsetX;
   const startY = event.offsetY;
-  const valve = isMouseInValve(startX, startY);
+  const valve = isMouseInValve(startX, startY, valves);
   currentValve = valve;
   if (valve) {
     isPipeDrawing = true;
@@ -675,11 +447,6 @@ canvas.addEventListener("mouseup", (event) => {
 });
 
 
-
-
-
-
-
 //Images
 const overlay = new Image();
 const background = new Image();
@@ -688,7 +455,6 @@ const valveImg = new Image();
 const rightInc = new Image();
 const leftInc = new Image();
 const wagonImg = new Image();
-
 
 //Source
 overlay.src = "assets/soil.jpg";
@@ -699,7 +465,6 @@ rightInc.src = "assets/Right.png";
 leftInc.src = "assets/Left.png";
 wagonImg.src = "assets/Wagon114x55.png";
 
-
 function loadImg(src) {
   return new Promise((resolve, reject) => {
     let img = new Image();
@@ -708,7 +473,6 @@ function loadImg(src) {
     img.src = src;
   });
 }
-
 
 let gameUpdateInterval;
 
@@ -730,8 +494,8 @@ async function initGame() {
     createOilPolygons(groundLevel, polygons);
     drawGroundBackground();
     window.requestAnimationFrame(render);
-    // Изменяем месяц каждую минуту
-    dateInterval = setInterval(changeMonth, 30 * 1000);
+
+    dateInterval = setInterval(changeMonth, MONTH_DURATION);
     gameUpdateInterval = setInterval(updateState, 100);
 
     changePrice(leftFactory.price, newPrice => leftFactory.price = newPrice);
@@ -757,28 +521,22 @@ function resetVariables() {
   money = 2000;
   earnings = 0;
   spendings = 0;
+  monthIndex = 0;
 }
 
-
-const menu = document.querySelector('.top-menu');
-
+//Top Menu
 const oilRigIcon = document.getElementById('oil-rig');
 const wagonIcon = document.getElementById('wagon');
 const sellLeftBtn = document.getElementById('sellLeft');
 const sellRightBtn = document.getElementById('sellRight');
 
-
 let isOilRigDrawing = false;
 let isWagonDrawing = false;
 oilRigIcon.addEventListener('click', () => {
-  if (money > 350) {
-    isOilRigDrawing = true;
-  }
+  if (money > 350) isOilRigDrawing = true;
 })
 wagonIcon.addEventListener('click', () => {
-  if (money > 200) {
-    isWagonDrawing = true;
-  }
+  if (money > 200) isWagonDrawing = true;
 })
 
 let sellLeft = false;
@@ -824,25 +582,45 @@ const modalWrapper = document.querySelector('.overlay-wrapper');
 const gameOverTab = document.querySelector('.game-over');
 const newGameTab = document.querySelector('.new-game');
 const startGame = document.querySelector('.user-name-form');
+const endGameBtn = document.getElementById('end-game');
+const userInput = document.querySelector('.user-name-input');
 
+
+//Game start
 startGame.addEventListener('submit', (event) => {
   event.preventDefault();
   modalWrapper.classList.toggle('active');
   newGameTab.classList.toggle('active');
+  const userName = userInput.value;
+
+  //save user name
+  localStorage.setItem('userName', userName);
   initGame();
 })
 
+endGameBtn.addEventListener('click', gameOver)
 
-
-let isGameOver = false;
 
 function gameOver() {
-  console.log("game over!");
-  clearInterval("gameUpdateInterval");
+  for (let interval of priceIntervals) {
+    clearInterval(interval);
+  }
+
+  clearInterval(gameUpdateInterval);
+  clearInterval(dateInterval);
   isGameOver = true;
 
-  modalWrapper.classList.toggle('active');
-  gameOverTab.classList.toggle('active');
+  render();
+
+  ctx.save();
+  ctx.font = "36px Smokum"
+  ctx.fillText("The land lease has ended", canvas.width / 2, canvas.height / 2);
+  ctx.restore()
+
+  setTimeout(() => {
+    modalWrapper.classList.toggle('active');
+    gameOverTab.classList.toggle('active');
+  }, 2000)
   const earningsResult = document.getElementById('earnings');
   const spendingsResult = document.getElementById('spendings');
   const totalResult = document.getElementById('total');
@@ -852,293 +630,106 @@ function gameOver() {
   spendingsResult.innerText = `Spendings: -$${spendings.toFixed(0)}`;
   totalResult.innerText = `Total: $${money.toFixed(0)}`;
 
+  //save result
+  const userName = localStorage.getItem('userName');
+  let userScores = JSON.parse(localStorage.getItem('userScores')) || [];
+
+  const result = {
+    user: userName,
+    score: Math.round(money),
+  };
+
+  if (userScores.length < 10) {
+    userScores.push(result);
+    localStorage.setItem('userScores', JSON.stringify(userScores));
+  } else {
+    updateUserScores(result, userScores)
+    localStorage.setItem('userScores', JSON.stringify(userScores));
+  };
+
+  userScores = JSON.parse(localStorage.getItem('userScores'))
+  updateScoreTable(userScores);
   restartBtn.addEventListener('click', reset)
 }
 
+//reset last game
 function reset() {
   isGameOver = false;
   gameOverTab.classList.toggle('active');
   newGameTab.classList.toggle('active');
+
+  sellLeftBtn.classList.remove('sell-button_active')
+  sellRightBtn.classList.remove('sell-button_active')
+
+  const dateElement = document.getElementById("date");
+  dateElement.innerHTML = "JAN";
 }
 
+function updateUserScores(result, userScores) {
+  // find user index with minimum score
+  let minIndex = 0;
+  let minScore = userScores[0].score;
 
-alert ('Hi! Work in progress, если есть возможность отложить проверку, свяжись со мной в дискорд, я напишу как закончу, спасибо!')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
-  // Вычисление вектора направления
-  const dx = endX - startX;
-  const dy = endY - startY;
-  const length = Math.sqrt(dx * dx + dy * dy);
-  const directionX = dx / length;
-  const directionY = dy / length;
-
-  // Добавить 10px к концу линии
-  const extension = 25;
-  endX += directionX * extension;
-  endY += directionY * extension;
-
-  // Вычисление перпендикулярного вектора
-  const perpendicularX = -directionY;
-  const perpendicularY = directionX;
-
-  // Вычисление точек пути
-  const startPointLeft = {
-    x: startX + perpendicularX * lineWidth / 2,
-    y: startY + perpendicularY * lineWidth / 2
-  };
-  const endPointLeft = {
-    x: endX + perpendicularX * lineWidth / 2,
-    y: endY + perpendicularY * lineWidth / 2
-  };
-  const endPointRight = {
-    x: endX - perpendicularX * lineWidth / 2,
-    y: endY - perpendicularY * lineWidth / 2
-  };
-  const startPointRight = {
-    x: startX - perpendicularX * lineWidth / 2,
-    y: startY - perpendicularY * lineWidth / 2
-  };
-
-  let path = new Path2D();
-
-  path.moveTo(startPointLeft.x, startPointLeft.y);
-  path.lineTo(endPointLeft.x, endPointLeft.y);
-  path.lineTo(endPointRight.x, endPointRight.y);
-  path.lineTo(startPointRight.x, startPointRight.y);
-  path.closePath();
-
-  return path;
-}
-
-const polygonSize = 100;    // Max polygon size
-
-function createOilPolygons(groundLevel, polygons) {
-  const canvasWidth = 1024;    // Ширина холста
-  const canvasHeight = 400;    // Высота холста
-  const numPolygons = 4;       // Количество многоугольников
-  const polygonGap = Math.floor((canvasWidth - polygonSize * 2) / numPolygons);
-
-  let originX = polygonSize;
-  while (originX < (canvasWidth - polygonSize)) {
-    const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
-    const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
-    const points = generatePolygon(polygonSideNumber, originX, originY);
-    const oilVolume = calculatePolygonArea(points);
-    let path = new Path2D();
-
-    path.moveTo(points[0].x, points[0].y);
-
-    for (let i = 1; i < points.length; i++) {
-      path.lineTo(points[i].x, points[i].y)
+  for (let i = 1; i < userScores.length; i++) {
+    if (userScores[i].score < minScore) {
+      minScore = userScores[i].score;
+      minIndex = i;
     }
+  }
 
-    path.closePath();
+  if (result.score > minScore) {
+    userScores.splice(minIndex, 1);
+    userScores.push(result);
+  }
+}
 
-    polygons.push({
-      id: polygons.length + 1,
-      path: path,
-      points: points,
-      oilVolume: oilVolume,
-      maxOilVolume: oilVolume,
-      isActive: false,
-      activePipesId: [],
-      toOilRig: [],
+function updateScoreTable(userScores) {
+  const scoreList = document.querySelector('.last-games');
+  if (scoreList) {
+    userScores.sort((a, b) => b.score - a.score);
+
+    scoreList.innerHTML = '';
+
+    //update table
+    userScores.forEach((user) => {
+      // create new list item
+      const newListItem = document.createElement('li');
+      newListItem.classList.add('last-games-item');
+
+      const userInfo = document.createElement('div');
+      userInfo.classList.add('last-games-user');
+
+      // add player name
+      const userName = document.createElement('span');
+      userName.classList.add('user-name');
+      userName.textContent = user.user;
+
+      // add score
+      const userScore = document.createElement('span');
+      userScore.classList.add('last-games-result');
+      userScore.textContent = user.score;
+
+      userInfo.appendChild(userName);
+      userInfo.appendChild(userScore);
+      newListItem.appendChild(userInfo);
+      scoreList.appendChild(newListItem);
     });
-    originX += polygonSize + Math.floor(Math.random() * polygonGap);
   }
 }
 
-//calculate oil volume in polygon
-function calculatePolygonArea(polygon) {
-  let area = 0;
-  const numVertices = polygon.length;
+alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
 
-  for (let i = 0; i < numVertices; i++) {
-    const currentVertex = polygon[i];
-    const nextVertex = polygon[(i + 1) % numVertices];
 
-    area += (currentVertex.x * nextVertex.y) - (currentVertex.y * nextVertex.x);
-  }
-
-  return Math.abs(area / 2);
+export {
+  updateWagonState,
+  oilRigs,
+  sellLeft,
+  sellRight,
+  leftFactory,
+  rightFactory,
+  groundLevel,
+  leftInc,
+  rightInc,
+  canvas,
+  ctx,
 }
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let t = array[i]; array[i] = array[j]; array[j] = t
-  }
-}
-
-//based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
-function generatePolygon(n = 10, originX = 0, originY = 0) {
-  // Step 1: generate two list of random X and Y coordinates
-  const xPool = [];
-  const yPool = [];
-  for (let i = 0; i < n; i++) {
-    xPool.push(Math.floor(Math.random() * polygonSize))
-    yPool.push(Math.floor(Math.random() * polygonSize))
-  }
-
-  // Step 2: sort them (here by x coordinate for starting point in Graham scan algorithm)
-  const sortedPointsX = xPool.sort((a, b) => a - b);
-  const sortedPointsY = yPool.sort((a, b) => a - b);
-
-  // Step 3: isolate the extreme points
-  const minX = sortedPointsX[0];
-  const maxX = sortedPointsX.at(-1);
-  const minY = sortedPointsY[0];
-  const maxY = sortedPointsY.at(-1);
-
-  // Step 4-5: Divide the interior points into two chains & Extract the vector components
-  let xVec = [], yVec = [];
-
-  let lastTop = minX, lastBot = minX;
-
-  for (let i = 1; i < n - 1; i++) {
-    let x = xPool[i];
-
-    if (Math.random() < 0.5) {
-      xVec.push(x - lastTop);
-      lastTop = x;
-    } else {
-      xVec.push(lastBot - x);
-      lastBot = x;
-    }
-  }
-
-  xVec.push(maxX - lastTop);
-  xVec.push(lastBot - maxX);
-
-  let lastLeft = minY, lastRight = minY;
-
-  for (let i = 1; i < n - 1; i++) {
-    let y = yPool[i];
-
-    if (Math.random() < 0.5) {
-      yVec.push(y - lastLeft);
-      lastLeft = y;
-    } else {
-      yVec.push(lastRight - y);
-      lastRight = y;
-    }
-  }
-
-  yVec.push(maxY - lastLeft);
-  yVec.push(lastRight - maxY);
-
-  // Steps 6: Randomly pair up the X- and Y-components
-  shuffle(yVec);
-
-  //Steps 7: Combine the paired up components into vectors
-  let vec = [];
-
-  for (let i = 0; i < n; i++) {
-    vec.push({ x: xVec[i], y: yVec[i] });
-  }
-
-  //Steps 8: Sort the vectors by angle
-  vec.sort((a, b) => Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x));
-
-  // Step 9: Lay them end-to-end to form a polygon
-  let x = 0, y = 0;
-  let minPolygonX = 0;
-  let minPolygonY = 0;
-  let points = [];
-
-  for (let i = 0; i < n; i++) {
-    points.push({ x: x, y: y });
-
-    x += vec[i].x;
-    y += vec[i].y;
-
-    minPolygonX = Math.min(minPolygonX, x);
-    minPolygonY = Math.min(minPolygonY, y);
-  }
-
-  // Step 10: Move the polygon
-  let offsetX = originX - minPolygonX;
-  for (let i = 0; i < n; i++) {
-    let p = points[i];
-    points[i] = { x: p.x + offsetX, y: p.y + originY };
-  }
-
-  return points
-}
-
-function getPathFromPipe(pipe, valves) {
-  let pathToRig = new Path2D();
-
-  let valvesId = pipe.path
-  let points = [];
-
-  for (let id of valvesId) {
-    for (let i = 0; i < valves.length; i++) {
-      if (valves[i].id === id) {
-        points.push({ x: valves[i].x, y: valves[i].y });
-        break;
-      }
-    }
-  }
-
-  pathToRig.moveTo(points[0].x, points[0].y);
-  for (let i = 1; i < points.length; i++) {
-    pathToRig.lineTo(points[i].x, points[i].y)
-  }
-  return pathToRig;
-}
-
-// check intersect with existing pipe
-//x1, y1, line1 start
-//x2, y2 line1 end
-//x3, y3 line2 start
-//x4, y4 line2 end
-function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
-  const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) /
-    ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-  const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) /
-    ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-  if (x1 === x3 && y1 === y3) {
-    return false;
-  }
-
-  if (x2 === x3 && y2 === y3) {
-    return false;
-  }
-
-  if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {
-    return false;
-  }
-
-  return true;
-}
-
-function calculateLineLength(x1, y1, x2, y2) {
-  var deltaX = x2 - x1;
-  var deltaY = y2 - y1;
-  var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  return length;
-}
-
-// export {
-//   getPathAlongLine,
-//   getPathFromPipe,
-//   checkLinesIntersect,
-//   createOilPolygons,
-//   calculateLineLength
-// }
