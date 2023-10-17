@@ -91,13 +91,13 @@
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
-  
+
   position: absolute;
   z-index: 1;
   top: 100%;
   left: 50%;
   margin-left: -70px;
-  
+
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -106,8 +106,6 @@
   visibility: visible;
   opacity: 1;
 }
-
-
 
 .menu-date {
   display: flex;
@@ -318,4 +316,32 @@
 
 .active {
   display: flex;
+}
+
+.footer {
+  background-color: black;
+  display: flex;
+  /* position: absolute; */
+  /* bottom: 0; */
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  font-size: 18px;
+  padding: 15px 50px;
+  line-height: 30px;
+  color: whitesmoke;
+}
+
+.footer a {
+  text-decoration: none;
+  transition: 0.3s;
+  color: whitesmoke;
+}
+
+.footer a img {
+  filter: invert(1);
+}
+
+.footer a:hover {
+  color: red;
 }
