@@ -89,8 +89,21 @@ function drawOilPolygons(polygons) {
     const path = polygon.path;
     const fillLevel = polygon.oilVolume / polygon.maxOilVolume;
 
+    //create liner gradient
+    let minPointY = polygon.points.reduce((min, curr) => min < curr.y ? min : curr.y, polygon.points[0].y);
+    let maxPointY = polygon.points.reduce((max, curr) => max > curr.y ? max : curr.y, polygon.points[0].y);
+    let pointX = polygon.points[0].x;
+    let gradientLength = maxPointY - minPointY;
+
+    let gradient = ctx.createLinearGradient(pointX, maxPointY, pointX, minPointY);
+    gradient.addColorStop(0, "rgba(33, 27, 21, 1)");
+    gradient.addColorStop(fillLevel, "rgba(33, 27, 21, 1)")
+    gradient.addColorStop(fillLevel, "rgba(33, 27, 21, 0)")
+    gradient.addColorStop(1, "rgba(33, 27, 21, 0)")
+
+
     ctx.save();
-    ctx.fillStyle = `rgba(33, 27, 21, ${fillLevel})`;
+    ctx.fillStyle = gradient;
     ctx.strokeStyle = "#9a4c25";
     ctx.lineWidth = 5;
     ctx.fill(path);
@@ -111,6 +124,7 @@ function drawFrame(img, frameX, frameY, canvasX, canvasY, direction) {
   ctx.restore();
 }
 
+//wagon animation
 const MOVEMENT_SPEED = 0.5;
 const WAGON_CYCLE_LOOP = [0, 1, 2, 3, 4, 5, 6];
 

@@ -34,7 +34,6 @@ import {
 import {
   updateOilRigs,
   OIL_RIG_CAPACITY,
-  OIL_PUMP_SPEED
 } from "./oilRigs.js"
 
 let isPipeDrawing = false;
@@ -54,11 +53,11 @@ let money = 2000;
 let earnings = 0;
 let spendings = 0;
 
-const MONTH_DURATION = 20 * 1000 //0.5 minute
+const MONTH_DURATION = 20 * 1000 //0.33 minute
 
 const WAGON_CAPACITY = 150; // max oil in wagon
 const WAGON_WIDTH = 114;
-const OIL_PUMP_SPEED_TO_WAGON = 1; // Oil volume decrease per 0.1 second
+const OIL_PUMP_SPEED_TO_WAGON = 0.4; // Oil volume decrease per 0.1 second
 
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
@@ -241,7 +240,7 @@ function drawGroundBackground() {
     }
   }
   ctx.save(); 
-  if (!isGameOver) ctx.clip(clipPath);
+  // if (!isGameOver) ctx.clip(clipPath);
   //draw ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
@@ -491,7 +490,7 @@ async function initGame() {
     resetVariables();
     drawBackground();
     drawGroundOverlay();
-    createOilPolygons(groundLevel, polygons);
+    polygons = createOilPolygons(groundLevel);
     drawGroundBackground();
     window.requestAnimationFrame(render);
 
@@ -525,13 +524,19 @@ function resetVariables() {
 }
 
 //Top Menu
+const radar = document.getElementById('radar');
 const oilRigIcon = document.getElementById('oil-rig');
 const wagonIcon = document.getElementById('wagon');
 const sellLeftBtn = document.getElementById('sellLeft');
 const sellRightBtn = document.getElementById('sellRight');
 
+let isRadarDrawing = false
 let isOilRigDrawing = false;
 let isWagonDrawing = false;
+
+radar.addEventListener('click', () => {
+  if (money > 300) isRadarDrawing = true;
+})
 oilRigIcon.addEventListener('click', () => {
   if (money > 350) isOilRigDrawing = true;
 })
@@ -717,7 +722,7 @@ function updateScoreTable(userScores) {
   }
 }
 
-alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
+// alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
 
 
 export {
