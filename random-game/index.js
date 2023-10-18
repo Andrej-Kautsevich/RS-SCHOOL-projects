@@ -49,11 +49,20 @@ let groundLevel;
 let currentValve;
 let pipes = [];
 let polygons = [];
-let leftFactory = { price: 0.95 };
-let rightFactory = { price: 0.95 };
 let money = 2000;
 let earnings = 0;
 let spendings = 0;
+
+let leftFactory = {
+  price: 0.95,
+  money: 0,
+  sellOilCount: 0,
+};
+let rightFactory = {
+  price: 0.95,
+  money: 0,
+  sellOilCount: 0,
+};
 
 const MONTH_DURATION = 20 * 1000 //0.33 minute
 
@@ -398,8 +407,13 @@ function sellWagonOil(wagon, factory) {
   if (wagon.oilVolume > 0) {
     wagon.isActive = false;
     wagon.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
-    money += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
-    earnings += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
+    console.log(wagon.oilVolume);
+    money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
+    earnings += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
+
+    //average price
+    factory.sellOilCount += OIL_PUMP_SPEED_TO_WAGON / 2;
+    factory.money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price
   } else {
     wagon.oilVolume = 0;
     wagon.isActive = true;
@@ -545,8 +559,16 @@ function resetVariables() {
   currentValve = {};
   pipes = [];
   polygons = [];
-  leftFactory = { price: 0.95 };
-  rightFactory = { price: 0.95 };
+  leftFactory = {
+    price: 0.95,
+    money: 0,
+    sellOilCount: 0,
+  };
+  rightFactory = {
+    price: 0.95,
+    money: 0,
+    sellOilCount: 0,
+  };
   money = 2000;
   earnings = 0;
   spendings = 0;
@@ -665,6 +687,8 @@ function gameOver() {
   spendingsResult.innerText = `Spendings: -$${spendings.toFixed(0)}`;
   totalResult.innerText = `Total: $${money.toFixed(0)}`;
 
+  updateFactoriesStats();
+
   //save result
   const userName = localStorage.getItem('userName');
   let userScores = JSON.parse(localStorage.getItem('userScores')) || [];
@@ -742,7 +766,7 @@ function updateScoreTable(userScores) {
       // add score
       const userScore = document.createElement('span');
       userScore.classList.add('last-games-result');
-      userScore.textContent = user.score;
+      userScore.textContent = `$${user.score}`;
 
       userInfo.appendChild(userName);
       userInfo.appendChild(userScore);
@@ -751,6 +775,34 @@ function updateScoreTable(userScores) {
     });
   }
 }
+
+
+function updateFactoriesStats() {
+  const leftFactorySold = document.getElementById('factory-left-sold');
+  const leftFactoryEarned = document.getElementById('factory-left-earned');
+  const leftFactoryPrice = document.getElementById('factory-left-price');
+
+  let leftPrice = 0;
+  let rightPrice = 0;
+
+  if (leftFactory.sellOilCount !== 0) leftPrice = leftFactory.money / leftFactory.sellOilCount;
+  if (rightFactory.sellOilCount !== 0) rightPrice = rightFactory.money / rightFactory.sellOilCount;
+
+  const rightFactorySold = document.getElementById('factory-right-sold');
+  const rightFactoryEarned = document.getElementById('factory-right-earned');
+  const rightFactoryPrice = document.getElementById('factory-right-price');
+
+  leftFactorySold.innerHTML = `${leftFactory.sellOilCount.toFixed(2)} barrels sold`;
+  leftFactoryEarned.innerHTML = `$${leftFactory.money.toFixed(0)} earned total`;
+  leftFactoryPrice.innerHTML = `$${leftPrice.toFixed(2)} per barrel`;
+
+  rightFactorySold.innerHTML = `${rightFactory.sellOilCount.toFixed(2)} barrels sold`;
+  rightFactoryEarned.innerHTML = `$${rightFactory.money.toFixed(0)} earned total`;
+  rightFactoryPrice.innerHTML = `$${rightPrice.toFixed(2)} per barrel`;
+}
+
+
+
 
 export {
   updateWagonState,
