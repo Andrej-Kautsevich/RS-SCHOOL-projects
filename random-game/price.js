@@ -1,9 +1,15 @@
+import { getRandomFloat, getRandomInt } from "./calculations.js";
+
 let priceIntervals = [];
+const MIX_PRICE = 0.30
+const MAX_PRICE = 1.40
+
+// get random oil price
 function changePrice(startPrice, changeCallback) {
   let price = startPrice;
-  let targetPrice = getRandomFloat(0.40, 1.40);
-  let duration = getRandomInt(15000, 80000);
-  let interval = 2000;
+  let targetPrice = getRandomFloat(MIX_PRICE, MAX_PRICE);
+  let duration = getRandomInt(15000, 80000); //change duration between 15 and 80 seconds
+  let interval = 2000; //set intermediate price every 2 second 
   let change = (targetPrice - price) / (duration / interval);
 
   let intervalID = setInterval(function () {
@@ -19,16 +25,6 @@ function changePrice(startPrice, changeCallback) {
     }
   }, interval);
   priceIntervals.push(intervalID);
-}
-
-// Генерация случайного вещественного числа в заданном диапазоне
-function getRandomFloat(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// Генерация случайного целого числа в заданном диапазоне
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function updateMoneyBox(money) {

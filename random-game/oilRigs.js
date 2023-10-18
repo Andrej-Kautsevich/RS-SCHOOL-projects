@@ -1,5 +1,5 @@
-const OIL_RIG_CAPACITY = 1000; //max oil in rig
-const OIL_PUMP_SPEED = 5; // Oil volume decrease per 0.1 second
+const OIL_RIG_CAPACITY = 500; //max oil in rig
+const OIL_PUMP_SPEED = 1.5; // Oil volume decrease per 0.1 second
 
 function updateOilRigs(oilRigs, pipes, polygons) {
   if (oilRigs) {

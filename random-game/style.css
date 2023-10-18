@@ -191,6 +191,7 @@
 
 .game-over-tab {
   display: none;
+  flex-direction: column;
   justify-content: center;
   position: relative;
   background-color: #f6d5a6;
@@ -222,6 +223,18 @@
   width: 100%;
   height: 1px;
   background-color: #0c0c0e;
+}
+
+.factories {
+  display: flex;
+  justify-content: space-between;
+}
+
+.factory-stats {
+  font-size: 48px;
+  letter-spacing: 1px;
+  list-style: none;
+  text-align: center;
 }
 
 .last-games {

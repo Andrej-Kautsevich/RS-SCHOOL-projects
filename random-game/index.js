@@ -23,6 +23,7 @@ import {
   drawFrame,
   drawWagons,
   drawOilPrice,
+  drawRadar,
 } from "./render.js"
 
 import {
@@ -34,7 +35,6 @@ import {
 import {
   updateOilRigs,
   OIL_RIG_CAPACITY,
-  OIL_PUMP_SPEED
 } from "./oilRigs.js"
 
 let isPipeDrawing = false;
@@ -44,22 +44,32 @@ let pipeLines = [];
 let oilRigs = [];
 let wagons = [];
 let valves = [];
+let radars = [];
 let groundLevel;
 let currentValve;
 let pipes = [];
 let polygons = [];
-let leftFactory = { price: 0.95 };
-let rightFactory = { price: 0.95 };
 let money = 2000;
 let earnings = 0;
 let spendings = 0;
 
-const MONTH_DURATION = 20 * 1000 //0.5 minute
+let leftFactory = {
+  price: 0.95,
+  money: 0,
+  sellOilCount: 0,
+};
+let rightFactory = {
+  price: 0.95,
+  money: 0,
+  sellOilCount: 0,
+};
+
+const MONTH_DURATION = 20 * 1000 //0.33 minute
 
 const WAGON_CAPACITY = 150; // max oil in wagon
 const WAGON_WIDTH = 114;
-const OIL_PUMP_SPEED_TO_WAGON = 1; // Oil volume decrease per 0.1 second
-
+const OIL_PUMP_SPEED_TO_WAGON = 0.4; // Oil volume decrease per 0.1 second
+const RADAR_RADIUS = 50;
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.save();
@@ -215,6 +225,52 @@ function createNewWagon(event) {
   drawFrame(wagonImg, 0, 0, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 1);
 }
 
+function createNewRadar(event) {
+  if (!isRadarDrawing) return;
+  money -= 300;
+  spendings += 300;
+
+  const mouseX = event.offsetX;
+  const mouseY = event.offsetY;
+  isRadarDrawing = false;
+
+  let clipPath = new Path2D();
+
+  clipPath.arc(mouseX, mouseY, RADAR_RADIUS, 0, 2 * Math.PI);
+  radars.push({
+    clipPath
+  })
+  console.log(radars);
+}
+
+let toDraw = {};
+
+canvas.addEventListener("mousedown", mouseDownListener);
+function mouseDownListener(event) {
+  const startX = event.offsetX;
+  const startY = event.offsetY;
+  const valve = isMouseInValve(startX, startY, valves);
+  currentValve = valve;
+  if (valve) {
+    isPipeDrawing = true;
+    toDraw.startX = currentValve.x; //adjust to valve center
+    toDraw.startY = currentValve.y;
+  }
+}
+
+canvas.addEventListener("mousemove", mouseMoveListener)
+function mouseMoveListener(event) {
+  toDraw.mouseX = event.offsetX;
+  toDraw.mouseY = event.offsetY;
+}
+
+canvas.addEventListener("mouseup", (event) => {
+  createNewPipeLine(event);
+  createNewOilRig(event);
+  createNewWagon(event);
+  createNewRadar(event);
+});
+
 function drawBackground() {
   ctx.drawImage(background, 0, 0);
   ctx.drawImage(rightInc, canvas.width - rightInc.width, groundLevel - rightInc.width - 11);
@@ -235,12 +291,22 @@ function drawBackground() {
 
 function drawGroundBackground() {
   let clipPath = new Path2D();
+
+  //clip along pipe lines
   if (pipeLines.length) {
     for (let pipe of pipeLines) {
       clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
     }
   }
-  ctx.save(); 
+  ctx.save();
+
+  //clip radars
+  if (radars.length) {
+    for (let radar of radars) {
+      clipPath.addPath(radar.clipPath);
+    }
+  }
+
   if (!isGameOver) ctx.clip(clipPath);
   //draw ground background
   ctx.beginPath();
@@ -249,7 +315,7 @@ function drawGroundBackground() {
   ctx.closePath();
   //draw oil polygons
   drawOilPolygons(polygons);
-  ctx.restore(); 
+  ctx.restore();
 }
 
 function drawGroundOverlay() {
@@ -275,6 +341,7 @@ function render() {
   if (isOilRigDrawing) drawNewOilRig(oilRigImg, toDraw.mouseX);
   if (isWagonDrawing) drawNewWagon(wagonImg, toDraw.mouseX);
   if (isPipeDrawing) drawNewPipe(toDraw.startX, toDraw.startY, toDraw.mouseX, toDraw.mouseY);
+  if (isRadarDrawing) drawRadar(toDraw.mouseX, toDraw.mouseY, RADAR_RADIUS);
 
   drawValves(valveImg, valves);
   if (!isGameOver) window.requestAnimationFrame(render)
@@ -340,8 +407,13 @@ function sellWagonOil(wagon, factory) {
   if (wagon.oilVolume > 0) {
     wagon.isActive = false;
     wagon.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
-    money += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
-    earnings += OIL_PUMP_SPEED_TO_WAGON * factory.price / 5;
+    console.log(wagon.oilVolume);
+    money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
+    earnings += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
+
+    //average price
+    factory.sellOilCount += OIL_PUMP_SPEED_TO_WAGON / 2;
+    factory.money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price
   } else {
     wagon.oilVolume = 0;
     wagon.isActive = true;
@@ -399,7 +471,7 @@ function checkOilRigInDirection(wagon) {
   );
 
   if (oilRigInDirection) { // If has OilRig in direction
-    return true; 
+    return true;
   }
 
   // is OilRig in other direction
@@ -409,7 +481,7 @@ function checkOilRigInDirection(wagon) {
       : oilRig.valve > position
   );
 
-  if (oilRigInDirection) { 
+  if (oilRigInDirection) {
     wagon.direction *= -1; //change direction
     return true
   }
@@ -417,35 +489,6 @@ function checkOilRigInDirection(wagon) {
     return false; // if no active rigs in any direction
   }
 }
-
-
-let toDraw = {};
-
-canvas.addEventListener("mousedown", mouseDownListener);
-function mouseDownListener(event) {
-  const startX = event.offsetX;
-  const startY = event.offsetY;
-  const valve = isMouseInValve(startX, startY, valves);
-  currentValve = valve;
-  if (valve) {
-    isPipeDrawing = true;
-    toDraw.startX = currentValve.x; //adjust to valve center
-    toDraw.startY = currentValve.y;
-  }
-}
-
-canvas.addEventListener("mousemove", mouseMoveListener)
-function mouseMoveListener(event) {
-  toDraw.mouseX = event.offsetX;
-  toDraw.mouseY = event.offsetY;
-}
-
-canvas.addEventListener("mouseup", (event) => {
-  createNewPipeLine(event);
-  createNewOilRig(event);
-  createNewWagon(event);
-});
-
 
 //Images
 const overlay = new Image();
@@ -491,7 +534,7 @@ async function initGame() {
     resetVariables();
     drawBackground();
     drawGroundOverlay();
-    createOilPolygons(groundLevel, polygons);
+    polygons = createOilPolygons(groundLevel);
     drawGroundBackground();
     window.requestAnimationFrame(render);
 
@@ -516,8 +559,16 @@ function resetVariables() {
   currentValve = {};
   pipes = [];
   polygons = [];
-  leftFactory = { price: 0.95 };
-  rightFactory = { price: 0.95 };
+  leftFactory = {
+    price: 0.95,
+    money: 0,
+    sellOilCount: 0,
+  };
+  rightFactory = {
+    price: 0.95,
+    money: 0,
+    sellOilCount: 0,
+  };
   money = 2000;
   earnings = 0;
   spendings = 0;
@@ -525,13 +576,19 @@ function resetVariables() {
 }
 
 //Top Menu
+const radar = document.getElementById('radar');
 const oilRigIcon = document.getElementById('oil-rig');
 const wagonIcon = document.getElementById('wagon');
 const sellLeftBtn = document.getElementById('sellLeft');
 const sellRightBtn = document.getElementById('sellRight');
 
+let isRadarDrawing = false
 let isOilRigDrawing = false;
 let isWagonDrawing = false;
+
+radar.addEventListener('click', () => {
+  if (money > 300) isRadarDrawing = true;
+})
 oilRigIcon.addEventListener('click', () => {
   if (money > 350) isOilRigDrawing = true;
 })
@@ -630,6 +687,8 @@ function gameOver() {
   spendingsResult.innerText = `Spendings: -$${spendings.toFixed(0)}`;
   totalResult.innerText = `Total: $${money.toFixed(0)}`;
 
+  updateFactoriesStats();
+
   //save result
   const userName = localStorage.getItem('userName');
   let userScores = JSON.parse(localStorage.getItem('userScores')) || [];
@@ -707,7 +766,7 @@ function updateScoreTable(userScores) {
       // add score
       const userScore = document.createElement('span');
       userScore.classList.add('last-games-result');
-      userScore.textContent = user.score;
+      userScore.textContent = `$${user.score}`;
 
       userInfo.appendChild(userName);
       userInfo.appendChild(userScore);
@@ -717,7 +776,32 @@ function updateScoreTable(userScores) {
   }
 }
 
-alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
+
+function updateFactoriesStats() {
+  const leftFactorySold = document.getElementById('factory-left-sold');
+  const leftFactoryEarned = document.getElementById('factory-left-earned');
+  const leftFactoryPrice = document.getElementById('factory-left-price');
+
+  let leftPrice = 0;
+  let rightPrice = 0;
+
+  if (leftFactory.sellOilCount !== 0) leftPrice = leftFactory.money / leftFactory.sellOilCount;
+  if (rightFactory.sellOilCount !== 0) rightPrice = rightFactory.money / rightFactory.sellOilCount;
+
+  const rightFactorySold = document.getElementById('factory-right-sold');
+  const rightFactoryEarned = document.getElementById('factory-right-earned');
+  const rightFactoryPrice = document.getElementById('factory-right-price');
+
+  leftFactorySold.innerHTML = `${leftFactory.sellOilCount.toFixed(2)} barrels sold`;
+  leftFactoryEarned.innerHTML = `$${leftFactory.money.toFixed(0)} earned total`;
+  leftFactoryPrice.innerHTML = `$${leftPrice.toFixed(2)} per barrel`;
+
+  rightFactorySold.innerHTML = `${rightFactory.sellOilCount.toFixed(2)} barrels sold`;
+  rightFactoryEarned.innerHTML = `$${rightFactory.money.toFixed(0)} earned total`;
+  rightFactoryPrice.innerHTML = `$${rightPrice.toFixed(2)} per barrel`;
+}
+
+
 
 
 export {

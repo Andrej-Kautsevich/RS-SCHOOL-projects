@@ -1,6 +1,11 @@
-const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
+import {
+  canvas,
+  ctx,
+} from "./index.js";
+
 const PIPE_COST_PER_LENGTH = 1;
+const POLYGON_DENSITY = 4;
+const POLYGON_SIZE = 125;    // Max polygon size
 
 function isMouseInValve(mouseX, mouseY, valves) {
   for (let i = 0; i < valves.length; i++) {
@@ -102,29 +107,28 @@ function getPathAlongLine(startX, startY, endX, endY, lineWidth) {
   return path;
 }
 
-const polygonSize = 100;    // Max polygon size
+function createOilPolygons(groundLevel) {
 
-function createOilPolygons(groundLevel, polygons) {
-  const canvasWidth = 1024;    // Ширина холста
-  const canvasHeight = 400;    // Высота холста
-  const numPolygons = 4;       // Количество многоугольников
-  const polygonGap = Math.floor((canvasWidth - polygonSize * 2) / numPolygons);
+  let polygons = []
+  const polygonGap = Math.floor((canvas.width - POLYGON_SIZE * 2) / POLYGON_DENSITY);
 
-  let originX = polygonSize;
-  while (originX < (canvasWidth - polygonSize)) {
-    const originY = groundLevel + polygonSize + Math.floor(Math.random() * (canvasHeight - polygonSize));
-    const polygonSideNumber = Math.floor(Math.random() * 6 + 5) //random number between [5-10]
+  let originX = Math.floor(Math.random() * POLYGON_SIZE);
+  console.log(groundLevel+13, canvas.height);
+  while (originX < (canvas.width - POLYGON_SIZE)) {
+    const originY = getRandomInt(groundLevel+13, canvas.height - POLYGON_SIZE) + POLYGON_SIZE;
+    console.log(originY)
+    const polygonSideNumber = getRandomInt(5, 10) //random number between [5-10]
     const points = generatePolygon(polygonSideNumber, originX, originY);
-    const oilVolume = calculatePolygonArea(points);
+    const oilVolume = Math.floor(calculatePolygonArea(points) / 4);
+
     let path = new Path2D();
-
     path.moveTo(points[0].x, points[0].y);
-
     for (let i = 1; i < points.length; i++) {
       path.lineTo(points[i].x, points[i].y)
     }
-
     path.closePath();
+
+    let maxPointX = points.reduce((max, curr) => max > curr.x ? max : curr.x, points[0].x);
 
     polygons.push({
       id: polygons.length + 1,
@@ -136,8 +140,10 @@ function createOilPolygons(groundLevel, polygons) {
       activePipesId: [],
       toOilRig: [],
     });
-    originX += polygonSize + Math.floor(Math.random() * polygonGap);
+    originX = maxPointX + getRandomInt(0, polygonGap)
   }
+  console.log(polygons)
+  return polygons
 }
 
 //calculate oil volume in polygon
@@ -152,7 +158,7 @@ function calculatePolygonArea(polygon) {
     area += (currentVertex.x * nextVertex.y) - (currentVertex.y * nextVertex.x);
   }
 
-  return Math.abs(area / 2);
+  return area;
 }
 
 //based on this work https://cglab.ca/~sander/misc/ConvexGeneration/convex.html
@@ -161,8 +167,8 @@ function generatePolygon(n = 10, originX = 0, originY = 0) {
   const xPool = [];
   const yPool = [];
   for (let i = 0; i < n; i++) {
-    xPool.push(Math.floor(Math.random() * polygonSize))
-    yPool.push(Math.floor(Math.random() * polygonSize))
+    xPool.push(Math.floor(Math.random() * POLYGON_SIZE))
+    yPool.push(Math.floor(Math.random() * POLYGON_SIZE))
   }
 
   // Step 2: sort them (here by x coordinate for starting point in Graham scan algorithm)
@@ -285,6 +291,16 @@ function checkLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   return true;
 }
 
+// generate a random real number in a given range
+function getRandomFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// generate a random integer in a given range
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export {
   isMouseInValve,
   checkPipeLineLength,
@@ -293,6 +309,8 @@ export {
   getPathAlongLine,
   createOilPolygons,
   checkLinesIntersect,
+  getRandomFloat,
+  getRandomInt,
 
   PIPE_COST_PER_LENGTH,
 }
