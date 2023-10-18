@@ -44,7 +44,7 @@ let pipeLines = [];
 let oilRigs = [];
 let wagons = [];
 let valves = [];
-let radars = [];
+let radar = {};
 let groundLevel;
 let currentValve;
 let pipes = [];
@@ -68,7 +68,7 @@ const MONTH_DURATION = 20 * 1000 //0.33 minute
 
 const WAGON_CAPACITY = 150; // max oil in wagon
 const WAGON_WIDTH = 114;
-const OIL_PUMP_SPEED_TO_WAGON = 0.4; // Oil volume decrease per 0.1 second
+const OIL_PUMP_SPEED_TO_WAGON = 0.5; // Oil volume decrease per 0.1 second
 const RADAR_RADIUS = 50;
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
@@ -225,22 +225,26 @@ function createNewWagon(event) {
   drawFrame(wagonImg, 0, 0, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 1);
 }
 
+let isRadarActive = false;
 function createNewRadar(event) {
   if (!isRadarDrawing) return;
-  money -= 300;
-  spendings += 300;
+  let clipPathRadar = new Path2D();
+  money -= 200;
+  spendings += 200;
 
   const mouseX = event.offsetX;
   const mouseY = event.offsetY;
   isRadarDrawing = false;
 
-  let clipPath = new Path2D();
+  clipPathRadar.arc(mouseX, mouseY, RADAR_RADIUS, 0, 2 * Math.PI);
+  radar = {clipPathRadar};
+  isRadarActive = true
 
-  clipPath.arc(mouseX, mouseY, RADAR_RADIUS, 0, 2 * Math.PI);
-  radars.push({
-    clipPath
-  })
-  console.log(radars);
+  //clear radar
+  setTimeout(() => {
+    isRadarActive = false;
+    radar = {};
+  }, 2000)
 }
 
 let toDraw = {};
@@ -292,22 +296,20 @@ function drawBackground() {
 function drawGroundBackground() {
   let clipPath = new Path2D();
 
+  ctx.save();
   //clip along pipe lines
   if (pipeLines.length) {
     for (let pipe of pipeLines) {
       clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
     }
   }
-  ctx.save();
 
-  //clip radars
-  if (radars.length) {
-    for (let radar of radars) {
-      clipPath.addPath(radar.clipPath);
-    }
+  if (isRadarActive) {
+    clipPath.addPath(radar.clipPathRadar);
   }
 
   if (!isGameOver) ctx.clip(clipPath);
+
   //draw ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
@@ -407,13 +409,12 @@ function sellWagonOil(wagon, factory) {
   if (wagon.oilVolume > 0) {
     wagon.isActive = false;
     wagon.oilVolume -= OIL_PUMP_SPEED_TO_WAGON;
-    console.log(wagon.oilVolume);
-    money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
-    earnings += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price;
+    money += OIL_PUMP_SPEED_TO_WAGON * factory.price;
+    earnings += OIL_PUMP_SPEED_TO_WAGON * factory.price;
 
     //average price
-    factory.sellOilCount += OIL_PUMP_SPEED_TO_WAGON / 2;
-    factory.money += (OIL_PUMP_SPEED_TO_WAGON / 2) * factory.price
+    factory.sellOilCount += OIL_PUMP_SPEED_TO_WAGON;
+    factory.money += OIL_PUMP_SPEED_TO_WAGON * factory.price
   } else {
     wagon.oilVolume = 0;
     wagon.isActive = true;
@@ -576,7 +577,7 @@ function resetVariables() {
 }
 
 //Top Menu
-const radar = document.getElementById('radar');
+const radarIcon = document.getElementById('radar');
 const oilRigIcon = document.getElementById('oil-rig');
 const wagonIcon = document.getElementById('wagon');
 const sellLeftBtn = document.getElementById('sellLeft');
@@ -586,8 +587,8 @@ let isRadarDrawing = false
 let isOilRigDrawing = false;
 let isWagonDrawing = false;
 
-radar.addEventListener('click', () => {
-  if (money > 300) isRadarDrawing = true;
+radarIcon.addEventListener('click', () => {
+  if (money > 200) isRadarDrawing = true;
 })
 oilRigIcon.addEventListener('click', () => {
   if (money > 350) isOilRigDrawing = true;

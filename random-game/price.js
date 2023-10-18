@@ -32,6 +32,7 @@ function updateMoneyBox(money) {
   const moneyToShow = Math.floor(money);
   moneyBox.innerText = `$ ${moneyToShow}`
 
+  const radarPrice = document.getElementById('radar-price');
   const rigPrice = document.getElementById('rig-price');
   const wagonPrice = document.getElementById('wagon-price');
 
@@ -42,8 +43,10 @@ function updateMoneyBox(money) {
   }
 
   if (money < 200) {
+    radarPrice.classList.add('menu-price_red')
     wagonPrice.classList.add('menu-price_red')
   } else {
+    radarPrice.classList.remove('menu-price_red')
     wagonPrice.classList.remove('menu-price_red')
   }
 }

@@ -96,7 +96,8 @@ function drawOilPolygons(polygons) {
   polygons.forEach((polygon) => {
 
     const path = polygon.path;
-    const fillLevel = polygon.oilVolume / polygon.maxOilVolume;
+    let fillLevel = polygon.oilVolume / polygon.maxOilVolume;
+    if (fillLevel < 0) fillLevel = 0;
 
     //create liner gradient
     let minPointY = polygon.points.reduce((min, curr) => min < curr.y ? min : curr.y, polygon.points[0].y);

@@ -113,10 +113,8 @@ function createOilPolygons(groundLevel) {
   const polygonGap = Math.floor((canvas.width - POLYGON_SIZE * 2) / POLYGON_DENSITY);
 
   let originX = Math.floor(Math.random() * POLYGON_SIZE);
-  console.log(groundLevel+13, canvas.height);
   while (originX < (canvas.width - POLYGON_SIZE)) {
     const originY = getRandomInt(groundLevel+13, canvas.height - POLYGON_SIZE) + POLYGON_SIZE;
-    console.log(originY)
     const polygonSideNumber = getRandomInt(5, 10) //random number between [5-10]
     const points = generatePolygon(polygonSideNumber, originX, originY);
     const oilVolume = Math.floor(calculatePolygonArea(points) / 4);
@@ -142,7 +140,6 @@ function createOilPolygons(groundLevel) {
     });
     originX = maxPointX + getRandomInt(0, polygonGap)
   }
-  console.log(polygons)
   return polygons
 }
 
