@@ -19,6 +19,15 @@ function drawNewWagon(wagonImg, mouseX) {
   ctx.drawImage(wagonImg, 0, 0, 114, 55, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 114, 55);
 }
 
+function drawRadar(mouseX, mouseY, radius) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.globalAlpha = 0.5;
+  ctx.arc(mouseX, mouseY, radius, 0, 2 * Math.PI)
+  ctx.fill();
+  ctx.restore();
+}
+
 function drawPipeLines(pipeLines) {
   pipeLines.forEach((pipe) => {
     ctx.save();
@@ -93,7 +102,6 @@ function drawOilPolygons(polygons) {
     let minPointY = polygon.points.reduce((min, curr) => min < curr.y ? min : curr.y, polygon.points[0].y);
     let maxPointY = polygon.points.reduce((max, curr) => max > curr.y ? max : curr.y, polygon.points[0].y);
     let pointX = polygon.points[0].x;
-    let gradientLength = maxPointY - minPointY;
 
     let gradient = ctx.createLinearGradient(pointX, maxPointY, pointX, minPointY);
     gradient.addColorStop(0, "rgba(33, 27, 21, 1)");
@@ -165,6 +173,7 @@ export {
   drawPipeLines,
   drawNewOilRig,
   drawNewWagon,
+  drawRadar,
   drawOilRigs,
   drawValves,
   drawOilPolygons,

@@ -23,6 +23,7 @@ import {
   drawFrame,
   drawWagons,
   drawOilPrice,
+  drawRadar,
 } from "./render.js"
 
 import {
@@ -43,6 +44,7 @@ let pipeLines = [];
 let oilRigs = [];
 let wagons = [];
 let valves = [];
+let radars = [];
 let groundLevel;
 let currentValve;
 let pipes = [];
@@ -58,7 +60,7 @@ const MONTH_DURATION = 20 * 1000 //0.33 minute
 const WAGON_CAPACITY = 150; // max oil in wagon
 const WAGON_WIDTH = 114;
 const OIL_PUMP_SPEED_TO_WAGON = 0.4; // Oil volume decrease per 0.1 second
-
+const RADAR_RADIUS = 50;
 
 function drawNewPipe(startX, startY, mouseX, mouseY) {
   ctx.save();
@@ -214,6 +216,52 @@ function createNewWagon(event) {
   drawFrame(wagonImg, 0, 0, mouseX - 114 / 2, groundLevel - wagonImg.height - 13 + 110, 1);
 }
 
+function createNewRadar(event) {
+  if (!isRadarDrawing) return;
+  money -= 300;
+  spendings += 300;
+
+  const mouseX = event.offsetX;
+  const mouseY = event.offsetY;
+  isRadarDrawing = false;
+
+  let clipPath = new Path2D();
+
+  clipPath.arc(mouseX, mouseY, RADAR_RADIUS, 0, 2 * Math.PI);
+  radars.push({
+    clipPath
+  })
+  console.log(radars);
+}
+
+let toDraw = {};
+
+canvas.addEventListener("mousedown", mouseDownListener);
+function mouseDownListener(event) {
+  const startX = event.offsetX;
+  const startY = event.offsetY;
+  const valve = isMouseInValve(startX, startY, valves);
+  currentValve = valve;
+  if (valve) {
+    isPipeDrawing = true;
+    toDraw.startX = currentValve.x; //adjust to valve center
+    toDraw.startY = currentValve.y;
+  }
+}
+
+canvas.addEventListener("mousemove", mouseMoveListener)
+function mouseMoveListener(event) {
+  toDraw.mouseX = event.offsetX;
+  toDraw.mouseY = event.offsetY;
+}
+
+canvas.addEventListener("mouseup", (event) => {
+  createNewPipeLine(event);
+  createNewOilRig(event);
+  createNewWagon(event);
+  createNewRadar(event);
+});
+
 function drawBackground() {
   ctx.drawImage(background, 0, 0);
   ctx.drawImage(rightInc, canvas.width - rightInc.width, groundLevel - rightInc.width - 11);
@@ -234,13 +282,23 @@ function drawBackground() {
 
 function drawGroundBackground() {
   let clipPath = new Path2D();
+
+  //clip along pipe lines
   if (pipeLines.length) {
     for (let pipe of pipeLines) {
       clipPath.addPath(getPathAlongLine(pipe.startX, pipe.startY, pipe.endX, pipe.endY, 50));
     }
   }
-  ctx.save(); 
-  // if (!isGameOver) ctx.clip(clipPath);
+  ctx.save();
+
+  //clip radars
+  if (radars.length) {
+    for (let radar of radars) {
+      clipPath.addPath(radar.clipPath);
+    }
+  }
+
+  if (!isGameOver) ctx.clip(clipPath);
   //draw ground background
   ctx.beginPath();
   ctx.fillStyle = "#714031";
@@ -248,7 +306,7 @@ function drawGroundBackground() {
   ctx.closePath();
   //draw oil polygons
   drawOilPolygons(polygons);
-  ctx.restore(); 
+  ctx.restore();
 }
 
 function drawGroundOverlay() {
@@ -274,6 +332,7 @@ function render() {
   if (isOilRigDrawing) drawNewOilRig(oilRigImg, toDraw.mouseX);
   if (isWagonDrawing) drawNewWagon(wagonImg, toDraw.mouseX);
   if (isPipeDrawing) drawNewPipe(toDraw.startX, toDraw.startY, toDraw.mouseX, toDraw.mouseY);
+  if (isRadarDrawing) drawRadar(toDraw.mouseX, toDraw.mouseY, RADAR_RADIUS);
 
   drawValves(valveImg, valves);
   if (!isGameOver) window.requestAnimationFrame(render)
@@ -398,7 +457,7 @@ function checkOilRigInDirection(wagon) {
   );
 
   if (oilRigInDirection) { // If has OilRig in direction
-    return true; 
+    return true;
   }
 
   // is OilRig in other direction
@@ -408,7 +467,7 @@ function checkOilRigInDirection(wagon) {
       : oilRig.valve > position
   );
 
-  if (oilRigInDirection) { 
+  if (oilRigInDirection) {
     wagon.direction *= -1; //change direction
     return true
   }
@@ -416,35 +475,6 @@ function checkOilRigInDirection(wagon) {
     return false; // if no active rigs in any direction
   }
 }
-
-
-let toDraw = {};
-
-canvas.addEventListener("mousedown", mouseDownListener);
-function mouseDownListener(event) {
-  const startX = event.offsetX;
-  const startY = event.offsetY;
-  const valve = isMouseInValve(startX, startY, valves);
-  currentValve = valve;
-  if (valve) {
-    isPipeDrawing = true;
-    toDraw.startX = currentValve.x; //adjust to valve center
-    toDraw.startY = currentValve.y;
-  }
-}
-
-canvas.addEventListener("mousemove", mouseMoveListener)
-function mouseMoveListener(event) {
-  toDraw.mouseX = event.offsetX;
-  toDraw.mouseY = event.offsetY;
-}
-
-canvas.addEventListener("mouseup", (event) => {
-  createNewPipeLine(event);
-  createNewOilRig(event);
-  createNewWagon(event);
-});
-
 
 //Images
 const overlay = new Image();
@@ -721,9 +751,6 @@ function updateScoreTable(userScores) {
     });
   }
 }
-
-// alert ('Привет ревьюер, игра работает но экономика пока ещё не настроена, проверять можно, но поиграть пока не получится')
-
 
 export {
   updateWagonState,
