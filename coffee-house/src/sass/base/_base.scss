@@ -5,6 +5,16 @@
 /**
  * Set up a decent box model on the root element
  */
-html {
+
+* {
   box-sizing: border-box;
+} 
+
+html {
+  font-size: 10px;
+}
+
+body {
+  @extend %font;
+  @include font($size: 1.6rem, $height: 150%);
 }

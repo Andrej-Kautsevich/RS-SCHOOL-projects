@@ -1,0 +1,19 @@
+.navigation {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 40px;
+}
+
+.navigation__item {
+  list-style: none;
+}
+
+.navigation__link {
+  color: $color-text-dark;
+  text-decoration: none;
+  // cursor: auto;
+  @extend %font-link;
+  @extend %transition-link;
+}
+

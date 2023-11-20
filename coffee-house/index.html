@@ -4,51 +4,50 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="dist/main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <title>Coffee House</title>
   </head>
   <body>
-    <header class="container header__container">
-      <div class="header__logo">
-        <a href="#" class="logo">
-          <object
-            type="image/svg+xml"
-            data="src/img/logo.svg"
-            class="logo-object"
-          >
-            Your browser does not support SVG
-          </object>
-        </a>
-      </div>
-      <nav class="header__navigation">
-        <ul class="navigation">
-          <li class="navigation__item">
-            <a href="#favorites-coffee" class="navigation__link"
-              >Favorite coffee</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a href="#about" class="navigation__link">About</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#mobile-app" class="navigation__link">Mobile app</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#contacts" class="navigation__link">Contact us</a>
-          </li>
-        </ul>
-      </nav>
-      <div class="header__menu">
-        <a href="#" class="link-button">
-          <span class="link-button__text">Menu</span>
-          <span class="icon icon_cup"></span>
-        </a>
+    <header class="header">
+      <div class="container header__container">
+        <div class="header__logo">
+          <a href="#" class="logo"><span class="logo-icon"></span></a>
+        </div>
+        <nav class="header__navigation">
+          <ul class="navigation">
+            <li class="navigation__item">
+              <a href="#favorites-coffee" class="navigation__link"
+                >Favorite coffee</a
+              >
+            </li>
+            <li class="navigation__item">
+              <a href="#about" class="navigation__link">About</a>
+            </li>
+            <li class="navigation__item">
+              <a href="#mobile-app" class="navigation__link">Mobile app</a>
+            </li>
+            <li class="navigation__item">
+              <a href="#contacts" class="navigation__link">Contact us</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="header__menu">
+          <a href="#" class="link-button">
+            <span class="link-button__text">Menu</span>
+            <span class="icon icon_cup"></span>
+          </a>
+        </div>
       </div>
     </header>
     <main>
       <section class="enjoy">
         <div class="container enjoy__container">
           <h1 class="enjoy__title">
-            Enjoy premium coffee at our charming cafe
+            <span class="enjoy__title_accent">Enjoy</span> premium coffee at our
+            charming cafe
           </h1>
           <p class="enjoy__text">
             With its inviting atmosphere and delicious coffee options, the
@@ -60,70 +59,71 @@
         </div>
       </section>
       <section class="favorites-coffee" id="favorites-coffee">
-        <div class="container favorites-coffee__container"></div>
-        <h2 class="favorites-coffee__title">Choose your favorite coffee</h2>
-        <div class="favorites-coffee__slider">
-          <div class="slider">
-            <button class="button button_icon-dark slider__btn-prev">
-              <span class="icon icon_left"></span>
-            </button>
-            <div class="slider__container">
-              <div class="slider__items">
-                <div class="slider__item">
-                  <img
-                    class="slider__image slider__image_1"
-                    src="src/img/coffee-slider/coffee-slider-1.png"
-                    alt=""
-                  />
-                </div>
-                <div class="slider__item">
-                  <img
-                    class="slider__image slider__image_2"
-                    src="src/img/coffee-slider/coffee-slider-2.png"
-                    alt=""
-                  />
-                </div>
-                <div class="slider__item">
-                  <img
-                    class="slider__image slider__image_3"
-                    src="src/img/coffee-slider/coffee-slider-3.png"
-                    alt=""
-                  />
+        <div class="container favorites-coffee__container">
+          <h2 class="favorites-coffee__title">Choose your favorite coffee</h2>
+          <div class="favorites-coffee__slider">
+            <div class="slider">
+              <button class="button button_icon-dark slider__btn-prev">
+                <span class="icon icon_left"></span>
+              </button>
+              <div class="slider__container">
+                <div class="slider__items">
+                  <div class="slider__item">
+                    <img
+                      class="slider__image slider__image_1"
+                      src="src/img/coffee-slider/coffee-slider-1.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="slider__item">
+                    <img
+                      class="slider__image slider__image_2"
+                      src="src/img/coffee-slider/coffee-slider-2.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="slider__item">
+                    <img
+                      class="slider__image slider__image_3"
+                      src="src/img/coffee-slider/coffee-slider-3.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
+              <button class="button button_icon-dark slider__btn-next">
+                <span class="icon icon_next"></span>
+              </button>
             </div>
-            <button class="button button_icon-dark slider__btn-next">
-              <span class="icon icon_next"></span>
-            </button>
           </div>
-        </div>
-        <h3 class="favorites-coffee__title">S’mores Frappuccino</h3>
-        <p class="favorites-coffee__text">
-          This new drink takes an espresso and mixes it with brown sugar and
-          cinnamon before being topped with oat milk.
-        </p>
-        <p class="favorites-coffe__price">15.50</p>
-        <div class="favorites-coffee__pagination">
-          <input
-            type="radio"
-            name="coffee-pagination"
-            class="coffee-pagination__button"
-            checked
-          />
-          <input
-            type="radio"
-            name="coffee-pagination"
-            class="coffee-pagination__button"
-          />
-          <input
-            type="radio"
-            name="coffee-pagination"
-            class="coffee-pagination__button"
-          />
+          <h3 class="favorites-coffee__title">S’mores Frappuccino</h3>
+          <p class="favorites-coffee__text">
+            This new drink takes an espresso and mixes it with brown sugar and
+            cinnamon before being topped with oat milk.
+          </p>
+          <p class="favorites-coffe__price">15.50</p>
+          <div class="favorites-coffee__pagination">
+            <input
+              type="radio"
+              name="coffee-pagination"
+              class="coffee-pagination__button"
+              checked
+            />
+            <input
+              type="radio"
+              name="coffee-pagination"
+              class="coffee-pagination__button"
+            />
+            <input
+              type="radio"
+              name="coffee-pagination"
+              class="coffee-pagination__button"
+            />
+          </div>
         </div>
       </section>
       <section class="about" id="about">
-        <div class="layout-2-column about__container">
+        <div class="container layout-2-column about__container">
           <div class="about__item box">
             <img
               class="about__image"
@@ -155,7 +155,7 @@
         </div>
       </section>
       <section class="mobile-app" id="mobile-app">
-        <div class="layout-2-column mobile-app__container">
+        <div class="container layout-2-column mobile-app__container">
           <div class="mobile-app__content">
             <h2 class="mobile-app__title">
               Download our apps to start ordering
@@ -184,7 +184,7 @@
         </div>
       </section>
       <footer class="contacts" id="contacts">
-        <div class="layout-2-column container_shadowed">
+        <div class="container layout-2-column contacts__container">
           <div class="contacts__offer">
             <h2 class="contacts__title">
               Sip, Savor, Smile. It’s coffee time!

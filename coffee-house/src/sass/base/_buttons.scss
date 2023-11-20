@@ -1,0 +1,12 @@
+.link-button {
+  display: inline-flex;
+  cursor: pointer;
+  text-decoration: none;
+  @extend %transition-link;
+}
+
+.link-button__text {
+  color: $color-text-dark;
+  margin-right: 8px;
+  @extend %font-link;
+}
