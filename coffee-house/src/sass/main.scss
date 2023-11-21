@@ -14,16 +14,17 @@
 @import
   'base/base',
   'base/buttons',
+  'base/coffee-slider',
   'base/icons',
   'base/logo',
   'base/fonts';
 
 // 4. Layout-related sections
 @import
-'layout/main',
-'layout/header',
-'layout/footer',
-'layout/container';
+  'layout/main',
+  'layout/header',
+  'layout/footer',
+  'layout/container';
 
 // 5. Components
 @import

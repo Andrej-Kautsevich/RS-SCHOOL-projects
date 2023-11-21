@@ -8,3 +8,17 @@
   height: 20px;
   @extend %transition;
 }
+
+.icon_left {
+  background-image: url(../src/img/icons/arrow-left.svg);
+  width: 24px;
+  height: 24px;
+  @extend %transition;
+}
+
+.icon_right {
+  background-image: url(../src/img/icons/arrow-right.svg);
+  width: 24px;
+  height: 24px;
+  @extend %transition;
+}

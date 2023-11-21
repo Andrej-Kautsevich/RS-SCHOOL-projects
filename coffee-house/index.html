@@ -58,7 +58,8 @@
                 favorite beverage.
               </p>
               <button class="button button_primary">
-                <span class="enjoy__button-text">Menu</span><span class="icon icon_cup"></span>
+                <span class="enjoy__button-text">Menu</span
+                ><span class="icon icon_cup"></span>
               </button>
             </div>
           </div>
@@ -66,64 +67,67 @@
       </section>
       <section class="favorites-coffee" id="favorites-coffee">
         <div class="container favorites-coffee__container">
-          <h2 class="favorites-coffee__title">Choose your favorite coffee</h2>
+          <h2 class="favorites-coffee__title">
+            Choose your
+            <span class="favorites-coffee__title_accent">favorite</span> coffee
+          </h2>
           <div class="favorites-coffee__slider">
-            <div class="slider">
-              <button class="button button_icon-dark slider__btn-prev">
+            <div class="coffee-slider">
+              <button class="button button_icon-dark coffee-slider__btn">
                 <span class="icon icon_left"></span>
               </button>
-              <div class="slider__container">
-                <div class="slider__items">
-                  <div class="slider__item">
+              <div class="coffee-slider__container">
+                <div class="coffee-slider__items">
+                  <div class="coffee-slider__item">
                     <img
-                      class="slider__image slider__image_1"
+                      class="coffee-slider__image coffee-slider__image_1"
                       src="src/img/coffee-slider/coffee-slider-1.png"
                       alt=""
                     />
+                    <h3 class="coffee-slider__title">S’mores Frappuccino</h3>
+                    <p class="coffee-slider__text">
+                      This new drink takes an espresso and mixes it with brown
+                      sugar and cinnamon before being topped with oat milk.
+                    </p>
+                    <p class="coffee-slider__price">$5.50</p>
                   </div>
-                  <div class="slider__item">
+                  <div class="coffee-slider__item">
                     <img
-                      class="slider__image slider__image_2"
+                      class="coffee-slider__image coffee-slider__image_2"
                       src="src/img/coffee-slider/coffee-slider-2.png"
                       alt=""
                     />
                   </div>
-                  <div class="slider__item">
+                  <div class="coffee-slider__item">
                     <img
-                      class="slider__image slider__image_3"
+                      class="coffee-slider__image coffee-slider__image_3"
                       src="src/img/coffee-slider/coffee-slider-3.png"
                       alt=""
                     />
                   </div>
                 </div>
               </div>
-              <button class="button button_icon-dark slider__btn-next">
-                <span class="icon icon_next"></span>
+              <button class="button button_icon-dark coffee-slider__btn">
+                <span class="icon icon_right"></span>
               </button>
             </div>
           </div>
-          <h3 class="favorites-coffee__title">S’mores Frappuccino</h3>
-          <p class="favorites-coffee__text">
-            This new drink takes an espresso and mixes it with brown sugar and
-            cinnamon before being topped with oat milk.
-          </p>
-          <p class="favorites-coffe__price">15.50</p>
-          <div class="favorites-coffee__pagination">
+          <div class="coffee-slider__pagination">
             <input
               type="radio"
               name="coffee-pagination"
-              class="coffee-pagination__button"
+              class="coffee-slider__pagination-button"
               checked
             />
             <input
               type="radio"
               name="coffee-pagination"
-              class="coffee-pagination__button"
+              class="coffee-slider__pagination-button"
             />
             <input
               type="radio"
               name="coffee-pagination"
-              class="coffee-pagination__button"
+              class="coffee-slider__pagination-button"
             />
           </div>
         </div>

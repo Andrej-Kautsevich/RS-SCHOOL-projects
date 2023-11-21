@@ -1,3 +1,17 @@
 .favorites-coffee__container {
   padding: 0 40px;
 }
+
+.favorites-coffee__title {
+  @extend %font-heading2;
+  margin: 0 0 40px;
+  text-align: center;
+    &_accent {
+      @extend %font-accent;
+    }
+}
+
+.favorites-coffee__slider {
+  display: flex;
+  justify-content: center;
+}

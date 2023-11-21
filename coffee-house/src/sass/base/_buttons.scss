@@ -16,11 +16,11 @@
   border: 0;
   padding: 0;
   cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   &_primary {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
     width: 200px;
     height: 64px;
@@ -30,15 +30,25 @@
     border-color: $color-background-body;
 
     @extend %transition;
-  }
 
     &:not(:hover) {
       .icon {
         opacity: 0;
       }
+
       .enjoy__button-text {
         transform: translateX(12px);
       }
     }
-}
+  }
 
+  &_icon-dark {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid $color-border-dark;
+    background-color: transparent;
+  }
+
+
+}

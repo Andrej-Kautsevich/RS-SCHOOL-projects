@@ -9,7 +9,17 @@
 }
 
 %font-heading1 {
-  @include font($size: 7.2rem, $height: 105%, $weight: 600)
+  @include font($size: 7.2rem, $height: 105%, $weight: 600);
+}
+
+%font-heading2 {
+  @include font($size: 6.0rem, $height: 125%, $weight: 600);
+
+}
+
+%font-heading3 {
+  @include font($size: 2.4rem, $height: 125%, $weight: 600);
+
 }
 
 %font-link {
