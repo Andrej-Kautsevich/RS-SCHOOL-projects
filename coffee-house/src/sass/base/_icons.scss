@@ -6,4 +6,5 @@
   background-image: url(../src/img/icons/coffee-cup.svg);
   width: 20px;
   height: 20px;
+  @extend %transition;
 }

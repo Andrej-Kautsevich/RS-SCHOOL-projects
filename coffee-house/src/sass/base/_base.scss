@@ -18,3 +18,7 @@ body {
   @extend %font;
   @include font($size: 1.6rem, $height: 150%);
 }
+
+p {
+  margin: 0;
+}

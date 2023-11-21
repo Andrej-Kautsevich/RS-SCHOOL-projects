@@ -8,6 +8,10 @@
   color: $color-text-accent;
 }
 
+%font-heading1 {
+  @include font($size: 7.2rem, $height: 105%, $weight: 600)
+}
+
 %font-link {
   @include font($size: 1.6rem, $height: 150%, $weight: 600);
 }
@@ -34,4 +38,8 @@
   &:hover:before {
     transform: scaleX(1);
   }
+}
+
+%transition {
+  transition: all 0.5s ease-out;
 }

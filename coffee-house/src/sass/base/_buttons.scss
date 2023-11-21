@@ -10,3 +10,35 @@
   margin-right: 8px;
   @extend %font-link;
 }
+
+.button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  &_primary {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 200px;
+    height: 64px;
+    padding: 20px 64px;
+    border-radius: 100px;
+    background-color: $color-background-body;
+    border-color: $color-background-body;
+
+    @extend %transition;
+  }
+
+    &:not(:hover) {
+      .icon {
+        opacity: 0;
+      }
+      .enjoy__button-text {
+        transform: translateX(12px);
+      }
+    }
+}
+

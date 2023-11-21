@@ -1,8 +1,31 @@
-// .enjoy__title {
-//   @extend %font;
-//   @include font($size: 7.2rem, $height: 105%, $weight: 600);
-//   margin: 0;
-//     &_accent {
-//       @extend %font-accent;
-//     }
-// }
+.enjoy__container {
+  margin: 0 40px;
+  padding: 100px;
+  border-radius: 40px;
+  background: url("../src/img/enjoy/img-hero.jpg") $color-background-container 50% / cover no-repeat;
+}
+
+.enjoy__offer {
+  display: flex;
+  flex-direction: column;
+  width: 530px;
+  gap: 40px;
+}
+
+.enjoy__title {
+  color: $color-text-light;
+  @extend %font-heading1;
+  margin: 0;
+    &_accent {
+      @extend %font-accent;
+    }
+}
+
+.enjoy__text {
+  color: $color-text-light;
+}
+
+.enjoy__button-text {
+  transform: translateX(0);
+  @extend %transition;
+}
