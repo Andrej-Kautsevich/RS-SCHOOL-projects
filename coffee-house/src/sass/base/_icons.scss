@@ -9,15 +9,13 @@
   @extend %transition;
 }
 
-.icon_left {
-  background-image: url(../src/img/icons/arrow-left.svg);
+.icon_next {
   width: 24px;
   height: 24px;
   @extend %transition;
 }
 
-.icon_right {
-  background-image: url(../src/img/icons/arrow-right.svg);
+.icon_prev {
   width: 24px;
   height: 24px;
   @extend %transition;

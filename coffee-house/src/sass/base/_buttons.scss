@@ -20,6 +20,8 @@
   justify-content: center;
   align-items: center;
 
+  @extend %transition;
+
   &_primary {
     gap: 8px;
     width: 200px;
@@ -28,8 +30,6 @@
     border-radius: 100px;
     background-color: $color-background-body;
     border-color: $color-background-body;
-
-    @extend %transition;
 
     &:not(:hover) {
       .icon {
@@ -48,7 +48,16 @@
     border-radius: 50%;
     border: 1px solid $color-border-dark;
     background-color: transparent;
+
+    &:hover {
+      background-color: $color-background-container;
+
+      .icon_next {
+        stroke: $color-text-light;
+      }
+      .icon_prev {
+        stroke: $color-text-light;
+      }
+    }
   }
-
-
 }
