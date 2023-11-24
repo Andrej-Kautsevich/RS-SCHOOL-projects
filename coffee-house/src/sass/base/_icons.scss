@@ -1,28 +1,64 @@
 .icon {
   display: inline-block;
+  @extend %transition;
 }
 
 .icon_cup {
   background-image: url(../src/img/icons/coffee-cup.svg);
   width: 20px;
   height: 20px;
-  @extend %transition;
+}
+
+.icon_pin {
+  background-image: url(../src/img/icons/pin.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.icon_phone {
+  background-image: url(../src/img/icons/phone.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.icon_clock {
+  background-image: url(../src/img/icons/clock.svg);
+  width: 20px;
+  height: 20px;
 }
 
 .icon_next {
   width: 24px;
   height: 24px;
-  @extend %transition;
 }
 
 .icon_prev {
   width: 24px;
   height: 24px;
-  @extend %transition;
 }
 
 .icon_store {
   width: 36px;
   height: 36px;
-  @extend %transition;
+}
+
+.icon_twitter {
+  width: 24px;
+  height: 24px;
+  stroke: $color-text-light;
+  fill: none;
+}
+
+.icon_instagram {
+  width: 24px;
+  height: 24px;
+  stroke: $color-text-light;
+  fill: none;
+}
+
+.icon_facebook {
+  width: 24px;
+  height: 24px;
+  stroke: $color-text-light;
+  fill: none;
 }

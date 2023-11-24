@@ -15,6 +15,7 @@
   'base/base',
   'base/buttons',
   'base/coffee-slider',
+  'base/contacts-info',
   'base/icons',
   'base/logo',
   'base/fonts';
@@ -23,7 +24,7 @@
 @import
   'layout/main',
   'layout/header',
-  'layout/footer',
+  'layout/contacts',
   'layout/container';
 
 // 5. Components
@@ -32,5 +33,4 @@
   'components/enjoy',
   'components/favorite-coffee',
   'components/about',
-  'components/mobile-app',
-  'components/contacts';
+  'components/mobile-app';

@@ -2,7 +2,7 @@
   display: inline-flex;
   cursor: pointer;
   text-decoration: none;
-  @extend %transition-link;
+  @include font-link ($color-text-dark)
 }
 
 .link-button__text {
@@ -71,8 +71,25 @@
       .icon_next {
         stroke: $color-text-light;
       }
+
       .icon_prev {
         stroke: $color-text-light;
+      }
+    }
+  }
+
+  &_icon-light {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid $color-border-light;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $color-border-light;
+
+      .icon {
+        stroke: $color-text-dark;
       }
     }
   }

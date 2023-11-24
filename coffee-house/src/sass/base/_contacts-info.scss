@@ -1,0 +1,35 @@
+.contacts-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contacts-info__title {
+  @extend %font-heading3;
+  margin: 0 0 40px;
+}
+
+.contacts-info__item {
+  @extend %font-link;
+  color: $color-text-light;
+  margin-bottom: 18px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .icon {
+    margin-right: 8px;
+  }
+}
+
+.contacts-info__links {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.contacts-info__link {
+  color: $color-text-light;
+  text-decoration: none;
+  @include font-link ($color-text-light)
+}

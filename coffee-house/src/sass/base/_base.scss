@@ -15,6 +15,7 @@ html {
 }
 
 body {
+  background-color: $color-background-body;
   @extend %font;
   @include font($size: 1.6rem, $height: 150%);
 }
