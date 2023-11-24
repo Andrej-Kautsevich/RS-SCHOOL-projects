@@ -13,6 +13,7 @@
 
 .button {
   appearance: none;
+  background-color: transparent;
   border: 0;
   padding: 0;
   cursor: pointer;
@@ -39,6 +40,21 @@
       .enjoy__button-text {
         transform: translateX(12px);
       }
+    }
+  }
+
+  &_app {
+    width: 200px;
+    padding: 12px 20px;
+    border-radius: 100px;
+    border: 1px solid $color-border-dark;
+    justify-content: start;
+
+    &:hover {
+      color: $color-text-light;
+      background-color: $color-background-container;
+      border-color: $color-background-container;
+      fill: $color-text-light;
     }
   }
 
