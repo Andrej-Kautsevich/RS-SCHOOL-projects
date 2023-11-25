@@ -40,3 +40,10 @@
     @extend %font-link;
   }
 }
+
+.mobile-app__screens {
+  max-width: 630px;
+  img {
+    display: block;
+  }
+}
