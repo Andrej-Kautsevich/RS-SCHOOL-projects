@@ -29,14 +29,14 @@ body {
   line-height: 125%;
 }
 
-.mobile-app__button-text_caption {
+.mobile-app__button-text-caption {
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
 }
 
-.mobile-app__button-text_link, .navigation__link, .contacts-info__item, .link-button__text {
+.mobile-app__button-text-link, .navigation__link, .contacts-info__item, .link-button__text {
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 600;
@@ -565,26 +565,6 @@ p {
   flex-shrink: 0;
 }
 
-.coffee-slider__pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  gap: 12px;
-}
-
-.coffee-slider__pagination-button {
-  appearance: none;
-  width: 40px;
-  height: 4px;
-  background-color: #C1B6AE;
-  border-radius: 2px;
-  border: 4px transparent;
-  cursor: pointer;
-}
-.coffee-slider__pagination-button:checked {
-  background-color: #665F55;
-}
-
 .contacts-info {
   display: flex;
   flex-direction: column;
@@ -767,7 +747,7 @@ p {
   height: 100%;
 }
 
-.main__wrapper {
+.main {
   display: flex;
   flex-direction: column;
   gap: 100px;
@@ -891,6 +871,26 @@ p {
   justify-content: center;
 }
 
+.favorites-coffee__controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 12px;
+}
+
+.favorites-coffee__control-button {
+  appearance: none;
+  width: 40px;
+  height: 4px;
+  background-color: #C1B6AE;
+  border-radius: 2px;
+  border: 4px transparent;
+  cursor: pointer;
+}
+.favorites-coffee__control-button:checked {
+  background-color: #665F55;
+}
+
 .about__container {
   padding: 0 40px;
 }
@@ -969,6 +969,7 @@ p {
   display: flex;
   flex-direction: column;
 }
+
 .mobile-app__screens {
   max-width: 630px;
 }
