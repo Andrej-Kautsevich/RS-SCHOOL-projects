@@ -6,6 +6,7 @@
   @include font-link ($color-text-dark);
 
   &_active {
+    cursor: default;
     &:before {
       transform: scaleX(1) !important;
     }
@@ -36,6 +37,8 @@
     height: 64px;
     padding: 20px 64px;
     border-radius: 100px;
+    text-decoration: none;
+    color: $color-text-dark;
     background-color: $color-background-body;
     border-color: $color-background-body;
 
@@ -136,4 +139,5 @@
   height: 30px;
   border-radius: 50%;
   background-color: $color-border-light;
+  @extend %transition;
 }
