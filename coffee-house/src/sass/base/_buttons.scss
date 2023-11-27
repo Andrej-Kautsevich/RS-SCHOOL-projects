@@ -1,0 +1,143 @@
+.link-button {
+  display: inline-flex;
+  cursor: pointer;
+  text-decoration: none;
+
+  @include font-link ($color-text-dark);
+
+  &_active {
+    cursor: default;
+    &:before {
+      transform: scaleX(1) !important;
+    }
+  }
+}
+
+.link-button__text {
+  color: $color-text-dark;
+  margin-right: 8px;
+  @extend %font-link;
+}
+
+.button {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  @extend %transition;
+
+  &_primary {
+    gap: 8px;
+    width: 200px;
+    height: 64px;
+    padding: 20px 64px;
+    border-radius: 100px;
+    text-decoration: none;
+    color: $color-text-dark;
+    background-color: $color-background-body;
+    border-color: $color-background-body;
+
+    &:not(:hover) {
+      .icon {
+        opacity: 0;
+      }
+
+      .enjoy__button-text {
+        transform: translateX(14px);
+      }
+    }
+  }
+
+  &_app {
+    width: 200px;
+    padding: 12px 20px;
+    border-radius: 100px;
+    border: 1px solid $color-border-dark;
+    justify-content: start;
+    text-decoration: none;
+    color: $color-text-dark;
+
+    &:hover {
+      color: $color-text-light;
+      background-color: $color-background-container;
+      border-color: $color-background-container;
+      
+      svg {
+        fill: $color-text-light;
+      }
+    }
+  }
+
+  &_icon-dark {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid $color-border-dark;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $color-background-container;
+
+      .icon_next {
+        stroke: $color-text-light;
+      }
+
+      .icon_prev {
+        stroke: $color-text-light;
+      }
+    }
+  }
+
+  &_icon-light {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid $color-border-light;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $color-border-light;
+
+      .icon {
+        stroke: $color-text-dark;
+      }
+    }
+  }
+}
+
+.tabs-button {
+  display: flex;
+  padding: 7px 16px 7px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 100px;
+  border: 1px solid $color-border-light;
+
+  &_active,
+  &:hover {
+    background-color: $color-background-container;
+    border: 1px solid $color-background-container;
+    color: $color-border-light;
+
+    .tabs-button__icon {
+      background-color: $color-background-body;
+    }
+  }
+}
+
+.tabs-button__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: $color-border-light;
+  @extend %transition;
+}

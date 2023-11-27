@@ -1,0 +1,71 @@
+.coffee-slider {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.coffee-slider__container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.coffee-slider__items {
+  display: flex;
+  width: 300%;
+}
+
+.coffee-slider__item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coffee-slider__image {
+  width: 480px;
+  height: 480px;
+}
+
+.coffee-slider__title {
+  @extend %font-heading3;
+  max-width: 480px;
+  margin: 20px 0 0;
+}
+
+.coffee-slider__text {
+  max-width: 480px;
+  text-align: center;
+  margin: 16px 0;
+}
+
+.coffee-slider__price {
+  max-width: 480px;
+  @extend %font-heading3;
+}
+
+.coffee-slider__btn {
+  flex-shrink: 0;
+}
+
+.coffee-slider__pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 12px;
+}
+
+//TODO: add interactive area
+.coffee-slider__pagination-button {
+  appearance: none;
+  width: 40px;
+  height: 4px;
+  background-color: $color-border-light;
+  border-radius: 2px;
+  border: 4px transparent;
+  cursor: pointer;
+
+  &:checked {
+    background-color: $color-border-dark;
+  }
+}

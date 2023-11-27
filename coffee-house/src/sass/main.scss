@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+// 1. Configuration and helpers
+@import 
+  "abstracts/variables",
+  "abstracts/mixins",
+  "abstracts/placeholders";
+
+// 2. Vendors
+@import 
+  "vendors/normalize";
+
+// 3. Base stuff
+@import
+  'base/base',
+  'base/buttons',
+  'base/coffee-slider',
+  'base/contacts-info',
+  'base/product',
+  'base/icons',
+  'base/logo',
+  'base/fonts';
+
+// 4. Layout-related sections
+@import
+  'layout/main',
+  'layout/header',
+  'layout/contacts',
+  'layout/container';
+
+// 5. Components
+@import
+  'components/navigation',
+  'components/enjoy',
+  'components/favorite-coffee',
+  'components/about',
+  'components/mobile-app',
+  'components/menu';

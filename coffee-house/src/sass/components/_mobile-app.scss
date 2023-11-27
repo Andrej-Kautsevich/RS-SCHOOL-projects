@@ -1,0 +1,50 @@
+.mobile-app__container {
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 100px;
+}
+
+.mobile-app__content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.mobile-app__buttons {
+  display: inline-flex;
+  gap: 20px;
+  .icon {
+    margin-right: 8px
+  }
+}
+
+.mobile-app__title {
+  margin: 0;
+  text-align: left;
+  @extend %font-heading2;
+
+  &_accent {
+    @extend %font-accent;
+  }
+}
+
+.mobile-app__button-text {
+  display: flex;
+  flex-direction: column;
+
+  &_caption {
+    @extend %font-caption;
+  }
+
+  &_link {
+    @extend %font-link;
+  }
+}
+
+.mobile-app__screens {
+  max-width: 630px;
+  img {
+    display: block;
+  }
+}
