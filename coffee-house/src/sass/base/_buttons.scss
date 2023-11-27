@@ -45,7 +45,7 @@
       }
 
       .enjoy__button-text {
-        transform: translateX(12px);
+        transform: translateX(14px);
       }
     }
   }
@@ -56,12 +56,17 @@
     border-radius: 100px;
     border: 1px solid $color-border-dark;
     justify-content: start;
+    text-decoration: none;
+    color: $color-text-dark;
 
     &:hover {
       color: $color-text-light;
       background-color: $color-background-container;
       border-color: $color-background-container;
-      fill: $color-text-light;
+      
+      svg {
+        fill: $color-text-light;
+      }
     }
   }
 

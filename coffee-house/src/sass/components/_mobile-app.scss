@@ -30,7 +30,8 @@
 }
 
 .mobile-app__button-text {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
 
   &_caption {
     @extend %font-caption;

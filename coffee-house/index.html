@@ -74,9 +74,8 @@
           <div class="favorites-coffee__slider">
             <div class="coffee-slider">
               <button class="button button_icon-dark coffee-slider__btn">
-                <!-- prettier-ignore -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path class="icon_prev" d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg class="icon icon_prev">
+                  <use xlink:href="./src/img/icons/arrow-left.svg#icon"></use>
                 </svg>
               </button>
               <div class="coffee-slider__container">
@@ -111,9 +110,8 @@
                 </div>
               </div>
               <button class="button button_icon-dark coffee-slider__btn">
-                <!-- prettier-ignore -->
-                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path class="icon_next" d="M6 12H18.5M18.5 12L12.5 6M18.5 12L12.5 18" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg class="icon icon_next">
+                  <use xlink:href="./src/img/icons/arrow-right.svg#icon"></use>
                 </svg>
               </button>
             </div>
@@ -190,28 +188,38 @@
               ordering your favorite coffee from wherever you are
             </p>
             <div class="mobile-app__buttons">
-              <a class="button button_app">
+              <a
+                class="button button_app"
+                href="https://www.apple.com/by/app-store/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <svg class="icon icon_store">
                   <use xlink:href="./src/img/icons/app-store.svg#icon"></use>
                 </svg>
                 <p class="mobile-app__button-text">
                   <span class="mobile-app__button-text_caption"
                     >Available on the</span
-                  ><br />
+                  >
                   <span class="mobile-app__button-text_link">App Store</span>
                 </p>
               </a>
-              <button class="button button_app">
+              <a
+                class="button button_app"
+                href="https://play.google.com/store/games?hl=ru&gl=US"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <svg class="icon icon_store">
                   <use xlink:href="./src/img/icons/google-play.svg#icon"></use>
                 </svg>
-                <a class="mobile-app__button-text">
+                <p class="mobile-app__button-text">
                   <span class="mobile-app__button-text_caption"
                     >Available on</span
-                  ><br />
+                  >
                   <span class="mobile-app__button-text_link">Google Play</span>
-                </a>
-              </button>
+                </p>
+              </a>
             </div>
           </div>
           <div class="mobile-app__screens">
