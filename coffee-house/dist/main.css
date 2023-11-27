@@ -29,14 +29,14 @@ body {
   line-height: 125%;
 }
 
-.mobile-app__button-text_caption {
+.mobile-app__button-text-caption {
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
 }
 
-.mobile-app__button-text_link, .navigation__link, .contacts-info__item, .link-button__text {
+.mobile-app__button-text-link, .navigation__link, .contacts-info__item, .link-button__text {
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 600;
@@ -969,6 +969,7 @@ p {
   display: flex;
   flex-direction: column;
 }
+
 .mobile-app__screens {
   max-width: 630px;
 }

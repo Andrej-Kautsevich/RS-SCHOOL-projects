@@ -32,14 +32,14 @@
 .mobile-app__button-text {
   display: flex;
   flex-direction: column;
+}
 
-  &_caption {
-    @extend %font-caption;
-  }
+.mobile-app__button-text-caption {
+  @extend %font-caption;
+}
 
-  &_link {
-    @extend %font-link;
-  }
+.mobile-app__button-text-link {
+  @extend %font-link;
 }
 
 .mobile-app__screens {
