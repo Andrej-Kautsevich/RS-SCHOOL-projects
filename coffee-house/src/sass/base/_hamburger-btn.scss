@@ -1,0 +1,40 @@
+%hamburger-line {
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: $color-text-dark;
+}
+
+
+.hamburger-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid $color-border-dark;
+  border-radius: 50%;
+
+  span {
+    @extend %hamburger-line;
+    @extend %transition;
+
+    &:first-child {
+      transform: translateY(4px);
+    }
+    &:last-child {
+      transform: translateY(-4px);
+    }
+  }
+}
+
+.hamburger-btn_active {
+  span {
+    &:first-child {
+      transform: rotate(45deg);
+    }
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+}

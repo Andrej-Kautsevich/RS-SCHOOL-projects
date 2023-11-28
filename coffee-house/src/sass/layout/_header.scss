@@ -1,15 +1,29 @@
-// -----------------------------------------------------------------------------
-// This file contains all styles related to the header of the site/application.
-// -----------------------------------------------------------------------------
-
 .header__container {
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @include media-mobile {
+    padding: 20px 16px;
+  }
 }
 
 .header__logo {
   width: 100px;
   height: 60px;
+}
+
+.header__menu-btn {
+  @include media-tablet {
+   display: none; 
+  }
+}
+
+.header__hamburger-btn {
+  display: none;
+  
+  @include media-tablet {
+   display: inline-flex; 
+  }
 }

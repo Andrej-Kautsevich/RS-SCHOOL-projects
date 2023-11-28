@@ -43,7 +43,7 @@ body {
   line-height: 150%;
 }
 
-.about__image, .enjoy__button-text, .icon, .product__image img, .tabs-button__icon, .button {
+.about__image, .enjoy__button-text, .icon, .product__image img, .hamburger-btn span, .tabs-button__icon, .button {
   transition: all 0.5s;
 }
 
@@ -488,6 +488,35 @@ p {
 .button_icon-light:hover .icon {
   stroke: #403F3D;
 }
+.button_hamburger {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #665F55;
+  border-radius: 50%;
+}
+.button_hamburger::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  width: 16px;
+  height: 1px;
+  border-radius: 2px;
+  background-color: #403F3D;
+}
+.button_hamburger::after {
+  content: "";
+  position: absolute;
+  bottom: 16px;
+  width: 16px;
+  height: 1px;
+  border-radius: 2px;
+  background-color: #403F3D;
+}
+.button_hamburger .active::before {
+  top: 20px;
+  transform: rotate(45deg);
+}
 
 .tabs-button {
   display: flex;
@@ -515,6 +544,36 @@ p {
   height: 30px;
   border-radius: 50%;
   background-color: #C1B6AE;
+}
+
+.hamburger-btn span {
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #403F3D;
+}
+
+.hamburger-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #665F55;
+  border-radius: 50%;
+}
+.hamburger-btn span:first-child {
+  transform: translateY(4px);
+}
+.hamburger-btn span:last-child {
+  transform: translateY(-4px);
+}
+
+.hamburger-btn_active span:first-child {
+  transform: rotate(45deg);
+}
+.hamburger-btn_active span:last-child {
+  transform: rotate(-45deg);
 }
 
 .coffee-slider {
@@ -761,10 +820,30 @@ p {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 380px) {
+  .header__container {
+    padding: 20px 16px;
+  }
+}
 
 .header__logo {
   width: 100px;
   height: 60px;
+}
+
+@media (max-width: 768px) {
+  .header__menu-btn {
+    display: none;
+  }
+}
+
+.header__hamburger-btn {
+  display: none;
+}
+@media (max-width: 768px) {
+  .header__hamburger-btn {
+    display: inline-flex;
+  }
 }
 
 .contacts__container {
@@ -797,7 +876,7 @@ p {
 }
 
 .container {
-  width: 1440px;
+  max-width: 1440px;
   margin: auto;
 }
 
@@ -806,6 +885,11 @@ p {
   margin: 0;
   padding: 0;
   gap: 40px;
+}
+@media (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
 }
 
 .navigation__item {
