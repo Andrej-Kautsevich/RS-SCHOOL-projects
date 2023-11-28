@@ -86,11 +86,7 @@
     &:hover {
       background-color: $color-background-container;
 
-      .icon_next {
-        stroke: $color-text-light;
-      }
-
-      .icon_prev {
+      .icon {
         stroke: $color-text-light;
       }
     }

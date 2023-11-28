@@ -498,10 +498,7 @@ p {
 .button_icon-dark:hover {
   background-color: #665F55;
 }
-.button_icon-dark:hover .icon_next {
-  stroke: #E1D4C9;
-}
-.button_icon-dark:hover .icon_prev {
+.button_icon-dark:hover .icon {
   stroke: #E1D4C9;
 }
 .button_icon-light {
@@ -831,6 +828,13 @@ p {
   width: 24px;
   height: 24px;
   stroke: #E1D4C9;
+  fill: none;
+}
+
+.icon_refresh {
+  width: 24px;
+  height: 24px;
+  stroke: #403F3D;
   fill: none;
 }
 
