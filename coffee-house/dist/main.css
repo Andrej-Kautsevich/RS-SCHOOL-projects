@@ -984,6 +984,11 @@ p {
 .favorites-coffee__container {
   padding: 0 40px;
 }
+@media (max-width: 380px) {
+  .favorites-coffee__container {
+    padding: 0 16px;
+  }
+}
 
 .favorites-coffee__title {
   margin: 0 0 40px;
