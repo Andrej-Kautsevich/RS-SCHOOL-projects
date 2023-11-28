@@ -30,7 +30,7 @@
   max-width: 480px;
   max-height: 480px;
 
-  @include media-mobile {
+  @include media-mobile-big {
     max-width: 348px;
     max-height: 348px;
   }
