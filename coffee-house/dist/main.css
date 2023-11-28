@@ -893,6 +893,17 @@ p {
   padding: 100px;
   border-radius: 40px;
 }
+@media (max-width: 768px) {
+  .contacts__wrapper {
+    flex-direction: column;
+    padding: 100px 60px;
+  }
+}
+@media (max-width: 380px) {
+  .contacts__wrapper {
+    padding: 60px 16px;
+  }
+}
 
 .contacts__offer {
   display: flex;
@@ -1025,6 +1036,12 @@ p {
   grid-template-rows: 430px 120px 430px;
   gap: 40px;
 }
+@media (max-width: 768px) {
+  .about__items {
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 .about__title {
   margin: 0;
@@ -1033,11 +1050,13 @@ p {
   overflow: hidden;
   border-radius: 20px;
 }
-.about__item:first-child {
-  margin-top: 0;
-}
 .about__item:hover .about__image {
   transform: scale(1);
+}
+@media (max-width: 768px) {
+  .about__item:nth-child(n+3) {
+    display: none;
+  }
 }
 
 .about__item_1 {
@@ -1068,6 +1087,16 @@ p {
   align-items: center;
   gap: 100px;
 }
+@media (max-width: 768px) {
+  .mobile-app__container {
+    flex-direction: column;
+  }
+}
+@media (max-width: 380px) {
+  .mobile-app__container {
+    gap: 40px;
+  }
+}
 
 .mobile-app__content {
   display: flex;
@@ -1076,7 +1105,8 @@ p {
 }
 
 .mobile-app__buttons {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 .mobile-app__buttons .icon {
@@ -1133,6 +1163,11 @@ p {
 .menu__item {
   width: 310px;
   height: 506px;
+}
+@media (max-width: 768px) {
+  .menu__item:nth-child(n+5) {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -4,12 +4,15 @@
 
 .about__items {
   margin-top: 40px;
-  // columns: 2;
-  // column-gap: 40px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 430px 120px 430px;
   gap: 40px;
+
+  @include media-tablet {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .about__title {
@@ -24,25 +27,16 @@
 .about__item {
   overflow: hidden;
   border-radius: 20px;
-  // margin-top: 40px;
-
-  &:first-child {
-    margin-top: 0;
-  }
-
-  // &_large {
-  //   width: 660px;
-  //   height: 590px;
-  // }
-
-  // &_small {
-  //   width: 660px;
-  //   height: 430px;
-  // }
 
   &:hover {
     .about__image {
       transform: scale(1);
+    }
+  }
+
+  @include media-tablet {
+    &:nth-child(n+3) {
+      display: none;
     }
   }
 }

@@ -38,4 +38,10 @@
 .menu__item {
   width: 310px;
   height: 506px;
+
+  @include media-tablet {
+    &:nth-child(n+5) {
+      display: none;
+    }
+  }
 }

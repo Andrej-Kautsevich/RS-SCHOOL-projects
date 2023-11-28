@@ -10,6 +10,15 @@
   background-color: $color-background-container;
   padding: 100px;
   border-radius: 40px;
+
+  @include media-tablet {
+    flex-direction: column;
+    padding: 100px 60px;
+  }
+
+  @include media-mobile {
+    padding: 60px 16px;
+  }
 }
 
 .contacts__offer {
