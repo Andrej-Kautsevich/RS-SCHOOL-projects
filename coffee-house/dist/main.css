@@ -632,8 +632,14 @@ p {
 }
 
 .coffee-slider__image {
-  width: 480px;
-  height: 480px;
+  max-width: 480px;
+  max-height: 480px;
+}
+@media (max-width: 380px) {
+  .coffee-slider__image {
+    max-width: 348px;
+    max-height: 348px;
+  }
 }
 
 .coffee-slider__title {
