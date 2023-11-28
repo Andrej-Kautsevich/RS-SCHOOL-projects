@@ -14,12 +14,28 @@ body {
   font-weight: 600;
   line-height: 105%;
 }
+@media (max-width: 380px) {
+  .enjoy__title {
+    font-size: 4.2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 115%;
+  }
+}
 
 .menu__title, .mobile-app__title, .about__title, .favorites-coffee__title, .contacts__title {
   font-size: 6rem;
   font-style: normal;
   font-weight: 600;
   line-height: 125%;
+}
+@media (max-width: 380px) {
+  .menu__title, .mobile-app__title, .about__title, .favorites-coffee__title, .contacts__title {
+    font-size: 3.2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+  }
 }
 
 .product__price, .product__name, .contacts-info__title, .coffee-slider__price, .coffee-slider__title {
@@ -436,11 +452,13 @@ p {
   background-color: #E1D4C9;
   border-color: #E1D4C9;
 }
-.button_primary:not(:hover) .icon {
-  opacity: 0;
-}
-.button_primary:not(:hover) .enjoy__button-text {
-  transform: translateX(14px);
+@media (min-width: 769px) {
+  .button_primary:not(:hover) .icon {
+    opacity: 0;
+  }
+  .button_primary:not(:hover) .enjoy__button-text {
+    transform: translateX(14px);
+  }
 }
 .button_app {
   width: 200px;
@@ -922,11 +940,22 @@ p {
   border-radius: 40px;
   background: url("../src/img/enjoy/img-hero.jpg") #665F55 50%/cover no-repeat;
 }
+@media (max-width: 768px) {
+  .enjoy__container {
+    padding: 100px 60px;
+  }
+}
+@media (max-width: 380px) {
+  .enjoy__container {
+    padding: 60px 16px;
+    margin: 0 16px;
+  }
+}
 
 .enjoy__offer {
   display: flex;
   flex-direction: column;
-  width: 530px;
+  max-width: 530px;
   gap: 40px;
 }
 
@@ -1058,6 +1087,7 @@ p {
   max-width: 630px;
 }
 .mobile-app__screens img {
+  width: 100%;
   display: block;
 }
 

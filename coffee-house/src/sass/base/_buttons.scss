@@ -43,13 +43,15 @@
     background-color: $color-background-body;
     border-color: $color-background-body;
 
-    &:not(:hover) {
-      .icon {
-        opacity: 0;
-      }
+    @include media-desktop {
+      &:not(:hover) {
+        .icon {
+          opacity: 0;
+        }
 
-      .enjoy__button-text {
-        transform: translateX(14px);
+        .enjoy__button-text {
+          transform: translateX(14px);
+        }
       }
     }
   }

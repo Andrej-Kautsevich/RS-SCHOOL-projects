@@ -3,12 +3,21 @@
   padding: 100px;
   border-radius: 40px;
   background: url("../src/img/enjoy/img-hero.jpg") $color-background-container 50% / cover no-repeat;
+
+  @include media-tablet {
+    padding: 100px 60px;
+  }
+
+  @include media-mobile {
+    padding: 60px 16px;
+    margin: 0 16px;
+  }
 }
 
 .enjoy__offer {
   display: flex;
   flex-direction: column;
-  width: 530px;
+  max-width: 530px;
   gap: 40px;
 }
 
