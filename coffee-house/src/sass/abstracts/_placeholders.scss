@@ -10,10 +10,18 @@
 
 %font-heading1 {
   @include font($size: 7.2rem, $height: 105%, $weight: 600);
+
+  @include media-mobile {
+    @include font($size: 4.2rem, $height: 115%, $weight: 600);
+  }
 }
 
 %font-heading2 {
   @include font($size: 6.0rem, $height: 125%, $weight: 600);
+  
+  @include media-mobile {
+    @include font($size: 3.2rem, $height: 125%, $weight: 600);
+  }
 }
 
 %font-heading3 {
