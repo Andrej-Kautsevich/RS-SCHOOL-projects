@@ -1,5 +1,5 @@
-.menu {
-  padding: 0 40px;
+.menu__container {
+  @extend %padding-content;
   display: flex;
   flex-direction: column;
   gap: 40px;

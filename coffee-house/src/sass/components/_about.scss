@@ -1,6 +1,5 @@
 .about__container {
-  padding: 0 40px;
-
+  @extend %padding-content;
 }
 
 .about__items {

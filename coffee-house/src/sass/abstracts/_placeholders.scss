@@ -18,7 +18,7 @@
 
 %font-heading2 {
   @include font($size: 6.0rem, $height: 125%, $weight: 600);
-  
+
   @include media-mobile {
     @include font($size: 3.2rem, $height: 125%, $weight: 600);
   }
@@ -42,4 +42,14 @@
 
 %transition {
   transition: all 0.5s;
+}
+
+%padding-content {
+  padding-left: $padding-desktop;
+  padding-right: $padding-desktop;
+
+  @include media-mobile {
+    padding-left: $padding-mobile;
+    padding-right: $padding-mobile;
+  }
 }

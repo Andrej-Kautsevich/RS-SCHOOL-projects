@@ -1,5 +1,5 @@
 .mobile-app__container {
-  padding: 0 40px;
+  @extend %padding-content;
   display: flex;
   align-items: center;
   gap: 100px;
