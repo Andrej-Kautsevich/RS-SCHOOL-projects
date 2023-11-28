@@ -600,6 +600,11 @@ p {
   align-items: center;
   padding: 0 4px;
 }
+@media (max-width: 768px) {
+  .coffee-slider {
+    padding: 0;
+  }
+}
 
 .coffee-slider__container {
   width: 100%;
@@ -640,6 +645,11 @@ p {
 
 .coffee-slider__btn {
   flex-shrink: 0;
+}
+@media (max-width: 380px) {
+  .coffee-slider__btn {
+    display: none;
+  }
 }
 
 .contacts-info {

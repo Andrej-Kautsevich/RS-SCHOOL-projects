@@ -3,6 +3,10 @@
   width: 100%;
   align-items: center;
   padding: 0 4px;
+
+  @include media-tablet {
+    padding: 0;
+  }
 }
 
 .coffee-slider__container {
@@ -46,4 +50,8 @@
 
 .coffee-slider__btn {
   flex-shrink: 0;
+
+  @include media-mobile {
+    display: none;
+  }
 }
