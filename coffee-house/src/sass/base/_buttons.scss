@@ -41,6 +41,7 @@
     color: $color-text-dark;
     background-color: $color-background-body;
     border-color: $color-background-body;
+    @extend %font-link;
 
     &:not(:hover) {
       .icon {
@@ -118,6 +119,7 @@
   gap: 8px;
   border-radius: 100px;
   border: 1px solid $color-border-light;
+  @extend %font-link;
 
   &_active,
   &:hover {
@@ -128,6 +130,10 @@
     .tabs-button__icon {
       background-color: $color-background-body;
     }
+  }
+
+  &_active {
+    cursor: auto;
   }
 }
 

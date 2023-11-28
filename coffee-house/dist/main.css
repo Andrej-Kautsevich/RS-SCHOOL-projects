@@ -36,7 +36,7 @@ body {
   line-height: 140%;
 }
 
-.mobile-app__button-text-link, .navigation__link, .contacts-info__item, .link-button__text {
+.mobile-app__button-text-link, .navigation__link, .contacts-info__item, .tabs-button, .button_primary, .link-button__text {
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 600;
@@ -505,6 +505,9 @@ p {
 }
 .tabs-button_active .tabs-button__icon, .tabs-button:hover .tabs-button__icon {
   background-color: #E1D4C9;
+}
+.tabs-button_active {
+  cursor: auto;
 }
 
 .tabs-button__icon {
