@@ -1149,18 +1149,23 @@ p {
 
 .menu__title {
   margin: 0;
-  width: 800px;
+  max-width: 800px;
   text-align: center;
 }
 .menu__buttons {
   display: flex;
   gap: 16px;
 }
+@media (max-width: 380px) {
+  .menu__buttons {
+    gap: 8px;
+  }
+}
 
 .menu__items {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 40px;
 }
 
@@ -1170,6 +1175,15 @@ p {
 }
 @media (max-width: 768px) {
   .menu__item:nth-child(n+5) {
+    display: none;
+  }
+}
+
+.menu__refresh {
+  align-self: center;
+}
+@media (min-width: 769px) {
+  .menu__refresh {
     display: none;
   }
 }
