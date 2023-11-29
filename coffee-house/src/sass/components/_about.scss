@@ -28,9 +28,11 @@
   overflow: hidden;
   border-radius: 20px;
 
-  &:hover {
-    .about__image {
-      transform: scale(1);
+  @include hover {
+    &:hover {
+      .about__image {
+        transform: scale(1);
+      }
     }
   }
 

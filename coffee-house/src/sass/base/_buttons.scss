@@ -44,7 +44,7 @@
     border-color: $color-background-body;
     @extend %font-link;
 
-    @include media-desktop {
+    @media (hover: hover) {
       &:not(:hover) {
         .icon {
           opacity: 0;
@@ -66,13 +66,15 @@
     text-decoration: none;
     color: $color-text-dark;
 
-    &:hover {
-      color: $color-text-light;
-      background-color: $color-background-container;
-      border-color: $color-background-container;
+    @include hover {
+      &:hover {
+        color: $color-text-light;
+        background-color: $color-background-container;
+        border-color: $color-background-container;
 
-      svg {
-        fill: $color-text-light;
+        svg {
+          fill: $color-text-light;
+        }
       }
     }
   }
@@ -84,11 +86,13 @@
     border: 1px solid $color-border-dark;
     background-color: transparent;
 
-    &:hover {
-      background-color: $color-background-container;
+    @include hover {
+      &:hover {
+        background-color: $color-background-container;
 
-      .icon {
-        stroke: $color-text-light;
+        .icon {
+          stroke: $color-text-light;
+        }
       }
     }
   }
@@ -100,11 +104,13 @@
     border: 1px solid $color-border-light;
     background-color: transparent;
 
-    &:hover {
-      background-color: $color-border-light;
+    @include hover {
+      &:hover {
+        background-color: $color-border-light;
 
-      .icon {
-        stroke: $color-text-dark;
+        .icon {
+          stroke: $color-text-dark;
+        }
       }
     }
   }
@@ -155,18 +161,26 @@
   border: 1px solid $color-border-light;
   @extend %font-link;
 
-  &_active,
-  &:hover {
-    background-color: $color-background-container;
-    border: 1px solid $color-background-container;
-    color: $color-border-light;
-
-    .tabs-button__icon {
-      background-color: $color-background-body;
+  @include hover {
+    &:hover {
+      background-color: $color-background-container;
+      border: 1px solid $color-background-container;
+      color: $color-border-light;
+    
+      .tabs-button__icon {
+        background-color: $color-background-body;
+      }
     }
   }
 
   &_active {
+    background-color: $color-background-container;
+    border: 1px solid $color-background-container;
+    color: $color-border-light;
+  
+    .tabs-button__icon {
+      background-color: $color-background-body;
+    }
     cursor: auto;
   }
 }
