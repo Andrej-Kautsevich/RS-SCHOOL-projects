@@ -465,7 +465,7 @@ p {
   background-color: #E1D4C9;
   border-color: #E1D4C9;
 }
-@media (hover: hover) {
+@media (min-width: 1024px) {
   .button_primary:not(:hover) .icon {
     opacity: 0;
   }
