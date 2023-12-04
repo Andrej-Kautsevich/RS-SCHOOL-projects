@@ -935,6 +935,7 @@ p {
 @media (max-width: 520px) {
   .contacts__wrapper {
     padding: 60px 16px;
+    gap: 40px;
   }
 }
 
@@ -1076,6 +1077,10 @@ p {
     display: flex;
     flex-direction: column;
   }
+  .about__items .about__item_2,
+  .about__items .about__item_3 {
+    display: none;
+  }
 }
 
 .about__title {
@@ -1091,8 +1096,8 @@ p {
   }
 }
 @media (max-width: 1023px) {
-  .about__item:nth-child(n+3) {
-    display: none;
+  .about__item {
+    height: 590px;
   }
 }
 
@@ -1117,6 +1122,16 @@ p {
   height: 100%;
   object-fit: cover;
   transform: scale(1.1);
+}
+@media (max-width: 1023px) {
+  .about__image {
+    transform: scale(1.07);
+  }
+}
+@media (max-width: 520px) {
+  .about__image {
+    transform: scale(1.25);
+  }
 }
 
 .mobile-app__container {
