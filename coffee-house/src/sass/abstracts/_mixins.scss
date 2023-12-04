@@ -20,7 +20,39 @@
     transition: transform 0.5s ease-out;
   }
 
-  &:hover:before {
-    transform: scaleX(1);
+  @media (hover: hover) {
+    &:hover:before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@mixin media-desktop {
+  @media (min-width: ($tablet-width + 1px)) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media (max-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin media-mobile-big {
+  @media (max-width: $mobile-big-width) {
+    @content;
+  }
+}
+
+@mixin media-mobile {
+  @media (max-width: $mobile-width) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    @content;
   }
 }

@@ -7,6 +7,7 @@
 
   &_active {
     cursor: default;
+
     &:before {
       transform: scaleX(1) !important;
     }
@@ -43,13 +44,15 @@
     border-color: $color-background-body;
     @extend %font-link;
 
-    &:not(:hover) {
-      .icon {
-        opacity: 0;
-      }
+    @include media-desktop {
+      &:not(:hover) {
+        .icon {
+          opacity: 0;
+        }
 
-      .enjoy__button-text {
-        transform: translateX(14px);
+        .enjoy__button-text {
+          transform: translateX(14px);
+        }
       }
     }
   }
@@ -63,13 +66,15 @@
     text-decoration: none;
     color: $color-text-dark;
 
-    &:hover {
-      color: $color-text-light;
-      background-color: $color-background-container;
-      border-color: $color-background-container;
-      
-      svg {
-        fill: $color-text-light;
+    @include hover {
+      &:hover {
+        color: $color-text-light;
+        background-color: $color-background-container;
+        border-color: $color-background-container;
+
+        svg {
+          fill: $color-text-light;
+        }
       }
     }
   }
@@ -81,15 +86,13 @@
     border: 1px solid $color-border-dark;
     background-color: transparent;
 
-    &:hover {
-      background-color: $color-background-container;
+    @include hover {
+      &:hover {
+        background-color: $color-background-container;
 
-      .icon_next {
-        stroke: $color-text-light;
-      }
-
-      .icon_prev {
-        stroke: $color-text-light;
+        .icon {
+          stroke: $color-text-light;
+        }
       }
     }
   }
@@ -101,11 +104,48 @@
     border: 1px solid $color-border-light;
     background-color: transparent;
 
-    &:hover {
-      background-color: $color-border-light;
+    @include hover {
+      &:hover {
+        background-color: $color-border-light;
 
-      .icon {
-        stroke: $color-text-dark;
+        .icon {
+          stroke: $color-text-dark;
+        }
+      }
+    }
+  }
+
+  &_hamburger {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: 1px solid $color-border-dark;
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      width: 16px;
+      height: 1px;
+      border-radius: 2px;
+      background-color: $color-text-dark;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 16px;
+      width: 16px;
+      height: 1px;
+      border-radius: 2px;
+      background-color: $color-text-dark;
+    }
+
+    .active {
+      &::before {
+        top: 20px;
+        transform: rotate(45deg);
       }
     }
   }
@@ -121,8 +161,19 @@
   border: 1px solid $color-border-light;
   @extend %font-link;
 
-  &_active,
-  &:hover {
+  @include hover {
+    &:hover {
+      background-color: $color-background-container;
+      border: 1px solid $color-background-container;
+      color: $color-border-light;
+
+      .tabs-button__icon {
+        background-color: $color-background-body;
+      }
+    }
+  }
+
+  &_active {
     background-color: $color-background-container;
     border: 1px solid $color-background-container;
     color: $color-border-light;
@@ -130,9 +181,7 @@
     .tabs-button__icon {
       background-color: $color-background-body;
     }
-  }
 
-  &_active {
     cursor: auto;
   }
 }

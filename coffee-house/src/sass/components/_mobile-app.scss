@@ -1,8 +1,16 @@
 .mobile-app__container {
-  padding: 0 40px;
+  @extend %padding-content;
   display: flex;
   align-items: center;
   gap: 100px;
+
+  @include media-tablet {
+    flex-direction: column;
+  }
+
+  @include media-mobile {
+    gap: 40px;
+  }
 }
 
 .mobile-app__content {
@@ -12,7 +20,8 @@
 }
 
 .mobile-app__buttons {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   .icon {
     margin-right: 8px
@@ -45,6 +54,7 @@
 .mobile-app__screens {
   max-width: 630px;
   img {
+    width: 100%;
     display: block;
   }
 }

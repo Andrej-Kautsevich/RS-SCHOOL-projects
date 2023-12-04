@@ -3,6 +3,10 @@
   margin: 0;
   padding: 0;
   gap: 40px;
+
+  @include media-tablet {
+    display: none;
+  }
 }
 
 .navigation__item {
@@ -12,7 +16,6 @@
 .navigation__link {
   color: $color-text-dark;
   text-decoration: none;
-  // cursor: auto;
   @include font-link ($color-text-dark);
   @extend %font-link;
 }
