@@ -19,7 +19,7 @@
 %font-heading2 {
   @include font($size: 6.0rem, $height: 125%, $weight: 600);
 
-  @include media-mobile {
+  @include media-mobile-big {
     @include font($size: 3.2rem, $height: 125%, $weight: 600);
   }
 }
