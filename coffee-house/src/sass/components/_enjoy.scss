@@ -26,6 +26,7 @@
 .enjoy__title {
   color: $color-text-light;
   @extend %font-heading1;
+  
   margin: 0;
     &_accent {
       @extend %font-accent;

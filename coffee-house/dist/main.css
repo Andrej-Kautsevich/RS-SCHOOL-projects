@@ -14,7 +14,7 @@ body {
   font-weight: 600;
   line-height: 105%;
 }
-@media (max-width: 520px) {
+@media (max-width: 680px) {
   .enjoy__title {
     font-size: 4.2rem;
     font-style: normal;
@@ -1176,6 +1176,7 @@ p {
 
 .mobile-app__screens {
   max-width: 630px;
+  flex-shrink: 0;
 }
 .mobile-app__screens img {
   width: 100%;
