@@ -1,5 +1,5 @@
-.menu {
-  padding: 0 40px;
+.menu__container {
+  @extend %padding-content;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -15,7 +15,7 @@
 .menu__title {
   @extend %font-heading2;
   margin: 0;
-  width: 800px;
+  max-width: 800px;
   text-align: center;
 
   &_accent {
@@ -26,16 +26,33 @@
 .menu__buttons {
   display: flex;
   gap: 16px;
+
+  @include media-mobile {
+    gap: 8px;
+  }
 }
 
 .menu__items {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 40px;
 }
 
 .menu__item {
   width: 310px;
   height: 506px;
+
+  @include media-tablet {
+    &:nth-child(n+5) {
+      display: none;
+    }
+  }
+}
+
+.menu__refresh {
+  align-self: center;
+  @include media-desktop {
+    display: none;
+  } 
 }

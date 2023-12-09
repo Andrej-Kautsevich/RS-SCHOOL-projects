@@ -6,9 +6,11 @@
   width: 100%;
   cursor: pointer;
 
-  &:hover {
-    .product__image img {
-      transform: scale(1);
+  @include hover {
+    &:hover {
+      .product__image img {
+        transform: scale(1);
+      }
     }
   }
 }

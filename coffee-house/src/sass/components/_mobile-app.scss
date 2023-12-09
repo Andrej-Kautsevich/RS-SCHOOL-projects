@@ -1,18 +1,33 @@
 .mobile-app__container {
-  padding: 0 40px;
+  @extend %padding-content;
   display: flex;
   align-items: center;
   gap: 100px;
+
+  @include media-tablet {
+    flex-direction: column;
+  }
+
+  @include media-mobile {
+    gap: 40px;
+  }
 }
 
 .mobile-app__content {
   display: flex;
+  flex: 1 1 400px;
   flex-direction: column;
   gap: 40px;
+
+  @include media-tablet {
+    flex-basis: auto;
+  }
+
 }
 
 .mobile-app__buttons {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   .icon {
     margin-right: 8px
@@ -43,8 +58,9 @@
 }
 
 .mobile-app__screens {
-  max-width: 630px;
+  flex: 0 1 auto;
   img {
+    width: 100%;
     display: block;
   }
 }
