@@ -15,6 +15,18 @@ burgerBtn.addEventListener('click', () => {
   }
 })
 
+menuBurger.addEventListener('click', (event) => {
+  if (
+    event.target.classList.contains('navigation__link') ||
+    event.target.classList.contains('menu-button')
+  ) {
+    burgerBtn.classList.remove('hamburger-btn_active');
+    menuBurger.classList.remove('header__navigation_open');
+    document.body.classList.remove('noscroll');
+    document.body.style.marginRight = '0px';
+  }
+});
+
 //calc width of the vertical scroll bar
 function calcScroll() {
   let div = document.createElement('div');

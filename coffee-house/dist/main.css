@@ -453,6 +453,7 @@ p {
 }
 @media (max-width: 1023px) {
   .menu-button .icon_cup {
+    background-image: url(../src/img/icons/coffee-cup-burger.svg);
     width: 40px;
     height: 40px;
   }
@@ -778,11 +779,6 @@ p {
   background-image: url(../src/img/icons/coffee-cup.svg);
   width: 20px;
   height: 20px;
-}
-@media (max-width: 1023px) {
-  .icon_cup {
-    background-image: url(../src/img/icons/coffee-cup-burger.svg);
-  }
 }
 
 .icon_pin {
