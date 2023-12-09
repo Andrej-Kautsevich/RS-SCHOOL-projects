@@ -37,7 +37,9 @@
 }
 
 %font-burger {
-  @include font($size: 3.2rem, $height: 125%, $weight: 600);
+  @include media-tablet {
+    @include font($size: 3.2rem, $height: 125%, $weight: 600);
+  }
 }
 
 %transition {

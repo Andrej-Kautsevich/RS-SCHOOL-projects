@@ -7,6 +7,10 @@
   background-image: url(../src/img/icons/coffee-cup.svg);
   width: 20px;
   height: 20px;
+
+  @include media-tablet {
+    background-image: url(../src/img/icons/coffee-cup-burger.svg);
+  }
 }
 
 .icon_pin {
