@@ -2,10 +2,11 @@
   @extend %padding-content;
 }
 
-.enjoy__wrapper{
+.enjoy__wrapper {
+  position: relative;
   padding: 100px;
+  overflow: hidden;
   border-radius: 40px;
-  background: url("../src/img/enjoy/img-hero.jpg") $color-background-container 50% / cover no-repeat;
 
   @include media-tablet {
     padding: 100px 60px;
@@ -26,11 +27,12 @@
 .enjoy__title {
   color: $color-text-light;
   @extend %font-heading1;
-  
+
   margin: 0;
-    &_accent {
-      @extend %font-accent;
-    }
+
+  &_accent {
+    @extend %font-accent;
+  }
 }
 
 .enjoy__text {
@@ -40,4 +42,15 @@
 .enjoy__button-text {
   transform: translateX(0);
   @extend %transition;
+}
+
+.enjoy__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+  background: url("../src/img/enjoy/img-hero.jpg") $color-background-container 50% / cover no-repeat;
 }
