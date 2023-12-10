@@ -68,7 +68,7 @@ body {
   }
 }
 
-.about__image, .enjoy__button-text, .icon, .product__image img, .hamburger-btn span, .tabs-button__icon, .button {
+.about__image, .enjoy__button-text, .icon, .product__image img, .coffee-slider__items, .hamburger-btn span, .tabs-button__icon, .button {
   transition: all 0.5s;
 }
 
@@ -640,7 +640,7 @@ p {
 }
 
 .coffee-slider__item {
-  width: 33.33%;
+  width: 33.3333333333%;
   display: flex;
   flex-direction: column;
   align-items: center;
