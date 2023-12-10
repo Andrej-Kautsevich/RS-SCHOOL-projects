@@ -44,9 +44,6 @@
   height: 506px;
 }
 
-.menu__refresh {
+.menu__add-button {
   align-self: center;
-  @include media-desktop {
-    display: none;
-  } 
 }

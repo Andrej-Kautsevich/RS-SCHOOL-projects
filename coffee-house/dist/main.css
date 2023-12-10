@@ -1268,19 +1268,9 @@ p {
   width: 310px;
   height: 506px;
 }
-@media (max-width: 1023px) {
-  .menu__item:nth-child(n+5) {
-    display: none;
-  }
-}
 
-.menu__refresh {
+.menu__add-button {
   align-self: center;
-}
-@media (min-width: 1024px) {
-  .menu__refresh {
-    display: none;
-  }
 }
 
 /*# sourceMappingURL=main.css.map */
