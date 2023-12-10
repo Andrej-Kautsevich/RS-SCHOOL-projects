@@ -68,8 +68,12 @@ body {
   }
 }
 
-.about__image, .enjoy__button-text, .icon, .product__image img, .coffee-slider__items, .hamburger-btn span, .tabs-button__icon, .button {
+.about__image, .enjoy__button-text, .icon, .product__image img, .hamburger-btn span, .tabs-button__icon, .button {
   transition: all 0.5s;
+}
+
+.progress-bar__line_active, .coffee-slider__items {
+  transition: all 0.8s;
 }
 
 .menu__container, .mobile-app__container, .about__container, .favorites-coffee__container, .enjoy__container, .contacts__container, .header__container {
@@ -681,6 +685,30 @@ p {
   }
 }
 
+.coffee-slider__progress-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 12px;
+}
+
+.progress-bar__line {
+  display: block;
+  width: 40px;
+  height: 4px;
+  background-color: #C1B6AE;
+  border-radius: 2px;
+  border: 4px transparent;
+  position: relative;
+}
+.progress-bar__line_active {
+  position: absolute;
+  width: 0;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #665F55;
+}
+
 .contacts-info {
   display: flex;
   flex-direction: column;
@@ -1076,26 +1104,6 @@ p {
 .favorites-coffee__slider {
   display: flex;
   justify-content: center;
-}
-
-.favorites-coffee__controls {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  gap: 12px;
-}
-
-.favorites-coffee__control-button {
-  appearance: none;
-  width: 40px;
-  height: 4px;
-  background-color: #C1B6AE;
-  border-radius: 2px;
-  border: 4px transparent;
-  cursor: pointer;
-}
-.favorites-coffee__control-button:checked {
-  background-color: #665F55;
 }
 
 .about__items {

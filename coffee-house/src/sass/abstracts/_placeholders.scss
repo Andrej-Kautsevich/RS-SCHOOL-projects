@@ -46,6 +46,10 @@
   transition: all 0.5s;
 }
 
+%slider-transition {
+  transition: all 0.8s;
+}
+
 %padding-content {
   padding-left: $padding-desktop;
   padding-right: $padding-desktop;

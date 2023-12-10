@@ -19,7 +19,7 @@ $itemsNumber: 3;
 .coffee-slider__items {
   display: flex;
   width: 100% * $itemsNumber;
-  @extend %transition;
+  @extend %slider-transition;
 }
 
 .coffee-slider__item {
@@ -61,5 +61,31 @@ $itemsNumber: 3;
 
   @include media-mobile {
     display: none;
+  }
+}
+
+.coffee-slider__progress-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 12px;
+}
+
+.progress-bar__line {
+  display: block;
+  width: 40px;
+  height: 4px;
+  background-color: $color-border-light;
+  border-radius: 2px;
+  border: 4px transparent;
+  position: relative;
+
+  &_active {
+    position: absolute;
+    width: 0;
+    height: 4px;
+    border-radius: 2px;
+    background-color: $color-border-dark;
+    @extend %slider-transition;
   }
 }
