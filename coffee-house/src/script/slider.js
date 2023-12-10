@@ -66,12 +66,10 @@ function startInterval() {
 }
 
 container.addEventListener('mouseenter', () => {
-  console.log('mouse in');
   isScrollPaused = true;
 })
 
 container.addEventListener('mouseleave', () => {
-  console.log('mouse out');
   isScrollPaused = false;
 })
 
@@ -89,13 +87,13 @@ let endX = 0;
 const TOUCH_THRESHOLD = 100;
 
 container.addEventListener('touchstart', (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   isScrollPaused = true;
   startX = e.touches[0].clientX;
 })
 
 container.addEventListener('touchend', (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   isScrollPaused = false;
   endX = e.changedTouches[0].clientX;
 
