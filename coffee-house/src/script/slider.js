@@ -25,3 +25,20 @@ function moveItems(direction) {
   let position = slideIndex * itemWidth;
   track.style.transform = `translateX(-${position}%)`;
 }
+
+let isScrollPaused = false;
+window.setInterval(() => {
+  if (!isScrollPaused) {
+    moveItems('right')
+  }
+}, 3000)
+
+container.addEventListener('mouseenter', () => {
+  console.log('mouse in');
+  isScrollPaused = true;
+})
+
+container.addEventListener('mouseleave', () => {
+  console.log('mouse out');
+  isScrollPaused = false;
+})
