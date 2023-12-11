@@ -1,67 +1,66 @@
-function getModalMarkup(item) {
+function getModalMarkup(item, index) {
   return (
     `
   <div class="card">
   <div class="card__image">
-    <img src="src/img/menu/coffee/coffee-1.jpg" alt="" />
+    <img src="src/img/menu/${item.category}/${item.category}-${index + 1}.jpg" alt="${item.name} photo" />
   </div>
   <div class="card__content">
     <div>
-      <h3 class="card__name">Irish coffee</h3>
+      <h3 class="card__name">${item.name}</h3>
       <p class="card__description">
-        Fragrant black coffee with Jameson Irish whiskey and whipped
-        milk
+      ${item.description}
       </p>
     </div>
     <div class="card__select">
       <span>Size</span>
       <div class="card__buttons">
-        <button class="button tabs-button" data-size="S">
+        <button class="button tabs-button tabs-button_active" data-size="${Object.keys(item.sizes)[0]}">
           <div class="tabs-button__icon">
-            <span class="icon">S</span>
+            <span class="icon">${Object.keys(item.sizes)[0].toUpperCase()}</span>
           </div>
-          200 ml
+          ${Object.values(item.sizes)[0].size}
         </button>
-        <button class="button tabs-button" data-size="M">
+        <button class="button tabs-button" data-size="${Object.keys(item.sizes)[1]}">
           <div class="tabs-button__icon">
-            <span class="icon">M</span>
+            <span class="icon">${Object.keys(item.sizes)[1].toUpperCase()}</span>
           </div>
-          300 ml
+          ${Object.values(item.sizes)[1].size}
         </button>
-        <button class="button tabs-button" data-size="L">
+        <button class="button tabs-button" data-size="${Object.keys(item.sizes)[2]}">
           <div class="tabs-button__icon">
-            <span class="icon">L</span>
+            <span class="icon">${Object.keys(item.sizes)[2].toUpperCase()}</span>
           </div>
-          400 ml
+          ${Object.values(item.sizes)[2].size}
         </button>
       </div>
     </div>
     <div class="card__select">
       <span>Additives</span>
       <div class="card__buttons">
-        <button class="button tabs-button" data-additives="1">
+        <button class="button tabs-button" data-additives="0">
           <div class="tabs-button__icon">
             <span class="icon">1</span>
           </div>
-          Sugar
+          ${Object.values(item.additives)[0].name}
         </button>
-        <button class="button tabs-button" data-additives="2">
+        <button class="button tabs-button" data-additives="1">
           <div class="tabs-button__icon">
             <span class="icon">2</span>
           </div>
-          Cinnamon
+          ${Object.values(item.additives)[1].name}
         </button>
-        <button class="button tabs-button" data-additives="3">
+        <button class="button tabs-button" data-additives="2">
           <div class="tabs-button__icon">
             <span class="icon">3</span>
           </div>
-          Syrup
+          ${Object.values(item.additives)[2].name}
         </button>
       </div>
     </div>
     <div class="card__total">
       <span>Total:</span>
-      <span>$7.00</span>
+      <span class="card__total-price">$${item.price}</span>
     </div>
     <div class="card__alert">
       <span class="icon icon_info"></span>

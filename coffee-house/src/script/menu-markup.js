@@ -13,7 +13,7 @@ function getProductMarkup(category, item, index) {
       <p class="product__text">
       ${item.description}
       </p>
-      <p class="product__price">${item.price}</p>
+      <p class="product__price">$${item.price}</p>
     </div>
   </div>
 </div>

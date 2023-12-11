@@ -27,7 +27,7 @@ console.log(currentItems);
 function createItem(item, index) {
   const product = document.createElement('div');
   product.innerHTML = getProductMarkup(currentCategory, item, index);
-  menuItemsContainer.appendChild(product)
+  menuItemsContainer.appendChild(product);
 }
 
 let visibleItemsCount = currentItems.length;
@@ -139,12 +139,51 @@ const fadeOutAnimation = (element, callback) => {
 //open modal tab
 let isModalOpen = false;
 
-function createModalCard(item) {
+function createModalCard(item, index) {
   const productCard = document.createElement('div');
-  productCard.innerHTML = getModalMarkup(item);
+  productCard.innerHTML = getModalMarkup(item, index);
   modalContent.appendChild(productCard);
   modalContent.querySelector('.menu__modal-close').addEventListener('click', closeModal);
   modalContent.classList.add('modal__content_active');
+
+  const sizeBtns = productCard.querySelectorAll('[data-size]');
+  const additivesBtns = productCard.querySelectorAll('[data-additives]');
+
+  let price = parseFloat(item.price);
+  let sizePrice = parseFloat(Object.values(item.sizes)[0]['add-price']);
+
+  sizeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const sizeIndex = btn.getAttribute('data-size');
+      sizePrice = parseFloat(item.sizes[sizeIndex]['add-price']);
+      updatePrice(price, sizePrice);
+
+      sizeBtns.forEach((btn) => {
+        btn.classList.remove('tabs-button_active');
+      })
+      btn.classList.add('tabs-button_active');
+    })
+  })
+
+  additivesBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const additivesIndex = btn.getAttribute('data-additives');
+      if (btn.classList.contains('tabs-button_active')) {
+        price -= parseFloat(item.additives[additivesIndex]['add-price']);
+        btn.classList.remove('tabs-button_active')
+      } else {
+        price += parseFloat(item.additives[additivesIndex]['add-price']);
+        btn.classList.add('tabs-button_active');
+      }
+      updatePrice(price, sizePrice);
+    })
+  })
+}
+
+function updatePrice(price, sizePrice) {
+  let total = price + sizePrice;
+  const priceText = modalContent.querySelector('.card__total-price');
+  priceText.textContent = `$${total.toFixed(2)}`
 }
 
 document.addEventListener('click', (e) => {
@@ -152,9 +191,9 @@ document.addEventListener('click', (e) => {
 
   //open modal
   if (product && !isModalOpen) {
-    const itemIndex = product.getAttribute('data-item-index')
+    const itemIndex = Number(product.getAttribute('data-item-index'))
     const item = currentItems[itemIndex];
-    createModalCard(item);
+    createModalCard(item, itemIndex);
     modalOverlay.classList.add('modal__overlay_visible');
     isModalOpen = true;
     handleScroll();
@@ -178,9 +217,7 @@ function closeModal() {
   })
 
   fadeOutAnimation(modalOverlay)
-
   isModalOpen = false;
-  console.log(isModalOpen)
 }
 
 // remove vertical scroll bar when noscroll applied
