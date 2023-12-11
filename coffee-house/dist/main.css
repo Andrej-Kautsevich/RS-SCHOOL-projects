@@ -778,6 +778,18 @@ p {
   padding: 16px;
   background-color: #E1D4C9;
   border-radius: 40px;
+  margin: 0 20px;
+}
+@media (max-width: 1023px) {
+  .card {
+    max-width: 688px;
+  }
+}
+@media (max-width: 520px) {
+  .card {
+    max-width: 342px;
+    margin: 0 10px;
+  }
 }
 
 .card__image {
@@ -785,6 +797,12 @@ p {
   height: 310px;
   overflow: hidden;
   border-radius: 40px;
+  flex-shrink: 0;
+}
+@media (max-width: 716px) {
+  .card__image {
+    display: none;
+  }
 }
 @media (hover: hover) {
   .card__image:hover img {
@@ -800,12 +818,17 @@ p {
 }
 
 .card__content {
-  flex: 1 0 0;
+  max-width: fit-content;
   display: flex;
   padding-left: 20px;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+}
+@media (max-width: 716px) {
+  .card__content {
+    padding-left: 0;
+  }
 }
 
 .card__name {
@@ -820,6 +843,7 @@ p {
 
 .card__buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 

@@ -22,8 +22,6 @@ function getItems(category) {
 
 getItems(currentCategory);
 
-console.log(currentItems);
-
 function createItem(item, index) {
   const product = document.createElement('div');
   product.innerHTML = getProductMarkup(currentCategory, item, index);
@@ -70,7 +68,6 @@ renderItems(0, visibleItemsCount);
 window.addEventListener('resize', () => {
   //change from desktop to mobile
   if (isDesktop && window.innerWidth < DESKTOP_WIDTH) {
-    console.log('change')
     isDesktop = false;
     visibleItemsCount = 4;
 
