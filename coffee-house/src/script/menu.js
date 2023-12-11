@@ -12,11 +12,11 @@ let currentItems = [];
 let currentCategory = 'coffee';
 let isDesktop = true;
 
-function getItems() {
-  currentItems = data.filter((item) => item.category === currentCategory);
+function getItems(category) {
+  currentItems = data.filter((item) => item.category === category);
 }
 
-getItems();
+getItems(currentCategory);
 
 console.log(currentItems);
 
@@ -89,3 +89,47 @@ window.addEventListener('resize', () => {
     }
   }
 })
+
+//switching categories
+
+const tabsBtn = document.querySelectorAll('.tabs-button');
+
+tabsBtn.forEach((tabBtn) => {
+  tabBtn.addEventListener('click', (e) => {
+    currentCategory = e.target.dataset['category'];
+
+    tabsBtn.forEach((tabBtn) => { tabBtn.classList.remove('tabs-button_active') });
+    tabBtn.classList.add('tabs-button_active');
+
+    //remove current items
+    changeTab(menuItemsContainer, () => {
+      getItems(currentCategory);
+      setVisibleItemsCount();
+      renderItems(0, visibleItemsCount);
+    });
+  })
+})
+
+// Fade out tab animation
+let fadeOut;
+const changeTab = (tab, callback) => {
+  const fadeOutKeyFrames = new KeyframeEffect(
+    tab,
+    [
+      { opacity: 1 },
+      { opacity: 0 },
+    ],
+    {
+      duration: 500,
+      easing: 'ease-out',
+    },
+  );
+  fadeOut = new Animation(fadeOutKeyFrames);
+
+  fadeOut.onfinish = () => {
+    tab.innerHTML = '';
+    callback();
+  }
+
+  fadeOut.play();
+}
