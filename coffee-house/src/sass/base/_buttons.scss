@@ -13,7 +13,7 @@
     }
   }
 
-  @include media-tablet {
+  @include burger {
     .icon_cup {
       background-image: url(../src/img/icons/coffee-cup-burger.svg);
       width: 40px;

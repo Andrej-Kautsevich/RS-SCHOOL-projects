@@ -49,6 +49,12 @@
   @media (max-width: $mobile-width) {
     @content;
   }
+
+}
+@mixin burger {
+  @media (max-width: 768px) {
+    @content;
+  }
 }
 
 @mixin hover {
