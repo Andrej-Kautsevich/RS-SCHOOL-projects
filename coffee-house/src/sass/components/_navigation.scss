@@ -3,10 +3,8 @@
   margin: 0;
   padding: 0;
   gap: 40px;
-
-  @include media-tablet {
-    display: none;
-  }
+  flex: 1 0 0;
+  justify-content: center;
 }
 
 .navigation__item {

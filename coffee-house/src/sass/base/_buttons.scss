@@ -1,4 +1,4 @@
-.link-button {
+.menu-button {
   display: inline-flex;
   cursor: pointer;
   text-decoration: none;
@@ -12,12 +12,25 @@
       transform: scaleX(1) !important;
     }
   }
+
+  @include media-tablet {
+    .icon_cup {
+      background-image: url(../src/img/icons/coffee-cup-burger.svg);
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
 
-.link-button__text {
+.menu-button__text {
   color: $color-text-dark;
   margin-right: 8px;
   @extend %font-link;
+  @extend %font-burger;
+
+  @include media-tablet {
+    margin-right: 16px;
+  }
 }
 
 .button {
@@ -53,6 +66,22 @@
         .enjoy__button-text {
           transform: translateX(14px);
         }
+      }
+    }
+  }
+
+  &_secondary {
+    width: 100%;
+    padding: 9px 78px;
+    border-radius: 100px;
+    color: $color-text-dark;
+    border: 1px solid $color-border-dark;
+    @extend %font-link;
+
+    @include hover {
+      &:hover {
+        background-color: $color-background-container;
+        color: $color-text-light;
       }
     }
   }
@@ -114,41 +143,6 @@
       }
     }
   }
-
-  &_hamburger {
-    position: relative;
-    width: 44px;
-    height: 44px;
-    border: 1px solid $color-border-dark;
-    border-radius: 50%;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 16px;
-      width: 16px;
-      height: 1px;
-      border-radius: 2px;
-      background-color: $color-text-dark;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 16px;
-      width: 16px;
-      height: 1px;
-      border-radius: 2px;
-      background-color: $color-text-dark;
-    }
-
-    .active {
-      &::before {
-        top: 20px;
-        transform: rotate(45deg);
-      }
-    }
-  }
 }
 
 .tabs-button {
@@ -165,10 +159,11 @@
     &:hover {
       background-color: $color-background-container;
       border: 1px solid $color-background-container;
-      color: $color-border-light;
+      color: $color-text-light;
 
       .tabs-button__icon {
         background-color: $color-background-body;
+        color: $color-text-dark;
       }
     }
   }
@@ -176,10 +171,11 @@
   &_active {
     background-color: $color-background-container;
     border: 1px solid $color-background-container;
-    color: $color-border-light;
+    color: $color-text-light;
 
     .tabs-button__icon {
       background-color: $color-background-body;
+      color: $color-text-dark;
     }
 
     cursor: auto;

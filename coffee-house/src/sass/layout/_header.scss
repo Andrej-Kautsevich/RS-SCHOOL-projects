@@ -5,23 +5,56 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  overflow-x: clip;
 }
 
 .header__logo {
+  z-index: 10;
   width: 100px;
   height: 60px;
 }
 
-.header__menu-btn {
+.header__hamburger-btn {
+  display: none;
+  z-index: 10;
+
   @include media-tablet {
-   display: none; 
+    display: inline-flex;
   }
 }
 
-.header__hamburger-btn {
-  display: none;
-  
+.header__navigation {
+  display: flex;
+  flex: 1 0 0;
+
+  * {
+    @extend %font-burger;
+  }
+
   @include media-tablet {
-   display: inline-flex; 
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: $color-background-body;
+    top: 0;
+    right: -100%;
+    z-index: 1;
+    padding: 160px 40px 60px;
+    transition: transform 0.75s cubic-bezier(0.5, -0.8, 0.5, 1.8);
+
+    .navigation {
+      flex-direction: column;
+      align-items: center;
+      flex: none;
+      gap: 60px;
+    }
+  }
+
+  &_open {
+    transform: translateX(-100%);
   }
 }
