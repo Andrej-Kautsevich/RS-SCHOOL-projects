@@ -42,17 +42,8 @@
 .menu__item {
   width: 310px;
   height: 506px;
-
-  @include media-tablet {
-    &:nth-child(n+5) {
-      display: none;
-    }
-  }
 }
 
-.menu__refresh {
+.menu__add-button {
   align-self: center;
-  @include media-desktop {
-    display: none;
-  } 
 }

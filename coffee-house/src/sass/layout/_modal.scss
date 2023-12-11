@@ -1,0 +1,33 @@
+.modal__overlay {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-background-backdrop;
+  visibility: hidden;
+  // opacity: 0;
+
+  &_visible {
+    visibility: visible;
+    // opacity: 1;
+  }
+}
+
+.modal__content {
+  visibility: hidden;
+  // opacity: 0;
+  transform-origin: 0 0;
+  transform: rotateX(-90deg);
+  @extend %transition;
+
+  &_active {
+    visibility: visible;
+    // opacity: 1;
+    transform: rotateX(0deg);
+  }
+}

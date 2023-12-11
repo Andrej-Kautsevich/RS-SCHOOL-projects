@@ -15,25 +15,3 @@
   display: flex;
   justify-content: center;
 }
-
-.favorites-coffee__controls {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  gap: 12px;
-}
-
-//TODO: add interactive area
-.favorites-coffee__control-button {
-  appearance: none;
-  width: 40px;
-  height: 4px;
-  background-color: $color-border-light;
-  border-radius: 2px;
-  border: 4px transparent;
-  cursor: pointer;
-
-  &:checked {
-    background-color: $color-border-dark;
-  }
-}

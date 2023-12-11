@@ -37,11 +37,17 @@
 }
 
 %font-burger {
-  @include font($size: 3.2rem, $height: 125%, $weight: 600);
+  @include media-tablet {
+    @include font($size: 3.2rem, $height: 125%, $weight: 600);
+  }
 }
 
 %transition {
   transition: all 0.5s;
+}
+
+%slider-transition {
+  transition: all 0.8s;
 }
 
 %padding-content {
