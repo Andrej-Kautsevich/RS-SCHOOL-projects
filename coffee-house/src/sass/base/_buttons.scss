@@ -159,10 +159,11 @@
     &:hover {
       background-color: $color-background-container;
       border: 1px solid $color-background-container;
-      color: $color-border-light;
+      color: $color-text-light;
 
       .tabs-button__icon {
         background-color: $color-background-body;
+        color: $color-text-dark;
       }
     }
   }
@@ -170,10 +171,11 @@
   &_active {
     background-color: $color-background-container;
     border: 1px solid $color-background-container;
-    color: $color-border-light;
+    color: $color-text-light;
 
     .tabs-button__icon {
       background-color: $color-background-body;
+      color: $color-text-dark;
     }
 
     cursor: auto;

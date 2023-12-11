@@ -578,20 +578,22 @@ p {
   .tabs-button:hover {
     background-color: #665F55;
     border: 1px solid #665F55;
-    color: #C1B6AE;
+    color: #E1D4C9;
   }
   .tabs-button:hover .tabs-button__icon {
     background-color: #E1D4C9;
+    color: #403F3D;
   }
 }
 .tabs-button_active {
   background-color: #665F55;
   border: 1px solid #665F55;
-  color: #C1B6AE;
+  color: #E1D4C9;
   cursor: auto;
 }
 .tabs-button_active .tabs-button__icon {
   background-color: #E1D4C9;
+  color: #403F3D;
 }
 
 .tabs-button__icon {
