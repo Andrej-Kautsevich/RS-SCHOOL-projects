@@ -1,7 +1,7 @@
 function getProductMarkup(category, item, index) {
   return (
     `
-  <div class="menu__item product">
+  <div class="menu__item product" data-item-index="${index}">
     <div class="product__image">
       <img
         src="src/img/menu/${category}/${category}-${index + 1}.jpg"

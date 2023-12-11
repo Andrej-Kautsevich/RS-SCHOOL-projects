@@ -1,12 +1,16 @@
 import getProductMarkup from './menu-markup.js';
+import getModalMarkup from './modal-markup.js';
 
 const res = await fetch('src/products.json');
 const data = await res.json();
 
 const menuItemsContainer = document.querySelector('.menu__items');
-const menuAddBtn = document.querySelector('.menu__add-button')
+const menuAddBtn = document.querySelector('.menu__add-button');
+const modalContent = document.querySelector('.modal__content');
+const modalOverlay = document.querySelector('.modal__overlay');
 
 const DESKTOP_WIDTH = 1024;
+const TRANSITION_DURATION = 500;
 
 let currentItems = [];
 let currentCategory = 'coffee';
@@ -60,7 +64,6 @@ menuAddBtn.addEventListener('click', () => {
   loadMoreItems()
 })
 
-
 setVisibleItemsCount();
 renderItems(0, visibleItemsCount);
 
@@ -102,7 +105,8 @@ tabsBtn.forEach((tabBtn) => {
     tabBtn.classList.add('tabs-button_active');
 
     //remove current items
-    changeTab(menuItemsContainer, () => {
+    fadeOutAnimation(menuItemsContainer, () => {
+      menuItemsContainer.innerHTML = '';
       getItems(currentCategory);
       setVisibleItemsCount();
       renderItems(0, visibleItemsCount);
@@ -111,10 +115,9 @@ tabsBtn.forEach((tabBtn) => {
 })
 
 // Fade out tab animation
-let fadeOut;
-const changeTab = (tab, callback) => {
+const fadeOutAnimation = (element, callback) => {
   const fadeOutKeyFrames = new KeyframeEffect(
-    tab,
+    element,
     [
       { opacity: 1 },
       { opacity: 0 },
@@ -124,20 +127,85 @@ const changeTab = (tab, callback) => {
       easing: 'ease-out',
     },
   );
-  fadeOut = new Animation(fadeOutKeyFrames);
+  const fadeOut = new Animation(fadeOutKeyFrames);
 
   fadeOut.onfinish = () => {
-    tab.innerHTML = '';
-    callback();
+    if (callback) callback();
   }
 
   fadeOut.play();
 }
 
 //open modal tab
+let isModalOpen = false;
 
 function createModalCard(item) {
   const productCard = document.createElement('div');
-  productCard.innerHTML = getProductCardMarkup(item);
-  menuItemsContainer.appendChild(productCard);
+  productCard.innerHTML = getModalMarkup(item);
+  modalContent.appendChild(productCard);
+  modalContent.querySelector('.menu__modal-close').addEventListener('click', closeModal);
+  modalContent.classList.add('modal__content_active');
+}
+
+document.addEventListener('click', (e) => {
+  const product = e.target.closest('.menu__item')
+
+  //open modal
+  if (product && !isModalOpen) {
+    const itemIndex = product.getAttribute('data-item-index')
+    const item = currentItems[itemIndex];
+    createModalCard(item);
+    modalOverlay.classList.add('modal__overlay_visible');
+    isModalOpen = true;
+    handleScroll();
+  }
+})
+
+//close modal
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal__overlay') && isModalOpen) {
+    closeModal();
+  }
+})
+
+function closeModal() {
+  modalContent.classList.remove('modal__content_active');
+
+  fadeOutAnimation(modalContent, () => {
+    modalOverlay.classList.remove('modal__overlay_visible');
+    modalContent.innerHTML = '';
+    handleScroll();
+  })
+
+  fadeOutAnimation(modalOverlay)
+
+  isModalOpen = false;
+  console.log(isModalOpen)
+}
+
+// remove vertical scroll bar when noscroll applied
+function handleScroll() {
+  document.body.classList.toggle('noscroll')
+  if (document.body.classList.contains('noscroll')) {
+    const marginRight = calcScroll() + 'px';
+    document.body.style.marginRight = marginRight;
+  } else {
+    document.body.style.marginRight = '0px';
+  }
+}
+
+//calc width of the vertical scroll bar
+function calcScroll() {
+  let div = document.createElement('div');
+
+  div.style.width = '50px';
+  div.style.height = '50px';
+  div.style.overflowY = 'scroll';
+  div.style.visibility = 'hidden';
+
+  document.body.appendChild(div);
+  let scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+
+  return scrollWidth;
 }

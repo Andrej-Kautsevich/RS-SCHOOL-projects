@@ -68,7 +68,7 @@ body {
   }
 }
 
-.about__image, .enjoy__button-text, .icon, .product__image img, .card__image img, .hamburger-btn span, .tabs-button__icon, .button {
+.about__image, .enjoy__button-text, .modal__content, .icon, .product__image img, .card__image img, .hamburger-btn span, .tabs-button__icon, .button {
   transition: all 0.5s;
 }
 
@@ -1113,10 +1113,20 @@ p {
   justify-content: center;
   align-items: center;
   background-color: rgba(64, 63, 61, 0.8);
+  visibility: hidden;
+}
+.modal__overlay_visible {
+  visibility: visible;
 }
 
 .modal__content {
-  width: 100%;
+  visibility: hidden;
+  transform-origin: 0 0;
+  transform: rotateX(-90deg);
+}
+.modal__content_active {
+  visibility: visible;
+  transform: rotateX(0deg);
 }
 
 .navigation {

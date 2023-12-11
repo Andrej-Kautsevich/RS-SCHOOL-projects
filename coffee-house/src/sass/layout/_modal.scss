@@ -9,9 +9,25 @@
   justify-content: center;
   align-items: center;
   background-color: $color-background-backdrop;
+  visibility: hidden;
+  // opacity: 0;
+
+  &_visible {
+    visibility: visible;
+    // opacity: 1;
+  }
 }
 
 .modal__content {
-  width: 100%;
-  // transform: rotateX(-90deg);
+  visibility: hidden;
+  // opacity: 0;
+  transform-origin: 0 0;
+  transform: rotateX(-90deg);
+  @extend %transition;
+
+  &_active {
+    visibility: visible;
+    // opacity: 1;
+    transform: rotateX(0deg);
+  }
 }
