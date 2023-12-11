@@ -96,7 +96,8 @@ const tabsBtn = document.querySelectorAll('[data-category]');
 
 tabsBtn.forEach((tabBtn) => {
   tabBtn.addEventListener('click', (e) => {
-    currentCategory = e.target.dataset['category'];
+    if (tabBtn.classList.contains('tabs-button_active')) { return }
+    currentCategory = e.target.closest('[data-category]').dataset['category'];
 
     tabsBtn.forEach((tabBtn) => { tabBtn.classList.remove('tabs-button_active') });
     tabBtn.classList.add('tabs-button_active');
