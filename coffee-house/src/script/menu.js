@@ -92,7 +92,7 @@ window.addEventListener('resize', () => {
 
 //switching categories
 
-const tabsBtn = document.querySelectorAll('.tabs-button');
+const tabsBtn = document.querySelectorAll('[data-category]');
 
 tabsBtn.forEach((tabBtn) => {
   tabBtn.addEventListener('click', (e) => {
@@ -132,4 +132,12 @@ const changeTab = (tab, callback) => {
   }
 
   fadeOut.play();
+}
+
+//open modal tab
+
+function createModalCard(item) {
+  const productCard = document.createElement('div');
+  productCard.innerHTML = getProductCardMarkup(item);
+  menuItemsContainer.appendChild(productCard);
 }

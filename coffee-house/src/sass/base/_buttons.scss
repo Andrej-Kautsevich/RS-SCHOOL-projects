@@ -70,6 +70,22 @@
     }
   }
 
+  &_secondary {
+    width: 100%;
+    padding: 9px 78px;
+    border-radius: 100px;
+    color: $color-text-dark;
+    border: 1px solid $color-border-dark;
+    @extend %font-link;
+
+    @include hover {
+      &:hover {
+        background-color: $color-background-container;
+        color: $color-text-light;
+      }
+    }
+  }
+
   &_app {
     width: 200px;
     padding: 12px 20px;
