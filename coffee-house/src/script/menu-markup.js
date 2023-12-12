@@ -8,6 +8,7 @@ function getProductMarkup(category, item, index) {
       </div>
       <img
         class = "product__image"
+        style = "display: none"
         src="src/img/menu/${category}/${category}-${index + 1}.jpg"
         alt="${item.name} photo"
       />

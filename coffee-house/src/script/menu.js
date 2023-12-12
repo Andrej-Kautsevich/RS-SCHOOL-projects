@@ -32,6 +32,7 @@ function createItem(item, index) {
   const spinner = product.querySelector('.spinner');
   image.addEventListener('load', () => {
     spinner.remove();
+    image.style.display = "";
   })
 }
 
