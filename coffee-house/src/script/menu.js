@@ -28,6 +28,11 @@ function createItem(item, index) {
   const product = document.createElement('div');
   product.innerHTML = getProductMarkup(currentCategory, item, index);
   menuItemsContainer.appendChild(product);
+  const image = product.querySelector('.product__image');
+  const spinner = product.querySelector('.spinner');
+  image.addEventListener('load', () => {
+    spinner.remove();
+  })
 }
 
 let visibleItemsCount = currentItems.length;
@@ -67,8 +72,19 @@ menuAddBtn.addEventListener('click', () => {
   loadMoreItems()
 })
 
+function preloadSpinner() {
+  const spinner = new Image();
+  spinner.src = './src/img/icons/spinner.svg';
+  spinner.onload = function () {
+    renderItems(0, visibleItemsCount);
+  };
+  spinner.onerror = function () {
+    renderItems(0, visibleItemsCount);
+  };
+}
+
 setVisibleItemsCount();
-renderItems(0, visibleItemsCount);
+preloadSpinner();
 
 window.addEventListener('resize', () => {
   //change from desktop to mobile

@@ -2,8 +2,12 @@ function getProductMarkup(category, item, index) {
   return (
     `
   <div class="menu__item product" data-item-index="${index}">
-    <div class="product__image">
+    <div class="product__image-wrapper">
+      <div class="spinner">
+        <svg class="icon icon_spinner"></svg>
+      </div>
       <img
+        class = "product__image"
         src="src/img/menu/${category}/${category}-${index + 1}.jpg"
         alt="${item.name} photo"
       />
