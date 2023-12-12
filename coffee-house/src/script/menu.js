@@ -10,11 +10,13 @@ const modalContent = document.querySelector('.modal__content');
 const modalOverlay = document.querySelector('.modal__overlay');
 
 const DESKTOP_WIDTH = 1024;
-const TRANSITION_DURATION = 500;
 
 let currentItems = [];
 let currentCategory = 'coffee';
 let isDesktop = true;
+if (window.innerWidth < DESKTOP_WIDTH) {
+  isDesktop = false;
+}
 
 function getItems(category) {
   currentItems = data.filter((item) => item.category === category);
@@ -88,7 +90,7 @@ window.addEventListener('resize', () => {
     if (visibleItemsCount < currentItems.length) {
       renderItems(visibleItemsCount, currentItems.length);
     }
-      menuAddBtn.style.display = 'none';
+    menuAddBtn.style.display = 'none';
   }
 })
 
@@ -246,3 +248,4 @@ function calcScroll() {
 
   return scrollWidth;
 }
+
