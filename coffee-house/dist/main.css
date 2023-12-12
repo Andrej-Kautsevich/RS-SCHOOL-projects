@@ -68,7 +68,7 @@ body {
   }
 }
 
-.about__image, .enjoy__button-text, .modal__content, .icon, .product__image img, .card__image img, .hamburger-btn span, .tabs-button__icon, .button {
+.about__image, .enjoy__button-text, .modal__content, .icon, .product__image, .card__image img, .hamburger-btn span, .tabs-button__icon, .button {
   transition: all 0.5s;
 }
 
@@ -873,17 +873,21 @@ p {
   cursor: pointer;
 }
 @media (hover: hover) {
-  .product:hover .product__image img {
+  .product:hover .product__image {
     transform: scale(1);
   }
 }
 
-.product__image {
+.product__image-wrapper {
+  position: relative;
   width: 100%;
+  height: 100%;
+  flex: 2 0 0;
   overflow: hidden;
   border-radius: 40px;
 }
-.product__image img {
+
+.product__image {
   display: block;
   width: 100%;
   height: 100%;
@@ -894,7 +898,7 @@ p {
 .product__description {
   padding: 20px;
   display: flex;
-  flex-grow: 2;
+  flex: 1 0 0;
   flex-direction: column;
 }
 
@@ -904,6 +908,14 @@ p {
 
 .product__price {
   margin-top: auto;
+}
+
+.spinner {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .icon {
@@ -958,6 +970,24 @@ p {
   height: 16px;
 }
 
+.icon_spinner {
+  background-image: url(../src/img/icons/spinner.svg);
+  width: 64px;
+  height: 64px;
+  animation: spinner 2s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .icon_next {
   width: 24px;
   height: 24px;
