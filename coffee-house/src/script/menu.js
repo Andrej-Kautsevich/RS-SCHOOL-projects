@@ -42,12 +42,15 @@ function renderItems(startIndex, endIndex) {
 }
 
 function setVisibleItemsCount() {
-  if (window.innerWidth < DESKTOP_WIDTH) {
+  if (!isDesktop) {
     isDesktop = false;
     visibleItemsCount = 4;
     if (visibleItemsCount < currentItems.length) {
       menuAddBtn.style.display = 'flex';
     }
+  } else {
+    isDesktop = true;
+    visibleItemsCount = currentItems.length;
   }
 }
 
@@ -81,12 +84,11 @@ window.addEventListener('resize', () => {
   //change from mobile to desktop
   if (!isDesktop && window.innerWidth >= DESKTOP_WIDTH) {
     isDesktop = true;
+    console.log(visibleItemsCount)
     if (visibleItemsCount < currentItems.length) {
       renderItems(visibleItemsCount, currentItems.length);
     }
-    if (visibleItemsCount >= currentItems.length) {
       menuAddBtn.style.display = 'none';
-    }
   }
 })
 
