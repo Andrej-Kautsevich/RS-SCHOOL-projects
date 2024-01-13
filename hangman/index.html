@@ -3,10 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
     <title>Hangman</title>
   </head>
   <body>
+    <div class="container">
+      <div class="hangman">
+        <img class="hangman__gallows" src="assets/gallows.jpg" alt="" />
+        <div class="hangman__man">
+          <img class="hangman__head" src="assets/head.svg" alt="" />
+          <img class="hangman__body" src="assets/body.svg" alt="" />
+          <img class="hangman__hand-left" src="assets/hand-left.svg" alt="" />
+          <img class="hangman__hand-right" src="assets/hand-right.svg" alt="" />
+          <img class="hangman__leg-left" src="assets/leg-left.svg" alt="" />
+          <img class="hangman__leg-right" src="assets/leg-right.svg" alt="" />
+        </div>
+      </div>
+      <div class="quiz">
+        <ul class="quiz__word">
+          <li class="quiz__letter">A</li>
+          <li class="quiz__letter"></li>
+          <li class="quiz__letter">C</li>
+          <li class="quiz__letter"></li>
+        </ul>
+        <p class="quiz__hint">Some hint to word</p>
+        <div class="quiz__keyboard">
+          <div class="keyboard">
+            <button class="keyboard__key" data-key="q">Q</button>
+            <button class="keyboard__key" data-key="w">W</button>
+            <button class="keyboard__key" data-key="e">E</button>
+            <button class="keyboard__key" data-key="e">R</button>
+            <button class="keyboard__key" data-key="e">T</button>
+            <button class="keyboard__key" data-key="e">Y</button>
+            <button class="keyboard__key" data-key="e">U</button>
+            <button class="keyboard__key" data-key="e">I</button>
+            <button class="keyboard__key" data-key="e">O</button>
+            <button class="keyboard__key" data-key="e">P</button>
+            <br />
+            <button class="keyboard__key" data-key="e">A</button>
+            <button class="keyboard__key" data-key="e">S</button>
+            <button class="keyboard__key" data-key="e">D</button>
+            <button class="keyboard__key" data-key="e">F</button>
+            <button class="keyboard__key" data-key="e">G</button>
+            <button class="keyboard__key" data-key="e">H</button>
+            <button class="keyboard__key" data-key="e">J</button>
+            <button class="keyboard__key" data-key="e">K</button>
+            <button class="keyboard__key" data-key="e">L</button>
+            <br />
+            <button class="keyboard__key" data-key="e">Z</button>
+            <button class="keyboard__key" data-key="e">X</button>
+            <button class="keyboard__key" data-key="e">C</button>
+            <button class="keyboard__key" data-key="e">V</button>
+            <button class="keyboard__key" data-key="e">B</button>
+            <button class="keyboard__key" data-key="e">N</button>
+            <button class="keyboard__key" data-key="e">M</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>

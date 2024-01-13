@@ -1,0 +1,58 @@
+.hangman {
+  width: 35%;
+  position: relative;
+}
+
+.hangman__gallows {
+  width: 100%;
+}
+
+.hangman__man {
+  width: 30%;
+  height: 50%;
+  position: absolute;
+  top: 25%;
+  right: 0%;
+}
+
+.hangman__head {
+  width: 100%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+}
+
+.hangman__body {
+  width: 5%;
+  position: absolute;
+  top: 35%;
+  right: 47.5%;
+}
+
+.hangman__hand-left {
+  width: 50%;
+  position: absolute;
+  top: 35%;
+  right: 48%;
+}
+
+.hangman__hand-right {
+  width: 50%;
+  position: absolute;
+  top: 35%;
+  right: 2%;
+}
+
+.hangman__leg-left {
+  width: 50%;
+  position: absolute;
+  top: 81%;
+  right: 48%;
+}
+
+.hangman__leg-right {
+  width: 50%;
+  position: absolute;
+  top: 81%;
+  right: 2%;
+}

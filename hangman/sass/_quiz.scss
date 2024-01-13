@@ -1,0 +1,30 @@
+.quiz {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+}
+
+.quiz__word {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.quiz__letter {
+  border-bottom: 2px solid black;
+  padding: 5px;
+  width: 2rem;
+  font-size: 2rem;
+  user-select: none;
+}
+
+.quiz__hint {
+  align-self: center;
+}
+
+.quiz__keyboard {
+  width: 100%;
+}
