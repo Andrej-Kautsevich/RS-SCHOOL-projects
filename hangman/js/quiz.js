@@ -2,7 +2,7 @@ import data from "../question.json" assert { type: "json" };
 
 class Quiz {
   constructor() {
-    this.question;
+    this.question = null;
   }
 
   setNewQuestion() {
@@ -10,7 +10,7 @@ class Quiz {
     this.question = data[questionId];
     console.log(this.question);
   }
-  
+
   renderAnswer() {
     return new Array(this.question.answer.length).fill(null).map(() => {
       const li = document.createElement('li');
@@ -38,6 +38,36 @@ class Quiz {
 
     container.appendChild(wordHTML);
     container.appendChild(hint);
+  }
+
+  setListeners() {
+    this.keyboard = document.querySelector('.keyboard');
+    this.keyboardKeys = Array.from(this.keyboard.children)
+    console.log(this.keyboardKeys);
+    this.keyboardKeys.forEach((keyButton) => {
+      keyButton.addEventListener('click', () => {
+        const key = keyButton.dataset.key;
+        this.handleKeyPress(key)
+      })
+    })
+  }
+
+  // A method to handle the key press event when a key is clicked
+  handleKeyPress(key) {
+    if (this.question.answer.includes(key)) {
+      this.revealLetter(key);
+    } else {
+      // Handle incorrect letter
+    }
+  }
+
+  revealLetter(letter) {
+    const letterElements = document.querySelectorAll('.quiz__letter');
+    this.question.answer.split('').forEach((answerLetter, index) => {
+      if (answerLetter.toLowerCase() === letter.toLowerCase()) {
+        letterElements[index].textContent = answerLetter.toUpperCase();
+      }
+    });
   }
 }
 

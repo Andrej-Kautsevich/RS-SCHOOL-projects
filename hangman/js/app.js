@@ -31,6 +31,8 @@ class App {
     // Assemble UI
     quizContainer.append(keyboardContainer);
     container.append(quizContainer);
+
+    this.quiz.setListeners()
   }
 }
 
