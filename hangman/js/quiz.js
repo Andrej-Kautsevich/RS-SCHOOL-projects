@@ -54,7 +54,7 @@ class Quiz {
   handleKeyPress(keyButton) {
     const key = keyButton.dataset.key;
 
-    if (this.question.answer.includes(key)) {
+    if (this.question.answer.toLowerCase().includes(key)) {
       this.revealLetter(key);
     } else {
       this.hangman.drawPart(this.guessNumber++);

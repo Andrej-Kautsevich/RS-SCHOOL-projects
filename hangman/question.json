@@ -1,12 +1,82 @@
 [
   {
     "language": "en",
-    "hint": "Some hint to answer",
-    "answer": "answer"
+    "hint": "This fruit is known for keeping the doctor away if eaten daily",
+    "answer": "apple"
   },
   {
     "language": "en",
-    "hint": "Some another hint to answer",
-    "answer": "something"
+    "hint": "The star at the center of our solar system",
+    "answer": "sun"
+  },
+  {
+    "language": "en",
+    "hint": "A mythical reptilian creature that breathes fire",
+    "answer": "dragon"
+  },
+  {
+    "language": "en",
+    "hint": "The chemical element with the symbol O and atomic number 8",
+    "answer": "oxygen"
+  },
+  {
+    "language": "en",
+    "hint": "The capital city of France",
+    "answer": "Paris"
+  },
+  {
+    "language": "en",
+    "hint": "A polygon with three sides",
+    "answer": "triangle"
+  },
+  {
+    "language": "en",
+    "hint": "The legendary ship that famously sank after hitting an iceberg",
+    "answer": "Titanic"
+  },
+  {
+    "language": "en",
+    "hint": "A large body of water, typically saltwater, that covers most of the Earth's surface",
+    "answer": "ocean"
+  },
+  {
+    "language": "en",
+    "hint": "The current form of communication you are using to access information",
+    "answer": "internet"
+  },
+  {
+    "language": "en",
+    "hint": "A popular black beverage that can be served hot or cold",
+    "answer": "coffee"
+  },
+  {
+    "language": "en",
+    "hint": "A season characterized by the falling of leaves from deciduous trees",
+    "answer": "autumn"
+  },
+  {
+    "language": "en",
+    "hint": "A sport played by two teams of eleven players with a spherical ball, known as soccer in the US",
+    "answer": "football"
+  },
+  {
+    "language": "en",
+    "hint": "The country known for its pyramids and sphinx",
+    "answer": "Egypt"
+  },
+  {
+    "language": "en",
+    "hint": "An aquatic mammal known for its playful behavior and intelligence",
+    "answer": "dolphin"
+  },  
+  {
+    "language": "en",
+    "hint": "A famous festival celebrated in Rio de Janeiro with colorful parades",
+    "answer": "Carnival"
+  },
+  {
+    "language": "en",
+    "hint": "The European country known for its tulip fields, windmills, and wooden shoes",
+    "answer": "Netherlands"
   }
 ]
