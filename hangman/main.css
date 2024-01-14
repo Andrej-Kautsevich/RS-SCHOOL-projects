@@ -62,44 +62,40 @@ body {
   right: 0%;
 }
 
-.hangman__head {
-  width: 100%;
+.hangman__part {
   position: absolute;
+  display: none;
+}
+.hangman__part_visible {
+  display: block;
+}
+.hangman__part--head {
+  width: 100%;
   top: 0%;
   right: 0%;
 }
-
-.hangman__body {
+.hangman__part--body {
   width: 5%;
-  position: absolute;
   top: 35%;
   right: 47.5%;
 }
-
-.hangman__hand-left {
+.hangman__part--hand-left {
   width: 50%;
-  position: absolute;
   top: 35%;
   right: 48%;
 }
-
-.hangman__hand-right {
+.hangman__part--hand-right {
   width: 50%;
-  position: absolute;
   top: 35%;
   right: 2%;
 }
-
-.hangman__leg-left {
+.hangman__part--leg-left {
   width: 50%;
-  position: absolute;
   top: 81%;
   right: 48%;
 }
-
-.hangman__leg-right {
+.hangman__part--leg-right {
   width: 50%;
-  position: absolute;
   top: 81%;
   right: 2%;
 }

@@ -15,44 +15,47 @@
   right: 0%;
 }
 
-.hangman__head {
-  width: 100%;
+.hangman__part {
   position: absolute;
-  top: 0%;
-  right: 0%;
-}
+  display: none;
 
-.hangman__body {
-  width: 5%;
-  position: absolute;
-  top: 35%;
-  right: 47.5%;
-}
+  &_visible {
+    display: block;
+  }
 
-.hangman__hand-left {
-  width: 50%;
-  position: absolute;
-  top: 35%;
-  right: 48%;
-}
+  &--head {
+    width: 100%;
+    top: 0%;
+    right: 0%;
+  }
 
-.hangman__hand-right {
-  width: 50%;
-  position: absolute;
-  top: 35%;
-  right: 2%;
-}
+  &--body {
+    width: 5%;
+    top: 35%;
+    right: 47.5%;
+  }
 
-.hangman__leg-left {
-  width: 50%;
-  position: absolute;
-  top: 81%;
-  right: 48%;
-}
+  &--hand-left {
+    width: 50%;
+    top: 35%;
+    right: 48%;
+  }
 
-.hangman__leg-right {
-  width: 50%;
-  position: absolute;
-  top: 81%;
-  right: 2%;
+  &--hand-right {
+    width: 50%;
+    top: 35%;
+    right: 2%;
+  }
+
+  &--leg-left {
+    width: 50%;
+    top: 81%;
+    right: 48%;
+  }
+
+  &--leg-right {
+    width: 50%;
+    top: 81%;
+    right: 2%;
+  }
 }
