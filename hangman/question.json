@@ -1,0 +1,12 @@
+[
+  {
+    "language": "en",
+    "hint": "Some hint to answer",
+    "answer": "answer"
+  },
+  {
+    "language": "en",
+    "hint": "Some another hint to answer",
+    "answer": "something"
+  }
+]

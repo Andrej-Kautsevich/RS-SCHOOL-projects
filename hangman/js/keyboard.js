@@ -1,14 +1,11 @@
-const Keyboard = {
-  container: null,
+class Keyboard {
+  init(container) {
+    const keyboard = document.createElement("div");
 
-  init() {
-    this.container = document.createElement("div");
-
-    this.container.classList.add("keyboard");
-    this.container.append(this.createKeys());
-
-    document.body.append(this.container);
-  },
+    keyboard.classList.add("keyboard");
+    keyboard.append(this.createKeys());
+    container.append(keyboard);
+  };
 
   createKeys() {
     const fragment = document.createDocumentFragment();
@@ -22,7 +19,7 @@ const Keyboard = {
       const button = document.createElement("button");
       const lineBreak = ["p", "l",].indexOf(key) !== -1;
 
-      button.setAttribute("data-key", key );
+      button.setAttribute("data-key", key);
       button.classList.add("keyboard__key");
 
       button.textContent = key.toUpperCase();
@@ -35,7 +32,7 @@ const Keyboard = {
     });
 
     return fragment;
-  },
+  };
 
 };
 

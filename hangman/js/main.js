@@ -1,7 +1,10 @@
-import Keyboard from "./keyboard.js"
+import App from "./app.js"
 
-//create keyboard
 window.addEventListener("DOMContentLoaded", function () {
-  Keyboard.init();
-});
+  const container = document.createElement("div");
+  container.classList.add("container");
+  document.body.append(container);
 
+  const quiz = new App();
+  quiz.start();
+});
