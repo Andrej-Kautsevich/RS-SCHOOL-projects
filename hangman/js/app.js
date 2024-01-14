@@ -6,7 +6,7 @@ class App {
   constructor() {
     this.hangman = new Hangman();
     this.keyboard = new Keyboard();
-    this.quiz = new Quiz();
+    this.quiz = new Quiz(this.hangman);
   }
 
   start() {

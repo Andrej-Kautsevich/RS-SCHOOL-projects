@@ -31,10 +31,13 @@ body {
 
 .quiz__letter {
   border-bottom: 2px solid black;
-  padding: 5px;
   width: 2rem;
+  height: 3rem;
   font-size: 2rem;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quiz__hint {
@@ -116,10 +119,16 @@ body {
   width: 6%;
   max-width: 3rem;
   margin: 3px;
+  transition: background 0.2s ease;
 }
-
-.keyboard__key:active {
+.keyboard__key:not(:disabled):hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.keyboard__key:not(:disabled):active {
   background: rgba(0, 0, 0, 0.05);
+}
+.keyboard__key:disabled {
+  cursor: auto;
 }
 
 /*# sourceMappingURL=main.css.map */

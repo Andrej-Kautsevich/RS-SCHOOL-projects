@@ -1,5 +1,11 @@
 class Hangman {
+
+  constructor() {
+    this.parts = [];
+  }
+
   render(container) {
+
     const hangman = document.createElement("div");
     hangman.classList.add("hangman");
 
@@ -16,6 +22,16 @@ class Hangman {
     `
 
     container.append(hangman);
+    this.parts = Array.from(document.querySelectorAll('.hangman__part'));
+  }
+
+  drawPart(guessNumber) {
+    this.hangman = document.querySelector('.hangman__man');
+    this.parts = this.hangman.children;
+
+    if (guessNumber >= 0 && guessNumber < this.parts.length) {
+      this.parts[guessNumber].classList.add('hangman__part_visible');
+    }
   }
 }
 

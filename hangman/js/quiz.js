@@ -1,8 +1,10 @@
 import data from "../question.json" assert { type: "json" };
 
 class Quiz {
-  constructor() {
+  constructor(hangman) {
     this.question = null;
+    this.guessNumber = 0;
+    this.hangman = hangman;
   }
 
   setNewQuestion() {
@@ -43,22 +45,22 @@ class Quiz {
   setListeners() {
     this.keyboard = document.querySelector('.keyboard');
     this.keyboardKeys = Array.from(this.keyboard.children)
-    console.log(this.keyboardKeys);
     this.keyboardKeys.forEach((keyButton) => {
-      keyButton.addEventListener('click', () => {
-        const key = keyButton.dataset.key;
-        this.handleKeyPress(key)
-      })
+      keyButton.addEventListener('click', () => this.handleKeyPress(keyButton))
     })
   }
 
   // A method to handle the key press event when a key is clicked
-  handleKeyPress(key) {
+  handleKeyPress(keyButton) {
+    const key = keyButton.dataset.key;
+
     if (this.question.answer.includes(key)) {
       this.revealLetter(key);
     } else {
-      // Handle incorrect letter
+      this.hangman.drawPart(this.guessNumber++);
     }
+
+    keyButton.disabled = true;
   }
 
   revealLetter(letter) {

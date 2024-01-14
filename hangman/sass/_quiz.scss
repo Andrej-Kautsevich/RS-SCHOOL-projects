@@ -15,10 +15,13 @@
 
 .quiz__letter {
   border-bottom: 2px solid black;
-  padding: 5px;
   width: 2rem;
+  height: 3rem;
   font-size: 2rem;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quiz__hint {
