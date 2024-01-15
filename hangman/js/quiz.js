@@ -1,10 +1,12 @@
 import data from "../question.json" assert { type: "json" };
+import Modal from "./modal.js";
 
 class Quiz {
   constructor(hangman) {
     this.question = null;
     this.guessNumber = 0;
     this.hangman = hangman;
+    this.modal = new Modal();
   }
 
   setNewQuestion() {
@@ -84,8 +86,8 @@ class Quiz {
     const letterElements = document.querySelectorAll('.quiz__letter');
     // Checking if every letter element has a non-empty textContent
     const allGuessed = Array.from(letterElements).every((element) => element.textContent.trim() !== '');
-    if (allGuessed) console.log("wins");
-    if (this.guessNumber > 5) console.log('lost');
+    if (allGuessed) this.modal.openModal("You win!", this.question.answer);
+    if (this.guessNumber > 5) this.modal.openModal("You lost!", this.question.answer);
   }
 
   revealLetter(letter) {
