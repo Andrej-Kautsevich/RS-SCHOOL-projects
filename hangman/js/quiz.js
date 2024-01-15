@@ -4,6 +4,7 @@ import Modal from "./modal.js";
 class Quiz {
   constructor(hangman) {
     this.question = null;
+    this.isGameOver = false;
     this.guessNumber = 0;
     this.hangman = hangman;
     this.modal = new Modal();
@@ -11,6 +12,7 @@ class Quiz {
 
   setNewQuestion() {
     this.guessNumber = 0;
+    this.gameOver = false;
     let questionId;
 
     let usedQuestions = JSON.parse(localStorage.getItem("usedQuestions")) || [];
@@ -24,7 +26,7 @@ class Quiz {
       const randomIndex = Math.floor(Math.random() * availableQuestions.length);
       questionId = availableQuestions[randomIndex].id;
     }
-    
+
     this.question = data[questionId];
 
     usedQuestions.push(questionId);
@@ -84,6 +86,8 @@ class Quiz {
 
   // A method to handle the key press event when a key is clicked
   handleKeyPress(keyButton) {
+    if (this.gameOver) return;
+
     const key = keyButton.dataset.key;
 
     if (this.question.answer.toLowerCase().includes(key)) {
@@ -100,6 +104,7 @@ class Quiz {
 
   // A method to handle the physical keyboard key press
   handlePhysicalKeyPress() {
+    if (this.gameOver) return;
     window.addEventListener('keypress', (e) => {
       const pressedKey = e.key.toLowerCase();
 
@@ -119,8 +124,11 @@ class Quiz {
     const letterElements = document.querySelectorAll('.quiz__letter');
     // Checking if every letter element has a non-empty textContent
     const allGuessed = Array.from(letterElements).every((element) => element.textContent.trim() !== '');
-    if (allGuessed) this.modal.openModal("You win!", this.question.answer);
-    if (this.guessNumber > 5) this.modal.openModal("You lost!", this.question.answer);
+    if (allGuessed || this.guessNumber > 5) {
+      this.gameOver = true;
+      const result = allGuessed ? "You win!" : "You lost!";
+      this.modal.openModal(result, this.question.answer);
+    }
   }
 
   revealLetter(letter) {
