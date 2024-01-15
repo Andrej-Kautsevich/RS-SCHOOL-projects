@@ -1,0 +1,82 @@
+.hangman {
+  display: flex;
+  max-width: 35%;
+  height: 100%;
+  align-items: center;
+
+  @include media-tablet-small {
+    max-width: 30%;
+  }
+
+  @include media-mobile {
+    flex: 1 0 0;
+    max-width: 50%;
+  }
+}
+
+.hangman__wrapper {
+  position: relative;
+}
+
+.hangman__gallows {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+
+  @include media-mobile {
+    max-height: 40vh;
+  }
+}
+
+.hangman__man {
+  width: 30%;
+  height: 50%;
+  position: absolute;
+  top: 25%;
+  right: 0%;
+}
+
+.hangman__part {
+  position: absolute;
+  display: none;
+
+  &_visible {
+    display: block;
+  }
+
+  &--head {
+    width: 100%;
+    top: 0%;
+    right: 0%;
+  }
+
+  &--body {
+    width: 5%;
+    top: 35%;
+    right: 47.5%;
+  }
+
+  &--hand-left {
+    width: 50%;
+    top: 35%;
+    right: 48%;
+  }
+
+  &--hand-right {
+    width: 50%;
+    top: 35%;
+    right: 2%;
+  }
+
+  &--leg-left {
+    width: 50%;
+    top: 81%;
+    right: 48%;
+  }
+
+  &--leg-right {
+    width: 50%;
+    top: 81%;
+    right: 2%;
+  }
+}
