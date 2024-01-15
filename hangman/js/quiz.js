@@ -11,9 +11,26 @@ class Quiz {
 
   setNewQuestion() {
     this.guessNumber = 0;
-    const questionId = Math.floor(Math.random() * data.length);
+    let questionId;
+
+    let usedQuestions = JSON.parse(localStorage.getItem("usedQuestions")) || [];
+    const availableQuestions = data.filter((_, index) => !usedQuestions.includes(index));
+
+    if (availableQuestions.length === 0) {
+      localStorage.removeItem("usedQuestions"); // Reset used questions
+      usedQuestions = [];
+      questionId = Math.floor(Math.random() * data.length);
+    } else {
+      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+      questionId = availableQuestions[randomIndex].id;
+    }
+    
     this.question = data[questionId];
-    console.info(`Current answer is -> %c${this.question.answer}`, 'color: red');
+
+    usedQuestions.push(questionId);
+    localStorage.setItem("usedQuestions", JSON.stringify(usedQuestions));
+
+    console.info(`Current answer is -> %c${this.question.answer}`, "color: red");
   }
 
   renderAnswer() {
