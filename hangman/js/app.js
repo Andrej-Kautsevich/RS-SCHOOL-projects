@@ -4,13 +4,14 @@ import Quiz from "./quiz.js";
 
 class App {
   constructor() {
+    this.container = null;
     this.hangman = new Hangman();
     this.keyboard = new Keyboard();
     this.quiz = new Quiz(this.hangman);
   }
 
   start() {
-    const container = document.querySelector(".container");
+    this.container = document.querySelector(".container");
 
     const quizContainer = document.createElement("div");
     quizContainer.classList.add("quiz");
@@ -19,7 +20,7 @@ class App {
     keyboardContainer.classList.add("quiz__keyboard");
 
     // Prepare hangman
-    this.hangman.render(container);
+    this.hangman.render(this.container);
     //render keyboard
     this.keyboard.init(keyboardContainer);
 
@@ -30,9 +31,13 @@ class App {
 
     // Assemble UI
     quizContainer.append(keyboardContainer);
-    container.append(quizContainer);
+    this.container.append(quizContainer);
 
     this.quiz.setListeners()
+  }
+
+  clear() {
+    this.container.innerHTML = "";
   }
 }
 

@@ -1,7 +1,13 @@
+import { quiz } from "./main.js";
+
 class Modal {
+  constructor() {
+    this.overlay = null;
+  }
+
   openModal(resultText, answerText) {
-    const overlay = document.createElement("div");
-    overlay.className = "overlay";
+    this.overlay = document.createElement("div");
+    this.overlay.className = "overlay";
 
     const modal = document.createElement("div");
     modal.className = "modal";
@@ -17,11 +23,18 @@ class Modal {
     const button = document.createElement("button");
     button.className = "button modal__button";
     button.innerText = "Play again";
+    button.addEventListener("click", () => this.closeModal())
 
     modal.append(result, answer, button);
-    overlay.append(modal);
+    this.overlay.append(modal);
 
-    document.body.append(overlay);
+    document.body.append(this.overlay);
+  }
+
+  closeModal() {
+    this.overlay.remove();
+    quiz.clear();
+    quiz.start();
   }
 }
 

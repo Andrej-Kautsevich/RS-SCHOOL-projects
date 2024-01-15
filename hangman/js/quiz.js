@@ -10,9 +10,10 @@ class Quiz {
   }
 
   setNewQuestion() {
+    this.guessNumber = 0;
     const questionId = Math.floor(Math.random() * data.length);
     this.question = data[questionId];
-    console.log(this.question);
+    console.info(`Current answer is -> %c${this.question.answer}`, 'color: red');
   }
 
   renderAnswer() {
@@ -80,7 +81,6 @@ class Quiz {
 
     keyButton.disabled = true;
   }
-
 
   checkGameEnd() {
     const letterElements = document.querySelectorAll('.quiz__letter');
