@@ -128,6 +128,7 @@ class Quiz {
     this.question.answer.split('').forEach((answerLetter, index) => {
       if (answerLetter.toLowerCase() === letter.toLowerCase()) {
         letterElements[index].textContent = answerLetter.toUpperCase();
+        letterElements[index].classList.add("quiz__letter_show")
       }
     });
   }

@@ -28,6 +28,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &_show {
+    border: none;
+  }
 }
 
 .quiz__hint {

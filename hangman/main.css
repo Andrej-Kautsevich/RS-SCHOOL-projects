@@ -76,6 +76,9 @@ body {
   align-items: center;
   justify-content: center;
 }
+.quiz__letter_show {
+  border: none;
+}
 
 .quiz__hint {
   text-align: center;
