@@ -34,6 +34,7 @@ class App {
     this.container.append(quizContainer);
 
     this.quiz.setListeners()
+    this.quiz.handlePhysicalKeyPress();
   }
 
   clear() {

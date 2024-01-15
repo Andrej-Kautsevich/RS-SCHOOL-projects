@@ -76,10 +76,26 @@ class Quiz {
       this.updateGuessCounter();
     }
 
+    keyButton.disabled = true;
     // Check for game completion after each guess
     this.checkGameEnd();
+  }
 
-    keyButton.disabled = true;
+  // A method to handle the physical keyboard key press
+  handlePhysicalKeyPress() {
+    window.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      const pressedKey = e.key.toLowerCase();
+
+      if (pressedKey.length === 1 && pressedKey >= 'a' && pressedKey <= 'z') {
+        const keyButton = Array.from(this.keyboard.children)
+          .find((keyEl) => keyEl.dataset.key === pressedKey && !keyEl.disabled);
+
+        if (keyButton) {
+          this.handleKeyPress(keyButton);
+        }
+      }
+    });
   }
 
   checkGameEnd() {
