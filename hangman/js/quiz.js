@@ -73,7 +73,19 @@ class Quiz {
       this.updateGuessCounter();
     }
 
+    // Check for game completion after each guess
+    this.checkGameEnd();
+
     keyButton.disabled = true;
+  }
+
+
+  checkGameEnd() {
+    const letterElements = document.querySelectorAll('.quiz__letter');
+    // Checking if every letter element has a non-empty textContent
+    const allGuessed = Array.from(letterElements).every((element) => element.textContent.trim() !== '');
+    if (allGuessed) console.log("wins");
+    if (this.guessNumber > 5) console.log('lost');
   }
 
   revealLetter(letter) {
