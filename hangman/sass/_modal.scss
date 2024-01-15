@@ -15,27 +15,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40vw;
+  max-width: 50vw;
   padding: 20px;
   z-index: 10;
   background-color: white;
   border-radius: 20px;
   border: solid 1px gray;
   gap: 20px;
+
+  @include media-mobile {
+    max-width: 80vw;
+  }
 }
 
 .modal__result {
-  font-size: 2rem;
+  font-size: 2em;
   font-weight: 700;
   margin: 0;
 }
 
 .modal__answer {
-  font-size: 1.5rem;
+  // font-size: 1.5rem;
   margin: 0;
 }
 
 .modal__button {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   padding: 5px;
 }
