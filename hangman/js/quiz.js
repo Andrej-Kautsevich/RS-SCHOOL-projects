@@ -29,6 +29,18 @@ class Quiz {
     return p;
   }
 
+  renderGuessCount() {
+    const p = document.createElement("p");
+    p.className = "quiz__guess-counter";
+
+    const span = document.createElement("span");
+    span.className = "quiz__guess-count"
+    span.innerText = `${this.guessNumber} / 6`;
+
+    p.append("Incorrect guesses: ", span);
+    return p;
+  }
+
   render(container) {
     const wordHTML = document.createElement("ul");
     wordHTML.classList.add("quiz__word");
@@ -37,9 +49,11 @@ class Quiz {
     letterElements.forEach(letterElement => wordHTML.appendChild(letterElement));
 
     const hint = this.renderHint();
+    const guessCounter = this.renderGuessCount();
 
     container.appendChild(wordHTML);
     container.appendChild(hint);
+    container.appendChild(guessCounter)
   }
 
   setListeners() {
@@ -58,6 +72,7 @@ class Quiz {
       this.revealLetter(key);
     } else {
       this.hangman.drawPart(this.guessNumber++);
+      this.updateGuessCounter();
     }
 
     keyButton.disabled = true;
@@ -70,6 +85,11 @@ class Quiz {
         letterElements[index].textContent = answerLetter.toUpperCase();
       }
     });
+  }
+
+  updateGuessCounter() {
+    const counter = document.querySelector(".quiz__guess-count");
+    counter.innerText = `${this.guessNumber} / 6`;
   }
 }
 

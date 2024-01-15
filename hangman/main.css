@@ -44,6 +44,14 @@ body {
   align-self: center;
 }
 
+.quiz__guess-counter {
+  align-self: center;
+}
+
+.quiz__guess-count {
+  color: red;
+}
+
 .quiz__keyboard {
   width: 100%;
 }
