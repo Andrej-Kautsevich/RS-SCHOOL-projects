@@ -83,11 +83,11 @@ class Quiz {
 
   // A method to handle the physical keyboard key press
   handlePhysicalKeyPress() {
-    window.addEventListener('keydown', (e) => {
-      e.preventDefault();
+    window.addEventListener('keypress', (e) => {
       const pressedKey = e.key.toLowerCase();
 
       if (pressedKey.length === 1 && pressedKey >= 'a' && pressedKey <= 'z') {
+        e.preventDefault();
         const keyButton = Array.from(this.keyboard.children)
           .find((keyEl) => keyEl.dataset.key === pressedKey && !keyEl.disabled);
 
