@@ -51,9 +51,7 @@ class Quiz {
     const hint = this.renderHint();
     const guessCounter = this.renderGuessCount();
 
-    container.appendChild(wordHTML);
-    container.appendChild(hint);
-    container.appendChild(guessCounter)
+    container.append(wordHTML, hint, guessCounter);
   }
 
   setListeners() {
