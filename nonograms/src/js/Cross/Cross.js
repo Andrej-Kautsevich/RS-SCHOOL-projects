@@ -34,6 +34,7 @@ export default class Cross {
       for (let j = 0; j < this.template[i].length; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil';
+        elem.addEventListener('click', () => this.mouseDownEvent(elem));
         row.appendChild(elem);
       }
 
@@ -73,7 +74,6 @@ export default class Cross {
     const crossTop = document.createElement('div');
     crossTop.className = 'cross__top';
     const hints = countColumnHints(this.template);
-    console.log(hints);
     const maxCeilsCount = Math.max(...hints.map((arr) => arr.length));
 
     for (let i = 0; i < hints.length; i++) {
@@ -94,6 +94,29 @@ export default class Cross {
       crossTop.appendChild(column);
     }
     return crossTop;
+  }
+
+  mouseDownEvent(elem) {
+    elem.classList.toggle('cross__ceil_active');
+    if (this.isGameFinished()) {
+      console.log('Game over!');
+    }
+  }
+
+  isGameFinished() {
+    const crossArea = this.cross.querySelector('.cross__area');
+    const rows = crossArea.querySelectorAll('.cross__row');
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].querySelectorAll('.cross__ceil');
+      for (let j = 0; j < cells.length; j++) {
+        const isActive = cells[j].classList.contains('cross__ceil_active');
+        // Check if ceil match template
+        if ((isActive && this.template[i][j] !== 1) || (!isActive && this.template[i][j] !== 0)) {
+          return false;
+        }
+      }
+    }
+    return true; // if all ceils match template
   }
 
   getCross() {
