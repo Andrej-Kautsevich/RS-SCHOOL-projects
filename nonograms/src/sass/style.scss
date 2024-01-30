@@ -8,4 +8,14 @@
 
 // 2. Vendors
 @import
-  'vendors/normalize';  
+  'vendors/normalize';
+
+// 3. Base stuff
+@import
+  'base/base'; 
+  
+// 4. Layout-related sections
+@import
+  'layout/app';  
+
+// 5. Components  

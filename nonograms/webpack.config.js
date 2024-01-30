@@ -4,12 +4,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-// const devServer = (isDev) => !isDev ? {} : {
-//   devServer: {
-//     open: true,
-//     port: 8080,
-//   },
-// };
+const devServer = (isDev) => (!isDev ? {} : {
+  devServer: {
+    open: true,
+    port: 8080,
+  },
+});
 
 module.exports = ({ development }) => ({
   mode: development ? 'development' : 'production',
@@ -43,5 +43,5 @@ module.exports = ({ development }) => ({
     }),
     new ESLintPlugin(),
   ],
-  // ...devServer(development)
+  ...devServer(development),
 });
