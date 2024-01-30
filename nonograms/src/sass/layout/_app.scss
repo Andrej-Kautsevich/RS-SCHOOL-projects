@@ -3,6 +3,7 @@
   flex-direction: column;
   width: fit-content;
   border: 2px solid $border-outer-color;
+  user-select: none;
 }
 
 .cross__bottom {
@@ -35,6 +36,7 @@
   padding: 1px;
   text-align: center;
   border-right: 1px solid $border-inner-color;
+  cursor: pointer;
 
   &_top {
     border-right: none;

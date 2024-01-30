@@ -4,7 +4,7 @@ export function countRowHints(template) {
   for (let i = 0; i < template.length; i++) {
     let count = 0;
     const rowHints = [];
-    for (let j = 0; j < template.length; j++) {
+    for (let j = 0; j < template[0].length; j++) {
       if (template[i][j] === 1) {
         count++;
       } else if (count > 0) {
@@ -22,7 +22,7 @@ export function countRowHints(template) {
 
 export function countColumnHints(template) {
   const hints = [];
-  for (let i = 0; i < template.length; i++) {
+  for (let i = 0; i < template[0].length; i++) {
     let count = 0;
     const columnHints = [];
     for (let j = 0; j < template.length; j++) {
