@@ -6,6 +6,6 @@ const container = document.createElement('div');
 container.classList.add('page-wrapper');
 document.body.append(container);
 
-const app = new App(templates[0].template);
+const app = new App(templates[2].template);
 
 app.start(container);

@@ -34,7 +34,8 @@ export default class Cross {
       for (let j = 0; j < this.template[i].length; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil';
-        elem.addEventListener('click', () => this.mouseDownEvent(elem));
+        elem.addEventListener('mousedown', (event) => this.mouseDownEvent(event, elem), false);
+        elem.addEventListener('contextmenu', (event) => event.preventDefault());
         row.appendChild(elem);
       }
 
@@ -96,8 +97,20 @@ export default class Cross {
     return crossTop;
   }
 
-  mouseDownEvent(elem) {
-    elem.classList.toggle('cross__ceil_active');
+  mouseDownEvent(event, elem) {
+    switch (event.button) {
+      case 0:
+        elem.classList.remove('cross__ceil_cross');
+        elem.classList.toggle('cross__ceil_active');
+        break;
+
+      case 2:
+        elem.classList.remove('cross__ceil_active');
+        elem.classList.toggle('cross__ceil_cross');
+        break;
+      default:
+    }
+
     if (this.isGameFinished()) {
       console.log('Game over!');
     }

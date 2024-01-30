@@ -63,6 +63,11 @@
     background-color: $ceil-color;
     box-shadow: inset 0px 0px 2px 1px white;
   }
+
+  &_cross {
+   background: url('../assets/cross.gif') no-repeat;
+   background-position: center center; 
+  }
 }
 
 .cross__left {

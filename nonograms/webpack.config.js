@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const CopyPlugin = require('copy-webpack-plugin');
 
 const devServer = (isDev) => (!isDev ? {} : {
   devServer: {
@@ -20,6 +22,7 @@ module.exports = ({ development }) => ({
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
+    assetModuleFilename: 'assets/[name][ext]',
   },
 
   module: {
@@ -29,6 +32,10 @@ module.exports = ({ development }) => ({
         use: [
           MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',
         ],
+      },
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
@@ -42,6 +49,12 @@ module.exports = ({ development }) => ({
       filename: 'style.css',
     }),
     new ESLintPlugin(),
+    new CopyPlugin({
+      patterns: [{
+        from: 'public',
+        noErrorOnMissing: true,
+      }],
+    }),
   ],
   ...devServer(development),
 });
