@@ -57,7 +57,7 @@ export default class Cross {
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__ceil cross__ceil_left';
+        elem.className = 'cross__left-ceil';
 
         // add all hints from right to left, then fill with empty ceils
         if (hints[i][j]) {
@@ -79,11 +79,11 @@ export default class Cross {
 
     for (let i = 0; i < hints.length; i++) {
       const column = document.createElement('div');
-      column.className = 'cross__row-top';
+      column.className = 'cross__top-row';
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__ceil cross__ceil_top';
+        elem.className = 'cross__top-ceil';
 
         // add all hints from bottom to top, then fill with empty ceils
         if (hints[i][j]) {

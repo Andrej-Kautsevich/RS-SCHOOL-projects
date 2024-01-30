@@ -29,34 +29,25 @@
   }
 }
 
-.cross__ceil {
+%cross-ceil {
   box-sizing: inherit;
   width: 20px;
   height: 20px;
   padding: 1px;
   text-align: center;
-  border-right: 1px solid $border-inner-color;
   cursor: pointer;
 
-  &_top {
-    border-right: none;
-    border-bottom: 1px solid $border-inner-color;
-
-    &:nth-child(5n) {
-      border-bottom: 2px solid $border-inner-color;
-    }
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  &:nth-child(5n) {
-    border-right: 2px solid $border-inner-color;
-  }
-
   &:last-child {
-    border-right: none;
+    border: none;
+  }
+}
+
+.cross__ceil {
+  @extend %cross-ceil;
+  border-right: 1px solid $border-inner-color;
+
+  &:not(&:last-child):nth-child(5n) {
+    border-right: 2px solid $border-inner-color;
   }
 
   &_active {
@@ -65,8 +56,8 @@
   }
 
   &_cross {
-   background: url('../assets/cross.gif') no-repeat;
-   background-position: center center; 
+    background: url('../assets/cross.gif') no-repeat;
+    background-position: center center;
   }
 }
 
@@ -78,6 +69,15 @@
   background-color: $background-color-dark;
 }
 
+.cross__left-ceil {
+  @extend %cross-ceil;
+  border-right: 1px solid $border-inner-color;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
 .cross__top {
   display: flex;
   width: fit-content;
@@ -86,7 +86,16 @@
   border-left: 2px solid $border-outer-color;
 }
 
-.cross__row-top {
+.cross__top-ceil {
+  @extend %cross-ceil;
+  border-bottom: 1px solid $border-inner-color;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cross__top-row {
   width: 20px;
 
   border-right: 1px solid $border-inner-color;
