@@ -1,7 +1,9 @@
 import { countRowHints, countColumnHints } from './CrossHints';
 
 export default class Cross {
-  constructor(template) {
+  constructor(template, timer) {
+    this.timer = timer;
+    this.isTimerActive = false;
     this.template = template; // Шаблон области
     this.cross = this.createCross(); // Создание области
   }
@@ -98,6 +100,11 @@ export default class Cross {
   }
 
   mouseDownEvent(event, elem) {
+    if (!this.isTimerActive) {
+      this.timer.startTimer();
+      this.isTimerActive = true;
+    }
+
     switch (event.button) {
       case 0:
         elem.classList.remove('cross__ceil_cross');
