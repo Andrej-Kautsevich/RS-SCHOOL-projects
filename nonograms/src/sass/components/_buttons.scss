@@ -1,0 +1,27 @@
+.button {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid $button-bg;
+  border-radius: 0.25rem;
+  background-color: $button-bg;
+  height: 1.75rem;
+  padding: 0.25rem;
+
+  &:hover {
+    background-color: $button-bg-hover;
+    background-color: $button-bg-hover;
+  }
+  
+  &_has-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &_link {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+  }
+}
+

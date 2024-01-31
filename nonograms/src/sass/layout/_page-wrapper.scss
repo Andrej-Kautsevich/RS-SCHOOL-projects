@@ -1,0 +1,12 @@
+.page-wrapper {
+  max-width: $content-width;
+  margin: auto;
+
+  display: grid;
+  height: 100vh;
+
+  grid-template: ". timer ." 1fr
+    "sidebar cross ." 5fr
+    "sidebar buttons ." 1fr
+    / minmax(150px, 1fr) 3fr 0.5fr;
+}

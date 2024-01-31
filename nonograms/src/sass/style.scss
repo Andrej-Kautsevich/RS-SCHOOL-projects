@@ -12,14 +12,17 @@
 
 // 3. Base stuff
 @import
-  'base/base'; 
+  'base/base', 
+  'base/icons'; 
   
 // 4. Layout-related sections
 @import
+  'layout/page-wrapper',  
   'layout/menubar',  
   'layout/app';  
 
 // 5. Components
 @import
+  'components/navigation',
   'components/buttons',
   'components/timer';
