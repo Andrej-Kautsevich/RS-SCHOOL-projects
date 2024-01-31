@@ -16,6 +16,10 @@
   
 // 4. Layout-related sections
 @import
+  'layout/menubar',  
   'layout/app';  
 
-// 5. Components  
+// 5. Components
+@import
+  'components/buttons',
+  'components/timer';

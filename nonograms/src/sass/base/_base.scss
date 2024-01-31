@@ -5,3 +5,13 @@
 html {
   scroll-behavior: smooth;
 }
+
+.page-wrapper {
+  display: grid;
+  height: 100vh;
+
+  grid-template: "sidebar timer ." 1fr
+    "sidebar cross ." 5fr
+    "sidebar buttons ." 1fr
+    / 1fr 3fr 1fr;
+}
