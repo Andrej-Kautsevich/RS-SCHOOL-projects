@@ -22,6 +22,10 @@ export default class GameButtons {
     const continueBtn = createElement('button', 'button game-buttons__button', 'Continue');
     const resetBtn = createElement('button', 'button game-buttons__button', 'Reset');
 
+    solutionBtn.addEventListener('click', () => {
+      this.cross.showSolution();
+    });
+
     resetBtn.addEventListener('click', () => {
       this.cross.resetCross();
     });

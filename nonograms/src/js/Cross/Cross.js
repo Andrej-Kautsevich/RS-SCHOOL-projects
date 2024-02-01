@@ -119,7 +119,7 @@ export default class Cross {
     }
 
     if (this.isGameFinished()) {
-      console.log('Game over!');
+      this.finishGame();
     }
   }
 
@@ -146,6 +146,27 @@ export default class Cross {
     crossAreaCeils.forEach((ceil) => {
       ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
     });
+  }
+
+  showSolution() {
+    this.resetCross();
+
+    const crossArea = this.cross.querySelector('.cross__area');
+    const crossAreaCeils = (crossArea.querySelectorAll('.cross__ceil'));
+
+    const templateArray = this.template.flat();
+    for (let i = 0; i < crossAreaCeils.length; i++) {
+      const element = crossAreaCeils[i];
+      if (templateArray[i] === 1) {
+        element.classList.add('cross__ceil_active');
+      }
+    }
+    this.finishGame();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  finishGame() {
+    console.log('Game over!');
   }
 
   getCross() {
