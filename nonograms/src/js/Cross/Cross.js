@@ -1,31 +1,51 @@
 import { countRowHints, countColumnHints } from './CrossHints';
+import templates from '../templates';
 
 export default class Cross {
-  constructor(template, timer) {
+  constructor(/* template */ timer) {
     this.timer = timer;
     this.isTimerActive = false;
-    this.template = template; // Шаблон области
+    // this.template = template; // Шаблон области
+    this.template = null;
     this.cross = this.createCross(); // Создание области
   }
 
-  createCross() {
-    const cross = document.createElement('div');
-    cross.className = 'cross';
+  getTemplate() {
+    const currentTemplateID = localStorage.getItem('templateID');
+    let templateID;
 
+    do {
+      templateID = JSON.stringify(Math.floor(Math.random() * templates.length));
+    } while (currentTemplateID === templateID);
+
+    this.template = templates[templateID].template;
+    localStorage.setItem('templateID', templateID);
+
+    return this.template;
+  }
+
+  createCross() {
+    let cross = document.querySelector('.cross');
+    if (!cross) {
+      cross = document.createElement('div');
+      cross.className = 'cross';
+    }
+
+    const crossArea = this.createArea();
     const crossTop = this.createTopHints();
     const crossBottom = document.createElement('div');
     crossBottom.className = 'cross__bottom';
 
-    const crossArea = this.createArea();
     const crossLeft = this.createLeftHint();
-
     crossBottom.append(crossLeft, crossArea);
+
     cross.append(crossTop, crossBottom);
 
     return cross;
   }
 
   createArea() {
+    this.template = this.getTemplate();
     const area = document.createElement('div');
     area.className = 'cross__area';
 
@@ -141,7 +161,6 @@ export default class Cross {
 
   resetCross() {
     const crossArea = this.cross.querySelector('.cross__area');
-    // console.log(crossArea);
     const crossAreaCeils = crossArea.querySelectorAll('.cross__ceil');
     crossAreaCeils.forEach((ceil) => {
       ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
@@ -167,6 +186,13 @@ export default class Cross {
   // eslint-disable-next-line class-methods-use-this
   finishGame() {
     console.log('Game over!');
+  }
+
+  startNewGame() {
+    console.log('Start new game');
+    const crossNode = this.cross;
+    crossNode.innerHTML = '';
+    this.cross = this.createCross(); // Создание области
   }
 
   getCross() {
