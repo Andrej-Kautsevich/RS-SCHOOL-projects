@@ -1,3 +1,5 @@
+// import Cross from "../Cross/Cross";
+
 function createElement(tag, className, textContent) {
   const element = document.createElement(tag);
   if (className) element.classList.add(...className.split(' '));
@@ -6,7 +8,8 @@ function createElement(tag, className, textContent) {
 }
 
 export default class GameButtons {
-  constructor() {
+  constructor(cross) {
+    this.cross = cross;
     this.gameButtons = this.createGameButtons();
   }
 
@@ -18,6 +21,10 @@ export default class GameButtons {
     const saveBtn = createElement('button', 'button game-buttons__button', 'Save');
     const continueBtn = createElement('button', 'button game-buttons__button', 'Continue');
     const resetBtn = createElement('button', 'button game-buttons__button', 'Reset');
+
+    resetBtn.addEventListener('click', () => {
+      this.cross.resetCross();
+    });
 
     gameButtons.append(solutionBtn, saveBtn, continueBtn, resetBtn);
 

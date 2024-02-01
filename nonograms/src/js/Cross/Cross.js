@@ -139,6 +139,15 @@ export default class Cross {
     return true; // if all ceils match template
   }
 
+  resetCross() {
+    const crossArea = this.cross.querySelector('.cross__area');
+    // console.log(crossArea);
+    const crossAreaCeils = crossArea.querySelectorAll('.cross__ceil');
+    crossAreaCeils.forEach((ceil) => {
+      ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
+    });
+  }
+
   getCross() {
     return this.cross;
   }
