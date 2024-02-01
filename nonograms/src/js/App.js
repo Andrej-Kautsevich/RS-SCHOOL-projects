@@ -1,12 +1,11 @@
 import Cross from './Cross/Cross';
 import Timer from './components/Timer';
 import GameButtons from './components/GameButtons';
-import createMenuBar from './layout/menubar';
 
 export default class App {
-  constructor(template) {
+  constructor(/* template */) {
     this.timer = new Timer();
-    this.cross = new Cross(template, this.timer);
+    this.cross = new Cross(/* template, */ this.timer);
     this.gameButtons = new GameButtons(this.cross);
   }
 
@@ -14,7 +13,7 @@ export default class App {
     const crossNode = this.cross.getCross();
     const timerNode = this.timer.getTimer();
     const gameButtons = this.gameButtons.getGameButtons();
-    const menuBar = createMenuBar();
+    const menuBar = this.gameButtons.getMenuBar();
 
     container.append(crossNode, timerNode, gameButtons, menuBar);
 
