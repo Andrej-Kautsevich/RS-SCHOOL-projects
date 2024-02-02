@@ -21,6 +21,6 @@ export default class App {
 
     container.append(crossNode, timerNode, gameButtons, menuBar);
 
-    this.cross.resetCross();
+    // this.cross.resetCross();
   }
 }

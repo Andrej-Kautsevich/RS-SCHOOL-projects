@@ -139,7 +139,7 @@ export default class Cross {
     }
 
     if (this.isGameFinished()) {
-      this.finishGame();
+      this.finishGame('win');
     }
   }
 
@@ -165,6 +165,7 @@ export default class Cross {
     crossAreaCeils.forEach((ceil) => {
       ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
     });
+    this.timer.setTime(0);
   }
 
   showSolution() {
@@ -184,12 +185,21 @@ export default class Cross {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  finishGame() {
+  finishGame(win) {
+    if (win === 'win') {
+      const time = this.timer.getTime();
+      console.log(time);
+    }
+    this.timer.stopTimer();
+    this.isTimerActive = false;
     console.log('Game over!');
   }
 
   startNewGame() {
     console.log('Start new game');
+    this.timer.stopTimer();
+    this.isTimerActive = false;
+    this.timer.setTime(0);
     const crossNode = this.cross;
     crossNode.innerHTML = '';
     this.cross = this.createCross(); // Создание области
