@@ -1,12 +1,16 @@
 import Cross from './Cross/Cross';
 import Timer from './components/Timer';
 import GameButtons from './components/GameButtons';
+import Modal from './layout/Modal';
+// import ScoreModal from './layout/ScoreModal';
 
 export default class App {
   constructor(/* template */) {
     this.timer = new Timer();
     this.cross = new Cross(/* template, */ this.timer);
-    this.gameButtons = new GameButtons(this.cross);
+    this.modal = new Modal();
+    // this.winModal = new ScoreModal();
+    this.gameButtons = new GameButtons(this.cross, this.modal, this.winModal);
   }
 
   start(container) {

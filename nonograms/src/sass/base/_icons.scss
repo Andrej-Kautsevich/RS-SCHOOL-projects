@@ -17,3 +17,12 @@
   background-size: contain;
   --size: 1rem;
 }
+
+.icon_close {
+  // background-image: url(../assets/close.svg);
+  mask-image: url(../assets/close.svg);
+  background-color: $color-icon;
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
