@@ -1,29 +1,47 @@
 import Modal from './Modal';
-import { createButton } from '../components/createNodeElement';
+import { createElement, createButton, createScoreTableItem } from '../components/createNodeElement';
 
 export default class ScoreModal extends Modal {
-  constructor(content) {
+  constructor(scores) {
     super();
-    this.content = content;
+    this.scores = scores;
   }
 
   generateContent() {
-    const scoreTableModal = document.createElement('div');
-    const text = this.content;
-    scoreTableModal.innerText = text;
+    const scoreTableModal = createElement('div', 'score-table');
+    const modalCLoseIcon = createElement('span', 'icon icon_close');
+    const heading = createElement('p', 'score-table__heading', 'Score table');
 
-    const modalCLoseIcon = document.createElement('span');
-    modalCLoseIcon.classList.add('icon', 'icon_close');
+    const scores = this.generateScoreTable();
 
-    this.modalCloseBtn = createButton('button button_action button_has-icon modal__close', null, (e) => this.closeModal(e));
-    this.modalCloseBtn.append(modalCLoseIcon);
-    scoreTableModal.append(this.modalCloseBtn);
+    const modalCloseBtn = createButton('button button_action button_has-icon modal__close', null, (e) => super.closeModal(e));
+    modalCloseBtn.append(modalCLoseIcon);
+    scoreTableModal.append(heading, scores, modalCloseBtn);
 
     return scoreTableModal;
   }
 
+  generateScoreTable() {
+    const table = createElement('table', 'score-table__scores');
+    const tableHead = createElement('thead');
+    const tableHeadRow = createScoreTableItem('score-table', '№', 'Name', 'Time');
+    tableHead.append(tableHeadRow);
+
+    const tableBody = createElement('tbody');
+
+    for (let i = 0; i < this.scores.length; i++) {
+      console.log(this.scores[i].time);
+      const score = createScoreTableItem('score-table', i, JSON.parse(this.scores[i].id), JSON.parse(this.scores[i].time));
+      tableBody.appendChild(score);
+    }
+
+    table.append(tableHead, tableBody);
+    return table;
+  }
+
   renderModal() {
-    const content = this.generateContent();
-    super.buildModal(content);
+    console.log(this.scores);
+    const table = this.generateContent();
+    super.buildModal(table);
   }
 }

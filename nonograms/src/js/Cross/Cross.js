@@ -3,6 +3,9 @@ import templates from '../templates';
 
 export default class Cross {
   constructor(/* template */ timer) {
+    if (localStorage.getItem('scores')) {
+      this.lastScores = JSON.parse(localStorage.getItem('scores'));
+    } else this.lastScores = [];
     this.timer = timer;
     this.isTimerActive = false;
     // this.template = template; // Шаблон области
@@ -184,12 +187,23 @@ export default class Cross {
     this.finishGame();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   finishGame(win) {
     if (win === 'win') {
       const time = this.timer.getTime();
-      console.log(time);
+      const currentTemplateID = localStorage.getItem('templateID');
+
+      const result = {
+        id: currentTemplateID,
+        time,
+      };
+
+      if (this.lastScores.length > 5) {
+        this.lastScores.shift();
+      }
+      this.lastScores.push(result);
+      localStorage.setItem('scores', JSON.stringify(this.lastScores));
     }
+
     this.timer.stopTimer();
     this.isTimerActive = false;
     console.log('Game over!');
@@ -203,6 +217,10 @@ export default class Cross {
     const crossNode = this.cross;
     crossNode.innerHTML = '';
     this.cross = this.createCross(); // Создание области
+  }
+
+  getLastScores() {
+    return this.lastScores;
   }
 
   getCross() {

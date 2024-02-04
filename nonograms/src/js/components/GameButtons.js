@@ -31,7 +31,7 @@ export default class GameButtons {
 
     const newGame = createMenuItem('navigation__item', 'Start New Game', () => this.cross.startNewGame());
     const scoreTable = createMenuItem('navigation__item', 'Score table', () => {
-      const scoreModal = new ScoreModal('Score Table');
+      const scoreModal = new ScoreModal(this.cross.getLastScores());
       scoreModal.renderModal();
     });
     const random = createMenuItem('navigation__item', 'Random game', () => this.cross.startNewGame());

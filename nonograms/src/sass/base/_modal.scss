@@ -16,9 +16,19 @@
   flex-direction: column;
   align-items: center;
   max-width: 50vw;
-  padding: 20px;
+  padding: 24px;
   z-index: 10;
   background-color: $background-color-dark;
   border-radius: 20px;
   border: solid 1px $background-color-dark;
+}
+
+.modal__content {
+  position: relative;
+}
+
+.modal__close {
+  position: absolute;
+  top: -5px;
+  right: -24px;
 }

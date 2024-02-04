@@ -1,7 +1,9 @@
-function createElement(tag, className, textContent) {
+function createElement(tag, className, content) {
   const element = document.createElement(tag);
   if (className) element.classList.add(...className.split(' '));
-  if (textContent) element.textContent = textContent;
+  if (typeof content === 'string' || typeof content === 'number') {
+    element.textContent = content;
+  } else if (content) element.appendChild(content);
   return element;
 }
 
@@ -11,8 +13,8 @@ function createButton(className, textContent, clickHandler) {
   return button;
 }
 
-function createMenuItem(itemClass, textContent, clickHandler, link) {
-  const item = createElement('li', itemClass);
+function createMenuItem(className, textContent, clickHandler, link) {
+  const item = createElement('li', className);
   let button;
   if (link) {
     button = createElement('a', 'button button_link', textContent);
@@ -26,8 +28,19 @@ function createMenuItem(itemClass, textContent, clickHandler, link) {
   return item;
 }
 
+function createScoreTableItem(className, number, templateName, time) {
+  const row = createElement('tr', `${className}__score`);
+  const itemNumber = createElement('td', `${className}__number`, number);
+  const name = createElement('td', `${className}__name`, templateName);
+  const score = createElement('td', `${className}__time`, time);
+
+  row.append(itemNumber, name, score);
+  return row;
+}
+
 export {
   createElement,
   createButton,
   createMenuItem,
+  createScoreTableItem,
 };

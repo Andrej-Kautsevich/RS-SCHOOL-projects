@@ -1,0 +1,21 @@
+.score-table__heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.score-table__scores {
+  width: 100%;
+  border: 1px solid $border-primary;
+  border-radius: 0.25rem;
+  border-collapse: collapse;
+
+  td,
+  th {
+    border: 1px solid $border-secondary;
+    border-width: 0 0 1px 1px;
+    font-weight: 500;
+    padding: 0.25rem;
+    text-align: center;
+  }
+}
