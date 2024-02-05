@@ -3,7 +3,8 @@
   flex-direction: column;
   width: fit-content;
   height: fit-content;
-  border: 2px solid $border-outer-color;
+  border: 2px solid var(--border-cross-primary);
+  background-color: var(--background-color);
   user-select: none;
 
   grid-area: cross;
@@ -12,20 +13,20 @@
 
 .cross__bottom {
   display: flex;
-  border-top: 2px solid $border-outer-color;
+  border-top: 2px solid var(--border-cross-primary);
 }
 
 .cross__area {
   // width: fit-content;
-  border-left: 2px solid $border-outer-color;
+  border-left: 2px solid var(--border-cross-primary);
 }
 
 .cross__row {
   display: flex;
-  border-bottom: 1px solid $border-inner-color;
+  border-bottom: 1px solid var(--border-cross-secondary);
 
   &:nth-child(5n) {
-    border-bottom: 2px solid $border-inner-color;
+    border-bottom: 2px solid var(--border-cross-secondary);
   }
 
   &:last-child {
@@ -48,14 +49,14 @@
 
 .cross__ceil {
   @extend %cross-ceil;
-  border-right: 1px solid $border-inner-color;
+  border-right: 1px solid var(--border-cross-secondary);
 
   &:not(&:last-child):nth-child(5n) {
-    border-right: 2px solid $border-inner-color;
+    border-right: 2px solid var(--border-cross-secondary);
   }
 
   &_active {
-    background-color: $ceil-color;
+    background-color: var(--ceil-color);
     box-shadow: inset 0px 0px 2px 1px white;
   }
 
@@ -70,12 +71,12 @@
   align-items: flex-end;
   justify-content: space-between;
   flex-direction: column;
-  background-color: $background-color-dark;
+  background-color: var(--background-color-dark);
 }
 
 .cross__left-ceil {
   @extend %cross-ceil;
-  border-right: 1px solid $border-inner-color;
+  border-right: 1px solid var(--border-cross-secondary);
 
   &:last-child {
     border-right: none;
@@ -86,13 +87,13 @@
   display: flex;
   width: fit-content;
   align-self: flex-end;
-  background-color: $background-color-dark;
-  border-left: 2px solid $border-outer-color;
+  background-color: var(--background-color-dark);
+  border-left: 2px solid var(--border-cross-primary);
 }
 
 .cross__top-ceil {
   @extend %cross-ceil;
-  border-bottom: 1px solid $border-inner-color;
+  border-bottom: 1px solid var(--border-cross-secondary);
 
   &:last-child {
     border-bottom: none;
@@ -102,10 +103,10 @@
 .cross__top-row {
   width: 20px;
 
-  border-right: 1px solid $border-inner-color;
+  border-right: 1px solid var(--border-cross-secondary);
 
   &:nth-child(5n) {
-    border-right: 2px solid $border-inner-color;
+    border-right: 2px solid var(--border-cross-secondary);
   }
 
   &:last-child {

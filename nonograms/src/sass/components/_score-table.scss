@@ -6,14 +6,13 @@
 
 .score-table__scores {
   width: 100%;
-  border: 1px solid $border-primary;
+  border: 2px solid var(--border-primary);
   border-radius: 0.25rem;
   border-collapse: collapse;
 
   td,
   th {
-    border: 1px solid $border-secondary;
-    border-width: 0 0 1px 1px;
+    border: 1px solid var(--border-secondary);
     font-weight: 500;
     padding: 0.25rem;
     text-align: center;

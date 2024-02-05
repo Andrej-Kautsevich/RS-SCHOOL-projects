@@ -4,6 +4,11 @@
   // place-self: start center;
   gap: 1rem;
   justify-content: center;
+  background-color: var(--background-color);
+  height: fit-content;
+  padding: 1rem;
+  border: 1px solid var(--background-color);
+  border-radius: 1rem;
 }
 
 .game-buttons__button {

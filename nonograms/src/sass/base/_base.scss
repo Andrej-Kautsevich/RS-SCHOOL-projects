@@ -6,6 +6,11 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-image: url('../assets/sakura.jpg');
+  color: var(--text-primary);
+}
+
 p {
   margin: 0;
 }

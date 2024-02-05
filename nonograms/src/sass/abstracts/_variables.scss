@@ -1,19 +1,22 @@
-$border-outer-color: #000000;
-$border-inner-color: gray;
-
-$border-primary: #858585;
-$border-secondary: #696969;
-
-$ceil-color: #000000;
-
-$background-color-dark: rgb(202, 202, 202);
-$color-overlay: rgba(0, 0, 0, 0.5);
-
-$button-bg: #cdcdcd;
-$button-bg-hover: lighten($button-bg, 6.25%);
-
 $content-width: 1440px;
 
-$color-icon: #b3b3b3;
+:root {
+  --text-primary: #1b1b1b;
+  --text-secondary: #4e4e4e;
+  --background-color: #ebebeb;
+  --background-color-dark: #d8d8d8;
 
-$background-tab: rgb(122, 115, 115);
+  --border-cross-primary: #000000;
+  --border-cross-secondary: #808080;
+
+  --border-primary: #858585;
+  --border-secondary: #696969;
+
+  --ceil-color: #000000;
+  --icon-color: #b3b3b3;
+
+  --overlay-color: rgba(0, 0, 0, 0.5);
+
+  --button-primary-default: #cdcdcd;
+  --button-primary-hover: #dddddd;
+}

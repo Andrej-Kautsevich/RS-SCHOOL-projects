@@ -3,7 +3,8 @@
   place-self: end center;
   font-size: 3rem;
   @extend %font-monospace;
-  border: 1px solid $button-bg;
+  border: 1px solid var(--background-color);
   border-radius: 1rem;
   padding: 1rem;
+  background-color: var(--background-color);
 }

@@ -4,16 +4,31 @@
 }
 
 .new-game__button {
+  --button-bg: transparent;
+
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
   &:hover {
-    background-color: $background-tab;
+    background-color: var(--background-color-dark);
   }
 
   &_active {
-    background-color: $background-tab;
+    background-color: var(--background-color-dark);
     border-bottom: none;
   }
 }
 
 .new-game__tab {
-  background-color: $background-tab;
+
+  .button {
+    --button-bg: var(--background-color);
+    --button-hover: var(--background-color-dark);
+  }
+
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  background-color: var(--background-color-dark);
 }
