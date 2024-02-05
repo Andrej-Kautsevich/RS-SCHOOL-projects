@@ -10,7 +10,7 @@ export default class Cross {
     this.isTimerActive = false;
     // this.template = template; // Шаблон области
     this.template = null;
-    this.cross = this.createCross(); // Создание области
+    this.cross = null; // Создание области
   }
 
   getTemplate() {
@@ -28,11 +28,7 @@ export default class Cross {
   }
 
   createCross() {
-    let cross = document.querySelector('.cross');
-    if (!cross) {
-      cross = document.createElement('div');
-      cross.className = 'cross';
-    }
+    const cross = document.querySelector('.cross');
 
     const crossArea = this.createArea();
     const crossTop = this.createTopHints();
@@ -48,7 +44,7 @@ export default class Cross {
   }
 
   createArea() {
-    this.template = this.getTemplate();
+    // this.template = this.getTemplate();
     const area = document.createElement('div');
     area.className = 'cross__area';
 
@@ -209,7 +205,8 @@ export default class Cross {
     console.log('Game over!');
   }
 
-  startNewGame() {
+  startNewGame(template) {
+    this.template = template;
     console.log('Start new game');
     this.timer.stopTimer();
     this.isTimerActive = false;
@@ -224,6 +221,10 @@ export default class Cross {
   }
 
   getCross() {
+    const cross = document.createElement('div');
+    cross.className = 'cross';
+    this.cross = cross;
+
     return this.cross;
   }
 }
