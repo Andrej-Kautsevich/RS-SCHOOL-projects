@@ -231,8 +231,7 @@ export default class Cross {
     const currentCrossHTML = this.cross.innerHTML;
     localStorage.setItem('saved game', currentCrossHTML);
 
-    const currentTemplateID = localStorage.getItem('templateID');
-    localStorage.setItem('saved template', currentTemplateID);
+    localStorage.setItem('saved nonogram', this.nonogram.id);
 
     const currentTime = this.timer.getTime();
     localStorage.setItem('saved time', currentTime);
@@ -245,10 +244,14 @@ export default class Cross {
     const savedCrossHTML = localStorage.getItem('saved game');
 
     if (savedCrossHTML) {
+      const nonogramID = localStorage.getItem('saved nonogram');
+      this.nonogram = nonograms[nonogramID];
+      localStorage.setItem('nonogramID', nonogramID);
       this.cross.innerHTML = savedCrossHTML;
       const ceils = this.cross.querySelectorAll('.cross__ceil');
-      ceils.forEach((ceil) => this.bindEvents(ceil));
+      this.timer.stopTimer();
       this.timer.setTime(localStorage.getItem('saved time'));
+      ceils.forEach((ceil) => this.bindEvents(ceil));
     }
   }
 
