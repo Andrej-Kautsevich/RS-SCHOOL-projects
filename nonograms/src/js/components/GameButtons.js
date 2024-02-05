@@ -20,8 +20,11 @@ export default class GameButtons {
     const solutionBtn = createButton('button game-buttons__button', 'Solution', () => this.cross.showSolution());
     const resetBtn = createButton('button game-buttons__button', 'Reset', () => this.cross.resetCross());
 
-    const saveBtn = createElement('button', 'button game-buttons__button', 'Save');
-    const continueBtn = createElement('button', 'button game-buttons__button', 'Continue');
+    const saveBtn = createButton('button game-buttons__button', 'Save', () => this.cross.saveGame());
+    const continueBtn = createButton('button game-buttons__button', 'Continue', () => this.cross.continueGame());
+    continueBtn.id = 'continue-btn';
+
+    if (!localStorage.getItem('saved game')) continueBtn.disabled = true;
 
     gameButtons.append(solutionBtn, saveBtn, continueBtn, resetBtn);
 

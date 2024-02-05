@@ -55,8 +55,7 @@ export default class Cross {
       for (let j = 0; j < this.template[i].length; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil';
-        elem.addEventListener('mousedown', (event) => this.mouseDownEvent(event, elem), false);
-        elem.addEventListener('contextmenu', (event) => event.preventDefault());
+        this.bindEvents(elem);
         row.appendChild(elem);
       }
 
@@ -142,6 +141,11 @@ export default class Cross {
     }
   }
 
+  bindEvents(ceil) {
+    ceil.addEventListener('mousedown', (event) => this.mouseDownEvent(event, ceil), false);
+    ceil.addEventListener('contextmenu', (event) => event.preventDefault());
+  }
+
   isGameFinished() {
     const crossArea = this.cross.querySelector('.cross__area');
     const rows = crossArea.querySelectorAll('.cross__row');
@@ -214,6 +218,31 @@ export default class Cross {
     const crossNode = this.cross;
     crossNode.innerHTML = '';
     this.cross = this.createCross(); // Создание области
+  }
+
+  saveGame() {
+    const currentCrossHTML = this.cross.innerHTML;
+    localStorage.setItem('saved game', currentCrossHTML);
+
+    const currentTemplateID = localStorage.getItem('templateID');
+    localStorage.setItem('saved template', currentTemplateID);
+
+    const currentTime = this.timer.getTime();
+    localStorage.setItem('saved time', currentTime);
+
+    const continueBtn = document.querySelector('#continue-btn');
+    continueBtn.disabled = false;
+  }
+
+  continueGame() {
+    const savedCrossHTML = localStorage.getItem('saved game');
+
+    if (savedCrossHTML) {
+      this.cross.innerHTML = savedCrossHTML;
+      const ceils = this.cross.querySelectorAll('.cross__ceil');
+      ceils.forEach((ceil) => this.bindEvents(ceil));
+      this.timer.setTime(localStorage.getItem('saved time'));
+    }
   }
 
   getLastScores() {
