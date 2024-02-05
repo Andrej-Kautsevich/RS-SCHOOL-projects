@@ -8,6 +8,8 @@ export default class ScoreModal extends Modal {
   }
 
   generateContent() {
+    this.scores.sort((a, b) => a.time - b.time);
+
     const scoreTableModal = createElement('div', 'score-table');
     const modalCLoseIcon = createElement('span', 'icon icon_close');
     const heading = createElement('p', 'score-table__heading', 'Score table');
