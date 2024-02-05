@@ -16,6 +16,7 @@ export default class Modal {
   buildModal(content) {
     // Overlay
     this.overlay = createElement('div', 'overlay');
+    this.overlay.addEventListener('click', (e) => this.closeModal(e));
 
     // modal
     this.modal = createElement('div', 'modal');
@@ -34,13 +35,10 @@ export default class Modal {
   }
 
   closeModal(e) {
-    let { target } = e;
-
-    while (target !== this.overlay && target !== this.modalCloseBtn) {
-      target = target.parentNode;
-      if (!target) return;
+    if (!e) {
+      this.overlay.remove();
+    } else if (e.target === this.overlay || e.currentTarget === this.modalCloseBtn) {
+      this.overlay.remove();
     }
-
-    this.overlay.remove();
   }
 }

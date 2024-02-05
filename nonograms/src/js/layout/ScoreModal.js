@@ -14,9 +14,9 @@ export default class ScoreModal extends Modal {
 
     const scores = this.generateScoreTable();
 
-    const modalCloseBtn = createButton('button button_action button_has-icon modal__close', null, (e) => super.closeModal(e));
-    modalCloseBtn.append(modalCLoseIcon);
-    scoreTableModal.append(heading, scores, modalCloseBtn);
+    this.modalCloseBtn = createButton('button button_action button_has-icon modal__close', null, (e) => super.closeModal(e));
+    this.modalCloseBtn.append(modalCLoseIcon);
+    scoreTableModal.append(heading, scores, this.modalCloseBtn);
 
     return scoreTableModal;
   }

@@ -40,9 +40,9 @@ export default class NewGameModal extends Modal {
 
     this.tabContainer.innerHTML = '';
     this.nonograms.filter((nonogram) => nonogram.level === level).forEach((nonogram) => {
-      const templateButton = createButton('button', `${nonogram.name}`, (e) => {
+      const templateButton = createButton('button', `${nonogram.name}`, () => {
         this.cross.startNewGame(nonogram);
-        super.closeModal(e);
+        super.closeModal();
       });
 
       this.tabContainer.appendChild(templateButton);

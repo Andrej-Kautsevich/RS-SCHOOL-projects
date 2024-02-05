@@ -11,9 +11,9 @@ export default class WinModal extends Modal {
 
     const textContent = createElement('p', 'end-game__text', `You have solved the ${nonogram.name} nonogram in ${timeString}!`);
 
-    const modalCloseBtn = createButton('button button_action button_has-icon modal__close', '', (e) => super.closeModal(e));
-    modalCloseBtn.append(modalCLoseIcon);
-    content.append(heading, textContent, modalCloseBtn);
+    this.modalCloseBtn = createButton('button button_action button_has-icon modal__close', '', (e) => super.closeModal(e));
+    this.modalCloseBtn.append(modalCLoseIcon);
+    content.append(heading, textContent, this.modalCloseBtn);
 
     return content;
   }

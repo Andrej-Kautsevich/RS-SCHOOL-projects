@@ -256,7 +256,7 @@ export default class Cross {
   }
 
   muteSound(e) {
-    const icon = e.target.querySelector('.icon');
+    const icon = e.currentTarget.querySelector('.icon');
     if (this.hasSound) {
       if (icon) {
         icon.classList.remove('icon_unmute');
