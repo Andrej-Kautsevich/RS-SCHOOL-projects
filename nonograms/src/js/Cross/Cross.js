@@ -200,10 +200,9 @@ export default class Cross {
       }
       this.lastScores.push(result);
       localStorage.setItem('scores', JSON.stringify(this.lastScores));
+      this.timer.stopTimer();
+      this.winModal.renderModal(this.timer.getTime(), this.nonogram);
     }
-
-    this.timer.stopTimer();
-    this.winModal.renderModal(this.timer.getTime(), this.nonogram);
   }
 
   startNewGame(nonogram) {
