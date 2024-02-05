@@ -1,3 +1,4 @@
+import WinModal from '../layout/WinModal';
 import { countRowHints, countColumnHints } from './CrossHints';
 import nonograms from '../nonograms';
 
@@ -10,6 +11,7 @@ export default class Cross {
     // this.template = template; // Шаблон области
     this.nonogram = null;
     this.cross = null; // Создание области
+    this.winModal = new WinModal();
   }
 
   getTemplate() {
@@ -187,15 +189,13 @@ export default class Cross {
 
   finishGame(win) {
     if (win === 'win') {
-      const time = this.timer.getTime();
-
       const result = {
         nonogramID: this.nonogram.id,
         name: this.nonogram.name,
-        time,
+        time: this.timer.getTime(),
       };
 
-      if (this.lastScores.length > 5) {
+      if (this.lastScores.length > 4) {
         this.lastScores.shift();
       }
       this.lastScores.push(result);
@@ -203,7 +203,7 @@ export default class Cross {
     }
 
     this.timer.stopTimer();
-    console.log('Game over!');
+    this.winModal.renderModal(this.timer.getTime(), this.nonogram);
   }
 
   startNewGame(nonogram) {
