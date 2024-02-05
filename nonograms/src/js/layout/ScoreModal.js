@@ -31,7 +31,7 @@ export default class ScoreModal extends Modal {
 
     for (let i = 0; i < this.scores.length; i++) {
       console.log(this.scores[i].time);
-      const score = createScoreTableItem('score-table', i, JSON.parse(this.scores[i].id), JSON.parse(this.scores[i].time));
+      const score = createScoreTableItem('score-table', i + 1, this.scores[i].name, this.scores[i].time);
       tableBody.appendChild(score);
     }
 

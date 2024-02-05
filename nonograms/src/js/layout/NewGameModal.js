@@ -3,9 +3,9 @@ import Modal from './Modal';
 import { createElement, createButton } from '../components/createNodeElement';
 
 export default class NewGameModal extends Modal {
-  constructor(templates, cross) {
+  constructor(nonograms, cross) {
     super();
-    this.templates = templates;
+    this.nonograms = nonograms;
     this.cross = cross;
   }
 
@@ -39,10 +39,9 @@ export default class NewGameModal extends Modal {
     btn.classList.add('new-game__button_active');
 
     this.tabContainer.innerHTML = '';
-    this.templates.filter((template) => template.level === level).forEach((template) => {
-      const templateButton = createButton('button button_action', `${template.name}`, (e) => {
-        localStorage.setItem('templateID', template.id);
-        this.cross.startNewGame(template.template);
+    this.nonograms.filter((nonogram) => nonogram.level === level).forEach((nonogram) => {
+      const templateButton = createButton('button button_action', `${nonogram.name}`, (e) => {
+        this.cross.startNewGame(nonogram);
         super.closeModal(e);
       });
 

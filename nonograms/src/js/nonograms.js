@@ -1,6 +1,6 @@
-const templates = [
+const nonograms = [
   {
-    id: 1,
+    id: 0,
     level: 'easy',
     name: 'easy name',
     template: [
@@ -12,7 +12,7 @@ const templates = [
     ],
   },
   {
-    id: 2,
+    id: 1,
     level: 'medium',
     name: 'medium name',
     template: [
@@ -31,7 +31,7 @@ const templates = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     level: 'hard',
     name: 'hard name',
     template: [
@@ -48,7 +48,7 @@ const templates = [
     ],
   },
   {
-    id: 4,
+    id: 3,
     level: 'hard',
     name: 'hard name2',
     template: [
@@ -66,4 +66,4 @@ const templates = [
   },
 ];
 
-export default templates;
+export default nonograms;

@@ -2,6 +2,7 @@ import Cross from './Cross/Cross';
 import Timer from './components/Timer';
 import GameButtons from './components/GameButtons';
 import Modal from './layout/Modal';
+import nonograms from './nonograms';
 // import ScoreModal from './layout/ScoreModal';
 
 export default class App {
@@ -21,6 +22,6 @@ export default class App {
 
     container.append(crossNode, timerNode, gameButtons, menuBar);
 
-    // this.cross.resetCross();
+    this.cross.startNewGame(nonograms[0]);
   }
 }

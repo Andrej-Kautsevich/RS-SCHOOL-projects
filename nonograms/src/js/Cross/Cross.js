@@ -1,5 +1,5 @@
 import { countRowHints, countColumnHints } from './CrossHints';
-import templates from '../templates';
+import nonograms from '../nonograms';
 
 export default class Cross {
   constructor(/* template */ timer) {
@@ -9,22 +9,22 @@ export default class Cross {
     this.timer = timer;
     this.isTimerActive = false;
     // this.template = template; // Шаблон области
-    this.template = null;
+    this.nonogram = null;
     this.cross = null; // Создание области
   }
 
   getTemplate() {
-    const currentTemplateID = localStorage.getItem('templateID');
-    let templateID;
+    const currentNonogramID = localStorage.getItem('nonogramID');
+    let nonogramID;
 
     do {
-      templateID = JSON.stringify(Math.floor(Math.random() * templates.length));
-    } while (currentTemplateID === templateID);
+      nonogramID = JSON.stringify(Math.floor(Math.random() * nonograms.length));
+    } while (currentNonogramID === nonogramID);
 
-    this.template = templates[templateID].template;
-    localStorage.setItem('templateID', templateID);
+    this.nonogram = nonograms[nonogramID];
+    localStorage.setItem('nonogramID', nonogramID);
 
-    return this.template;
+    return this.nonogram;
   }
 
   createCross() {
@@ -48,11 +48,11 @@ export default class Cross {
     const area = document.createElement('div');
     area.className = 'cross__area';
 
-    for (let i = 0; i < this.template.length; i++) {
+    for (let i = 0; i < this.nonogram.template.length; i++) {
       const row = document.createElement('div');
       row.className = 'cross__row';
 
-      for (let j = 0; j < this.template[i].length; j++) {
+      for (let j = 0; j < this.nonogram.template[i].length; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil';
         this.bindEvents(elem);
@@ -69,9 +69,9 @@ export default class Cross {
     const crossLeft = document.createElement('div');
     crossLeft.className = 'cross__left';
 
-    const hints = countRowHints(this.template);
+    const hints = countRowHints(this.nonogram.template);
     const maxCeilsCount = Math.max(...hints.map((arr) => arr.length));
-    for (let i = 0; i < this.template.length; i++) {
+    for (let i = 0; i < this.nonogram.template.length; i++) {
       const row = document.createElement('div');
       row.className = 'cross__row cross__row_left';
 
@@ -94,7 +94,7 @@ export default class Cross {
   createTopHints() {
     const crossTop = document.createElement('div');
     crossTop.className = 'cross__top';
-    const hints = countColumnHints(this.template);
+    const hints = countColumnHints(this.nonogram.template);
     const maxCeilsCount = Math.max(...hints.map((arr) => arr.length));
 
     for (let i = 0; i < hints.length; i++) {
@@ -154,7 +154,8 @@ export default class Cross {
       for (let j = 0; j < cells.length; j++) {
         const isActive = cells[j].classList.contains('cross__ceil_active');
         // Check if ceil match template
-        if ((isActive && this.template[i][j] !== 1) || (!isActive && this.template[i][j] !== 0)) {
+        if ((isActive && this.nonogram.template[i][j] !== 1)
+          || (!isActive && this.nonogram.template[i][j] !== 0)) {
           return false;
         }
       }
@@ -177,7 +178,7 @@ export default class Cross {
     const crossArea = this.cross.querySelector('.cross__area');
     const crossAreaCeils = (crossArea.querySelectorAll('.cross__ceil'));
 
-    const templateArray = this.template.flat();
+    const templateArray = this.nonogram.template.flat();
     for (let i = 0; i < crossAreaCeils.length; i++) {
       const element = crossAreaCeils[i];
       if (templateArray[i] === 1) {
@@ -190,10 +191,10 @@ export default class Cross {
   finishGame(win) {
     if (win === 'win') {
       const time = this.timer.getTime();
-      const currentTemplateID = localStorage.getItem('templateID');
 
       const result = {
-        id: currentTemplateID,
+        nonogramID: this.nonogram.id,
+        name: this.nonogram.name,
         time,
       };
 
@@ -209,8 +210,9 @@ export default class Cross {
     console.log('Game over!');
   }
 
-  startNewGame(template) {
-    this.template = template;
+  startNewGame(nonogram) {
+    this.nonogram = nonogram;
+    localStorage.setItem('nonogramID', this.nonogram.id);
     console.log('Start new game');
     this.timer.stopTimer();
     this.isTimerActive = false;

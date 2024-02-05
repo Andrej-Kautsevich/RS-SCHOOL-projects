@@ -1,7 +1,7 @@
 // import Cross from "../Cross/Cross";
 import ScoreModal from '../layout/ScoreModal';
 import NewGameModal from '../layout/NewGameModal';
-import templates from '../templates';
+import nonograms from '../nonograms';
 
 import { createElement, createButton, createMenuItem } from './createNodeElement';
 
@@ -36,7 +36,7 @@ export default class GameButtons {
     const menuBarItems = createElement('ul', 'menu-bar__navigation navigation');
 
     const newGame = createMenuItem('navigation__item', 'Start New Game', () => {
-      const newGameModal = new NewGameModal(templates, this.cross);
+      const newGameModal = new NewGameModal(nonograms, this.cross);
       newGameModal.renderModal();
     });
     const scoreTable = createMenuItem('navigation__item', 'Score table', () => {
