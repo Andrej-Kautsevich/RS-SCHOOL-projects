@@ -48,11 +48,29 @@ export default class GameButtons {
       this.cross.startNewGame(template);
     });
     const rules = createMenuItem('navigation__item', 'How to solve?', null, 'https://nonograms-katana.fandom.com/wiki/Tips_for_solving');
+    const settings = this.createSettings();
 
     menuBarItems.append(newGame, scoreTable, random, rules);
-    menuBar.append(menuBarItems);
+    menuBar.append(menuBarItems, settings);
 
     return menuBar;
+  }
+
+  createSettings() {
+    const themeSpan = createElement('span', 'icon icon_theme-light');
+    const theme = createButton('button button_has-icon', 'Theme', () => {
+      this.cross.changeTheme();
+    });
+    theme.prepend(themeSpan);
+
+    const muteSpan = createElement('span', 'icon icon_unmute');
+    const mute = createButton('button button_has-icon', 'Mute', (e) => {
+      this.cross.muteSound(e);
+    });
+    mute.prepend(muteSpan);
+
+    const settings = createElement('div', 'menu-bar__settings', theme, mute);
+    return settings;
   }
 
   getGameButtons() {

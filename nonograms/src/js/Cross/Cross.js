@@ -2,6 +2,10 @@ import WinModal from '../layout/WinModal';
 import { countRowHints, countColumnHints } from './CrossHints';
 import nonograms from '../nonograms';
 
+import leftClickSound from '../../assets/left-click.mp3';
+import rightClickSound from '../../assets/right-click.mp3';
+import gongSound from '../../assets/gong.mp3';
+
 export default class Cross {
   constructor(/* template */ timer) {
     if (localStorage.getItem('scores')) {
@@ -12,6 +16,10 @@ export default class Cross {
     this.nonogram = null;
     this.cross = null; // Создание области
     this.winModal = new WinModal();
+    this.leftClickSound = new Audio(leftClickSound);
+    this.rightClickSound = new Audio(rightClickSound);
+    this.gongSound = new Audio(gongSound);
+    this.hasSound = true;
   }
 
   getTemplate() {
@@ -125,11 +133,13 @@ export default class Cross {
       case 0:
         elem.classList.remove('cross__ceil_cross');
         elem.classList.toggle('cross__ceil_active');
+        if (this.hasSound) this.leftClickSound.play();
         break;
 
       case 2:
         elem.classList.remove('cross__ceil_active');
         elem.classList.toggle('cross__ceil_cross');
+        if (this.hasSound) this.rightClickSound.play();
         break;
       default:
     }
@@ -202,6 +212,7 @@ export default class Cross {
       localStorage.setItem('scores', JSON.stringify(this.lastScores));
       this.timer.stopTimer();
       this.winModal.renderModal(this.timer.getTime(), this.nonogram);
+      if (this.hasSound) this.gongSound.play();
     }
   }
 
@@ -238,6 +249,23 @@ export default class Cross {
       const ceils = this.cross.querySelectorAll('.cross__ceil');
       ceils.forEach((ceil) => this.bindEvents(ceil));
       this.timer.setTime(localStorage.getItem('saved time'));
+    }
+  }
+
+  muteSound(e) {
+    const icon = e.target.querySelector('.icon');
+    if (this.hasSound) {
+      if (icon) {
+        icon.classList.remove('icon_unmute');
+        icon.classList.add('icon_mute');
+      }
+      this.hasSound = false;
+    } else if (!this.hasSound) {
+      if (icon) {
+        icon.classList.remove('icon_mute');
+        icon.classList.add('icon_unmute');
+      }
+      this.hasSound = true;
     }
   }
 

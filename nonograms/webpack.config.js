@@ -37,6 +37,10 @@ module.exports = ({ development }) => ({
         test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.mp3$/i,
+        type: 'asset',
+      },
     ],
   },
 

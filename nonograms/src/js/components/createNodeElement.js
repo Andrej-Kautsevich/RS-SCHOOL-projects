@@ -1,14 +1,19 @@
-function createElement(tag, className, content) {
+function createElement(tag, className, ...content) {
   const element = document.createElement(tag);
   if (className) element.classList.add(...className.split(' '));
   if (typeof content === 'string' || typeof content === 'number') {
     element.textContent = content;
-  } else if (content) element.appendChild(content);
+  } else if (content) element.append(...content);
   return element;
 }
 
 function createButton(className, textContent, clickHandler) {
-  const button = createElement('button', className, textContent);
+  let button;
+  if (textContent) {
+    button = createElement('button', className, textContent);
+  } else {
+    button = createElement('button', className);
+  }
   button.addEventListener('click', clickHandler);
   return button;
 }

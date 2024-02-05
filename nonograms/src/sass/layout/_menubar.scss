@@ -25,6 +25,9 @@
 }
 
 .menu-bar__settings {
+  margin-top: 1rem;
+  gap: 0.5rem;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }

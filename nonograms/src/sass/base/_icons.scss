@@ -26,3 +26,17 @@
   background-size: contain;
   --size: 1rem;
 }
+
+.icon_mute {
+  background-image: url(../assets/mute.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
+
+.icon_unmute {
+  background-image: url(../assets/sound.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
