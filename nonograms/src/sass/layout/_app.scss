@@ -36,8 +36,8 @@
 
 %cross-ceil {
   box-sizing: inherit;
-  width: 20px;
-  height: 20px;
+  width: var(--ceil-size);
+  height: var(--ceil-size);
   padding: 1px;
   text-align: center;
   cursor: pointer;
@@ -57,12 +57,13 @@
 
   &_active {
     background-color: var(--ceil-color);
-    box-shadow: inset 0px 0px 2px 1px white;
+    box-shadow: var(--ceil-shadow);
   }
 
   &_cross {
-    background: url('../assets/cross.gif') no-repeat;
+    background: url('../assets/cross.svg') no-repeat;
     background-position: center center;
+    background-size: contain;
   }
 }
 

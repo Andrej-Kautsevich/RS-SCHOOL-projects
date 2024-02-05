@@ -2,6 +2,7 @@ import Cross from './Cross/Cross';
 import Timer from './components/Timer';
 import GameButtons from './components/GameButtons';
 import Modal from './layout/Modal';
+import Theme from './layout/Theme';
 import nonograms from './nonograms';
 // import ScoreModal from './layout/ScoreModal';
 
@@ -11,7 +12,8 @@ export default class App {
     this.cross = new Cross(/* template, */ this.timer);
     this.modal = new Modal();
     // this.winModal = new ScoreModal();
-    this.gameButtons = new GameButtons(this.cross, this.modal, this.winModal);
+    this.theme = new Theme();
+    this.gameButtons = new GameButtons(this.cross, this.modal, this.theme);
   }
 
   start(container) {

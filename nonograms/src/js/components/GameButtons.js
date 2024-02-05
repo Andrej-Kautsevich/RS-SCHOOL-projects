@@ -6,9 +6,10 @@ import nonograms from '../nonograms';
 import { createElement, createButton, createMenuItem } from './createNodeElement';
 
 export default class GameButtons {
-  constructor(cross, modal) {
+  constructor(cross, modal, theme) {
     this.cross = cross;
     this.modal = modal;
+    this.theme = theme;
     // this.winModal = winModal;
     this.gameButtons = this.createGameButtons();
     this.menuBar = this.createMenuBar();
@@ -58,8 +59,8 @@ export default class GameButtons {
 
   createSettings() {
     const themeSpan = createElement('span', 'icon icon_theme-light');
-    const theme = createButton('button button_has-icon', 'Theme', () => {
-      this.cross.changeTheme();
+    const theme = createButton('button button_has-icon', 'Theme', (e) => {
+      this.theme.changeTheme(e);
     });
     theme.prepend(themeSpan);
 

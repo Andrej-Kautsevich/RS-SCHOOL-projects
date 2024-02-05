@@ -5,21 +5,22 @@
 }
 
 .icon_theme-light {
-  background-image: url(../assets/theme-light.svg);
+  mask-image: url(../assets/theme-light.svg);
+  background-color: var(--icon-color);
   background-repeat: no-repeat;
   background-size: contain;
   --size: 1rem;
 }
 
 .icon_theme-dark {
-  background-image: url(../assets/theme-dark.svg);
+  mask-image: url(../assets/theme-dark.svg);
+  background-color: var(--icon-color);
   background-repeat: no-repeat;
   background-size: contain;
   --size: 1rem;
 }
 
 .icon_close {
-  // background-image: url(../assets/close.svg);
   mask-image: url(../assets/close.svg);
   background-color: var(--icon-color);
   background-repeat: no-repeat;
@@ -28,14 +29,16 @@
 }
 
 .icon_mute {
-  background-image: url(../assets/mute.svg);
+  mask-image: url(../assets/mute.svg);
+  background-color: var(--icon-color);
   background-repeat: no-repeat;
   background-size: contain;
   --size: 1rem;
 }
 
 .icon_unmute {
-  background-image: url(../assets/sound.svg);
+  mask-image: url(../assets/sound.svg);
+  background-color: var(--icon-color);
   background-repeat: no-repeat;
   background-size: contain;
   --size: 1rem;
