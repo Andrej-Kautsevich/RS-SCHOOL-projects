@@ -2,6 +2,7 @@ export default class Timer {
   constructor() {
     this.time = 0;
     this.timer = this.createTimer();
+    this.isTimerActive = false;
     this.timeInterval = '';
   }
 
@@ -17,9 +18,12 @@ export default class Timer {
   }
 
   startTimer() {
-    this.timeInterval = setInterval(() => {
-      this.stepTimer();
-    }, 1000);
+    if (!this.isTimerActive) {
+      this.isTimerActive = true;
+      this.timeInterval = setInterval(() => {
+        this.stepTimer();
+      }, 1000);
+    }
   }
 
   stepTimer() {
@@ -31,6 +35,7 @@ export default class Timer {
   }
 
   stopTimer() {
+    this.isTimerActive = false;
     clearInterval(this.timeInterval);
   }
 

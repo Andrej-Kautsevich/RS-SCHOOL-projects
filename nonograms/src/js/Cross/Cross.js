@@ -7,7 +7,6 @@ export default class Cross {
       this.lastScores = JSON.parse(localStorage.getItem('scores'));
     } else this.lastScores = [];
     this.timer = timer;
-    this.isTimerActive = false;
     // this.template = template; // Шаблон области
     this.nonogram = null;
     this.cross = null; // Создание области
@@ -118,10 +117,7 @@ export default class Cross {
   }
 
   mouseDownEvent(event, elem) {
-    if (!this.isTimerActive) {
-      this.timer.startTimer();
-      this.isTimerActive = true;
-    }
+    this.timer.startTimer();
 
     switch (event.button) {
       case 0:
@@ -164,6 +160,7 @@ export default class Cross {
   }
 
   resetCross() {
+    this.timer.stopTimer();
     const crossArea = this.cross.querySelector('.cross__area');
     const crossAreaCeils = crossArea.querySelectorAll('.cross__ceil');
     crossAreaCeils.forEach((ceil) => {
@@ -206,7 +203,6 @@ export default class Cross {
     }
 
     this.timer.stopTimer();
-    this.isTimerActive = false;
     console.log('Game over!');
   }
 
@@ -215,7 +211,6 @@ export default class Cross {
     localStorage.setItem('nonogramID', this.nonogram.id);
     console.log('Start new game');
     this.timer.stopTimer();
-    this.isTimerActive = false;
     this.timer.setTime(0);
     const crossNode = this.cross;
     crossNode.innerHTML = '';
