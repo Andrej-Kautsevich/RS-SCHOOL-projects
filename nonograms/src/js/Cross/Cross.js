@@ -211,8 +211,10 @@ export default class Cross {
   bindHintClickEvents(elem) {
     const ceil = elem;
     ceil.onmousedown = () => {
-      if (this.hasSound) this.rightClickSound.play();
-      elem.classList.toggle('cross__ceil_cross');
+      if (elem.textContent) {
+        if (this.hasSound) this.rightClickSound.play();
+        elem.classList.toggle('cross__ceil_cross');
+      }
     };
     ceil.oncontextmenu = (event) => event.preventDefault();
   }
