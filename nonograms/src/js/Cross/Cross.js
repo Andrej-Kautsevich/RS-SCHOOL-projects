@@ -58,7 +58,7 @@ export default class Cross {
     // this.template = this.getTemplate();
     const area = document.createElement('div');
     area.className = 'cross__area';
-    area.addEventListener('mouseleave', () => this.mouseLeaveEvent());
+    area.onmouseleave = () => this.mouseUpEvent();
 
     for (let i = 0; i < this.nonogram.template.length; i++) {
       const row = document.createElement('div');
@@ -191,25 +191,26 @@ export default class Cross {
     }
   }
 
-  mouseLeaveEvent() {
-    this.mouseIsDown = false;
-    this.ceilState = null;
-
-    if (this.isGameFinished()) {
-      this.finishGame('win');
-    }
-  }
-
   handleHintClick(elem) {
     if (this.hasSound) this.rightClickSound.play();
     elem.classList.toggle('cross__ceil_cross');
   }
 
-  bindEvents(ceil) {
-    ceil.addEventListener('mousedown', (event) => this.mouseDownEvent(event, ceil), false);
-    ceil.addEventListener('mouseover', () => this.mouseOverEvent(ceil));
-    ceil.addEventListener('mouseup', () => this.mouseUpEvent());
-    ceil.addEventListener('contextmenu', (event) => event.preventDefault());
+  bindEvents(elem) {
+    const ceil = elem;
+    ceil.onmousedown = (event) => this.mouseDownEvent(event, ceil);
+    ceil.onmouseover = () => this.mouseOverEvent(ceil);
+    ceil.onmouseup = () => this.mouseUpEvent();
+    ceil.oncontextmenu = (event) => event.preventDefault();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  removeEvents(elem) {
+    const ceil = elem;
+    ceil.onmousedown = null;
+    ceil.onmouseover = null;
+    ceil.onmouseup = null;
+    ceil.oncontextmenu = null;
   }
 
   isGameFinished() {
@@ -272,6 +273,11 @@ export default class Cross {
       this.winModal.renderModal(this.timer.getTime(), this.nonogram);
       if (this.hasSound) this.gongSound.play();
     }
+    const ceils = this.cross.querySelectorAll('.cross__ceil');
+    ceils.forEach((ceil) => this.removeEvents(ceil));
+
+    const area = document.querySelector('.cross__area');
+    area.onmouseleave = null;
   }
 
   startNewGame(nonogram) {
@@ -309,7 +315,7 @@ export default class Cross {
       const ceils = this.cross.querySelectorAll('.cross__ceil');
       ceils.forEach((ceil) => this.bindEvents(ceil));
       const area = document.querySelector('.cross__area');
-      area.addEventListener('mouseleave', () => this.mouseLeaveEvent());
+      area.addEventListener('mouseleave', () => this.mouseUpEvent());
 
       this.timer.stopTimer();
       this.timer.setTime(localStorage.getItem('saved time'));
