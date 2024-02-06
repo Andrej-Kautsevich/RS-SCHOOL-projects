@@ -47,6 +47,7 @@ module.exports = ({ development }) => ({
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, 'index.html'),
       title: 'Nonograms',
     }),
     new MiniCssExtractPlugin({
