@@ -33,13 +33,14 @@ function createMenuItem(className, textContent, clickHandler, link) {
   return item;
 }
 
-function createScoreTableItem(className, number, templateName, time) {
+function createScoreTableItem(className, number, templateName, difficulty, time) {
   const row = createElement('tr', `${className}__score`);
   const itemNumber = createElement('td', `${className}__number`, number);
   const name = createElement('td', `${className}__name`, templateName);
+  const level = createElement('td', `${className}__level`, difficulty);
   const score = createElement('td', `${className}__time`, time);
 
-  row.append(itemNumber, name, score);
+  row.append(itemNumber, name, level, score);
   return row;
 }
 

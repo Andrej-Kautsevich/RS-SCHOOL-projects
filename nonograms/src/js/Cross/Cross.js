@@ -20,8 +20,27 @@ export default class Cross {
     this.rightClickSound = new Audio(rightClickSound);
     this.gongSound = new Audio(gongSound);
     this.hasSound = true;
+    this.mouseIsDown = false;
+    this.ceilState = null; // clicked ceil state
   }
 
+  /*   template() {
+      const templateArray = [];
+      const area = document.querySelector('.cross__area');
+      const areaRows = area.querySelectorAll('.cross__row');
+      areaRows.forEach((row) => {
+        const array = [];
+        const ceils = row.querySelectorAll('.cross__ceil');
+        for (let i = 0; i < ceils.length; i++) {
+          if (ceils[i].classList.contains('cross__ceil_active')) {
+            array.push(1);
+          } else array.push(0);
+        }
+        templateArray.push(array);
+      });
+      console.log(templateArray);
+    }
+   */
   getTemplate() {
     const currentNonogramID = localStorage.getItem('nonogramID');
     let nonogramID;
@@ -56,6 +75,7 @@ export default class Cross {
     // this.template = this.getTemplate();
     const area = document.createElement('div');
     area.className = 'cross__area';
+    area.onmouseleave = () => this.mouseUpEvent();
 
     for (let i = 0; i < this.nonogram.template.length; i++) {
       const row = document.createElement('div');
@@ -63,7 +83,7 @@ export default class Cross {
 
       for (let j = 0; j < this.nonogram.template[i].length; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__ceil';
+        elem.className = 'cross__ceil cross__ceil_center';
         this.bindEvents(elem);
         row.appendChild(elem);
       }
@@ -86,7 +106,8 @@ export default class Cross {
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__left-ceil';
+        elem.className = 'cross__ceil cross__ceil_left';
+        elem.addEventListener('click', () => this.handleHintClick(elem));
 
         // add all hints from right to left, then fill with empty ceils
         if (hints[i][j]) {
@@ -112,7 +133,8 @@ export default class Cross {
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__top-ceil';
+        elem.className = 'cross__ceil cross__ceil_top';
+        elem.addEventListener('click', () => this.handleHintClick(elem));
 
         // add all hints from bottom to top, then fill with empty ceils
         if (hints[i][j]) {
@@ -131,12 +153,24 @@ export default class Cross {
 
     switch (event.button) {
       case 0:
+        if (elem.classList.contains('cross__ceil_active')) {
+          this.ceilState = 'empty';
+        } else {
+          this.ceilState = 'active';
+        }
+
         elem.classList.remove('cross__ceil_cross');
         elem.classList.toggle('cross__ceil_active');
         if (this.hasSound) this.leftClickSound.play();
         break;
 
       case 2:
+        if (elem.classList.contains('cross__ceil_cross')) {
+          this.ceilState = 'empty';
+        } else {
+          this.ceilState = 'cross';
+        }
+
         elem.classList.remove('cross__ceil_active');
         elem.classList.toggle('cross__ceil_cross');
         if (this.hasSound) this.rightClickSound.play();
@@ -144,14 +178,56 @@ export default class Cross {
       default:
     }
 
+    this.mouseIsDown = true;
+  }
+
+  mouseOverEvent(elem) {
+    if (!this.mouseIsDown) return;
+    switch (this.ceilState) {
+      case 'active':
+        if (elem.classList.contains('cross__ceil_active')) break;
+        elem.classList.remove('cross__ceil_cross');
+        elem.classList.add('cross__ceil_active');
+        break;
+      case 'cross':
+        if (elem.classList.contains('cross__ceil_cross')) break;
+        elem.classList.remove('cross__ceil_active');
+        elem.classList.add('cross__ceil_cross');
+        break;
+      default:
+        elem.classList.remove('cross__ceil_active', 'cross__ceil_cross');
+    }
+  }
+
+  mouseUpEvent() {
+    this.mouseIsDown = false;
+    this.ceilState = null;
+
     if (this.isGameFinished()) {
       this.finishGame('win');
     }
   }
 
-  bindEvents(ceil) {
-    ceil.addEventListener('mousedown', (event) => this.mouseDownEvent(event, ceil), false);
-    ceil.addEventListener('contextmenu', (event) => event.preventDefault());
+  handleHintClick(elem) {
+    if (this.hasSound) this.rightClickSound.play();
+    elem.classList.toggle('cross__ceil_cross');
+  }
+
+  bindEvents(elem) {
+    const ceil = elem;
+    ceil.onmousedown = (event) => this.mouseDownEvent(event, ceil);
+    ceil.onmouseover = () => this.mouseOverEvent(ceil);
+    ceil.onmouseup = () => this.mouseUpEvent();
+    ceil.oncontextmenu = (event) => event.preventDefault();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  removeEvents(elem) {
+    const ceil = elem;
+    ceil.onmousedown = null;
+    ceil.onmouseover = null;
+    ceil.onmouseup = null;
+    ceil.oncontextmenu = null;
   }
 
   isGameFinished() {
@@ -172,13 +248,7 @@ export default class Cross {
   }
 
   resetCross() {
-    this.timer.stopTimer();
-    const crossArea = this.cross.querySelector('.cross__area');
-    const crossAreaCeils = crossArea.querySelectorAll('.cross__ceil');
-    crossAreaCeils.forEach((ceil) => {
-      ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
-    });
-    this.timer.setTime(0);
+    this.startNewGame(this.nonogram);
   }
 
   showSolution() {
@@ -202,6 +272,7 @@ export default class Cross {
       const result = {
         nonogramID: this.nonogram.id,
         name: this.nonogram.name,
+        level: this.nonogram.level,
         time: this.timer.getTime(),
       };
 
@@ -214,6 +285,11 @@ export default class Cross {
       this.winModal.renderModal(this.timer.getTime(), this.nonogram);
       if (this.hasSound) this.gongSound.play();
     }
+    const ceils = this.cross.querySelectorAll('.cross__ceil');
+    ceils.forEach((ceil) => this.removeEvents(ceil));
+
+    const area = document.querySelector('.cross__area');
+    area.onmouseleave = null;
   }
 
   startNewGame(nonogram) {
@@ -249,9 +325,12 @@ export default class Cross {
       localStorage.setItem('nonogramID', nonogramID);
       this.cross.innerHTML = savedCrossHTML;
       const ceils = this.cross.querySelectorAll('.cross__ceil');
+      ceils.forEach((ceil) => this.bindEvents(ceil));
+      const area = document.querySelector('.cross__area');
+      area.addEventListener('mouseleave', () => this.mouseUpEvent());
+
       this.timer.stopTimer();
       this.timer.setTime(localStorage.getItem('saved time'));
-      ceils.forEach((ceil) => this.bindEvents(ceil));
     }
   }
 
