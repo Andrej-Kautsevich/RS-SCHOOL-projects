@@ -14,11 +14,11 @@
 
   @include media-mobile {
     row-gap: 1rem;
-    grid-template: ". timer ." 1fr
-      "cross cross cross" 5fr
-      "sidebar sidebar sidebar" 1fr
-      ". buttons ." 1fr
-      / 1fr 3fr 1fr;
+    grid-template: 
+    ". timer ." min-content
+    "cross cross cross" minmax(200px, max-content)
+    "sidebar sidebar sidebar" 1fr
+    ". buttons ." 1fr/1fr 3fr 1fr;
     ;
   }
 }

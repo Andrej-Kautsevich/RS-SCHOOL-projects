@@ -15,7 +15,7 @@ const devServer = (isDev) => (!isDev ? {} : {
 
 module.exports = ({ development }) => ({
   mode: development ? 'development' : 'production',
-  devtool: development ? 'evil' : false,
+  devtool: development ? 'eval-source-map' : 'source-map',
   // watch: !development,
 
   entry: [path.resolve(__dirname, './src/js/index.js'), path.resolve(__dirname, './src/sass/style.scss')],
@@ -47,7 +47,6 @@ module.exports = ({ development }) => ({
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, 'index.html'),
       title: 'Nonograms',
     }),
     new MiniCssExtractPlugin({
