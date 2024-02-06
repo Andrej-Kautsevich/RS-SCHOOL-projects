@@ -272,6 +272,7 @@ export default class Cross {
       const result = {
         nonogramID: this.nonogram.id,
         name: this.nonogram.name,
+        level: this.nonogram.level,
         time: this.timer.getTime(),
       };
 
