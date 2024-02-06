@@ -107,7 +107,7 @@ export default class Cross {
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil cross__ceil_left';
-        elem.addEventListener('click', () => this.handleHintClick(elem));
+        this.bindHintClickEvents(elem);
 
         // add all hints from right to left, then fill with empty ceils
         if (hints[i][j]) {
@@ -134,7 +134,7 @@ export default class Cross {
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
         elem.className = 'cross__ceil cross__ceil_top';
-        elem.addEventListener('click', () => this.handleHintClick(elem));
+        this.bindHintClickEvents(elem);
 
         // add all hints from bottom to top, then fill with empty ceils
         if (hints[i][j]) {
@@ -208,9 +208,13 @@ export default class Cross {
     }
   }
 
-  handleHintClick(elem) {
-    if (this.hasSound) this.rightClickSound.play();
-    elem.classList.toggle('cross__ceil_cross');
+  bindHintClickEvents(elem) {
+    const ceil = elem;
+    ceil.onmousedown = () => {
+      if (this.hasSound) this.rightClickSound.play();
+      elem.classList.toggle('cross__ceil_cross');
+    };
+    ceil.oncontextmenu = (event) => event.preventDefault();
   }
 
   bindEvents(elem) {
