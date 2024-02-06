@@ -63,7 +63,7 @@ export default class Cross {
 
       for (let j = 0; j < this.nonogram.template[i].length; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__ceil';
+        elem.className = 'cross__ceil cross__ceil_center';
         this.bindEvents(elem);
         row.appendChild(elem);
       }
@@ -86,7 +86,8 @@ export default class Cross {
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__left-ceil';
+        elem.className = 'cross__ceil cross__ceil_left';
+        elem.addEventListener('click', () => this.handleHintClick(elem));
 
         // add all hints from right to left, then fill with empty ceils
         if (hints[i][j]) {
@@ -112,7 +113,8 @@ export default class Cross {
 
       for (let j = 0; j < maxCeilsCount; j++) {
         const elem = document.createElement('div');
-        elem.className = 'cross__top-ceil';
+        elem.className = 'cross__ceil cross__ceil_top';
+        elem.addEventListener('click', () => this.handleHintClick(elem));
 
         // add all hints from bottom to top, then fill with empty ceils
         if (hints[i][j]) {
@@ -147,6 +149,11 @@ export default class Cross {
     if (this.isGameFinished()) {
       this.finishGame('win');
     }
+  }
+
+  handleHintClick(elem) {
+    if (this.hasSound) this.rightClickSound.play();
+    elem.classList.toggle('cross__ceil_cross');
   }
 
   bindEvents(ceil) {

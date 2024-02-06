@@ -49,10 +49,29 @@
 
 .cross__ceil {
   @extend %cross-ceil;
-  border-right: 1px solid var(--border-cross-secondary);
 
-  &:not(&:last-child):nth-child(5n) {
-    border-right: 2px solid var(--border-cross-secondary);
+  &_center {
+    border-right: 1px solid var(--border-cross-secondary);
+
+    &:not(&:last-child):nth-child(5n) {
+      border-right: 2px solid var(--border-cross-secondary);
+    }
+  }
+
+  &_left {
+    border-right: 1px solid var(--border-cross-secondary);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &_top {
+    border-bottom: 1px solid var(--border-cross-secondary);
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   &_active {
@@ -75,30 +94,12 @@
   background-color: var(--background-color-dark);
 }
 
-.cross__left-ceil {
-  @extend %cross-ceil;
-  border-right: 1px solid var(--border-cross-secondary);
-
-  &:last-child {
-    border-right: none;
-  }
-}
-
 .cross__top {
   display: flex;
   width: fit-content;
   align-self: flex-end;
   background-color: var(--background-color-dark);
   border-left: 2px solid var(--border-cross-primary);
-}
-
-.cross__top-ceil {
-  @extend %cross-ceil;
-  border-bottom: 1px solid var(--border-cross-secondary);
-
-  &:last-child {
-    border-bottom: none;
-  }
 }
 
 .cross__top-row {
