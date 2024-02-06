@@ -1,0 +1,45 @@
+.icon {
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+}
+
+.icon_theme-light {
+  mask-image: url(../assets/theme-light.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
+
+.icon_theme-dark {
+  mask-image: url(../assets/theme-dark.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
+
+.icon_close {
+  mask-image: url(../assets/close.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
+
+.icon_mute {
+  mask-image: url(../assets/mute.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}
+
+.icon_unmute {
+  mask-image: url(../assets/sound.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+  --size: 1rem;
+}

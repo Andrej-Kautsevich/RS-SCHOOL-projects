@@ -1,0 +1,31 @@
+$content-width: 1440px;
+$tablet-width: 900px;
+$mobile-width: 650px;
+
+:root {
+  --text-primary: #1b1b1b;
+  --text-secondary: #4e4e4e;
+  --background-color: #ebebeb;
+  --background-color-dark: #d8d8d8;
+
+  --border-cross-primary: #000000;
+  --border-cross-secondary: #808080;
+
+  --border-primary: #858585;
+  --border-secondary: #696969;
+
+  --ceil-color: #000000;
+  --ceil-shadow: inset 0px 0px 2px 1px white;
+  --icon-color: #1b1b1b;
+
+  --overlay-color: rgba(0, 0, 0, 0.5);
+
+  --button-primary-default: #cdcdcd;
+  --button-primary-hover: #dddddd;
+
+  --ceil-size: 30px;
+
+  @include media-tablet {
+    --ceil-size: 20px;
+  }
+}
