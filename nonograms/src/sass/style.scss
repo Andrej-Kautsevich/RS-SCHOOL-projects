@@ -2,9 +2,9 @@
 
 // 1. Configuration and helpers
 @import
+  'abstracts/mixins',
   'abstracts/variables',
-  'abstracts/placeholders',
-  'abstracts/mixins';
+  'abstracts/placeholders';
 
 // 2. Vendors
 @import

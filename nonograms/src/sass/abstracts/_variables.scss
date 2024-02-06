@@ -1,4 +1,6 @@
 $content-width: 1440px;
+$tablet-width: 900px;
+$mobile-width: 650px;
 
 :root {
   --text-primary: #1b1b1b;
@@ -21,5 +23,9 @@ $content-width: 1440px;
   --button-primary-default: #cdcdcd;
   --button-primary-hover: #dddddd;
 
-  --ceil-size: 20px;
+  --ceil-size: 30px;
+
+  @include media-tablet {
+    --ceil-size: 20px;
+  }
 }

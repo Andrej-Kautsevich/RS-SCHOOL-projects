@@ -102,7 +102,7 @@
 }
 
 .cross__top-row {
-  width: 20px;
+  width: var(--ceil-size);
 
   border-right: 1px solid var(--border-cross-secondary);
 

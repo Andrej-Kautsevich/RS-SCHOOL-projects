@@ -3,6 +3,9 @@
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
+  @include media-mobile {
+    font-size: 1.5rem;
+  }
 }
 
 .end-game__text {

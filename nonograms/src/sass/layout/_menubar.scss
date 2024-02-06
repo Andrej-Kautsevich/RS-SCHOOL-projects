@@ -10,6 +10,11 @@
   padding: 1rem;
   border: 1px solid var(--background-color);
   border-radius: 1rem;
+
+  @include media-mobile {
+    margin: 0;
+    justify-self: center;
+  }
 }
 
 .menu-bar__navigation {
@@ -25,6 +30,10 @@
   .button {
     width: 100%;
     max-width: 150px;
+  }
+
+  @include media-mobile {
+    flex-wrap: wrap;
   }
 }
 
