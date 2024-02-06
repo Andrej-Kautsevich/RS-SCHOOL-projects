@@ -326,8 +326,6 @@ export default class Cross {
       this.cross.innerHTML = savedCrossHTML;
       const ceils = this.cross.querySelectorAll('.cross__ceil');
       ceils.forEach((ceil) => this.bindEvents(ceil));
-      const area = document.querySelector('.cross__area');
-      area.addEventListener('mouseleave', () => this.mouseUpEvent());
 
       this.timer.stopTimer();
       this.timer.setTime(localStorage.getItem('saved time'));
