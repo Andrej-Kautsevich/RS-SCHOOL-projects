@@ -10,7 +10,7 @@ export default class Timer {
     const timer = document.createElement('div');
     timer.classList.add('timer');
 
-    const timeString = `${Math.floor(this.time / 60)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
+    const timeString = `${`0${Math.floor(this.time / 60)}`.slice(-2)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
 
     timer.innerHTML = timeString;
 
@@ -30,7 +30,7 @@ export default class Timer {
     const timer = document.querySelector('.timer');
 
     this.time++;
-    const timeString = `${Math.floor(this.time / 60)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
+    const timeString = `${`0${Math.floor(this.time / 60)}`.slice(-2)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
     timer.innerHTML = timeString;
   }
 
@@ -44,7 +44,7 @@ export default class Timer {
 
     const timer = document.querySelector('.timer');
 
-    const timeString = `${Math.floor(this.time / 60)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
+    const timeString = `${`0${Math.floor(this.time / 60)}`.slice(-2)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
 
     timer.innerHTML = timeString;
   }

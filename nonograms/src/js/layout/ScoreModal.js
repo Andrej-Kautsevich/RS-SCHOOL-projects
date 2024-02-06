@@ -34,7 +34,7 @@ export default class ScoreModal extends Modal {
     for (let i = 0; i < this.scores.length; i++) {
       console.log(this.scores[i].time);
       const { time } = this.scores[i];
-      const timeString = `${Math.floor(time / 60)} : ${`0${Math.floor(time % 60)}`.slice(-2)}`;
+      const timeString = `${`0${Math.floor(time / 60)}`.slice(-2)} : ${`0${Math.floor(time % 60)}`.slice(-2)}`;
       const score = createScoreTableItem('score-table', i + 1, this.scores[i].name, this.scores[i].level, timeString);
       tableBody.appendChild(score);
     }
