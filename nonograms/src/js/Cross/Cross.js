@@ -24,6 +24,23 @@ export default class Cross {
     this.ceilState = null; // clicked ceil state
   }
 
+  /*   template() {
+      const templateArray = [];
+      const area = document.querySelector('.cross__area');
+      const areaRows = area.querySelectorAll('.cross__row');
+      areaRows.forEach((row) => {
+        const array = [];
+        const ceils = row.querySelectorAll('.cross__ceil');
+        for (let i = 0; i < ceils.length; i++) {
+          if (ceils[i].classList.contains('cross__ceil_active')) {
+            array.push(1);
+          } else array.push(0);
+        }
+        templateArray.push(array);
+      });
+      console.log(templateArray);
+    }
+   */
   getTemplate() {
     const currentNonogramID = localStorage.getItem('nonogramID');
     let nonogramID;
