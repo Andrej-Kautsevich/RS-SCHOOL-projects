@@ -231,13 +231,7 @@ export default class Cross {
   }
 
   resetCross() {
-    this.timer.stopTimer();
-    const crossArea = this.cross.querySelector('.cross__area');
-    const crossAreaCeils = crossArea.querySelectorAll('.cross__ceil');
-    crossAreaCeils.forEach((ceil) => {
-      ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
-    });
-    this.timer.setTime(0);
+    this.startNewGame(this.nonogram);
   }
 
   showSolution() {
