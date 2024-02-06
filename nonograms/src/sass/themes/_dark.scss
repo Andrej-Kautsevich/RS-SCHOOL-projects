@@ -26,8 +26,8 @@
 
 body.dark-theme {
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100%;
+  width: 100%;
 }
 
 body.dark-theme::after {
