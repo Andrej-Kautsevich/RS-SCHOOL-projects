@@ -2,17 +2,77 @@ const nonograms = [
   {
     id: 0,
     level: 'easy',
-    name: 'easy name',
+    name: 'flag',
     template: [
       [1, 1, 1, 1, 1],
+      [1, 0, 1, 0, 1],
+      [1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0],
+    ],
+  },
+  {
+    id: 1,
+    level: 'easy',
+    name: 'heart',
+    template: [
+      [0, 1, 0, 1, 0],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [0, 1, 1, 1, 0],
+      [0, 0, 1, 0, 0],
+    ],
+  },
+  {
+    id: 2,
+    level: 'easy',
+    name: 'smile',
+    template: [
+      [0, 0, 0, 0, 0],
+      [0, 1, 0, 1, 0],
+      [0, 0, 0, 0, 0],
       [1, 0, 0, 0, 1],
+      [0, 1, 1, 1, 0],
+    ],
+  },
+  {
+    id: 3,
+    level: 'easy',
+    name: 'bat',
+    template: [
+      [0, 1, 0, 1, 0],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 0, 1, 0, 1],
+      [1, 0, 0, 0, 1],
+    ],
+  },
+  {
+    id: 4,
+    level: 'easy',
+    name: 'diamond',
+    template: [
+      [0, 0, 1, 0, 0],
+      [0, 1, 0, 1, 0],
       [1, 0, 0, 0, 1],
       [0, 1, 0, 1, 0],
       [0, 0, 1, 0, 0],
     ],
   },
   {
-    id: 1,
+    id: 5,
+    level: 'easy',
+    name: 'shuriken',
+    template: [
+      [1, 0, 0, 1, 1],
+      [1, 1, 1, 1, 0],
+      [0, 1, 0, 1, 0],
+      [0, 1, 1, 1, 1],
+      [1, 1, 0, 0, 1],
+    ],
+  },
+  {
+    id: 6,
     level: 'medium',
     name: 'medium name',
     template: [
@@ -31,7 +91,7 @@ const nonograms = [
     ],
   },
   {
-    id: 2,
+    id: 7,
     level: 'hard',
     name: 'hard name',
     template: [
@@ -48,7 +108,7 @@ const nonograms = [
     ],
   },
   {
-    id: 3,
+    id: 8,
     level: 'hard',
     name: 'hard name2',
     template: [
