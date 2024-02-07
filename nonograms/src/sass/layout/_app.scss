@@ -32,6 +32,10 @@
   &:last-child {
     border-bottom: none;
   }
+
+  &_hover {
+    background-color: var(--background-color);
+  }
 }
 
 %cross-ceil {
