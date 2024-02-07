@@ -43,4 +43,10 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
+  .menu-bar__theme {
+    &:hover {
+      box-shadow: 0px 0px 20px 0px var(--shadow-color);
+    }
+  }
 }

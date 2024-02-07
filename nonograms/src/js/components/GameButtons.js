@@ -58,7 +58,7 @@ export default class GameButtons {
 
   createSettings() {
     const themeSpan = createElement('span', 'icon icon_theme-light');
-    const theme = createButton('button button_has-icon', 'Theme', (e) => {
+    const theme = createButton('button button_has-icon menu-bar__theme', 'Theme', (e) => {
       this.theme.changeTheme(e);
     });
     theme.prepend(themeSpan);

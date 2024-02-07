@@ -41,6 +41,10 @@ module.exports = ({ development }) => ({
         test: /\.mp3$/i,
         type: 'asset',
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
 
