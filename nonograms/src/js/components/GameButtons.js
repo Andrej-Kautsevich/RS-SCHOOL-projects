@@ -40,7 +40,7 @@ export default class GameButtons {
       newGameModal.renderModal();
     });
     const scoreTable = createMenuItem('navigation__item', 'Score table', () => {
-      const scoreModal = new ScoreModal(this.cross.getLastScores());
+      const scoreModal = new ScoreModal();
       scoreModal.renderModal();
     });
     const random = createMenuItem('navigation__item', 'Random game', () => {

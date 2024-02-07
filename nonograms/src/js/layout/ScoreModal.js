@@ -2,9 +2,9 @@ import Modal from './Modal';
 import { createElement, createButton, createScoreTableItem } from '../components/createNodeElement';
 
 export default class ScoreModal extends Modal {
-  constructor(scores) {
+  constructor() {
     super();
-    this.scores = scores;
+    this.scores = JSON.parse(localStorage.getItem('scores'));
   }
 
   generateContent() {

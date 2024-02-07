@@ -8,9 +8,9 @@ import gongSound from '../../assets/gong.mp3';
 
 export default class Cross {
   constructor(timer) {
-    if (localStorage.getItem('scores')) {
-      this.lastScores = JSON.parse(localStorage.getItem('scores'));
-    } else this.lastScores = [];
+    // if (localStorage.getItem('scores')) {
+    //   this.lastScores = JSON.parse(localStorage.getItem('scores'));
+    // } else this.lastScores = [];
     this.timer = timer;
     this.nonogram = null;
     this.cross = null; // Создание области
@@ -360,11 +360,13 @@ export default class Cross {
         time: this.timer.getTime(),
       };
 
-      if (this.lastScores.length > 4) {
-        this.lastScores.shift();
+      const lastScores = JSON.parse(localStorage.getItem('scores'));
+      if (lastScores.length > 4) {
+        lastScores.shift();
       }
-      this.lastScores.push(result);
-      localStorage.setItem('scores', JSON.stringify(this.lastScores));
+      lastScores.push(result);
+      localStorage.setItem('scores', JSON.stringify(lastScores));
+
       this.timer.stopTimer();
       this.winModal.renderModal(this.timer.getTime(), this.nonogram);
       if (this.hasSound) this.gongSound.play();
@@ -432,10 +434,6 @@ export default class Cross {
       }
       this.hasSound = true;
     }
-  }
-
-  getLastScores() {
-    return this.lastScores;
   }
 
   getCross() {
