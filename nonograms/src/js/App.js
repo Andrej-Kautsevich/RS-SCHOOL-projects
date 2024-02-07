@@ -4,14 +4,12 @@ import GameButtons from './components/GameButtons';
 import Modal from './layout/Modal';
 import Theme from './layout/Theme';
 import nonograms from './nonograms';
-// import ScoreModal from './layout/ScoreModal';
 
 export default class App {
-  constructor(/* template */) {
+  constructor() {
     this.timer = new Timer();
-    this.cross = new Cross(/* template, */ this.timer);
+    this.cross = new Cross(this.timer);
     this.modal = new Modal();
-    // this.winModal = new ScoreModal();
     this.theme = new Theme();
     this.gameButtons = new GameButtons(this.cross, this.modal, this.theme);
   }

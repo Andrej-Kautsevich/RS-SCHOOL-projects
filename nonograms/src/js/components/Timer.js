@@ -11,7 +11,6 @@ export default class Timer {
     timer.classList.add('timer');
 
     const timeString = `${`0${Math.floor(this.time / 60)}`.slice(-2)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
-
     timer.innerHTML = timeString;
 
     return timer;
@@ -43,9 +42,7 @@ export default class Timer {
     this.time = time;
 
     const timer = document.querySelector('.timer');
-
     const timeString = `${`0${Math.floor(this.time / 60)}`.slice(-2)} : ${`0${Math.floor(this.time % 60)}`.slice(-2)}`;
-
     timer.innerHTML = timeString;
   }
 

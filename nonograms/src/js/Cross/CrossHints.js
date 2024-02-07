@@ -1,4 +1,4 @@
-// Функция для подсчета подсказок
+// Count cross hints
 export function countRowHints(template) {
   const hints = [];
   for (let i = 0; i < template.length; i++) {

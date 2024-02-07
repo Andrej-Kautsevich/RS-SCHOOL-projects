@@ -1,9 +1,4 @@
-function createElement(tag, className, textContent) {
-  const element = document.createElement(tag);
-  if (className) element.classList.add(...className.split(' '));
-  if (textContent) element.append(textContent);
-  return element;
-}
+import { createElement } from '../components/createNodeElement';
 
 export default class Modal {
   constructor() {
@@ -26,7 +21,6 @@ export default class Modal {
     this.modal.append(this.modalContent);
     this.overlay.append(this.modal);
 
-    // return this.overlay;
     this.openModal();
   }
 

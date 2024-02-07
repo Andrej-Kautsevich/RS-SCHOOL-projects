@@ -7,12 +7,11 @@ import rightClickSound from '../../assets/right-click.mp3';
 import gongSound from '../../assets/gong.mp3';
 
 export default class Cross {
-  constructor(/* template */ timer) {
+  constructor(timer) {
     if (localStorage.getItem('scores')) {
       this.lastScores = JSON.parse(localStorage.getItem('scores'));
     } else this.lastScores = [];
     this.timer = timer;
-    // this.template = template; // Шаблон области
     this.nonogram = null;
     this.cross = null; // Создание области
     this.winModal = new WinModal();
@@ -27,23 +26,25 @@ export default class Cross {
     this.startCeil = {};
   }
 
-  /*   template() {
-      const templateArray = [];
-      const area = document.querySelector('.cross__area');
-      const areaRows = area.querySelectorAll('.cross__row');
-      areaRows.forEach((row) => {
-        const array = [];
-        const ceils = row.querySelectorAll('.cross__ceil');
-        for (let i = 0; i < ceils.length; i++) {
-          if (ceils[i].classList.contains('cross__ceil_active')) {
-            array.push(1);
-          } else array.push(0);
-        }
-        templateArray.push(array);
-      });
-      console.log(templateArray);
-    }
-   */
+  // get current drawn puzzle template
+  // eslint-disable-next-line class-methods-use-this
+  template() {
+    const templateArray = [];
+    const area = document.querySelector('.cross__area');
+    const areaRows = area.querySelectorAll('.cross__row');
+    areaRows.forEach((row) => {
+      const array = [];
+      const ceils = row.querySelectorAll('.cross__ceil');
+      for (let i = 0; i < ceils.length; i++) {
+        if (ceils[i].classList.contains('cross__ceil_active')) {
+          array.push(1);
+        } else array.push(0);
+      }
+      templateArray.push(array);
+    });
+    console.log(templateArray);
+  }
+
   getTemplate() {
     const currentNonogramID = localStorage.getItem('nonogramID');
     let nonogramID;
@@ -75,7 +76,6 @@ export default class Cross {
   }
 
   createArea() {
-    // this.template = this.getTemplate();
     const area = document.createElement('div');
     area.className = 'cross__area';
     area.onmouseleave = () => this.mouseLeaveEvent();
@@ -384,7 +384,7 @@ export default class Cross {
     this.timer.setTime(0);
     const crossNode = this.cross;
     crossNode.innerHTML = '';
-    this.cross = this.createCross(); // Создание области
+    this.cross = this.createCross();
   }
 
   saveGame() {

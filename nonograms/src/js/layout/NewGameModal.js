@@ -1,5 +1,4 @@
 import Modal from './Modal';
-
 import { createElement, createButton } from '../components/createNodeElement';
 
 export default class NewGameModal extends Modal {

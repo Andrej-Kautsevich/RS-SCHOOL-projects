@@ -10,7 +10,6 @@ export default class GameButtons {
     this.cross = cross;
     this.modal = modal;
     this.theme = theme;
-    // this.winModal = winModal;
     this.gameButtons = this.createGameButtons();
     this.menuBar = this.createMenuBar();
   }
