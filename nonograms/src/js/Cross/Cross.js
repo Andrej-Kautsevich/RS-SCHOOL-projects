@@ -24,6 +24,7 @@ export default class Cross {
     this.ceilState = null; // clicked ceil state
     this.hintRow = null;
     this.hintColumn = null;
+    this.startCeil = {};
   }
 
   /*   template() {
@@ -155,6 +156,11 @@ export default class Cross {
   mouseDownEvent(event, elem) {
     this.timer.startTimer();
 
+    this.startCeil = {
+      row: elem.dataset.row,
+      column: elem.dataset.column,
+    };
+
     switch (event.button) {
       case 0:
         if (elem.classList.contains('cross__ceil_active')) {
@@ -202,19 +208,61 @@ export default class Cross {
 
     // fill ceils
     if (this.mouseIsDown) {
-      switch (this.ceilState) {
-        case 'active':
-          if (elem.classList.contains('cross__ceil_active')) break;
-          elem.classList.remove('cross__ceil_cross');
-          elem.classList.add('cross__ceil_active');
-          break;
-        case 'cross':
-          if (elem.classList.contains('cross__ceil_cross')) break;
-          elem.classList.remove('cross__ceil_active');
-          elem.classList.add('cross__ceil_cross');
-          break;
-        default:
-          elem.classList.remove('cross__ceil_active', 'cross__ceil_cross');
+      // fill same column
+      if (elemColumn === this.startCeil.column) {
+        const startRow = Math.min(this.startCeil.row, elemRow);
+        const endRow = Math.max(this.startCeil.row, elemRow);
+        let ceilsInRow = [];
+
+        for (let i = startRow; i <= endRow; i++) {
+          const ceils = this.cross.querySelectorAll(`[data-row='${i}'][data-column='${this.startCeil.column}']`);
+          ceilsInRow = ceilsInRow.concat(Array.from(ceils));
+        }
+
+        ceilsInRow.forEach((ceil) => {
+          switch (this.ceilState) {
+            case 'active':
+              if (ceil.classList.contains('cross__ceil_active')) break;
+              ceil.classList.remove('cross__ceil_cross');
+              ceil.classList.add('cross__ceil_active');
+              break;
+            case 'cross':
+              if (ceil.classList.contains('cross__ceil_cross')) break;
+              ceil.classList.remove('cross__ceil_active');
+              ceil.classList.add('cross__ceil_cross');
+              break;
+            default:
+              ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
+          }
+        });
+      }
+      // fill same row
+      if (elemRow === this.startCeil.row) {
+        const startColumn = Math.min(this.startCeil.column, elemColumn);
+        const endColumn = Math.max(this.startCeil.column, elemColumn);
+        let ceilsInColumn = [];
+
+        for (let i = startColumn; i <= endColumn; i++) {
+          const ceils = this.cross.querySelectorAll(`[data-row='${this.startCeil.row}'][data-column='${i}']`);
+          ceilsInColumn = ceilsInColumn.concat(Array.from(ceils));
+        }
+
+        ceilsInColumn.forEach((ceil) => {
+          switch (this.ceilState) {
+            case 'active':
+              if (ceil.classList.contains('cross__ceil_active')) break;
+              ceil.classList.remove('cross__ceil_cross');
+              ceil.classList.add('cross__ceil_active');
+              break;
+            case 'cross':
+              if (ceil.classList.contains('cross__ceil_cross')) break;
+              ceil.classList.remove('cross__ceil_active');
+              ceil.classList.add('cross__ceil_cross');
+              break;
+            default:
+              ceil.classList.remove('cross__ceil_active', 'cross__ceil_cross');
+          }
+        });
       }
     }
   }
@@ -222,6 +270,7 @@ export default class Cross {
   mouseUpEvent() {
     this.mouseIsDown = false;
     this.ceilState = null;
+    this.startCeil = {};
 
     if (this.isGameFinished()) {
       this.finishGame('win');
