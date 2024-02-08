@@ -382,7 +382,6 @@ export default class Cross {
   startNewGame(nonogram) {
     this.nonogram = nonogram;
     localStorage.setItem('nonogramID', this.nonogram.id);
-    console.log('Start new game');
     this.timer.stopTimer();
     this.timer.setTime(0);
     const crossNode = this.cross;
@@ -412,8 +411,13 @@ export default class Cross {
       localStorage.setItem('nonogramID', nonogramID);
       this.cross.innerHTML = savedCrossHTML;
       this.cross.querySelector('.cross__area').onmouseleave = () => this.mouseLeaveEvent();
-      const ceils = this.cross.querySelectorAll('.cross__ceil');
+      const ceils = this.cross.querySelectorAll('.cross__ceil_center');
       ceils.forEach((ceil) => this.bindEvents(ceil));
+
+      const leftHintCeils = this.cross.querySelectorAll('.cross__ceil_left');
+      const topHintCeils = this.cross.querySelectorAll('.cross__ceil_top');
+      leftHintCeils.forEach((ceil) => this.bindHintClickEvents(ceil));
+      topHintCeils.forEach((ceil) => this.bindHintClickEvents(ceil));
 
       this.timer.stopTimer();
       this.timer.setTime(localStorage.getItem('saved time'));

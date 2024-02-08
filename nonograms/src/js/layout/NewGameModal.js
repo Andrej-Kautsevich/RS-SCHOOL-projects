@@ -23,7 +23,6 @@ export default class NewGameModal extends Modal {
     content.appendChild(tabs);
     this.tabContainer = createElement('div', 'new-game__tab');
     content.appendChild(this.tabContainer);
-    console.log(tabs);
     this.showTemplates(tabs.querySelector('.new-game__button'), 'easy');
 
     return content;
