@@ -360,10 +360,11 @@ export default class Cross {
         time: this.timer.getTime(),
       };
 
-      const lastScores = JSON.parse(localStorage.getItem('scores'));
-      if (lastScores.length > 4) {
-        lastScores.shift();
+      let lastScores = JSON.parse(localStorage.getItem('scores'));
+      if (!lastScores) {
+        lastScores = [];
       }
+      if (lastScores.length > 4) lastScores.shift();
       lastScores.push(result);
       localStorage.setItem('scores', JSON.stringify(lastScores));
 
