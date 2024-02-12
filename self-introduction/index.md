@@ -1,4 +1,4 @@
-
+# [Link to video](https://youtu.be/Q58E3uPe56o)
 
 Hi, my name is Andrey, and I am 27 years old. I was born in Molodechno, Belarus, and after school, I moved to Minsk to study at the Belarusian National Technical University. After graduation, I stayed in Minsk and started working in my specialty as a geodetic engineer. Today, my responsibilities include communicating with clients, obtaining technical specifications, and delivering the final result of the work on time. This also includes working on multiple projects simultaneously. However, after several years of work and due to some crisis in the construction industry, I decided to change my field of activity.
 
