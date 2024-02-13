@@ -1,4 +1,4 @@
-# [Link to video](https://youtu.be/Q58E3uPe56o)
+# [Link to video](https://youtu.be/G-Hdxjia4HU)
 
 Hi, my name is Andrey, and I am 27 years old. I was born in Molodechno, Belarus, and after school, I moved to Minsk to study at the Belarusian National Technical University. After graduation, I stayed in Minsk and started working in my specialty as a geodetic engineer. Today, my responsibilities include communicating with clients, obtaining technical specifications, and delivering the final result of the work on time. This also includes working on multiple projects simultaneously. However, after several years of work and due to some crisis in the construction industry, I decided to change my field of activity.
 
@@ -8,7 +8,7 @@ I chose this school because I like the organization of the educational process, 
 
 Some of my favorite tasks at school are related to web application development. At the end of stage 0, I created a game similar to turmoil in which you need to find and develop oil fields. At the end of stage 1, I created a nonograms game. I like to see how I have improved my programming skills over the past period by comparing these two completed tasks.
 
-I think my current English level is something like B1, but in the near future, I plan to take a test to confirm my level.
+I think my current English level is something like A2, but in the near future, I plan to take a test to confirm my level.
 
 In my free time, I always feel the need to gain some new knowledge. For example, last year, I completed a Czech language course and started playing the bass guitar.
 
