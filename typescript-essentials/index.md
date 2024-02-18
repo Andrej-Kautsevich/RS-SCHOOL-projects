@@ -6,6 +6,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 1. **Getting Started with TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/4S2N8LEK?sharingId=1E2CC95861031AD9)
 2. **Declare Variable Types in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/8R6BLBKW?sharingId=1E2CC95861031AD9)
+3. Implement Interfaces in TypeScript: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/J6EAUV4T?sharingId=1E2CC95861031AD9)
 
 ## Reflections
 
@@ -18,3 +19,10 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
     > * Ensures forward compatibility. With enumerations, your code is less likely to fail if someone changes the values corresponding to the member names in the future.
 
     A union type describes a value that can be one of several types. This flexibility can be helpful when a value isn't under control. It uses the vertical bar or pipe (|) to separate each type. An intersection type combines two or more types to create a new type that has all properties of the existing types. It uses the ampersand (&) to separate each type, or you can use lyteral types to provide exact values to variables. Object type such as array declare syntax: `primitive[]` or `Array<'type'>`. TypeScript provides the Tuple type for array that contains values of mixed types. To declare a Tuple, use the syntax `variableName: [type, type, ...]`. All this provide reducing the likelihood of runtime errors and improving overall code quality.
+3. From this module, I got an overview of interfaces in TypeScript. Interfaces are used to:
+
+    > * Create shorthand names for commonly used types and get the benefit of Intellisense and type checking.
+    > * Drive consistency across a set of objects because every object that implements the interface operates under the same type definitions.
+    > * Describe existing JavaScript APIs and clarify function parameters and return types.
+
+    So, interfaces are useful when working with a team of developers to ensure that proper values are being passed into properties, constructors, or functions. Interfaces are also useful when working with JavaScript libraries like jQuery.
