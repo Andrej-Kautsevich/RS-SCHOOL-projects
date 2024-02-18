@@ -7,10 +7,13 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 1. **Getting Started with TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/4S2N8LEK?sharingId=1E2CC95861031AD9)
 2. **Declare Variable Types in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/8R6BLBKW?sharingId=1E2CC95861031AD9)
 3. Implement Interfaces in TypeScript: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/J6EAUV4T?sharingId=1E2CC95861031AD9)
+4. Develop Typed Functions in TypeScript: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLKMFZH?sharingId=1E2CC95861031AD9)
+
 
 ## Reflections
 
 1. **Getting Started with TypeScript**: In this module I got an overview of TypeScript and its key features. I learned how to install the TypeScript compiler and set up projects in Visual Studio Code. TypeScript addresses the limitations of JavaScript, doing so without compromising the key value proposition of JavaScript: the ability to run your code anywhere and on every platform, browser, or host.
+
 2. **Declare Variable Types in TypeScript**: The main benefit of TypeScript is that it enables to add static types to JavaScript code, which enhances code clarity and helps prevent unexpected errors. To declare an explicit type, the syntax `variableName: type` is used. All types in TypeScript are subtypes of a single top type called the any type. Types are categorized as primitive types, object types, or type parameters. A helpful addition to the standard set of datatypes from JavaScript is the enumeration type, or enum. Using enumerations:
 
     > * Helps reduce errors caused by transposing or mistyping numbers.
@@ -19,6 +22,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
     > * Ensures forward compatibility. With enumerations, your code is less likely to fail if someone changes the values corresponding to the member names in the future.
 
     A union type describes a value that can be one of several types. This flexibility can be helpful when a value isn't under control. It uses the vertical bar or pipe (|) to separate each type. An intersection type combines two or more types to create a new type that has all properties of the existing types. It uses the ampersand (&) to separate each type, or you can use lyteral types to provide exact values to variables. Object type such as array declare syntax: `primitive[]` or `Array<'type'>`. TypeScript provides the Tuple type for array that contains values of mixed types. To declare a Tuple, use the syntax `variableName: [type, type, ...]`. All this provide reducing the likelihood of runtime errors and improving overall code quality.
+
 3. From this module, I got an overview of interfaces in TypeScript. Interfaces are used to:
 
     > * Create shorthand names for commonly used types and get the benefit of Intellisense and type checking.
@@ -26,3 +30,5 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
     > * Describe existing JavaScript APIs and clarify function parameters and return types.
 
     So, interfaces are useful when working with a team of developers to ensure that proper values are being passed into properties, constructors, or functions. Interfaces are also useful when working with JavaScript libraries like jQuery.
+
+4. In JavaScript function parameters are always optional. TypeScript allows to add the logic for checking data types for parameters, perform type checking on the passed arguments, or check the number of arguments received. Like in JS you may use function expression, declaration, arrow functions. In TS you can also use deconstruction and rest parameters. Typed functions are especially important when you're working with larger code bases or functions developed by others. TypeScript helps ensure the correct value types as you develop your code. In addition, when creating the function logic you'll have full autocomplete support.
