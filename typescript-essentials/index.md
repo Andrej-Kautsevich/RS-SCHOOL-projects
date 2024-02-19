@@ -11,6 +11,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLJTGGH?sharingId=1E2CC95861031AD9)
 6. **Generics in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/EJ7YDMAP?sharingId=1E2CC95861031AD9)
 7. **Work with External Libraries in TypeScript**: [Badge]([badge-link](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/FZUCHAHX?sharingId=1E2CC95861031AD9))
+8. **Organize Code with Namespaces in TypeScript**: [Badge]([badge-link](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/N796WRVF?sharingId=1E2CC95861031AD9))
 
 
 ## Reflections
@@ -41,3 +42,9 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 6. **Generics in TypeScript**: Generics are a feature in TypeScript that are not supported in JavaScript. Generics are code templates that you can define and reuse throughout your codebase. They provide a way to tell functions, classes, or interfaces what type you want to use when you call it. It has syntax `< >`. Generics provides more flexibility when working with types, enable code reuse, reduce the need to use the any type.
 
 7. **Work with External Libraries in TypeScript**: From this module, I’ve learned how to organize code using modules and import an external type library. Modules have been a feature of JavaScript since ES6, so they are also supported by TypeScript. Modules provide a way to organize and categorize your code, enabling you to group related code together. In real projects third-party libraries are often used. However, the JavaScript library may not have type definitions. As static typing is a primary reason to use TypeScript, it's possible to use external type for almost all common libraries, many of them can be found in a open-source project `DefinitelyTyped` and others.
+
+8. **Organize Code with Namespaces in TypeScript**: Namespaces are a TypeScript-specific way to organize and categorize your code, enabling you to group related code together. Namespaces allow you to group variables, functions, interfaces, or classes related to business rules in one namespace and security in another.  Unlike modules namespaces allows you to keep code in one file. Code inside a namespace is pulled from the global scope and into the scope of the namespace. This placement can help you avoid naming conflicts between components in the global namespace and can be beneficial when working with distributed development teams that may use similar component names.
+
+    To make a function or class available to code outside of the namespace, athe export keyword before its name is used. It's also possible to organize code using nested namespaces. You may want to create an alias to shorten and simplify code.
+
+    Modules offer some additional benefits that namespaces do not. So, for new projects, modules are recommended for code organization.
