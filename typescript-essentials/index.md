@@ -10,6 +10,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 4. **Develop Typed Functions in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLKMFZH?sharingId=1E2CC95861031AD9)
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLJTGGH?sharingId=1E2CC95861031AD9)
 6. **Generics in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/EJ7YDMAP?sharingId=1E2CC95861031AD9)
+7. **Work with External Libraries in TypeScript**: [Badge]([badge-link](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/FZUCHAHX?sharingId=1E2CC95861031AD9))
 
 
 ## Reflections
@@ -38,3 +39,5 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 5. **Declare and Instantiate Classes in TypeScript**: From this module, I’ve gained an understanding of TypeScript classes. They are similar to JS with some specific features. As with all TypeScript functions, the constructor parameters in can be required or optional, have default values, or be rest parameters. Accessors (get & set) are required to set or return the value of the object's members from code. In typescript, interfaces are used to establish a "code contract" that describe the required properties of an object and their types. So, you can use an interface to ensure class instance shape. Classes enable you to express common object-oriented patterns in a standard way, making features like inheritance more readable and interoperable.
 
 6. **Generics in TypeScript**: Generics are a feature in TypeScript that are not supported in JavaScript. Generics are code templates that you can define and reuse throughout your codebase. They provide a way to tell functions, classes, or interfaces what type you want to use when you call it. It has syntax `< >`. Generics provides more flexibility when working with types, enable code reuse, reduce the need to use the any type.
+
+7. **Work with External Libraries in TypeScript**: From this module, I’ve learned how to organize code using modules and import an external type library. Modules have been a feature of JavaScript since ES6, so they are also supported by TypeScript. Modules provide a way to organize and categorize your code, enabling you to group related code together. In real projects third-party libraries are often used. However, the JavaScript library may not have type definitions. As static typing is a primary reason to use TypeScript, it's possible to use external type for almost all common libraries, many of them can be found in a open-source project `DefinitelyTyped` and others.
