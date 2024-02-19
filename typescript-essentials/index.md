@@ -10,8 +10,8 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 4. **Develop Typed Functions in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLKMFZH?sharingId=1E2CC95861031AD9)
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/3XLJTGGH?sharingId=1E2CC95861031AD9)
 6. **Generics in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/EJ7YDMAP?sharingId=1E2CC95861031AD9)
-7. **Work with External Libraries in TypeScript**: [Badge]([badge-link](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/FZUCHAHX?sharingId=1E2CC95861031AD9))
-8. **Organize Code with Namespaces in TypeScript**: [Badge]([badge-link](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/N796WRVF?sharingId=1E2CC95861031AD9))
+7. **Work with External Libraries in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/FZUCHAHX?sharingId=1E2CC95861031AD9)
+8. **Organize Code with Namespaces in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/andrejkautsevich-2407/N796WRVF?sharingId=1E2CC95861031AD9)
 
 
 ## Reflections
