@@ -18,3 +18,7 @@ export interface NewsItem {
     publishedAt: string;
     content: string;
 }
+
+export interface View<T> {
+    draw(data: T[]): void;
+}
