@@ -10,8 +10,7 @@
     "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module",
-        "project": "./tsconfig.json",
-        "tsconfigRootDir": "./migration-to-ts"
+        "project": "./migration-to-ts/tsconfig.json"
     },
     "env": {
         "es6": true,
