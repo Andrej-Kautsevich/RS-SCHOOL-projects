@@ -24,6 +24,17 @@ export interface NewsItem {
     content: string;
 }
 
+export interface SourcesList {
+    status: string;
+    sources: SourceItem[];
+}
+
+export interface NewsList {
+    status: string;
+    totalResults: number;
+    articles: NewsItem[];
+}
+
 export interface View<T> {
     draw(data: T[]): void;
 }
