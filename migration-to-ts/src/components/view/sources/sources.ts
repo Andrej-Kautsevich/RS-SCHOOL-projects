@@ -1,5 +1,5 @@
 import './sources.css';
-import { SourceItem, View, assertIsDefined, assertIsInstanceOf } from '../../../types/index';
+import { SourceItem, View, assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/index';
 
 class Sources implements View<SourceItem> {
     draw(data: SourceItem[]): void {
@@ -11,10 +11,10 @@ class Sources implements View<SourceItem> {
             const sourceClone = sourceItemTemp.content.cloneNode(true);
             assertIsInstanceOf(sourceClone, DocumentFragment);
 
-            const sourceItemName = sourceClone.querySelector('.source__item-name');
+            const sourceItemName = queryElement(sourceClone, HTMLElement, '.source__item-name');
             assertIsDefined(sourceItemName);
 
-            const sourceItem = sourceClone.querySelector('.source__item');
+            const sourceItem = queryElement(sourceClone, HTMLElement, '.source__item');
             assertIsDefined(sourceItem);
 
             sourceItemName.textContent = item.name;
@@ -23,7 +23,7 @@ class Sources implements View<SourceItem> {
             fragment.append(sourceClone);
         });
 
-        const sources = document.querySelector('.sources');
+        const sources = queryElement(document, HTMLElement, '.sources');
         assertIsDefined(sources);
         sources.append(fragment);
     }
