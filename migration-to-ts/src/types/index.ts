@@ -50,9 +50,7 @@ export interface EndpointOptions {
     [key: string]: string | undefined;
 }
 
-export interface Endpoint {
-    endpoint: 'sources' | 'top-headlines' | 'everything';
-}
+export type Endpoint = 'sources' | 'top-headlines' | 'everything';
 
 export type Callback<T> = (data?: T) => void;
 
