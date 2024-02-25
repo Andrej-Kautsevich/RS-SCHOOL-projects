@@ -39,6 +39,23 @@ export interface View<T> {
     draw(data: T[]): void;
 }
 
+export interface EndpointRequest {
+    endpoint: Endpoint;
+    options?: EndpointOptions;
+}
+
+export interface EndpointOptions {
+    apiKey?: string;
+    category?: 'business' | 'entertainment' | 'general' | 'health' | 'science' | 'sports' | 'technology';
+    [key: string]: string | undefined;
+}
+
+export interface Endpoint {
+    endpoint: 'sources' | 'top-headlines' | 'everything';
+}
+
+export type Callback<T> = (data?: T) => void;
+
 export function assertIsDefined<T>(value: T): asserts value is NonNullable<T> {
     if (value === undefined || value === null) {
         throw new Error(`${value} is not defined`);
