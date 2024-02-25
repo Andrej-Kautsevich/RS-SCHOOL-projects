@@ -1,7 +1,8 @@
+import { Callback, assertIsDefined, assertIsInstanceOf } from '../../types/index';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {
-    getSources(callback) {
+    getSources<T>(callback: Callback<T>) {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -10,13 +11,16 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e, callback) {
+    getNews<T>(e: Event, callback: Callback<T>) {
         let target = e.target;
+        assertIsInstanceOf(target, HTMLElement);
         const newsContainer = e.currentTarget;
+        assertIsInstanceOf(newsContainer, HTMLElement);
 
-        while (target !== newsContainer) {
+        while (target && target !== newsContainer) {
             if (target.classList.contains('source__item')) {
                 const sourceId = target.getAttribute('data-source-id');
+                assertIsDefined(sourceId);
                 if (newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
                     super.getResp(
@@ -32,6 +36,7 @@ class AppController extends AppLoader {
                 return;
             }
             target = target.parentNode;
+            assertIsInstanceOf(target, HTMLElement);
         }
     }
 }
