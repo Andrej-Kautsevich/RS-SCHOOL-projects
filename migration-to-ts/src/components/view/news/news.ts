@@ -9,7 +9,7 @@ class News implements View<NewsItem> {
         const newsItemTemp = document.querySelector('#newsItemTemp');
         assertIsInstanceOf(newsItemTemp, HTMLTemplateElement);
 
-        news.forEach((item, idx) => {
+        news.forEach((item: Readonly<NewsItem>, idx) => {
             const newsClone = newsItemTemp.content.cloneNode(true);
             assertIsInstanceOf(newsClone, DocumentFragment);
             assertIsDefined(newsClone);

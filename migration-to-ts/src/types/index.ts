@@ -1,8 +1,3 @@
-interface Source {
-    id: string;
-    name: string;
-}
-
 export interface SourceItem {
     name: string;
     id: number;
@@ -14,7 +9,7 @@ export interface SourceItem {
 }
 
 export interface NewsItem {
-    source: Source;
+    source: Pick<SourceItem, 'id' | 'name'>;
     author: string;
     title: string;
     description: string;
@@ -50,20 +45,22 @@ export interface EndpointRequest {
 }
 
 export enum Categories {
-    'business',
-    'entertainment',
-    'general',
-    'health',
-    'science',
-    'sports',
-    'technology',
+    Business = 'business',
+    Entertainment = 'entertainment',
+    General = 'general',
+    Health = 'health',
+    Science = 'science',
+    Sports = 'sports',
+    Technology = 'technology',
 }
 
-export interface EndpointOptions {
+export type EndpointOptions = {
     apiKey?: string;
     category?: Categories;
-    [key: string]: Categories | string | undefined;
-}
+    sources?: string;
+} & {
+    [K in keyof typeof Categories]?: string;
+};
 
 export type Endpoint = 'sources' | 'top-headlines' | 'everything';
 

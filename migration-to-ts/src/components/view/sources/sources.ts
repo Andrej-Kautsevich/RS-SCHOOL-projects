@@ -7,7 +7,7 @@ class Sources implements View<SourceItem> {
         const sourceItemTemp = document.querySelector('#sourceItemTemp');
         assertIsInstanceOf(sourceItemTemp, HTMLTemplateElement);
 
-        data.forEach((item: SourceItem) => {
+        data.forEach((item: Readonly<SourceItem>) => {
             const sourceClone = sourceItemTemp.content.cloneNode(true);
             assertIsInstanceOf(sourceClone, DocumentFragment);
 
