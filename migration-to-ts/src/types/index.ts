@@ -44,10 +44,20 @@ export interface EndpointRequest {
     options?: EndpointOptions;
 }
 
+export enum Categories {
+    'business',
+    'entertainment',
+    'general',
+    'health',
+    'science',
+    'sports',
+    'technology',
+}
+
 export interface EndpointOptions {
     apiKey?: string;
-    category?: 'business' | 'entertainment' | 'general' | 'health' | 'science' | 'sports' | 'technology';
-    [key: string]: string | undefined;
+    category?: Categories;
+    [key: string]: Categories | string | undefined;
 }
 
 export type Endpoint = 'sources' | 'top-headlines' | 'everything';
