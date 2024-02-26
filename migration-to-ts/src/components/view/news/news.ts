@@ -2,7 +2,7 @@ import { NewsItem, View, assertIsDefined, assertIsInstanceOf, queryElement } fro
 import './news.css';
 
 class News implements View<NewsItem> {
-    draw(data: NewsItem[]): void {
+    public draw(data: NewsItem[]): void {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();

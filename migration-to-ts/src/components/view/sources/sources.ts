@@ -2,7 +2,7 @@ import './sources.css';
 import { SourceItem, View, assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/index';
 
 class Sources implements View<SourceItem> {
-    draw(data: SourceItem[]): void {
+    public draw(data: SourceItem[]): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector('#sourceItemTemp');
         assertIsInstanceOf(sourceItemTemp, HTMLTemplateElement);

@@ -11,7 +11,7 @@ class App {
         this.view = new AppView();
     }
 
-    start() {
+    public start() {
         queryElement(document, HTMLElement, '.sources').addEventListener('click', (e) =>
             this.controller.getNews(e, (data?: NewsList) => {
                 if (data) {
