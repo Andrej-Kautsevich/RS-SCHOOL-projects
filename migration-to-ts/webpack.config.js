@@ -19,6 +19,14 @@ const baseConfig = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+                type: 'asset',
+            },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
         ],
     },
     resolve: {
@@ -27,6 +35,8 @@ const baseConfig = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
+        publicPath: '/',
+        assetModuleFilename: 'assets/[name][ext]',
     },
     plugins: [
         new DotenvWebpackPlugin(),
