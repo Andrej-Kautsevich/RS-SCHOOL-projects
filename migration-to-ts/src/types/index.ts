@@ -25,14 +25,19 @@ export interface NewsItem {
 }
 
 export interface SourcesList {
-    status: string;
+    status: RequestStatus;
     sources: SourceItem[];
 }
 
 export interface NewsList {
-    status: string;
+    status: RequestStatus;
     totalResults: number;
     articles: NewsItem[];
+}
+
+enum RequestStatus {
+    'ok',
+    'error',
 }
 
 export interface View<T> {
