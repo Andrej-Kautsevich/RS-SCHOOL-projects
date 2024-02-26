@@ -1,5 +1,6 @@
 import { NewsItem, View, assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/index';
 import './news.css';
+import img from '../../../assets/placeholder.jpg';
 
 class News implements View<NewsItem> {
     public draw(data: NewsItem[]): void {
@@ -17,7 +18,7 @@ class News implements View<NewsItem> {
             if (idx % 2) queryElement(newsClone, Element, '.news__item').classList.add('alt');
 
             queryElement(newsClone, HTMLElement, '.news__meta-photo').style.backgroundImage = `url(${
-                item.urlToImage || 'img/news_placeholder.jpg'
+                item.urlToImage || img
             })`;
             queryElement(newsClone, HTMLElement, '.news__meta-author').textContent = item.author || item.source.name;
             queryElement(newsClone, HTMLElement, '.news__meta-date').textContent = item.publishedAt
