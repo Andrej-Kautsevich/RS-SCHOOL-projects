@@ -1,4 +1,5 @@
-import { NewsList, SourcesList, queryElement } from '../../types/index';
+import { NewsList, SourcesList } from '../../types/index';
+import { queryElement } from '../../types/helpers';
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 

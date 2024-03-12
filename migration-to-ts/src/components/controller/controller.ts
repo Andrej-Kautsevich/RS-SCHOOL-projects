@@ -1,4 +1,5 @@
-import { Callback, assertIsDefined, assertIsInstanceOf } from '../../types/index';
+import { Callback } from '../../types/index';
+import { assertIsDefined, assertIsInstanceOf } from '../../types/helpers';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {

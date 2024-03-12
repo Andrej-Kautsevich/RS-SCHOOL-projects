@@ -1,4 +1,5 @@
-import { NewsItem, View, assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/index';
+import { NewsItem, View } from '../../../types/index';
+import { assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/helpers';
 import './news.css';
 import img from '../../../assets/placeholder.jpg';
 

@@ -25,7 +25,7 @@ const baseConfig = {
             },
             {
                 test: /\.html$/i,
-                loader: "html-loader",
+                loader: 'html-loader',
             },
         ],
     },
@@ -45,7 +45,7 @@ const baseConfig = {
             filename: 'index.html',
         }),
         new CleanWebpackPlugin(),
-        new EslintPlugin({ extensions: 'ts' })
+        new EslintPlugin({ extensions: 'ts' }),
     ],
 };
 

@@ -1,5 +1,6 @@
 import './sources.css';
-import { SourceItem, View, assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/index';
+import { SourceItem, View } from '../../../types/index';
+import { assertIsDefined, assertIsInstanceOf, queryElement } from '../../../types/helpers';
 
 class Sources implements View<SourceItem> {
     public draw(data: SourceItem[]): void {
