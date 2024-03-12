@@ -3,9 +3,11 @@ import { assertIsDefined, assertIsInstanceOf, queryElement } from '../../../type
 import './news.css';
 import img from '../../../assets/placeholder.jpg';
 
+const MAX_ITEMS_PER_PAGE = 10;
+
 class News implements View<NewsItem> {
     public draw(data: NewsItem[]): void {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+        const news = data.length >= MAX_ITEMS_PER_PAGE ? data.filter((_item, idx) => idx < MAX_ITEMS_PER_PAGE) : data;
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = document.querySelector('#newsItemTemp');
