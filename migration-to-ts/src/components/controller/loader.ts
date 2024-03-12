@@ -1,4 +1,4 @@
-import { Callback, Endpoint, EndpointOptions, EndpointRequest } from '../../types/index';
+import { Callback, Endpoint, EndpointOptions, EndpointRequest, HttpStatus } from '../../types/index';
 
 class Loader {
     private baseLink: string;
@@ -20,7 +20,7 @@ class Loader {
 
     private errorHandler(res: Response) {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === HttpStatus.NotFound || res.status === HttpStatus.Unauthorized)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }

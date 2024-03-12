@@ -35,6 +35,11 @@ enum RequestStatus {
     Error = 'error',
 }
 
+export enum HttpStatus {
+    Unauthorized = 401,
+    NotFound = 404,
+}
+
 export interface View<T> {
     draw(data: T[]): void;
 }
