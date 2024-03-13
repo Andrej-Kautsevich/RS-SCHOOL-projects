@@ -1,0 +1,21 @@
+@import url(normalize.css);
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: rgb(214, 168, 168);
+}
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: var(--main-color);
+}
+
+.hidden {
+  display: none;
+}
+

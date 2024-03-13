@@ -1,2 +1,2 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const a = 'src';
+import './styles/style.css';
+import './app';

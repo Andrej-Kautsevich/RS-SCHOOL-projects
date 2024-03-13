@@ -7,3 +7,7 @@ export const div = (className: string, ...children: (BaseComponent | HTMLElement
 export const p = (className: string, txt?: string, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLParagraphElement>({ tag: 'p', className, txt }, ...children);
 };
+
+export const main = (className: string, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['main']>({ tag: 'main', className }, ...children);
+};
