@@ -1,3 +1,4 @@
+import UserNameEntry from './components/UserNameEntry/UserNameEntry';
 import { main } from './components/tags';
 
 class App {
@@ -5,6 +6,9 @@ class App {
 
   public start(): void {
     const mainComponent = main.call(null, ['main']);
+    const loginComponent = UserNameEntry.bind(null)();
+    mainComponent.append(loginComponent);
+
     this.root.append(mainComponent.getNode());
   }
 }

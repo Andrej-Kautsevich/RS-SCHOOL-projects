@@ -1,0 +1,31 @@
+.user-entry {
+  display: flex;
+}
+
+.user-entry__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: var(--background-color);
+
+  &.form {
+    .form__label {
+      width: 100%;
+      display: flex;
+    }
+
+    .form__input {
+      color: black;
+      flex: 1 0;
+      margin-left: 1em;
+      border: 1px solid var(--border-primary);
+      border-radius: 5px;
+    }
+
+    .form__button {
+      font-size: 1.25em;
+    }
+  }
+}

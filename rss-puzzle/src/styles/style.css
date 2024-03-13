@@ -6,6 +6,19 @@
 
 :root {
   --main-color: rgb(214, 168, 168);
+
+  --text-primary: #1b1b1b;
+  --text-secondary: #4e4e4e;
+  --background-color: #ebebeb;
+  --background-color-dark: #d8d8d8;
+
+  --border-primary: #858585;
+  --border-secondary: #696969;
+
+  --button-primary-default: #cdcdcd;
+  --button-primary-hover: #dddddd;
+
+  --overlay-color: rgba(0, 0, 0, 0.5);
 }
 
 .main {
@@ -18,4 +31,3 @@
 .hidden {
   display: none;
 }
-

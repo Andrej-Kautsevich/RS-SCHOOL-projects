@@ -1,0 +1,40 @@
+.button {
+  --button-bg: var(--button-primary-default);
+  --button-hover: var(--button-primary-hover);
+  --button-color: var(--text-primary);
+  appearance: none;
+  cursor: pointer;
+  color: var(--button-color);
+  border: 1px solid var(--button-bg);
+  border-radius: 0.25rem;
+  background-color: var(--button-bg);
+  padding: 0.25rem;
+  transition: 0.2s;
+
+  &:not(:disabled):hover {
+    background-color: var(--button-hover);
+    border-color: var(--button-hover);
+    box-shadow:  1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)
+  }
+
+  &_has-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &_link {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  &_action {
+    --button-bg: transparent;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.65;
+  }
+}
