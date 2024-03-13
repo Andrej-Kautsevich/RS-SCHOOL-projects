@@ -4,7 +4,7 @@ class App {
   constructor(private root = document.body) {}
 
   public start(): void {
-    const mainComponent = main.call(null, 'main');
+    const mainComponent = main.call(null, ['main']);
     this.root.append(mainComponent.getNode());
   }
 }
