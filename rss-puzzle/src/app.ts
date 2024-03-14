@@ -1,19 +1,39 @@
 import { BaseComponent } from './components/BaseComponent';
 import UserNameEntry from './components/UserNameEntry/UserNameEntry';
-import { main } from './components/tags';
+import { router } from './components/services/RouterService';
+import { div, main } from './components/tags';
+import { PagesId } from './components/types';
 
 class App {
   private loginEntry: BaseComponent;
 
-  constructor(private root = document.body) {
+  private root: HTMLElement;
+
+  private mainComponent: BaseComponent;
+
+  constructor() {
+    this.root = document.body;
     this.loginEntry = new UserNameEntry();
+    this.mainComponent = main.call(null, { className: 'main' });
+
+    router.addRoute(PagesId.login, () => {
+      this.renderPage(this.loginEntry);
+    });
+    router.addRoute(PagesId.start, () => {
+      this.renderPage(div({})); // TODO: add start page
+    });
+
+    this.start();
   }
 
-  public start(): void {
-    const mainComponent = main.call(null, { className: 'main' });
-    mainComponent.append(this.loginEntry);
+  public start() {
+    this.root.append(this.mainComponent.getNode());
+    router.navigateTo(PagesId.login);
+  }
 
-    this.root.append(mainComponent.getNode());
+  private renderPage(page: BaseComponent) {
+    this.mainComponent.getNode().innerHTML = '';
+    this.mainComponent.append(page.getNode());
   }
 }
 

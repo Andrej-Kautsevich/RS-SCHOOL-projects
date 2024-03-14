@@ -3,7 +3,8 @@ import styles from './userNameEntry.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import { BaseComponent } from '../BaseComponent';
 import StorageService from '../services/LocalStorageService';
-import { UserData } from '../types';
+import { PagesId, UserData } from '../types';
+import { router } from '../services/RouterService';
 
 export default class UserNameEntry extends BaseComponent {
   private form: BaseComponent<HTMLFormElement>;
@@ -91,5 +92,6 @@ export default class UserNameEntry extends BaseComponent {
     const surname = this.surnameInput.getNode().value;
 
     this.localStorageService.saveData('login', { firstName, surname });
+    router.navigateTo(PagesId.start);
   };
 }
