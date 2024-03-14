@@ -12,7 +12,7 @@ export const main = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['main']>({ ...props, tag: 'main' }, ...children);
 };
 
-export const form = (props: ElementFnProps<HTMLFormElement>, ...children: BaseComponent[]) => {
+export const form = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLFormElement>({ ...props, tag: 'form' }, ...children);
 };
 

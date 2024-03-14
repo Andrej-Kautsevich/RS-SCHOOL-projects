@@ -1,8 +1,9 @@
 import { button, div, form, input, label, p } from '../tags';
 import styles from './userNameEntry.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
-
 import { BaseComponent } from '../BaseComponent';
+import StorageService from '../services/LocalStorageService';
+import { UserData } from '../types';
 
 export default class UserNameEntry extends BaseComponent {
   private form: BaseComponent<HTMLFormElement>;
@@ -13,13 +14,14 @@ export default class UserNameEntry extends BaseComponent {
 
   private submitButton: BaseComponent;
 
-  constructor() {
+  constructor(private localStorageService = new StorageService<UserData>('user')) {
     super({ className: styles.userEntry });
 
     this.firstNameInput = input({
       className: styles.formInput,
       type: 'text',
       name: 'userFirstName',
+      id: 'userFirstName',
       required: true,
       pattern: '^[A-Z][A-Za-z\\-]{2,}$',
       placeholder: '',
@@ -29,6 +31,7 @@ export default class UserNameEntry extends BaseComponent {
       className: styles.formInput,
       type: 'text',
       name: 'userSurname',
+      id: 'userSurname',
       required: true,
       pattern: '^[A-Z][A-Za-z\\-]{3,}$',
       placeholder: '',
@@ -42,10 +45,10 @@ export default class UserNameEntry extends BaseComponent {
     });
 
     this.form = form(
-      { classNames: [styles.userEntryForm, styles.form] },
+      { classNames: [styles.userEntryForm, styles.form], onsubmit: this.handleSubmit },
       div(
         { className: styles.formField },
-        label({ className: styles.formLabel, txt: 'First Name:' }),
+        label({ className: styles.formLabel, txt: 'First Name:', htmlFor: 'userFirstName' }),
         this.firstNameInput,
         p({
           className: styles.formRequirements,
@@ -54,7 +57,7 @@ export default class UserNameEntry extends BaseComponent {
       ),
       div(
         { className: styles.formField },
-        label({ className: styles.formLabel, txt: 'Surname:' }),
+        label({ className: styles.formLabel, txt: 'Surname:', htmlFor: 'userSurname' }),
         this.surnameInput,
         p({
           className: styles.formRequirements,
@@ -79,5 +82,14 @@ export default class UserNameEntry extends BaseComponent {
     } else {
       this.submitButton.setAttribute('disabled', 'true');
     }
+  };
+
+  private handleSubmit = (event: Event) => {
+    event.preventDefault();
+
+    const firstName = this.firstNameInput.getNode().value;
+    const surname = this.surnameInput.getNode().value;
+
+    this.localStorageService.saveData('login', { firstName, surname });
   };
 }
