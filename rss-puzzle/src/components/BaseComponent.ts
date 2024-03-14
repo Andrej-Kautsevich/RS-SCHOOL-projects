@@ -5,7 +5,10 @@ export type Props<T extends HTMLElement = HTMLElement> = Partial<
 > & {
   txt?: string;
   tag?: keyof HTMLElementTagNameMap;
+  classNames?: string[];
 };
+
+export type ElementFnProps<T extends HTMLElement = HTMLElement> = Omit<Props<T>, 'tag'>;
 
 export class BaseComponent<T extends HTMLElement = HTMLElement> {
   protected node: T;
@@ -19,6 +22,9 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
 
     if (props.txt) {
       node.textContent = props.txt;
+    }
+    if (props.classNames) {
+      node.classList.add(...props.classNames);
     }
     this.node = node;
 

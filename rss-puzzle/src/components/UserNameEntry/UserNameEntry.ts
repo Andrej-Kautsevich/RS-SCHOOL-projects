@@ -5,7 +5,7 @@ import buttonStyles from '../../styles/button.module.scss';
 import { BaseComponent } from '../BaseComponent';
 
 export default class UserNameEntry extends BaseComponent {
-  private form: BaseComponent;
+  private form: BaseComponent<HTMLFormElement>;
 
   private firstNameInput: BaseComponent<HTMLInputElement>;
 
@@ -16,39 +16,50 @@ export default class UserNameEntry extends BaseComponent {
   constructor() {
     super({ className: styles.userEntry });
 
-    this.firstNameInput = input([styles.formInput], 'text', 'userFirstName', {
+    this.firstNameInput = input({
+      className: styles.formInput,
+      type: 'text',
+      name: 'userFirstName',
       required: true,
       pattern: '^[A-Z][A-Za-z\\-]{2,}$',
       placeholder: '',
     });
 
-    this.surnameInput = input([styles.formInput], 'text', 'userSurname', {
+    this.surnameInput = input({
+      className: styles.formInput,
+      type: 'text',
+      name: 'userSurname',
       required: true,
       pattern: '^[A-Z][A-Za-z\\-]{3,}$',
       placeholder: '',
     });
 
-    this.submitButton = button([styles.formButton, buttonStyles.button], 'Submit', 'submit', { disabled: true });
+    this.submitButton = button({
+      classNames: [styles.formButton, buttonStyles.button],
+      txt: 'Submit',
+      type: 'submit',
+      disabled: true,
+    });
 
     this.form = form(
-      [styles.userEntryForm, styles.form],
+      { classNames: [styles.userEntryForm, styles.form] },
       div(
-        [styles.formField],
-        label([styles.formLabel], 'First Name:'),
+        { className: styles.formField },
+        label({ className: styles.formLabel, txt: 'First Name:' }),
         this.firstNameInput,
-        p(
-          [styles.formRequirements],
-          "The user's first name must begin with a capital letter, consist only of letters of the English alphabet and a hyphen ('-') and contain at least 3 letters",
-        ),
+        p({
+          className: styles.formRequirements,
+          txt: "The user's first name must begin with a capital letter, consist only of letters of the English alphabet and a hyphen ('-') and contain at least 3 letters",
+        }),
       ),
       div(
-        [styles.formField],
-        label([styles.formLabel], 'Surname:'),
+        { className: styles.formField },
+        label({ className: styles.formLabel, txt: 'Surname:' }),
         this.surnameInput,
-        p(
-          [styles.formRequirements],
-          "The user's surname must begin with a capital letter, consist only of letters of the English alphabet and a hyphen ('-') and contain at least 4 letters",
-        ),
+        p({
+          className: styles.formRequirements,
+          txt: "The user's surname must begin with a capital letter, consist only of letters of the English alphabet and a hyphen ('-') and contain at least 4 letters",
+        }),
       ),
       this.submitButton,
     );

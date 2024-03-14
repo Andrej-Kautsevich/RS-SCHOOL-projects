@@ -10,7 +10,7 @@ class App {
   }
 
   public start(): void {
-    const mainComponent = main.call(null, ['main']);
+    const mainComponent = main.call(null, { className: 'main' });
     mainComponent.append(this.loginEntry);
 
     this.root.append(mainComponent.getNode());

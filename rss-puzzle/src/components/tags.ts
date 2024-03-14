@@ -1,43 +1,29 @@
-import { BaseComponent } from './BaseComponent';
+import { BaseComponent, ElementFnProps } from './BaseComponent';
 
-export const div = (classNames: string[], ...children: (BaseComponent | HTMLElement)[]) => {
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLDivElement>({ className: combinedClass }, ...children);
+export const div = (props: ElementFnProps, ...children: (BaseComponent | HTMLElement)[]) => {
+  return new BaseComponent<HTMLDivElement>({ ...props }, ...children);
 };
 
-export const p = (classNames: string[], txt?: string, ...children: BaseComponent[]) => {
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLParagraphElement>({ tag: 'p', className: combinedClass, txt }, ...children);
+export const p = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLParagraphElement>({ ...props, tag: 'p' }, ...children);
 };
 
-export const main = (classNames: string[], ...children: BaseComponent[]) => {
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLElementTagNameMap['main']>({ tag: 'main', className: combinedClass }, ...children);
+export const main = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['main']>({ ...props, tag: 'main' }, ...children);
 };
 
-export const form = (classNames: string[], ...children: BaseComponent[]) => {
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLFormElement>({ tag: 'form', className: combinedClass }, ...children);
+export const form = (props: ElementFnProps<HTMLFormElement>, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLFormElement>({ ...props, tag: 'form' }, ...children);
 };
 
-export const label = (classNames: string[], text: string, ...children: (BaseComponent | HTMLElement)[]) => {
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLLabelElement>({ tag: 'label', className: combinedClass, txt: text }, ...children);
+export const label = (props: ElementFnProps<HTMLLabelElement>, ...children: (BaseComponent | HTMLElement)[]) => {
+  return new BaseComponent<HTMLLabelElement>({ ...props, tag: 'label' }, ...children);
 };
 
-export const input = (classNames: string[], type: string, name: string, ...rest: Partial<HTMLInputElement>[]) => {
-  const attributes = Object.assign({}, ...rest);
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLInputElement>({ tag: 'input', className: combinedClass, type, name, ...attributes });
+export const input = (props: ElementFnProps<HTMLInputElement>) => {
+  return new BaseComponent<HTMLInputElement>({ ...props, tag: 'input' });
 };
-export const button = (classNames: string[], text: string, type: string, ...rest: Partial<HTMLButtonElement>[]) => {
-  const attributes = Object.assign({}, ...rest);
-  const combinedClass = classNames.join(' ');
-  return new BaseComponent<HTMLButtonElement>({
-    tag: 'button',
-    className: combinedClass,
-    type,
-    txt: text,
-    ...attributes,
-  });
+
+export const button = (props: ElementFnProps<HTMLButtonElement>) => {
+  return new BaseComponent<HTMLButtonElement>({ ...props, tag: 'button' });
 };
