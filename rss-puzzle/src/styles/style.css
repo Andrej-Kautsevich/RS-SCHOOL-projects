@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+p {
+  margin: 0;
+}
+
 :root {
   --main-color: rgb(214, 168, 168);
 

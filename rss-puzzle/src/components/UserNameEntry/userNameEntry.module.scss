@@ -11,21 +11,46 @@
   background-color: var(--background-color);
 
   &.form {
-    .form__label {
-      width: 100%;
+    .form__field {
       display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .form__label {
+      margin-bottom: 0.5em;
     }
 
     .form__input {
-      color: black;
-      flex: 1 0;
-      margin-left: 1em;
       border: 1px solid var(--border-primary);
       border-radius: 5px;
+
+      &:invalid:not(:placeholder-shown) {
+        color: red;
+        outline-color: red;
+        border-color: red;
+      }
+
+      &:invalid:focus:not(:placeholder-shown) {
+        &~.form__requirements {
+          max-height: fit-content;
+          padding: 0 1em 1em;
+          text-align: center;
+        }
+      }
     }
 
     .form__button {
       font-size: 1.25em;
+    }
+
+    .form__requirements {
+      max-height: 0;
+      max-width: 300px;
+      transition: 0.28s;
+      overflow: hidden;
+      color: red;
+      font-style: italic;
     }
   }
 }

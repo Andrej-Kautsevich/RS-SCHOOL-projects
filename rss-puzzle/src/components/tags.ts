@@ -25,8 +25,7 @@ export const label = (classNames: string[], text: string, ...children: (BaseComp
   return new BaseComponent<HTMLLabelElement>({ tag: 'label', className: combinedClass, txt: text }, ...children);
 };
 
-type InputAttributes = Partial<Omit<HTMLInputElement, 'style' | 'dataset' | 'classList' | 'children' | 'tagName'>>;
-export const input = (classNames: string[], type: string, name: string, ...rest: InputAttributes[]) => {
+export const input = (classNames: string[], type: string, name: string, ...rest: Partial<HTMLInputElement>[]) => {
   const attributes = Object.assign({}, ...rest);
   const combinedClass = classNames.join(' ');
   return new BaseComponent<HTMLInputElement>({ tag: 'input', className: combinedClass, type, name, ...attributes });

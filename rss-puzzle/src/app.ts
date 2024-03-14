@@ -1,13 +1,17 @@
+import { BaseComponent } from './components/BaseComponent';
 import UserNameEntry from './components/UserNameEntry/UserNameEntry';
 import { main } from './components/tags';
 
 class App {
-  constructor(private root = document.body) {}
+  private loginEntry: BaseComponent;
+
+  constructor(private root = document.body) {
+    this.loginEntry = new UserNameEntry();
+  }
 
   public start(): void {
     const mainComponent = main.call(null, ['main']);
-    const loginComponent = UserNameEntry.bind(null)();
-    mainComponent.append(loginComponent);
+    mainComponent.append(this.loginEntry);
 
     this.root.append(mainComponent.getNode());
   }
