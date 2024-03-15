@@ -16,6 +16,11 @@ export class StorageService<T> {
     localStorage.setItem(storageKey, JSON.stringify(data));
   }
 
+  public removeData(key: string): void {
+    const storageKey = this.getStorageKey(key);
+    localStorage.removeItem(storageKey);
+  }
+
   public getData(key: string): T | undefined {
     const storageKey = this.getStorageKey(key);
     const data = localStorage.getItem(storageKey);

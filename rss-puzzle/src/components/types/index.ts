@@ -1,6 +1,6 @@
 export interface UserData {
-  firstName?: string;
-  surname?: string;
+  firstName: string;
+  surname: string;
 }
 
 export enum PagesId {

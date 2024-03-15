@@ -4,6 +4,7 @@ import UserNameEntry from './components/UserNameEntry/UserNameEntry';
 import { router } from './components/services/RouterService';
 import { main } from './components/tags';
 import { PagesId } from './components/types';
+import { user } from './models/User';
 
 class App {
   private loginEntry: UserNameEntry;
@@ -33,7 +34,11 @@ class App {
 
   public start() {
     this.root.append(this.mainComponent.getNode());
-    router.navigateTo(PagesId.login);
+    if (user.isAuth()) {
+      router.navigateTo(PagesId.start);
+    } else {
+      router.navigateTo(PagesId.login);
+    }
   }
 
   private renderPage(page: BaseComponent) {
