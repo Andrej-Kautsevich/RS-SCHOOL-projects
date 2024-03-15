@@ -91,7 +91,7 @@ export default class UserNameEntry extends BaseComponent {
     const firstName = this.firstNameInput.getNode().value;
     const surname = this.surnameInput.getNode().value;
 
-    router.navigateTo(PagesId.start);
     localStorageService.saveData('login', { firstName, surname });
+    router.navigateTo(PagesId.start);
   };
 }

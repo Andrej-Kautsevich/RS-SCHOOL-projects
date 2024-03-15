@@ -6,9 +6,9 @@ import { main } from './components/tags';
 import { PagesId } from './components/types';
 
 class App {
-  private loginEntry: BaseComponent;
+  private loginEntry: UserNameEntry;
 
-  private startScreen: BaseComponent;
+  private startScreen: StartScreen;
 
   private root: HTMLElement;
 
@@ -24,6 +24,7 @@ class App {
       this.renderPage(this.loginEntry);
     });
     router.addRoute(PagesId.start, () => {
+      this.startScreen.updateUserName();
       this.renderPage(this.startScreen);
     });
 

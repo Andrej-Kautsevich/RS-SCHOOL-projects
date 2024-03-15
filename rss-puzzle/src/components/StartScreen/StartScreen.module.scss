@@ -17,6 +17,21 @@
   color: var(--accent-color);
 }
 
+.start__greeting {
+  opacity: 0;
+  animation: fade-in 2s linear 0.5s;
+  animation-fill-mode: forwards;
+}
+
 .start__description {
   text-align: center;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
