@@ -10,7 +10,6 @@ export class RouterService {
   navigateTo(path: PagesId) {
     if (this.routes[path]) {
       this.routes[path]!();
-
     } else {
       throw new Error('Route not found!');
     }

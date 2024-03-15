@@ -1,4 +1,6 @@
-export default class StorageService<T> {
+import { UserData } from '../types';
+
+export class StorageService<T> {
   private storageKeyPrefix: string;
 
   constructor(storageKeyPrefix: string) {
@@ -27,3 +29,5 @@ export default class StorageService<T> {
     }
   }
 }
+
+export const localStorageService = new StorageService<UserData>('user');

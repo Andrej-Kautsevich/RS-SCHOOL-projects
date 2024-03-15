@@ -2,8 +2,8 @@ import { button, div, form, input, label, p } from '../tags';
 import styles from './userNameEntry.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import { BaseComponent } from '../BaseComponent';
-import StorageService from '../services/LocalStorageService';
-import { PagesId, UserData } from '../types';
+import { localStorageService } from '../services/LocalStorageService';
+import { PagesId } from '../types';
 import { router } from '../services/RouterService';
 
 export default class UserNameEntry extends BaseComponent {
@@ -15,7 +15,7 @@ export default class UserNameEntry extends BaseComponent {
 
   private submitButton: BaseComponent;
 
-  constructor(private localStorageService = new StorageService<UserData>('user')) {
+  constructor() {
     super({ className: styles.userEntry });
 
     this.firstNameInput = input({
@@ -91,7 +91,7 @@ export default class UserNameEntry extends BaseComponent {
     const firstName = this.firstNameInput.getNode().value;
     const surname = this.surnameInput.getNode().value;
 
-    this.localStorageService.saveData('login', { firstName, surname });
     router.navigateTo(PagesId.start);
+    localStorageService.saveData('login', { firstName, surname });
   };
 }
