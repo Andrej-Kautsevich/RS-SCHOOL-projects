@@ -28,6 +28,9 @@
 }
 
 .start__button {
+  width: 100%;
+  max-width: 100px;
+  justify-content: center;
   --size: 1rem;
 
   .start__button-icon {

@@ -4,9 +4,18 @@
   height: var(--size);
 }
 
-.icon_logout {
-  mask-image: url(../assets/images/logout_icon.svg);
+@mixin icon-background {
   background-color: var(--icon-color);
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.icon_logout {
+  mask-image: url(../assets/images/logout_icon.svg);
+  @include icon-background;
+}
+
+.icon_play {
+  mask-image: url(../assets/images/play_icon.svg);
+  @include icon-background;
 }

@@ -28,6 +28,7 @@ class App {
       this.startScreen.updateUserName();
       this.renderPage(this.startScreen);
     });
+    router.addRoute(PagesId.main, () => {});
 
     this.start();
   }

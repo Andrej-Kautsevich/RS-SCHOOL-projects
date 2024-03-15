@@ -6,4 +6,6 @@ export interface UserData {
 export enum PagesId {
   login = 'login',
   start = 'start',
+
+  main = 'main',
 }
