@@ -16,11 +16,11 @@ export class StorageService<T> {
     localStorage.setItem(storageKey, JSON.stringify(data));
   }
 
-  public getData(key: string): T | null {
+  public getData(key: string): T | undefined {
     const storageKey = this.getStorageKey(key);
     const data = localStorage.getItem(storageKey);
     if (!data) {
-      return null;
+      return undefined;
     }
     try {
       return JSON.parse(data);

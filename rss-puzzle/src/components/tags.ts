@@ -27,3 +27,11 @@ export const input = (props: ElementFnProps<HTMLInputElement>) => {
 export const button = (props: ElementFnProps<HTMLButtonElement>) => {
   return new BaseComponent<HTMLButtonElement>({ ...props, tag: 'button' });
 };
+
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+export const h = (level: HeadingLevel, props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLHeadingElement>(
+    { ...props, tag: `h${level}` as keyof HTMLElementTagNameMap },
+    ...children,
+  );
+};

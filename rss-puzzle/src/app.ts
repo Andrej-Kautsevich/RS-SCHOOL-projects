@@ -1,11 +1,14 @@
 import { BaseComponent } from './components/BaseComponent';
+import StartScreen from './components/StartScreen/StartScreen';
 import UserNameEntry from './components/UserNameEntry/UserNameEntry';
 import { router } from './components/services/RouterService';
-import { div, main } from './components/tags';
+import { main } from './components/tags';
 import { PagesId } from './components/types';
 
 class App {
   private loginEntry: BaseComponent;
+
+  private startScreen: BaseComponent;
 
   private root: HTMLElement;
 
@@ -14,13 +17,14 @@ class App {
   constructor() {
     this.root = document.body;
     this.loginEntry = new UserNameEntry();
+    this.startScreen = new StartScreen();
     this.mainComponent = main.call(null, { className: 'main' });
 
     router.addRoute(PagesId.login, () => {
       this.renderPage(this.loginEntry);
     });
     router.addRoute(PagesId.start, () => {
-      this.renderPage(div({})); // TODO: add start page
+      this.renderPage(this.startScreen);
     });
 
     this.start();

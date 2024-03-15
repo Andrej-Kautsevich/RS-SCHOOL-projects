@@ -8,8 +8,18 @@ p {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
 :root {
-  --main-color: rgb(214, 168, 168);
+  --main-color: #d6a8a8;
+  --accent-color: #954747;
 
   --text-primary: #1b1b1b;
   --text-secondary: #4e4e4e;
@@ -23,9 +33,13 @@ p {
   --button-primary-hover: #dddddd;
 
   --overlay-color: rgba(0, 0, 0, 0.5);
+
+  --gutter: 1rem;
+  --elem-radius: 0.5rem;
 }
 
 .main {
+  display: flex;
   width: 100vw;
   height: 100vh;
   margin: 0 auto;
