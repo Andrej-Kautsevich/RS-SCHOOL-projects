@@ -1,5 +1,5 @@
-import { localStorageService } from '../components/services/LocalStorageService';
-import { UserData } from '../components/types';
+import { localStorageService } from '../services/LocalStorageService';
+import { UserData } from '../types';
 
 export class User {
   private userData: UserData | undefined;

@@ -1,12 +1,12 @@
 import { BaseComponent } from '../BaseComponent';
-import { localStorageService } from '../services/LocalStorageService';
+import { localStorageService } from '../../services/LocalStorageService';
 import { button, h, p, span } from '../tags';
 import styles from './StartScreen.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import iconStyles from '../../styles/icons.module.scss';
 import { user } from '../../models/User';
-import { router } from '../services/RouterService';
-import { PagesId } from '../types';
+import { router } from '../../services/RouterService';
+import { PagesId } from '../../types';
 
 export default class StartScreen extends BaseComponent {
   private userGreeting: BaseComponent<HTMLHeadingElement>;

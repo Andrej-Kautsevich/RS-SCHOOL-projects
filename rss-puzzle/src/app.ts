@@ -1,9 +1,9 @@
 import { BaseComponent } from './components/BaseComponent';
 import StartScreen from './components/StartScreen/StartScreen';
 import UserNameEntry from './components/UserNameEntry/UserNameEntry';
-import { router } from './components/services/RouterService';
+import { router } from './services/RouterService';
 import { main } from './components/tags';
-import { PagesId } from './components/types';
+import { PagesId } from './types';
 import { user } from './models/User';
 
 class App {

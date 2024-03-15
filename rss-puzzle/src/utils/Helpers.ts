@@ -1,4 +1,4 @@
-import { localStorageService } from '../components/services/LocalStorageService';
+import { localStorageService } from '../services/LocalStorageService';
 
 export const isNotNullable = <T>(element: T | null | undefined): element is T => {
   return typeof element !== 'undefined' && element !== null;
