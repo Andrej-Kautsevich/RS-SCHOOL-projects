@@ -1,7 +1,12 @@
 import { BaseComponent } from '../BaseComponent';
 import { localStorageService } from '../services/LocalStorageService';
-import { h, p } from '../tags';
+import { button, h, p, span } from '../tags';
 import styles from './StartScreen.module.scss';
+import buttonStyles from '../../styles/button.module.scss';
+import iconStyles from '../../styles/icons.module.scss';
+import { user } from '../../models/User';
+import { router } from '../services/RouterService';
+import { PagesId } from '../types';
 
 export default class StartScreen extends BaseComponent {
   private userGreeting: BaseComponent<HTMLHeadingElement>;
@@ -19,6 +24,17 @@ export default class StartScreen extends BaseComponent {
         className: styles.startDescription,
         txt: 'RSS Puzzle is an interactive mini-game aimed at enhancing English language skills. Assemble sentences to reveal parts of an artwork puzzle. Toggle hints for enhanced gameplay experience',
       }),
+      button(
+        {
+          classNames: [styles.start__button, buttonStyles.button, buttonStyles.buttonHasIcon],
+          onclick() {
+            user.deleteUser();
+            router.navigateTo(PagesId.login);
+          },
+        },
+        span({ className: styles.startButtonText, txt: 'Log out' }),
+        span({ classNames: [styles.startButtonIcon, iconStyles.icon, iconStyles.iconLogout] }),
+      ),
     ]);
   }
 

@@ -27,10 +27,35 @@
   text-align: center;
 }
 
+.start__button {
+  --size: 1rem;
+
+  .start__button-icon {
+    opacity: 0;
+  }
+
+  .start__button-text {
+    transform: translateX(calc(var(--size) / 2));
+    transition: all 0.5s;
+  }
+
+  &:hover {
+    .start__button-icon {
+      animation: fade-in 1s;
+      animation-fill-mode: forwards;
+    }
+
+    .start__button-text {
+      transform: translateX(0);
+    }
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

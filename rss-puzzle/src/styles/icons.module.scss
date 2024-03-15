@@ -1,0 +1,12 @@
+.icon {
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+}
+
+.icon_logout {
+  mask-image: url(../assets/images/logout_icon.svg);
+  background-color: var(--icon-color);
+  background-repeat: no-repeat;
+  background-size: contain;
+}

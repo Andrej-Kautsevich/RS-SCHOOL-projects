@@ -8,6 +8,10 @@ export const p = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLParagraphElement>({ ...props, tag: 'p' }, ...children);
 };
 
+export const span = (props: ElementFnProps) => {
+  return new BaseComponent<HTMLSpanElement>({ ...props, tag: 'span' });
+};
+
 export const main = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['main']>({ ...props, tag: 'main' }, ...children);
 };
@@ -24,8 +28,8 @@ export const input = (props: ElementFnProps<HTMLInputElement>) => {
   return new BaseComponent<HTMLInputElement>({ ...props, tag: 'input' });
 };
 
-export const button = (props: ElementFnProps<HTMLButtonElement>) => {
-  return new BaseComponent<HTMLButtonElement>({ ...props, tag: 'button' });
+export const button = (props: ElementFnProps<HTMLButtonElement>, ...children: (BaseComponent | HTMLElement)[]) => {
+  return new BaseComponent<HTMLButtonElement>({ ...props, tag: 'button' }, ...children);
 };
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
