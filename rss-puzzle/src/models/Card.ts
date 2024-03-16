@@ -7,10 +7,11 @@ export default class Card extends BaseComponent {
 
   private sources: BaseComponent;
 
-  constructor(word: string, gameBoard: GameBoard, sources: BaseComponent) {
+  constructor(word: string, width: number, gameBoard: GameBoard, sources: BaseComponent) {
     super({ classNames: [styles.gameCard], txt: word });
     this.gameBoard = gameBoard;
     this.sources = sources;
+    this.setCardWidth(width);
     this.addListener('click', this.moveCard.bind(this));
   }
 
@@ -21,5 +22,9 @@ export default class Card extends BaseComponent {
   public moveCard() {
     const gameBoardLine = this.gameBoard.getSentenceLine();
     gameBoardLine.append(this.getCard());
+  }
+
+  private setCardWidth(width: number) {
+    this.getNode().style.width = `${width}%`;
   }
 }

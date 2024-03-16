@@ -46,8 +46,10 @@ export default class MainGamePage extends BaseComponent {
   public createCards(): void {
     this.words.forEach((wordRound: string[]) => {
       const cardsLine: Card[] = [];
+      const totalLength = wordRound.reduce((total, word) => total + word.length, 0);
       wordRound.forEach((word) => {
-        const card = new Card(word, this.gameBoard, this.sources);
+        const width = (word.length / totalLength) * 100;
+        const card = new Card(word, width, this.gameBoard, this.sources);
         cardsLine.push(card);
       });
       this.cards.push(cardsLine);
