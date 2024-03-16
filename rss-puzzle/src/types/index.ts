@@ -10,7 +10,7 @@ export enum PagesId {
   main = 'main',
 }
 
-export interface Sentences {
+export interface RoundSentence {
   audioExample: string;
   textExample: string;
   textExampleTranslate: string;
@@ -26,5 +26,5 @@ export interface WordCollection {
 
 export interface Round {
   levelData: object;
-  words: Sentences[];
+  words: RoundSentence[];
 }

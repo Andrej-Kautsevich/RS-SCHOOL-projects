@@ -1,19 +1,21 @@
-import { Round } from '../../types';
+import Card from '../../models/Card';
+import { RoundSentence } from '../../types';
 import { BaseComponent } from '../BaseComponent';
 import { div } from '../tags';
 import styles from './MainGamePage.module.scss';
 
 export default class GameBoard extends BaseComponent {
-  private round: Round;
+  public roundSentences: RoundSentence[] = [];
 
   private sentenceLines: BaseComponent[] = [];
 
+  public currentCards: Card[] = [];
+
   public currentSentenceNumber: number = 0;
 
-  constructor(round: Round) {
+  constructor() {
     super({ className: styles.gameGameBoard });
-    this.round = round;
-    this.createLines(this.round.words.length);
+    this.createLines(this.roundSentences.length);
   }
 
   public createLines(roundsNumber: number) {
@@ -24,7 +26,26 @@ export default class GameBoard extends BaseComponent {
     }
   }
 
+  public clearBoard() {
+    this.destroyChildren();
+    this.currentCards = [];
+    this.currentSentenceNumber = 0;
+    this.sentenceLines = [];
+    this.createLines(this.roundSentences.length);
+  }
+
   public getSentenceLine() {
     return this.sentenceLines[this.currentSentenceNumber];
+  }
+
+  public addCard(card: Card) {
+    this.currentCards.push(card);
+  }
+
+  public removeCard(card: Card) {
+    const index = this.currentCards.indexOf(card);
+    if (index !== -1) {
+      this.currentCards.splice(index, 1);
+    }
   }
 }

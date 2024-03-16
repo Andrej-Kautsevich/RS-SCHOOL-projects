@@ -19,3 +19,8 @@
   mask-image: url(../assets/images/play_icon.svg);
   @include icon-background;
 }
+
+.icon_continue {
+  mask-image: url(../assets/images/right_arrow_icon.svg);
+  @include icon-background;
+}

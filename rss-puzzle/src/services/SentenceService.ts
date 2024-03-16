@@ -22,15 +22,6 @@ export class SentenceService {
       this.wordCollectionLevel.rounds[Math.floor(Math.random() * this.wordCollectionLevel.rounds.length)];
     return randomRound;
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getSentencesFromRound(round: Round): string[] {
-    const sentences: string[] = [];
-    round.words.forEach((word) => {
-      sentences.push(word.textExample);
-    });
-    return sentences;
-  }
 }
 
 export const sentenceService = new SentenceService(wordCollectionLevel1);
