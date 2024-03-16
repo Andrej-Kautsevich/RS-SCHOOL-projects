@@ -12,16 +12,24 @@ export default class Card extends BaseComponent {
     this.gameBoard = gameBoard;
     this.sources = sources;
     this.setCardWidth(width);
-    this.addListener('click', this.moveCard.bind(this));
+    this.addListener('click', this.moveCardToGameBoard.bind(this));
   }
 
   public getCard() {
     return this.getNode();
   }
 
-  public moveCard() {
+  private moveCardToGameBoard() {
     const gameBoardLine = this.gameBoard.getSentenceLine();
     gameBoardLine.append(this.getCard());
+    this.removeListener('click', this.moveCardToGameBoard);
+    this.addListener('click', this.moveCardToSources.bind(this));
+  }
+
+  private moveCardToSources() {
+    this.sources.append(this.getCard());
+    this.removeListener('click', this.moveCardToSources);
+    this.addListener('click', this.moveCardToGameBoard.bind(this));
   }
 
   private setCardWidth(width: number) {
