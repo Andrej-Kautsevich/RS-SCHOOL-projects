@@ -1,0 +1,50 @@
+:root {
+  --card-background-color: #f077dc;
+  --card-border-color: #6c3463;
+}
+
+.game {
+  max-width: var(--content-width);
+  margin: auto;
+
+  display: grid;
+  min-height: 100vh;
+  column-gap: 1rem;
+  row-gap: 1rem;
+
+  grid-template: ". gameBar ." 2fr
+    ". gameBoard ." minmax(50dvh, 10fr)
+    ". sources ." 1fr
+    ". buttons ." 1fr
+    "empty empty empty" 1fr
+    / minmax(50px, 1fr) minmax(50dvw, 3fr) minmax(50px, 1fr);
+}
+
+.game__game-board {
+  display: grid;
+  grid-template-rows: repeat(10, 10%);
+  grid-area: gameBoard;
+  border: 1px solid var(--card-border-color);
+}
+
+.game__line {
+  display: flex;
+  border: 1px solid black;
+}
+
+.game__sources {
+  display: flex;
+  grid-area: sources;
+  height: fit-content;
+}
+
+.game__card {
+  display: flex;
+  align-items: center;
+  background-color: var(--card-background-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 4px;
+  padding: 1dvh 0.5dvw;
+  user-select: none;
+  cursor: grab;
+}

@@ -18,6 +18,10 @@ h6 {
 }
 
 :root {
+  --content-width: 1440px;
+  --tablet-width: 900px;
+  --mobile-width: 650px;
+
   --main-color: #d6a8a8;
   --accent-color: #954747;
   --icon-color: #1b1b1b;
