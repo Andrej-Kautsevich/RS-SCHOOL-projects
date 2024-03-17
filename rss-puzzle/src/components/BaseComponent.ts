@@ -33,6 +33,9 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     }
   }
 
+  /**
+   * Appends a child component to the current component.
+   */
   public append(child: BaseComponent | HTMLElement): void {
     if (child instanceof BaseComponent) {
       this.children.push(child);
@@ -48,28 +51,62 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     });
   }
 
+  /**
+   * Returns the HTML node associated with the component.
+   */
   public getNode() {
     return this.node;
   }
 
+  /**
+   * Returns an array of child components.
+   */
   public getChildren() {
     return this.children;
   }
 
+  /**
+   * Sets the text content of the component.
+   */
   public setTextContent(content: string): void {
     this.node.textContent = content;
   }
 
+  /**
+   * Sets an attribute on the component's HTML node.
+   */
   public setAttribute(attribute: string, value: string): void {
     this.node.setAttribute(attribute, value);
   }
 
+  /**
+   * Removes an attribute from the component's HTML node.
+   */
   public removeAttribute(attribute: string): void {
     this.node.removeAttribute(attribute);
   }
 
+  /**
+   * Toggles the presence of a CSS class on the component's HTML node.
+   */
   public toggleClass(className: string): void {
     this.node.classList.toggle(className);
+  }
+
+  /**
+   * Add one or more CSS classes on the component's HTML node.
+   * @param {string[]} classNames - array of classes names
+   */
+  public addClasses(classNames: string[]): void {
+    this.node.classList.add(...classNames);
+  }
+
+  /**
+   * Remove one or more CSS classes on the component's HTML node.
+   * @param {string[]} classNames - array of classes names
+   */
+  public removeClasses(classNames: string[]): void {
+    this.node.classList.remove(...classNames);
   }
 
   public addListener(event: string, listener: EventListener, options = false): void {
