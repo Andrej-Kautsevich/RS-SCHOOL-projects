@@ -8,10 +8,9 @@ import GameButtons from './GameButtons/GameButtons';
 import ButtonState from './GameButtons/types';
 import GameUIManager from './GameUIManager/GameUIManager';
 import styles from './MainGamePage.module.scss';
-import cardStyles from '../../models/card.module.scss';
 import AUTO_COMPLETE_DELAY from './types/constants';
+// import AUTO_COMPLETE_DELAY from './types/constants';
 import { getSentencesFromRound } from './utils';
-import backgroundImage from '../../assets/images/backgrounds/cvety-priroda-lug-poni-losadka.jpg';
 
 export default class MainGamePage extends BaseComponent {
   private gameBoard: GameBoard;
@@ -31,8 +30,6 @@ export default class MainGamePage extends BaseComponent {
   private roundSentences: RoundSentence[] = [];
 
   public currentRoundSentence: number = 0;
-
-  private image: string = backgroundImage;
 
   constructor() {
     super({ className: styles.game });
@@ -63,7 +60,7 @@ export default class MainGamePage extends BaseComponent {
       const totalLength = wordRound.reduce((total, word) => total + word.length, 0);
       wordRound.forEach((word) => {
         const width = (word.length / totalLength) * 100;
-        const card = new Card(word, width, this.image);
+        const card = new Card(word, width);
         card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
         cardsLine.push(card);
       });
@@ -87,25 +84,22 @@ export default class MainGamePage extends BaseComponent {
     card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
     this.gameBoard.removeCard(card);
     this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
-    card.removeClasses([cardStyles.card_true, cardStyles.card_false]);
+    card.removeClasses([styles.game__card_true, styles.game__card_false]);
   };
 
   private checkSentenceWords(): boolean {
     let isMatching = true;
     this.gameBoard.currentCards.forEach((card, index) => {
       if (card.getWord() !== this.words[this.currentRoundSentence][index]) {
-        card.toggleClass(cardStyles.card_true, false);
-        card.toggleClass(cardStyles.card_false, true);
+        card.toggleClass(styles.game__card_true, false);
+        card.toggleClass(styles.game__card_false, true);
         isMatching = false;
       } else {
-        card.toggleClass(cardStyles.card_false, false);
-        card.toggleClass(cardStyles.card_true, true);
+        card.toggleClass(styles.game__card_false, false);
+        card.toggleClass(styles.game__card_true, true);
       }
     });
     if (this.isSentenceLineComplete() && isMatching) {
-      this.gameBoard.currentCards.forEach((card) => {
-        card.toggleClass(cardStyles.card_completed);
-      });
       this.gameButtons.transformButton(ButtonState.continue);
       this.gameButtons.observer.unsubscribeAll();
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
@@ -135,7 +129,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
 
     this.gameBoard.currentCards.forEach((card) => {
-      card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
+      card.removeClasses([styles.game__card_false, styles.game__card_true]);
     });
 
     if (this.currentRoundSentence > this.round.words.length - 1) {

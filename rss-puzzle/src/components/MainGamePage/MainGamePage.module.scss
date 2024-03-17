@@ -18,10 +18,8 @@
   column-gap: 1rem;
   row-gap: 1rem;
 
-  /* prettier-ignore */
   grid-template: ". gameBar ." 2fr
-    ". gameBoard ." minmax(50dvh, 10fr)
-    ". sources ." 1fr
+    ". gameBoard ." minmax(50dvh, 10fr) ". sources ." 1fr
     ". buttons ." 1fr
     "empty empty empty" 1fr
     / 1fr minmax(50dvw, 3fr) 1fr;
@@ -42,6 +40,30 @@
 .game__sources {
   display: flex;
   grid-area: sources;
+}
+
+.game__card {
+  display: flex;
+  align-items: center;
+  background-color: var(--card-background-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 4px;
+  padding: 1dvh 0.5dvw;
+  user-select: none;
+  cursor: grab;
+  justify-content: center;
+  transition: 0.5s ease;
+  transition-property: color, background-color;
+
+  &_true {
+    color: var(--card-true-color);
+    background-color: var(--card-true-background-color);
+  }
+
+  &_false {
+    color: var(--card-false-color);
+    background-color: var(--card-false-background-color);
+  }
 }
 
 .game__buttons {
