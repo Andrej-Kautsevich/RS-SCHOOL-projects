@@ -1,3 +1,7 @@
+:root {
+  --color-true: #28c38a;
+}
+
 .game-button {
   min-width: 20%;
   // max-width: 100px;
@@ -11,6 +15,12 @@
   &__text {
     transform: translateX(calc(var(--size) / 2));
     transition: all 0.5s;
+  }
+
+  &_checked {
+    transition: all 1s ease;
+    --button-hover: var(--color-true);
+    --button-bg: var(--color-true);
   }
 
   &:not(:disabled):hover {

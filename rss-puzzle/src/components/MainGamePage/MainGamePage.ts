@@ -5,6 +5,7 @@ import { BaseComponent } from '../BaseComponent';
 import { div } from '../tags';
 import GameBoard from './GameBoard';
 import GameButtons from './GameButtons/GameButtons';
+import ButtonState from './GameButtons/types';
 import GameUIManager from './GameUIManager/GameUIManager';
 import styles from './MainGamePage.module.scss';
 import { getSentencesFromRound } from './utils';
@@ -92,6 +93,11 @@ export default class MainGamePage extends BaseComponent {
         card.toggleClass(styles.game__card_true, true);
       }
     });
+    if (this.isSentenceLineComplete() && isMatching) {
+      this.gameButtons.transformButton(ButtonState.continue);
+      this.gameButtons.observer.unsubscribeAll();
+      this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
+    }
     return isMatching;
   }
 
@@ -109,6 +115,16 @@ export default class MainGamePage extends BaseComponent {
 
   private handleContinueButton() {
     this.currentRoundSentence += 1;
+
+    this.gameButtons.transformButton(ButtonState.check);
+    this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
+    this.gameButtons.observer.unsubscribeAll();
+    this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
+
+    this.gameBoard.currentCards.forEach((card) => {
+      card.removeClasses([styles.game__card_false, styles.game__card_true]);
+    });
+
     if (this.currentRoundSentence > this.round.words.length) {
       this.round = sentenceService.getRandomRound();
       this.currentRoundSentence = 0;

@@ -13,6 +13,10 @@ export class Observer<T> {
     this.observers = this.observers.filter((subscriber) => subscriber !== observer);
   }
 
+  public unsubscribeAll() {
+    this.observers = [];
+  }
+
   public notify(data: T) {
     this.observers.forEach((observer) => observer.update(data));
   }
