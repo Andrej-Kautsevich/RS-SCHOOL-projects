@@ -15,6 +15,7 @@ export default class Hint extends BaseComponent {
       { classNames: [styles.hint__button] },
       span({ classNames: [iconStyles.icon, iconStyles.icon_hint] }),
     );
+    this.hintButton.addListener('click', this.toggleHint.bind(this));
     this.hintLine = span({ classNames: [styles.hint__line] });
 
     this.appendChildren([this.hintButton, this.hintLine]);
@@ -22,5 +23,10 @@ export default class Hint extends BaseComponent {
 
   public addHint(hint: string) {
     this.hintLine.setTextContent(hint);
+  }
+
+  private toggleHint() {
+    console.log('das');
+    this.hintButton.toggleClass(styles.hint__button_active);
   }
 }
