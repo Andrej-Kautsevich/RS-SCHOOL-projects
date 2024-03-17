@@ -39,3 +39,7 @@ export const h = (level: HeadingLevel, props: ElementFnProps, ...children: BaseC
     ...children,
   );
 };
+
+export const img = (source: string, props?: ElementFnProps<HTMLImageElement>) => {
+  return new BaseComponent<HTMLImageElement>({ ...props, src: source, tag: 'img' });
+};
