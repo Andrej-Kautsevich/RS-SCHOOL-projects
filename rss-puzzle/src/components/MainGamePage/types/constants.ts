@@ -1,0 +1,3 @@
+const AUTO_COMPLETE_DELAY = 80;
+
+export default AUTO_COMPLETE_DELAY;

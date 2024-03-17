@@ -10,7 +10,11 @@ import ButtonState from './types';
 export default class GameButtons extends BaseComponent {
   private continueButton: BaseComponent<HTMLButtonElement>;
 
+  private completeButton: BaseComponent<HTMLButtonElement>;
+
   public observer = new Observer<void>();
+
+  public competeObserver = new Observer<void>();
 
   constructor() {
     super({ className: styles.gameButtons });
@@ -25,11 +29,24 @@ export default class GameButtons extends BaseComponent {
     this.continueButton.getNode().addEventListener('click', () => {
       this.observer.notify();
     });
-    this.appendChildren([this.continueButton]);
+
+    this.completeButton = button({
+      classNames: [buttonStyles.button, gameButtonStyles.gameButtonComplete],
+      txt: 'Complete',
+      onclick: () => {
+        this.competeObserver.notify();
+      },
+    });
+
+    this.appendChildren([this.continueButton, this.completeButton]);
   }
 
   public getContinueButton() {
     return this.continueButton;
+  }
+
+  public getCompleteButton() {
+    return this.completeButton;
   }
 
   public transformButton(state: ButtonState) {

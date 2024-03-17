@@ -69,4 +69,5 @@
 .game__buttons {
   display: flex;
   grid-area: buttons;
+  justify-content: space-around;
 }

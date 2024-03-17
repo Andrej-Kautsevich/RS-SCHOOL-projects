@@ -1,5 +1,6 @@
 :root {
   --color-true: #28c38a;
+  --color-complete: #2582e7;
 }
 
 .game-button {
@@ -21,6 +22,16 @@
     transition: all 1s ease;
     --button-hover: var(--color-true);
     --button-bg: var(--color-true);
+  }
+
+  &_complete {
+    color: var(--text-light);
+    transition: all 1s ease;
+    --button-bg: var(--color-complete);
+
+    &:not(:disabled):hover {
+      color: var(--text-primary);
+    }
   }
 
   &:not(:disabled):hover {
