@@ -11,26 +11,26 @@
 }
 
 .icon_logout {
-  mask-image: url(../assets/images/logout_icon.svg);
+  mask-image: url(../assets/images/icons/logout_icon.svg);
   @include icon-background;
 }
 
 .icon_play {
-  mask-image: url(../assets/images/play_icon.svg);
+  mask-image: url(../assets/images/icons/play_icon.svg);
   @include icon-background;
 }
 
 .icon_continue {
-  mask-image: url(../assets/images/right_arrow_icon.svg);
+  mask-image: url(../assets/images/icons/right_arrow_icon.svg);
   @include icon-background;
 }
 
 .icon_check {
-  mask-image: url(../assets/images/question_help_icon.svg);
+  mask-image: url(../assets/images/icons/question_help_icon.svg);
   @include icon-background;
 }
 
 .icon_hint {
-  mask-image: url(../assets/images/creative_idea_icon.svg);
+  mask-image: url(../assets/images/icons/creative_idea_icon.svg);
   @include icon-background;
 }

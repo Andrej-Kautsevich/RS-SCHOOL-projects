@@ -3,7 +3,7 @@ import { sentenceService } from '../../services/SentenceService';
 import { Round, RoundSentence } from '../../types';
 import { BaseComponent } from '../BaseComponent';
 import { div } from '../tags';
-import GameBoard from './GameBoard';
+import GameBoard from './GameBoard/GameBoard';
 import GameButtons from './GameButtons/GameButtons';
 import ButtonState from './GameButtons/types';
 import GameUIManager from './GameUIManager/GameUIManager';
@@ -139,21 +139,11 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
 
-    this.gameBoard.currentCards.forEach((card) => {
-      card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
-    });
-
-    this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
-
     if (this.currentRoundSentence > this.round.words.length - 1) {
-      this.round = sentenceService.getRandomRound();
-      this.currentRoundSentence = 0;
       this.startNewRound();
       return;
     }
-    this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
-    this.gameBoard.currentCards = [];
-    this.gameBoard.currentSentenceNumber = this.currentRoundSentence;
+    this.startNewSentence();
   }
 
   private async handleCompleteButton() {
@@ -182,14 +172,25 @@ export default class MainGamePage extends BaseComponent {
     this.handleCheckButton();
   }
 
+  private startNewSentence() {
+    this.gameBoard.currentCards.forEach((card) => {
+      card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
+    });
+
+    this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
+    this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
+    this.gameBoard.currentCards = [];
+    this.gameBoard.currentSentenceNumber = this.currentRoundSentence;
+  }
+
   private startNewRound() {
+    this.currentRoundSentence = 0;
     this.round = sentenceService.getRandomRound();
     this.roundSentences = getSentencesFromRound(this.round);
     this.gameBoard.roundSentences = this.roundSentences;
     this.gameBoard.clearBoard();
     this.setWords();
     this.createCards();
-    this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
-    this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
+    this.startNewSentence();
   }
 }

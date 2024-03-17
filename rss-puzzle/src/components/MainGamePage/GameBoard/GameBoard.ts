@@ -1,8 +1,8 @@
-import Card from '../../models/Card';
-import { RoundSentence } from '../../types';
-import { BaseComponent } from '../BaseComponent';
-import { div } from '../tags';
-import styles from './MainGamePage.module.scss';
+import Card from '../../../models/Card';
+import { RoundSentence } from '../../../types';
+import { BaseComponent } from '../../BaseComponent';
+import { div } from '../../tags';
+import styles from '../MainGamePage.module.scss';
 
 export default class GameBoard extends BaseComponent {
   public roundSentences: RoundSentence[] = [];
