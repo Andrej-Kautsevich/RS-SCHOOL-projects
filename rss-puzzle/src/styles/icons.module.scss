@@ -24,3 +24,8 @@
   mask-image: url(../assets/images/right_arrow_icon.svg);
   @include icon-background;
 }
+
+.icon_check {
+  mask-image: url(../assets/images/question_help_icon.svg);
+  @include icon-background;
+}

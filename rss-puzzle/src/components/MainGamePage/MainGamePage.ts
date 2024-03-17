@@ -33,7 +33,7 @@ export default class MainGamePage extends BaseComponent {
 
     this.gameBoard = new GameBoard();
     this.gameButtons = new GameButtons();
-    this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
+    this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
 
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
@@ -69,7 +69,9 @@ export default class MainGamePage extends BaseComponent {
     gameBoardLine.append(card.getNode());
     card.getNode().addEventListener('click', this.moveCardToSources.bind(this, card), { once: true });
     this.gameBoard.addCard(card);
-    this.checkSentenceWords();
+    if (this.isSentenceLineComplete()) {
+      this.gameButtons.getContinueButton().removeAttribute('disabled');
+    }
   };
 
   private moveCardToSources = (card: Card) => {
@@ -77,19 +79,32 @@ export default class MainGamePage extends BaseComponent {
     card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
     this.gameBoard.removeCard(card);
     this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
+    card.removeClasses([styles.game__card_true, styles.game__card_false]);
   };
 
   private checkSentenceWords(): boolean {
     let isMatching = true;
     this.gameBoard.currentCards.forEach((card, index) => {
       if (card.getWord() !== this.words[this.currentRoundSentence][index]) {
+        card.toggleClass(styles.game__card_false, true);
         isMatching = false;
+      } else {
+        card.toggleClass(styles.game__card_true, true);
       }
     });
-    if (this.gameBoard.currentCards.length === this.words[this.currentRoundSentence].length && isMatching) {
-      this.gameButtons.getContinueButton().removeAttribute('disabled');
-    }
     return isMatching;
+  }
+
+  private isSentenceLineComplete(): boolean {
+    let isComplete = true;
+    if (this.gameBoard.currentCards.length !== this.words[this.currentRoundSentence].length) {
+      isComplete = false;
+    }
+    return isComplete;
+  }
+
+  private handleCheckButton() {
+    this.checkSentenceWords();
   }
 
   private handleContinueButton() {

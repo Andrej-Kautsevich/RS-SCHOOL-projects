@@ -18,12 +18,12 @@ export default class GameButtons extends BaseComponent {
         classNames: [buttonStyles.button, buttonStyles.buttonHasIcon, gameButtonStyles.gameButton],
         disabled: true,
       },
-      span({ className: gameButtonStyles.gameButtonText, txt: 'Continue' }),
-      span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles.iconContinue] }),
+      span({ className: gameButtonStyles.gameButtonText, txt: 'Check' }),
+      span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles.iconCheck] }),
     );
     this.continueButton.getNode().addEventListener('click', () => {
       this.observer.notify();
-      this.continueButton.setAttribute('disabled', 'true');
+      // this.continueButton.setAttribute('disabled', 'true');
     });
     this.appendChildren([this.continueButton]);
   }

@@ -1,6 +1,12 @@
 :root {
   --card-background-color: #f077dc;
   --card-border-color: #6c3463;
+
+  --card-true-color: #28c38a;
+  --card-true-background-color: hsla(158, 66%, 46%, 0.12);
+
+  --card-false-color: #ed593b;
+  --card-false-background-color: hsla(10, 83%, 58%, 0.12);
 }
 
 .game {
@@ -13,8 +19,7 @@
   row-gap: 1rem;
 
   grid-template: ". gameBar ." 2fr
-    ". gameBoard ." minmax(50dvh, 10fr)
-    ". sources ." 1fr
+    ". gameBoard ." minmax(50dvh, 10fr) ". sources ." 1fr
     ". buttons ." 1fr
     "empty empty empty" 1fr
     / 1fr minmax(50dvw, 3fr) 1fr;
@@ -47,6 +52,18 @@
   user-select: none;
   cursor: grab;
   justify-content: center;
+  transition: 0.5s ease;
+  transition-property: color, background-color;
+
+  &_true {
+    color: var(--card-true-color);
+    background-color: var(--card-true-background-color);
+  }
+
+  &_false {
+    color: var(--card-false-color);
+    background-color: var(--card-false-background-color);
+  }
 }
 
 .game__buttons {
