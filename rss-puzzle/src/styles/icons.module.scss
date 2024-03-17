@@ -29,3 +29,8 @@
   mask-image: url(../assets/images/question_help_icon.svg);
   @include icon-background;
 }
+
+.icon_hint {
+  mask-image: url(../assets/images/creative_idea_icon.svg);
+  @include icon-background;
+}

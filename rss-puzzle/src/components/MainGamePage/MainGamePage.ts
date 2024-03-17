@@ -12,8 +12,11 @@ import cardStyles from '../../models/card.module.scss';
 import AUTO_COMPLETE_DELAY from './types/constants';
 import { getSentencesFromRound } from './utils';
 import backgroundImage from '../../assets/images/backgrounds/cvety-priroda-lug-poni-losadka.jpg';
+import Toolbar from './Toolbar/Toolbar';
 
 export default class MainGamePage extends BaseComponent {
+  private toolbar: Toolbar;
+
   private gameBoard: GameBoard;
 
   private sources: BaseComponent;
@@ -36,15 +39,17 @@ export default class MainGamePage extends BaseComponent {
 
   constructor() {
     super({ className: styles.game });
-
     this.gameBoard = new GameBoard();
+
     this.gameButtons = new GameButtons();
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
     this.gameButtons.competeObserver.subscribe({ update: this.handleCompleteButton.bind(this) });
 
+    this.toolbar = new Toolbar();
+
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
-    this.appendChildren([this.gameBoard, this.sources, this.gameButtons]);
+    this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
 
     this.startNewRound();
   }
@@ -138,6 +143,8 @@ export default class MainGamePage extends BaseComponent {
       card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
     });
 
+    this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
+
     if (this.currentRoundSentence > this.round.words.length - 1) {
       this.round = sentenceService.getRandomRound();
       this.currentRoundSentence = 0;
@@ -182,6 +189,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameBoard.clearBoard();
     this.setWords();
     this.createCards();
+    this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
     this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
   }
 }

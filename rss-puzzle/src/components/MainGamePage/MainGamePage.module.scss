@@ -19,7 +19,7 @@
   row-gap: 1rem;
 
   /* prettier-ignore */
-  grid-template: ". gameBar ." 2fr
+  grid-template: ". toolbar ." 2fr
     ". gameBoard ." minmax(50dvh, 10fr)
     ". sources ." 1fr
     ". buttons ." 1fr
