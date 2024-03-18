@@ -13,4 +13,20 @@
   border-color: transparent;
   border-radius: 50%;
   transition: box-shadow 250ms ease;
+
+  &:hover {
+    animation: shadow-pulse 1s infinite;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 2px 0px rgba(106, 91, 37, 0.61);
+  }
+  70% {
+    box-shadow: 0 0 1px 20px rgba(204, 169, 44, 0);
+  }
+  100% {
+    box-shadow: 0 0 2px 0px rgba(204, 169, 44, 0);
+  }
 }
