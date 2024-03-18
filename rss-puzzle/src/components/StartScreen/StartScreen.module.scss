@@ -10,7 +10,7 @@
   align-items: center;
   border-radius: var(--elem-radius);
   background: linear-gradient(var(--background-color), var(--background-color-dark));
-  box-shadow: 0px 0px 15px 7px #000000b3;
+  box-shadow: 0 0 20px 7px var(--accent-color);
 }
 
 .start__title {
