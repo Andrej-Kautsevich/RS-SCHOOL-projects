@@ -1,14 +1,18 @@
 import { BaseComponent } from '../../../BaseComponent';
-import { button, span } from '../../../tags';
+import { button, input, label, span } from '../../../tags';
 import styles from './pronunciation.module.scss';
 import iconStyles from '../../../../styles/icons.module.scss';
 
 export default class Pronunciation extends BaseComponent {
-  private hintButton: BaseComponent<HTMLButtonElement>;
+  public hintButton: BaseComponent<HTMLButtonElement>;
 
   private hintIcon: BaseComponent<HTMLSpanElement>;
 
+  private hintToggleButton: BaseComponent<HTMLInputElement>;
+
   public hint: HTMLAudioElement | null = null;
+
+  public hintEnabled: boolean = false;
 
   constructor() {
     super({ classNames: [styles.pronunciation] });
@@ -19,7 +23,19 @@ export default class Pronunciation extends BaseComponent {
       this.hintIcon,
     );
 
-    this.appendChildren([this.hintButton]);
+    this.hintToggleButton = input({
+      classNames: [styles.pronunciation__toggleButton],
+      type: 'checkbox',
+      id: 'pronunciation',
+      name: 'pronunciation',
+      onclick: () => this.toggleHint(),
+    });
+
+    this.appendChildren([
+      this.hintButton,
+      this.hintToggleButton,
+      label({ className: styles.pronunciation__label, htmlFor: 'pronunciation', txt: 'Show pronunciation hint' }),
+    ]);
   }
 
   public addAudio(audioSrc: string) {
@@ -32,5 +48,14 @@ export default class Pronunciation extends BaseComponent {
     if (this.hint) {
       this.hint.play();
     }
+  }
+
+  private toggleHint() {
+    this.hintEnabled = !this.hintEnabled;
+    this.showHint(this.hintEnabled);
+  }
+
+  public showHint(isVisible: boolean) {
+    this.hintButton.toggleClass(styles.pronunciation__button_visible, isVisible);
   }
 }

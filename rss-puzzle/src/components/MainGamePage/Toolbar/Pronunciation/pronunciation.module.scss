@@ -1,10 +1,12 @@
 .pronunciation {
   display: flex;
+  align-items: center;
 }
 
 .pronunciation__button {
   display: flex;
-  cursor: pointer;
+  visibility: hidden;
+  margin-right: 1rem;
   --size: 2rem;
   appearance: none;
   padding: 0;
@@ -16,6 +18,53 @@
 
   &:hover {
     animation: shadow-pulse 1s infinite;
+  }
+
+  &_visible {
+    visibility: visible;
+    cursor: pointer;
+  }
+}
+
+.pronunciation__toggleButton {
+  display: none;
+
+  &:hover + .pronunciation__label::before {
+    background: #50565a;
+    box-shadow: inset 0px 0px 0px 2px #f7f2f2;
+  }
+
+  &:checked + .pronunciation__label::before {
+    width: 1em;
+    height: 1em;
+    border-radius: 0.2em;
+    border: 2px solid #fff;
+    transform: rotate(90deg);
+    background: #50565a;
+    box-shadow: 0 0 0 1px #000;
+  }
+}
+
+.pronunciation__label {
+  display: block;
+  position: relative;
+  padding-left: 1.5em;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 1em;
+    height: 1em;
+    border: 1px solid #343a3f;
+    border-radius: 0.2em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition:
+      all 0.2s,
+      background 0.2s ease-in-out;
+    background: #f3f3f3;
   }
 }
 

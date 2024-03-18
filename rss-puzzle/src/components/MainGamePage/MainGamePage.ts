@@ -114,6 +114,10 @@ export default class MainGamePage extends BaseComponent {
       this.gameButtons.transformButton(ButtonState.continue);
       this.gameButtons.observer.unsubscribeAll();
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
+
+      if (!this.toolbar.pronunciation.hintEnabled) {
+        this.toolbar.pronunciation.showHint(true);
+      }
     }
     return isMatching;
   }
@@ -138,6 +142,9 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.getCompleteButton().removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
+    if (!this.toolbar.pronunciation.hintEnabled) {
+      this.toolbar.pronunciation.showHint(false);
+    }
 
     if (this.currentRoundSentence > this.round.words.length - 1) {
       this.startNewRound();
