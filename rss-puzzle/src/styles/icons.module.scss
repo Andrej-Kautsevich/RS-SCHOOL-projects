@@ -34,3 +34,8 @@
   mask-image: url(../assets/images/icons/creative_idea_icon.svg);
   @include icon-background;
 }
+
+.icon_sound {
+  mask-image: url(../assets/images/icons/speaker_none_thin_icon.svg);
+  @include icon-background;
+}

@@ -177,7 +177,10 @@ export default class MainGamePage extends BaseComponent {
       card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
     });
 
+    // set Hints
     this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
+    this.toolbar.pronunciation.addAudio(this.round.words[this.currentRoundSentence].audioExample);
+
     this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
     this.gameBoard.currentCards = [];
     this.gameBoard.currentSentenceNumber = this.currentRoundSentence;

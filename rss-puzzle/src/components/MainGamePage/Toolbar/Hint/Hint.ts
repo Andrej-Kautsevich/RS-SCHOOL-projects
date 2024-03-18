@@ -26,7 +26,6 @@ export default class Hint extends BaseComponent {
   }
 
   private toggleHint() {
-    console.log('das');
     this.hintButton.toggleClass(styles.hint__button_active);
   }
 }

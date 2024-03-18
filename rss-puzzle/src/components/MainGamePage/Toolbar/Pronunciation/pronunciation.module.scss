@@ -1,0 +1,16 @@
+.pronunciation {
+  display: flex;
+}
+
+.pronunciation__button {
+  display: flex;
+  cursor: pointer;
+  --size: 2rem;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 50%;
+  transition: box-shadow 250ms ease;
+}

@@ -10,9 +10,12 @@
 }
 
 .hint__button {
-  display: block;
+  display: flex;
   cursor: pointer;
   --size: 2rem;
+  appearance: none;
+  padding: 0;
+  border: none;
   background-color: transparent;
   border-color: transparent;
   border-radius: 50%;
