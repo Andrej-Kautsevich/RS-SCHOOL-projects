@@ -127,7 +127,7 @@ export default class MainGamePage extends BaseComponent {
       this.gameButtons.observer.unsubscribeAll();
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
 
-      if (!this.toolbar.pronunciation.hintEnabled) {
+      if (!this.toolbar.pronunciation.pronunciationHintActive) {
         this.toolbar.pronunciation.showHint(true);
       }
     }
@@ -154,7 +154,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.getCompleteButton().removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
-    if (!this.toolbar.pronunciation.hintEnabled) {
+    if (!this.toolbar.pronunciation.pronunciationHintActive) {
       this.toolbar.pronunciation.showHint(false);
     }
 

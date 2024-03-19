@@ -2,6 +2,7 @@ import { BaseComponent } from '../../../BaseComponent';
 import { button, input, label, span } from '../../../tags';
 import styles from './pronunciation.module.scss';
 import iconStyles from '../../../../styles/icons.module.scss';
+import { user } from '../../../../models/User';
 
 export default class Pronunciation extends BaseComponent {
   public hintButton: BaseComponent<HTMLButtonElement>;
@@ -12,14 +13,17 @@ export default class Pronunciation extends BaseComponent {
 
   public hint: HTMLAudioElement | null = null;
 
-  public hintEnabled: boolean = false;
+  public pronunciationHintActive: boolean = true;
 
   constructor() {
     super({ classNames: [styles.pronunciation] });
 
     this.hintIcon = span({ classNames: [iconStyles.icon, iconStyles.icon_sound] });
     this.hintButton = button(
-      { classNames: [styles.pronunciation__button], onclick: () => this.playAudio() },
+      {
+        classNames: [styles.pronunciation__button, styles.pronunciation__button_visible],
+        onclick: () => this.playAudio(),
+      },
       this.hintIcon,
     );
 
@@ -28,6 +32,7 @@ export default class Pronunciation extends BaseComponent {
       type: 'checkbox',
       id: 'pronunciation',
       name: 'pronunciation',
+      checked: true,
       onclick: () => this.toggleHint(),
     });
 
@@ -36,6 +41,11 @@ export default class Pronunciation extends BaseComponent {
       this.hintToggleButton,
       label({ className: styles.pronunciation__label, htmlFor: 'pronunciation', txt: 'Show pronunciation hint' }),
     ]);
+
+    if (!user.getSettings()?.pronunciationHint) {
+      this.hintToggleButton.getNode().checked = false;
+      this.toggleHint();
+    }
   }
 
   public addAudio(audioSrc: string) {
@@ -51,11 +61,12 @@ export default class Pronunciation extends BaseComponent {
   }
 
   private toggleHint() {
-    this.hintEnabled = !this.hintEnabled;
-    this.showHint(this.hintEnabled);
+    this.pronunciationHintActive = !this.pronunciationHintActive;
+    user.setSettings('pronunciationHint', this.pronunciationHintActive);
+    this.showHint();
   }
 
-  public showHint(isVisible: boolean) {
-    this.hintButton.toggleClass(styles.pronunciation__button_visible, isVisible);
+  public showHint() {
+    this.hintButton.toggleClass(styles.pronunciation__button_visible);
   }
 }

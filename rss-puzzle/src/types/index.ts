@@ -1,6 +1,14 @@
 export interface UserData {
   firstName: string;
   surname: string;
+
+  settings?: UserSettings;
+}
+
+export interface UserSettings {
+  translateHint: boolean;
+  pronunciationHint: boolean;
+  backgroundHint: boolean;
 }
 
 export enum PagesId {
