@@ -39,8 +39,6 @@ export default class MainGamePage extends BaseComponent {
 
   public currentRoundCount: number = 0;
 
-  public currentLevelCount: number = 0;
-
   private image = new Image();
 
   constructor() {
@@ -136,7 +134,7 @@ export default class MainGamePage extends BaseComponent {
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
 
       if (!this.toolbar.pronunciation.pronunciationHintActive) {
-        this.toolbar.pronunciation.showHint();
+        this.toolbar.pronunciation.showHint(true);
       }
     }
     return isMatching;
@@ -162,13 +160,11 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.getCompleteButton().removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
-
     if (!this.toolbar.pronunciation.pronunciationHintActive) {
-      this.toolbar.pronunciation.showHint();
+      this.toolbar.pronunciation.showHint(false);
     }
 
     if (this.currentRoundSentence > this.round.words.length - 1) {
-      this.toolbar.switcher.checkRoundComplete(this.currentRoundCount);
       this.currentRoundCount += 1;
       this.startNewRound(this.currentRoundCount);
       return;
@@ -220,19 +216,13 @@ export default class MainGamePage extends BaseComponent {
   }
 
   public startNewRound(round: number = 0) {
-    this.currentRoundCount = round;
-    if (round >= this.rounds.length) {
-      this.toolbar.switcher.checkLevelComplete(sentenceService.currentLevel);
-      this.rounds = sentenceService.getNextLevelRounds();
-      this.startNewLevel(sentenceService.currentLevel);
-    }
     this.sources.destroyChildren();
     this.currentRoundSentence = 0;
-    this.round = this.rounds[this.currentRoundCount];
+    this.currentRoundCount = 0;
+    this.round = this.rounds[round];
     this.roundSentences = getSentencesFromRound(this.round);
     this.gameBoard.roundSentences = this.roundSentences;
     this.gameBoard.clearBoard();
-    this.toolbar.switcher.selectRound(this.currentRoundCount);
     this.image.src = backgroundImage;
     this.image.onload = () => {
       this.setWords();
@@ -245,8 +235,6 @@ export default class MainGamePage extends BaseComponent {
   public startNewLevel(level: number = 0) {
     sentenceService.setWordCollectionLevel(level);
     this.rounds = sentenceService.getRounds(level);
-    this.currentRoundCount = 0;
-    this.toolbar.switcher.selectLevel(level);
     this.toolbar.switcher.renderRoundOptions(this.rounds.length);
     this.startNewRound(0);
   }

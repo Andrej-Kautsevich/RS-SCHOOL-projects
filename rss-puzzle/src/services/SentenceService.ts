@@ -8,8 +8,6 @@ import { WordCollection, Round } from '../types';
 
 const DIFFICULTY_COEFFICIENT = 2;
 export class SentenceService {
-  private currentLevel: number = 0;
-
   private levels: WordCollection[] = [
     wordCollectionLevel1,
     wordCollectionLevel2,
@@ -26,8 +24,8 @@ export class SentenceService {
   }
 
   public setWordCollectionLevel(level: number): WordCollection {
-    this.currentLevel = level;
-    this.wordCollectionLevel = this.levels[this.currentLevel];
+    const index = level;
+    this.wordCollectionLevel = this.levels[index];
     return this.wordCollectionLevel;
   }
 
@@ -44,15 +42,6 @@ export class SentenceService {
       rounds.push(this.getRandomRound());
     }
     return rounds;
-  }
-
-  public getNextLevelRounds(): Round[] {
-    this.currentLevel += 1;
-    if (this.currentLevel >= this.levels.length) {
-      this.currentLevel = 0;
-    }
-    this.setWordCollectionLevel(this.currentLevel);
-    return this.getRounds(this.currentLevel);
   }
 }
 
