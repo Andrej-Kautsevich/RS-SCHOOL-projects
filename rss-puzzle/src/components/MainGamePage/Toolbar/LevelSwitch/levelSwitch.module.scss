@@ -7,3 +7,14 @@
 .switcher__level {
   display: flex;
 }
+
+.switcher__select {
+
+  &_checked {
+    background-color: var(--checked-color);
+  }
+
+  &_active {
+    background-color: var(--active-color);
+  }
+}

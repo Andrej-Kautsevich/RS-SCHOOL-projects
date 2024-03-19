@@ -40,6 +40,9 @@ h6 {
 
   --overlay-color: rgba(0, 0, 0, 0.5);
 
+  --checked-color: rgba(69, 219, 69, 0.712);
+  --active-color: rgba(235, 235, 78, 0.717);
+
   --gutter: 1rem;
   --elem-radius: 0.5rem;
 }

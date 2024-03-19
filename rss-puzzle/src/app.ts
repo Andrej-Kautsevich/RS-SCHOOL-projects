@@ -43,7 +43,7 @@ class App {
   public start() {
     this.root.append(this.mainComponent.getNode());
     if (user.isAuth()) {
-      router.navigateTo(PagesId.main);
+      router.navigateTo(PagesId.start);
     } else {
       router.navigateTo(PagesId.login);
     }
