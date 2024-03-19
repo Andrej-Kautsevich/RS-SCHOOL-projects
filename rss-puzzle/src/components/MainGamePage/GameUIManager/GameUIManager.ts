@@ -8,9 +8,10 @@ export default class GameUIManager {
     this.sourcesContainer = sourcesContainer;
   }
 
-  public displayCards(cards: Card[]) {
+  public displayCards(cards: Card[], isVisible: boolean) {
     cards.sort(() => Math.random() - 0.5);
     cards.forEach((card) => {
+      card.toggleViability(isVisible);
       this.sourcesContainer.append(card.getCard());
     });
   }

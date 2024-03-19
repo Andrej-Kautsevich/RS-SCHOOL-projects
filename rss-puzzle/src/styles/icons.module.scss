@@ -40,6 +40,11 @@
   @include icon-background;
 }
 
+.icon_image {
+  mask-image: url(../assets/images/icons/frame_gallery_image_images_photo_icon.svg);
+  @include icon-background;
+}
+
 .icon_pulsate {
   animation: pulsate 1s infinite;
 }

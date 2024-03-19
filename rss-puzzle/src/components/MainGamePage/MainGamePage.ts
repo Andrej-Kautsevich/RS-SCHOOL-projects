@@ -46,10 +46,17 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.competeObserver.subscribe({ update: this.handleCompleteButton.bind(this) });
 
     this.toolbar = new Toolbar();
+    this.toolbar.backgroundHint.backgroundHintObserver.subscribe({ update: this.toggleBackground.bind(this) });
 
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
     this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
+  }
+
+  private toggleBackground() {
+    this.cards[this.currentRoundSentence].forEach((card) => {
+      card.toggleViability(this.toolbar.backgroundHint.backgroundHintActive);
+    });
   }
 
   public setWords() {
@@ -114,6 +121,7 @@ export default class MainGamePage extends BaseComponent {
     if (this.isSentenceLineComplete() && isMatching) {
       this.gameBoard.currentCards.forEach((card) => {
         card.toggleClass(cardStyles.card_completed);
+        card.toggleViability(true);
       });
       this.gameButtons.transformButton(ButtonState.continue);
       this.gameButtons.observer.unsubscribeAll();
@@ -192,7 +200,10 @@ export default class MainGamePage extends BaseComponent {
     this.toolbar.hint.addHint(this.round.words[this.currentRoundSentence].textExampleTranslate);
     this.toolbar.pronunciation.addAudio(this.round.words[this.currentRoundSentence].audioExample);
 
-    this.gameUIManager.displayCards(this.cards[this.currentRoundSentence]);
+    this.gameUIManager.displayCards(
+      this.cards[this.currentRoundSentence],
+      this.toolbar.backgroundHint.backgroundHintActive,
+    );
     this.gameBoard.currentCards = [];
     this.gameBoard.currentSentenceNumber = this.currentRoundSentence;
   }

@@ -65,4 +65,8 @@ $text-shadow:
     font-weight: bold;
     text-shadow: $text-shadow;
   }
+
+  &_notVisible {
+    background: var(--accent-color) !important;
+  }
 }

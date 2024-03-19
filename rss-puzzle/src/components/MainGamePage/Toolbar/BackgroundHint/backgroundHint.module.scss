@@ -1,0 +1,22 @@
+.backgroundHint {
+  display: flex;
+  align-items: center;
+}
+
+.backgroundHint__button {
+  display: flex;
+  cursor: pointer;
+  --size: 2rem;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  border-color: transparent;
+  margin-left: 1rem;
+
+  &_disable {
+    span {
+      background-color: gray;
+    }
+  }
+}

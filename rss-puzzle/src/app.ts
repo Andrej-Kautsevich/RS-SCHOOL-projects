@@ -43,9 +43,9 @@ class App {
   public start() {
     this.root.append(this.mainComponent.getNode());
     if (user.isAuth()) {
-      router.navigateTo(PagesId.start);
+      router.navigateTo(PagesId.main);
     } else {
-      router.navigateTo(PagesId.login);
+      router.navigateTo(PagesId.main);
     }
   }
 

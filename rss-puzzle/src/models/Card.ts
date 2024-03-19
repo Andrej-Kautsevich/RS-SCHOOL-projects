@@ -42,4 +42,8 @@ export default class Card extends BaseComponent {
   private setCardWidth(width: number) {
     this.getNode().style.width = `${width}%`;
   }
+
+  public toggleViability(isVisible: boolean) {
+    this.imgWrapper.toggleClass(cardStyles.card_notVisible, !isVisible);
+  }
 }
