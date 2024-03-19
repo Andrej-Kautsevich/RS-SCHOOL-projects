@@ -28,7 +28,6 @@ export default class StartScreen extends BaseComponent {
         {
           classNames: [styles.start__button, buttonStyles.button, buttonStyles.buttonHasIcon],
           onclick() {
-            user.deleteUser();
             router.navigateTo(PagesId.main);
           },
         },

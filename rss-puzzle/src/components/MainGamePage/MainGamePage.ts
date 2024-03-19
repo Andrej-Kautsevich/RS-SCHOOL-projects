@@ -50,8 +50,6 @@ export default class MainGamePage extends BaseComponent {
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
     this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
-
-    this.startNewRound();
   }
 
   public setWords() {
@@ -199,7 +197,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameBoard.currentSentenceNumber = this.currentRoundSentence;
   }
 
-  private startNewRound() {
+  public startNewRound() {
     this.currentRoundSentence = 0;
     this.round = sentenceService.getRandomRound();
     this.roundSentences = getSentencesFromRound(this.round);

@@ -34,6 +34,7 @@ class App {
     });
     router.addRoute(PagesId.main, () => {
       this.renderPage(this.gamePage);
+      this.gamePage.startNewRound();
     });
 
     this.start();
@@ -44,7 +45,7 @@ class App {
     if (user.isAuth()) {
       router.navigateTo(PagesId.start);
     } else {
-      router.navigateTo(PagesId.main);
+      router.navigateTo(PagesId.login);
     }
   }
 
