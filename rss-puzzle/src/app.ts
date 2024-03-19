@@ -34,7 +34,7 @@ class App {
     });
     router.addRoute(PagesId.main, () => {
       this.renderPage(this.gamePage);
-      this.gamePage.startNewRound();
+      this.gamePage.startNewLevel();
     });
 
     this.start();

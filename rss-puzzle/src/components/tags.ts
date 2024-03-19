@@ -28,6 +28,14 @@ export const input = (props: ElementFnProps<HTMLInputElement>) => {
   return new BaseComponent<HTMLInputElement>({ ...props, tag: 'input' });
 };
 
+export const select = (props: ElementFnProps<HTMLSelectElement>, ...children: (BaseComponent | HTMLElement)[]) => {
+  return new BaseComponent<HTMLSelectElement>({ ...props, tag: 'select' }, ...children);
+};
+
+export const option = (props: ElementFnProps<HTMLOptionElement>) => {
+  return new BaseComponent<HTMLOptionElement>({ ...props, tag: 'option' });
+};
+
 export const button = (props: ElementFnProps<HTMLButtonElement>, ...children: (BaseComponent | HTMLElement)[]) => {
   return new BaseComponent<HTMLButtonElement>({ ...props, tag: 'button' }, ...children);
 };

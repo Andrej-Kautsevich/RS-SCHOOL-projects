@@ -31,9 +31,13 @@ export default class MainGamePage extends BaseComponent {
 
   private round!: Round;
 
+  private rounds: Round[] = [];
+
   private roundSentences: RoundSentence[] = [];
 
   public currentRoundSentence: number = 0;
+
+  public currentRoundCount: number = 0;
 
   private image = new Image();
 
@@ -47,6 +51,8 @@ export default class MainGamePage extends BaseComponent {
 
     this.toolbar = new Toolbar();
     this.toolbar.backgroundHint.backgroundHintObserver.subscribe({ update: this.toggleBackground.bind(this) });
+    this.toolbar.switcher.levelsObserver.subscribe({ update: this.startNewLevel.bind(this) });
+    this.toolbar.switcher.roundsObserver.subscribe({ update: this.startNewRound.bind(this) });
 
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
@@ -159,7 +165,8 @@ export default class MainGamePage extends BaseComponent {
     }
 
     if (this.currentRoundSentence > this.round.words.length - 1) {
-      this.startNewRound();
+      this.currentRoundCount += 1;
+      this.startNewRound(this.currentRoundCount);
       return;
     }
     this.startNewSentence();
@@ -208,9 +215,11 @@ export default class MainGamePage extends BaseComponent {
     this.gameBoard.currentSentenceNumber = this.currentRoundSentence;
   }
 
-  public startNewRound() {
+  public startNewRound(round: number = 0) {
+    this.sources.destroyChildren();
     this.currentRoundSentence = 0;
-    this.round = sentenceService.getRandomRound();
+    this.currentRoundCount = 0;
+    this.round = this.rounds[round];
     this.roundSentences = getSentencesFromRound(this.round);
     this.gameBoard.roundSentences = this.roundSentences;
     this.gameBoard.clearBoard();
@@ -221,5 +230,12 @@ export default class MainGamePage extends BaseComponent {
       this.startNewSentence();
       this.gameBoard.setSize();
     };
+  }
+
+  public startNewLevel(level: number = 0) {
+    sentenceService.setWordCollectionLevel(level);
+    this.rounds = sentenceService.getRounds(level);
+    this.toolbar.switcher.renderRoundOptions(this.rounds.length);
+    this.startNewRound(0);
   }
 }
