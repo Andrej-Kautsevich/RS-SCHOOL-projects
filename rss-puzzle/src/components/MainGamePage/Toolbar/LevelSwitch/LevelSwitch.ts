@@ -66,4 +66,38 @@ export default class LevelSwitch extends BaseComponent {
       this.roundSwitchInput.append(roundOption);
     }
   }
+
+  public checkRoundComplete(roundNumber: number) {
+    const roundOption = this.roundSwitchInput.getChildren()[roundNumber];
+    roundOption.removeClasses([styles.switcher__select_active]);
+    roundOption.addClasses([styles.switcher__select_checked]);
+  }
+
+  public checkLevelComplete(levelNumber: number) {
+    const levelOption = this.levelSwitchInput.getChildren()[levelNumber];
+    levelOption.removeClasses([styles.switcher__select_active]);
+    levelOption.addClasses([styles.switcher__select_checked]);
+  }
+
+  public selectRound(roundNumber: number) {
+    this.roundSwitchInput.getChildren().forEach((roundOption, index) => {
+      if (index === roundNumber) {
+        roundOption.setAttribute('selected', 'true');
+        roundOption.toggleClass(styles.switcher__select_active, true);
+      } else {
+        roundOption.removeAttribute('selected');
+      }
+    });
+  }
+
+  public selectLevel(levelNumber: number) {
+    this.levelSwitchInput.getChildren().forEach((levelOption, index) => {
+      if (index === levelNumber) {
+        levelOption.setAttribute('selected', 'true');
+        levelOption.toggleClass(styles.switcher__select_active, true);
+      } else {
+        levelOption.removeAttribute('selected');
+      }
+    });
+  }
 }
