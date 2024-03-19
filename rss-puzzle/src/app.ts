@@ -44,7 +44,7 @@ class App {
     if (user.isAuth()) {
       router.navigateTo(PagesId.start);
     } else {
-      router.navigateTo(PagesId.login);
+      router.navigateTo(PagesId.main);
     }
   }
 

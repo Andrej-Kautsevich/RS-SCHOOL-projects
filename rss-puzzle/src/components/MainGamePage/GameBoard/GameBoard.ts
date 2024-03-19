@@ -13,9 +13,10 @@ export default class GameBoard extends BaseComponent {
 
   public currentSentenceNumber: number = 0;
 
+  public gameBoardHight: number = 0;
+
   constructor() {
     super({ className: styles.gameGameBoard });
-    this.createLines(this.roundSentences.length);
   }
 
   public createLines(roundsNumber: number) {
@@ -47,5 +48,10 @@ export default class GameBoard extends BaseComponent {
     if (index !== -1) {
       this.currentCards.splice(index, 1);
     }
+  }
+
+  public setSize() {
+    this.gameBoardHight = this.getNode().clientHeight;
+    this.getNode().style.setProperty('--height', `${this.gameBoardHight}`);
   }
 }

@@ -35,7 +35,7 @@ export default class MainGamePage extends BaseComponent {
 
   public currentRoundSentence: number = 0;
 
-  private image: string = backgroundImage;
+  private image = new Image();
 
   constructor() {
     super({ className: styles.game });
@@ -63,12 +63,18 @@ export default class MainGamePage extends BaseComponent {
 
   public createCards(): void {
     this.cards = [];
-    this.words.forEach((wordRound: string[]) => {
+    const gameBoardWidth = this.gameBoard.getNode().clientWidth;
+    const gameBoardHeight = this.gameBoard.getNode().clientHeight;
+    this.words.forEach((wordRound: string[], index) => {
+      let offsetX = 0;
+      const offsetY = -(gameBoardHeight / this.words.length) * index;
       const cardsLine: Card[] = [];
       const totalLength = wordRound.reduce((total, word) => total + word.length, 0);
       wordRound.forEach((word) => {
         const width = (word.length / totalLength) * 100;
-        const card = new Card(word, width, this.image);
+
+        const card = new Card(word, width, this.image.src, offsetX, offsetY);
+        offsetX -= (gameBoardWidth * width) / 100;
         card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
         cardsLine.push(card);
       });
@@ -199,8 +205,12 @@ export default class MainGamePage extends BaseComponent {
     this.roundSentences = getSentencesFromRound(this.round);
     this.gameBoard.roundSentences = this.roundSentences;
     this.gameBoard.clearBoard();
-    this.setWords();
-    this.createCards();
-    this.startNewSentence();
+    this.image.src = backgroundImage;
+    this.image.onload = () => {
+      this.setWords();
+      this.createCards();
+      this.startNewSentence();
+      this.gameBoard.setSize();
+    };
   }
 }
