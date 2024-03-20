@@ -22,7 +22,7 @@
   grid-template: 
     ". . ." 0.25fr
     ". toolbar ." 1fr
-    ". gameBoard ." 10fr
+    "info gameBoard ." 10fr
     ". sources ." 1fr
     ". buttons ." 1fr
     ". . ." 0.25fr
@@ -35,6 +35,7 @@
   grid-area: gameBoard;
   border: 1px solid var(--card-border-color);
   background-position: 0% 0%;
+  background-color: #c4abab;
 }
 
 .game__line {
@@ -50,4 +51,17 @@
   display: flex;
   grid-area: buttons;
   justify-content: space-around;
+}
+
+.game__roundInfo {
+  display: flex;
+  grid-area: info;
+  flex-direction: column;
+  margin-left: 2rem;
+  gap: 1rem;
+}
+
+.game__roundInfoText {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: var(--text-primary);
 }

@@ -2,7 +2,7 @@ import Card from '../../models/Card';
 import { sentenceService } from '../../services/SentenceService';
 import { Round, RoundSentence } from '../../types';
 import { BaseComponent } from '../BaseComponent';
-import { div } from '../tags';
+import { div, p } from '../tags';
 import GameBoard from './GameBoard/GameBoard';
 import GameButtons from './GameButtons/GameButtons';
 import ButtonState from './GameButtons/types';
@@ -11,7 +11,6 @@ import styles from './MainGamePage.module.scss';
 import cardStyles from '../../models/card.module.scss';
 import AUTO_COMPLETE_DELAY from './types/constants';
 import { getSentencesFromRound } from './utils';
-import backgroundImage from '../../assets/images/backgrounds/cvety-priroda-lug-poni-losadka.jpg';
 import Toolbar from './Toolbar/Toolbar';
 
 export default class MainGamePage extends BaseComponent {
@@ -24,6 +23,8 @@ export default class MainGamePage extends BaseComponent {
   private gameButtons: GameButtons;
 
   private gameUIManager: GameUIManager;
+
+  private roundInfo: BaseComponent = div({ classNames: [styles.game__roundInfo] });
 
   private words: string[][] = [];
 
@@ -48,7 +49,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameBoard = new GameBoard();
 
     this.gameButtons = new GameButtons();
-    this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
+    this.gameButtons.observer.subscribe({ update: this.checkSentenceWords.bind(this) });
     this.gameButtons.competeObserver.subscribe({ update: this.handleCompleteButton.bind(this) });
 
     this.toolbar = new Toolbar();
@@ -86,7 +87,7 @@ export default class MainGamePage extends BaseComponent {
       wordRound.forEach((word) => {
         const width = (word.length / totalLength) * 100;
 
-        const card = new Card(word, width, this.image.src, offsetX, offsetY);
+        const card = new Card(word, width, this.image.src, offsetX, offsetY, gameBoardWidth, gameBoardHeight);
         offsetX -= (gameBoardWidth * width) / 100;
         card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
         cardsLine.push(card);
@@ -126,9 +127,10 @@ export default class MainGamePage extends BaseComponent {
         card.toggleClass(cardStyles.card_true, true);
       }
     });
+
+    // End of sentence
     if (this.isSentenceLineComplete() && isMatching) {
       this.gameBoard.currentCards.forEach((card) => {
-        card.toggleClass(cardStyles.card_completed);
         card.toggleViability(true);
       });
       this.gameButtons.transformButton(ButtonState.continue);
@@ -137,6 +139,16 @@ export default class MainGamePage extends BaseComponent {
 
       if (!this.toolbar.pronunciation.pronunciationHintActive) {
         this.toolbar.pronunciation.showHint();
+      }
+
+      // End of round
+      if (this.currentRoundSentence === this.roundSentences.length - 1) {
+        this.cards.forEach((cards) => {
+          cards.forEach((card) => {
+            card.toggleClass(cardStyles.card_completed);
+          });
+        });
+        this.showRoundInfo();
       }
     }
     return isMatching;
@@ -150,10 +162,6 @@ export default class MainGamePage extends BaseComponent {
     return isComplete;
   }
 
-  private handleCheckButton() {
-    this.checkSentenceWords();
-  }
-
   private handleContinueButton() {
     this.currentRoundSentence += 1;
 
@@ -161,7 +169,7 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
     this.gameButtons.getCompleteButton().removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
-    this.gameButtons.observer.subscribe({ update: this.handleCheckButton.bind(this) });
+    this.gameButtons.observer.subscribe({ update: this.checkSentenceWords.bind(this) });
 
     if (!this.toolbar.pronunciation.pronunciationHintActive) {
       this.toolbar.pronunciation.showHint();
@@ -199,7 +207,17 @@ export default class MainGamePage extends BaseComponent {
 
     await Promise.all(promises);
 
-    this.handleCheckButton();
+    this.checkSentenceWords();
+  }
+
+  private showRoundInfo() {
+    this.roundInfo.appendChildren([
+      p({ className: styles.game__roundInfoText, txt: `Name: ${this.round.levelData.name}` }),
+      p({ className: styles.game__roundInfoText, txt: `Author: ${this.round.levelData.author}` }),
+      p({ className: styles.game__roundInfoText, txt: `Year: ${this.round.levelData.year}` }),
+    ]);
+
+    this.append(this.roundInfo);
   }
 
   private startNewSentence() {
@@ -220,6 +238,7 @@ export default class MainGamePage extends BaseComponent {
   }
 
   public startNewRound(round: number = 0) {
+    this.roundInfo.destroy();
     this.currentRoundCount = round;
     if (round >= this.rounds.length) {
       this.toolbar.switcher.checkLevelComplete(sentenceService.currentLevel);
@@ -233,12 +252,11 @@ export default class MainGamePage extends BaseComponent {
     this.gameBoard.roundSentences = this.roundSentences;
     this.gameBoard.clearBoard();
     this.toolbar.switcher.selectRound(this.currentRoundCount);
-    this.image.src = backgroundImage;
+    this.image.src = `./images/${this.round.levelData.imageSrc}`;
     this.image.onload = () => {
       this.setWords();
       this.createCards();
       this.startNewSentence();
-      this.gameBoard.setSize();
     };
   }
 

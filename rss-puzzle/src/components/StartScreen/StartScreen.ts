@@ -49,8 +49,8 @@ export default class StartScreen extends BaseComponent {
   }
 
   public updateUserName() {
-    const firstName = localStorageService.getData('login')?.firstName;
-    const surname = localStorageService.getData('login')?.surname;
+    const firstName = localStorageService.getData('user')?.firstName;
+    const surname = localStorageService.getData('user')?.surname;
     const greeting = `Hello, ${firstName} ${surname}`;
     this.userGreeting.setTextContent(greeting);
   }

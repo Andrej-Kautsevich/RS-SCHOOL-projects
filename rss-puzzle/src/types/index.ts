@@ -32,6 +32,15 @@ export interface WordCollection {
 }
 
 export interface Round {
-  levelData: object;
+  levelData: LevelData;
   words: RoundSentence[];
+}
+
+export interface LevelData {
+  id: string;
+  name: string;
+  imageSrc: string;
+  cutSrc: string;
+  author: string;
+  year: string;
 }

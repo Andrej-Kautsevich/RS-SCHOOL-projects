@@ -19,14 +19,15 @@ $text-shadow:
 .card {
   display: flex;
   align-items: center;
-  border-right: 2px solid #0000;
-  border-left: 2px solid #0000;
+  border: 2px solid #0000;
   border-radius: 4px;
   user-select: none;
   cursor: grab;
   justify-content: center;
-  transition: 0.5s ease;
-  transition-property: color, background-color;
+  transition:
+    color 0.5s ease,
+    background 0.5s ease,
+    border 5s ease,;
   position: relative;
   color: var(--text-light);
 
@@ -41,7 +42,10 @@ $text-shadow:
   }
 
   &_completed {
-    border: none;
+    border-width: 0;
+    .card__text {
+      visibility: hidden;
+    }
   }
 
   --g: 0px; /* controls the gap */
@@ -64,6 +68,7 @@ $text-shadow:
     font-family: Arial;
     font-weight: bold;
     text-shadow: $text-shadow;
+    transition: all 0.5s ease;
   }
 
   &_notVisible {
