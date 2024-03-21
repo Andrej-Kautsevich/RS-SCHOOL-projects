@@ -5,13 +5,13 @@ import { BaseComponent } from '../BaseComponent';
 import { div, p } from '../tags';
 import GameBoard from './GameBoard/GameBoard';
 import GameButtons from './GameButtons/GameButtons';
-import ButtonState from './GameButtons/types';
 import GameUIManager from './GameUIManager/GameUIManager';
 import styles from './MainGamePage.module.scss';
 import cardStyles from '../../models/card.module.scss';
 import AUTO_COMPLETE_DELAY from './types/constants';
 import { getSentencesFromRound } from './utils';
 import Toolbar from './Toolbar/Toolbar';
+import ButtonName from './GameButtons/types';
 
 export default class MainGamePage extends BaseComponent {
   private toolbar: Toolbar;
@@ -102,7 +102,7 @@ export default class MainGamePage extends BaseComponent {
     card.getNode().addEventListener('click', this.moveCardToSources.bind(this, card), { once: true });
     this.gameBoard.addCard(card);
     if (this.isSentenceLineComplete()) {
-      this.gameButtons.getContinueButton().removeAttribute('disabled');
+      this.gameButtons.buttons.Continue.removeAttribute('disabled');
     }
     card.getNode().removeEventListener('click', this.moveCardToGameBoard.bind(this, card));
   };
@@ -111,7 +111,7 @@ export default class MainGamePage extends BaseComponent {
     this.sources.append(card.getNode());
     card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
     this.gameBoard.removeCard(card);
-    this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
+    this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
     card.removeClasses([cardStyles.card_true, cardStyles.card_false]);
   };
 
@@ -133,7 +133,7 @@ export default class MainGamePage extends BaseComponent {
       this.gameBoard.currentCards.forEach((card) => {
         card.toggleViability(true);
       });
-      this.gameButtons.transformButton(ButtonState.continue);
+      this.gameButtons.transformButton(ButtonName.check, ButtonName.continue);
       this.gameButtons.observer.unsubscribeAll();
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
 
@@ -165,9 +165,9 @@ export default class MainGamePage extends BaseComponent {
   private handleContinueButton() {
     this.currentRoundSentence += 1;
 
-    this.gameButtons.transformButton(ButtonState.check);
-    this.gameButtons.getContinueButton().setAttribute('disabled', 'true');
-    this.gameButtons.getCompleteButton().removeAttribute('disabled');
+    this.gameButtons.transformButton(ButtonName.continue, ButtonName.check);
+    this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
+    this.gameButtons.buttons.Complete.removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.checkSentenceWords.bind(this) });
 
@@ -187,7 +187,7 @@ export default class MainGamePage extends BaseComponent {
   private async handleCompleteButton() {
     this.gameBoard.currentCards = [];
     this.gameBoard.getSentenceLine().destroyChildren();
-    this.gameButtons.getCompleteButton().setAttribute('disabled', 'true');
+    this.gameButtons.buttons.Complete.setAttribute('disabled', 'true');
 
     const currentRoundCards = this.cards[this.currentRoundSentence].slice();
 

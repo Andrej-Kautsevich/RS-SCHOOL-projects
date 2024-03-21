@@ -1,13 +1,45 @@
 :root {
   --color-true: #28c38a;
   --color-complete: #2582e7;
+  --animation-duration: 300ms; // set this var to constants
+}
+
+.buttons {
+  display: grid;
+  grid-template: 'firstButton . secondButton' / 1fr 1fr 1fr;
+
+  &__check,
+  &__continue {
+    grid-area: firstButton;
+  }
+
+  &__complete,
+  &__statistics {
+    grid-area: secondButton;
+  }
+
+  &__complete {
+    color: var(--text-light);
+    transition: all 1s ease;
+    --button-bg: var(--color-complete);
+
+    &:not(:disabled):hover {
+      color: var(--text-primary);
+    }
+  }
+
+  &__continue {
+    transition: all 1s ease;
+    --button-hover: var(--color-true);
+    --button-bg: var(--color-true);
+  }
 }
 
 .game-button {
-  min-width: 20%;
-  // max-width: 100px;
   justify-content: center;
   --size: 1rem;
+  transition: opacity var(--animation-duration) ease;
+  opacity: 1;
 
   &__icon {
     opacity: 0;
@@ -16,22 +48,6 @@
   &__text {
     transform: translateX(calc(var(--size) / 2));
     transition: all 0.5s;
-  }
-
-  &_checked {
-    transition: all 1s ease;
-    --button-hover: var(--color-true);
-    --button-bg: var(--color-true);
-  }
-
-  &_complete {
-    color: var(--text-light);
-    transition: all 1s ease;
-    --button-bg: var(--color-complete);
-
-    &:not(:disabled):hover {
-      color: var(--text-primary);
-    }
   }
 
   &:not(:disabled):hover {
@@ -43,6 +59,10 @@
     .game-button__text {
       transform: translateX(0);
     }
+  }
+
+  &_hidden {
+    opacity: 0 !important;
   }
 }
 

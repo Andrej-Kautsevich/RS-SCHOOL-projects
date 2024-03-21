@@ -5,63 +5,88 @@ import gameButtonStyles from './GameButton.module.scss';
 import buttonStyles from '../../../styles/button.module.scss';
 import iconStyles from '../../../styles/icons.module.scss';
 import { Observer } from '../../../utils/Observer';
-import ButtonState from './types';
+import ButtonName, { GameButton } from './types';
+import ANIMATION_DURATION from './types/constants';
 
 export default class GameButtons extends BaseComponent {
-  private continueButton: BaseComponent<HTMLButtonElement>;
+  public buttons: Record<ButtonName, GameButton>;
 
-  private completeButton: BaseComponent<HTMLButtonElement>;
+  private checkButton: GameButton;
+
+  private continueButton: GameButton;
+
+  private completeButton: GameButton;
+
+  private statisticsButton: GameButton;
 
   public observer = new Observer<void>();
 
   public competeObserver = new Observer<void>();
 
   constructor() {
-    super({ className: styles.gameButtons });
-    this.continueButton = button(
-      {
-        classNames: [buttonStyles.button, buttonStyles.buttonHasIcon, gameButtonStyles.gameButton],
-        disabled: true,
-      },
-      span({ className: gameButtonStyles.gameButtonText, txt: ButtonState.check }),
-      span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles.iconCheck] }),
-    );
-    this.continueButton.getNode().addEventListener('click', () => {
-      this.observer.notify();
-    });
+    super({ classNames: [styles.gameButtons, gameButtonStyles.buttons] });
+    this.buttons = {
+      [ButtonName.check]: (this.checkButton = button(
+        {
+          classNames: [
+            buttonStyles.button,
+            buttonStyles.buttonHasIcon,
+            gameButtonStyles.buttons__check,
+            gameButtonStyles.gameButton,
+          ],
+          disabled: true,
+          onclick: () => this.observer.notify(),
+        },
+        span({ className: gameButtonStyles.gameButtonText, txt: 'Check' }),
+        span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles.iconCheck] }),
+      )),
 
-    this.completeButton = button({
-      classNames: [buttonStyles.button, gameButtonStyles.gameButtonComplete],
-      txt: 'Complete',
-      onclick: () => {
-        this.competeObserver.notify();
-      },
-    });
+      [ButtonName.continue]: (this.continueButton = button(
+        {
+          classNames: [
+            buttonStyles.button,
+            buttonStyles.buttonHasIcon,
+            gameButtonStyles.buttons__continue,
+            gameButtonStyles.gameButton,
+            gameButtonStyles.gameButtonHidden,
+          ],
+          onclick: () => this.observer.notify(),
+        },
+        span({ className: gameButtonStyles.gameButtonText, txt: 'Continue' }),
+        span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles.iconContinue] }),
+      )),
 
-    this.appendChildren([this.continueButton, this.completeButton]);
+      [ButtonName.complete]: (this.completeButton = button({
+        classNames: [buttonStyles.button, gameButtonStyles.buttons__complete, gameButtonStyles.gameButtonComplete],
+        txt: 'Complete',
+        onclick: () => {
+          this.competeObserver.notify();
+        },
+      })),
+
+      [ButtonName.statistics]: (this.statisticsButton = button({
+        classNames: [
+          buttonStyles.button,
+          gameButtonStyles.buttons__statistics,
+          gameButtonStyles.gameButtonStatistics,
+          gameButtonStyles.gameButtonHidden,
+        ],
+        txt: 'Statistics',
+        onclick: () => {},
+      })),
+    };
+
+    this.appendChildren([this.buttons.Check, this.buttons.Complete]);
   }
 
-  public getContinueButton() {
-    return this.continueButton;
-  }
-
-  public getCompleteButton() {
-    return this.completeButton;
-  }
-
-  public transformButton(state: ButtonState) {
-    const iconStyle = `icon${state}`;
-
-    this.continueButton.destroyChildren();
-    this.continueButton.appendChildren([
-      span({ className: gameButtonStyles.gameButtonText, txt: state }),
-      span({ classNames: [gameButtonStyles.gameButtonIcon, iconStyles.icon, iconStyles[iconStyle]] }),
-    ]);
-
-    if (state === ButtonState.continue) {
-      this.continueButton.toggleClass(gameButtonStyles.gameButtonChecked);
-    } else {
-      this.continueButton.toggleClass(gameButtonStyles.gameButtonChecked, false);
-    }
+  public transformButton(from: ButtonName, to: ButtonName) {
+    this.buttons[from].toggleClass(gameButtonStyles.gameButtonHidden);
+    setTimeout(() => {
+      this.buttons[from].getNode().remove();
+      this.append(this.buttons[to]);
+      setTimeout(() => {
+        this.buttons[to].toggleClass(gameButtonStyles.gameButtonHidden);
+      }, 20);
+    }, ANIMATION_DURATION);
   }
 }
