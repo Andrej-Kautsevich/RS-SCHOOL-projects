@@ -1,6 +1,6 @@
 import Card from '../../models/Card';
 import { sentenceService } from '../../services/SentenceService';
-import { Round, RoundSentence } from '../../types';
+import { Round, RoundSentence, SentenceStatistics } from '../../types';
 import { BaseComponent } from '../BaseComponent';
 import { div, p } from '../tags';
 import GameBoard from './GameBoard/GameBoard';
@@ -13,6 +13,7 @@ import { getSentencesFromRound } from './utils';
 import Toolbar from './Toolbar/Toolbar';
 import ButtonName from './GameButtons/types';
 import { statisticsPageObserver } from '../../utils/Observer';
+import { localStorageService } from '../../services/LocalStorageService';
 
 export default class MainGamePage extends BaseComponent {
   private toolbar: Toolbar;
@@ -42,6 +43,8 @@ export default class MainGamePage extends BaseComponent {
   public currentRoundCount: number = 0;
 
   public currentLevelCount: number = 0;
+
+  private isHintUsed = false;
 
   private image = new Image();
 
@@ -108,7 +111,7 @@ export default class MainGamePage extends BaseComponent {
     card.getNode().addEventListener('click', this.moveCardToSources.bind(this, card), { once: true });
     this.gameBoard.addCard(card);
     if (this.isSentenceLineComplete()) {
-      this.gameButtons.buttons.Continue.removeAttribute('disabled');
+      this.gameButtons.buttons.Check.removeAttribute('disabled');
     }
     card.getNode().removeEventListener('click', this.moveCardToGameBoard.bind(this, card));
   };
@@ -117,11 +120,11 @@ export default class MainGamePage extends BaseComponent {
     this.sources.append(card.getNode());
     card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
     this.gameBoard.removeCard(card);
-    this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
+    this.gameButtons.buttons.Check.setAttribute('disabled', 'true');
     card.removeClasses([cardStyles.card_true, cardStyles.card_false]);
   };
 
-  private checkSentenceWords(): boolean {
+  private checkSentenceWords() {
     let isMatching = true;
     this.gameBoard.currentCards.forEach((card, index) => {
       if (card.getWord() !== this.words[this.currentRoundSentence][index]) {
@@ -136,10 +139,13 @@ export default class MainGamePage extends BaseComponent {
 
     // End of sentence
     if (this.isSentenceLineComplete() && isMatching) {
+      this.updateStatistics();
+
       this.gameBoard.currentCards.forEach((card) => {
         card.toggleViability(true);
       });
       this.gameButtons.transformButton(ButtonName.check, ButtonName.continue);
+      this.gameButtons.buttons.Complete.setAttribute('disabled', 'true');
       this.gameButtons.observer.unsubscribeAll();
       this.gameButtons.observer.subscribe({ update: this.handleContinueButton.bind(this) });
 
@@ -158,7 +164,18 @@ export default class MainGamePage extends BaseComponent {
         this.showRoundInfo();
       }
     }
-    return isMatching;
+  }
+
+  private updateStatistics() {
+    const statistics = localStorageService.getData('userStatistics') || [];
+
+    const data: SentenceStatistics = {
+      isHintUsed: this.isHintUsed,
+      textExample: this.roundSentences[this.currentRoundSentence].textExample,
+    };
+
+    statistics.push(data);
+    localStorageService.saveData('userStatistics', statistics);
   }
 
   private isSentenceLineComplete(): boolean {
@@ -173,7 +190,7 @@ export default class MainGamePage extends BaseComponent {
     this.currentRoundSentence += 1;
 
     this.gameButtons.transformButton(ButtonName.continue, ButtonName.check);
-    this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
+    // this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
     this.gameButtons.buttons.Complete.removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.checkSentenceWords.bind(this) });
@@ -190,6 +207,7 @@ export default class MainGamePage extends BaseComponent {
   }
 
   private async handleCompleteButton() {
+    this.isHintUsed = true;
     this.gameBoard.currentCards = [];
     this.gameBoard.getSentenceLine().destroyChildren();
     this.gameButtons.buttons.Complete.setAttribute('disabled', 'true');
@@ -211,6 +229,7 @@ export default class MainGamePage extends BaseComponent {
     });
 
     await Promise.all(promises);
+    this.gameButtons.buttons.Check.setAttribute('disabled', 'true');
 
     this.checkSentenceWords();
   }
@@ -226,6 +245,7 @@ export default class MainGamePage extends BaseComponent {
   }
 
   private startNewSentence() {
+    this.isHintUsed = false;
     this.gameBoard.currentCards.forEach((card) => {
       card.removeClasses([cardStyles.card_false, cardStyles.card_true]);
     });
@@ -243,6 +263,7 @@ export default class MainGamePage extends BaseComponent {
   }
 
   public startNewRound(round: number = 0) {
+    localStorageService.removeData('userStatistics');
     this.roundInfo.destroy();
     this.currentRoundCount = round;
     if (round >= this.rounds.length) {

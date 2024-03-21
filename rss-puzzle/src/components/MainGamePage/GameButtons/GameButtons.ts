@@ -9,6 +9,7 @@ import ButtonName, { GameButton } from './types';
 import ANIMATION_DURATION from './types/constants';
 import { router } from '../../../services/RouterService';
 import { PagesId } from '../../../types';
+import { localStorageService } from '../../../services/LocalStorageService';
 
 export default class GameButtons extends BaseComponent {
   public buttons: Record<ButtonName, GameButton>;
@@ -75,6 +76,7 @@ export default class GameButtons extends BaseComponent {
         ],
         txt: 'Results',
         onclick: () => {
+          localStorageService.getData('userStatistics');
           router.navigateTo(PagesId.statistics);
         },
       })),

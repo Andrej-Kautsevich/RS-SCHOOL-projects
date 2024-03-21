@@ -7,6 +7,7 @@ import { PagesId } from './types';
 import { user } from './models/User';
 import MainGamePage from './components/MainGamePage/MainGamePage';
 import StatisticsPage from './components/StatisticsPage/StatisticsPage';
+import { localStorageService } from './services/LocalStorageService';
 
 class App {
   private loginEntry: UserNameEntry;
@@ -42,6 +43,8 @@ class App {
       this.gamePage.startNewLevel();
     });
     router.addRoute(PagesId.statistics, () => {
+      const sentences = localStorageService.getData('userStatistics');
+      this.statisticsPage.setSentences(sentences);
       this.renderPage(this.statisticsPage);
     });
 

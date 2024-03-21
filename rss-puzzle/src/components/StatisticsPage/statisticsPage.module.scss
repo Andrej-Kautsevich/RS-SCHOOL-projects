@@ -1,3 +1,13 @@
+:root {
+  --known-background-color: #d4edda;
+  --known-border-color: #c3e6cb;
+  --unknown-background-color: #f8d7da;
+  --unknown-border-color: #f5c6cb;
+  --heading-color: #004085;
+  --scrollbar-thumb-color: #6c757d;
+  --scrollbar-track-color: #e9ecef;
+}
+
 .statistics {
   display: flex;
   flex-direction: column;
@@ -16,6 +26,46 @@
 
   &__title {
     color: var(--accent-color);
+  }
+
+  &__sentences {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 50vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb-color);
+      border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track-color);
+    }
+  }
+
+  &__name {
+    font-size: 1.5em;
+    color: var(--heading-color);
+
+    &_known {
+      background-color: var(--known-background-color);
+      border: 1px solid var(--known-border-color);
+    }
+
+    &_unknown {
+      background-color: var(--unknown-background-color);
+      border: 1px solid var(--unknown-border-color);
+    }
+  }
+
+  &__item {
+    margin: 10px 0;
   }
 }
 

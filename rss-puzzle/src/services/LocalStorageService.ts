@@ -1,4 +1,4 @@
-import { UserData } from '../types';
+import { UserLocalStorageData } from '../types';
 
 export class StorageService<T> {
   private storageKeyPrefix: string;
@@ -11,21 +11,21 @@ export class StorageService<T> {
     return `${this.storageKeyPrefix}_${key}`;
   }
 
-  public saveData(key: string, data: T): void {
-    const storageKey = this.getStorageKey(key);
+  public saveData<K extends keyof T>(key: K, data: T[K]): void {
+    const storageKey = this.getStorageKey(key.toString());
     localStorage.setItem(storageKey, JSON.stringify(data));
   }
 
-  public removeData(key: string): void {
-    const storageKey = this.getStorageKey(key);
+  public removeData<K extends keyof T>(key: K): void {
+    const storageKey = this.getStorageKey(key.toString());
     localStorage.removeItem(storageKey);
   }
 
-  public getData(key: string): T | undefined {
-    const storageKey = this.getStorageKey(key);
+  public getData<K extends keyof T>(key: K): T[K] | null {
+    const storageKey = this.getStorageKey(key.toString());
     const data = localStorage.getItem(storageKey);
     if (!data) {
-      return undefined;
+      return null;
     }
     try {
       return JSON.parse(data);
@@ -35,4 +35,4 @@ export class StorageService<T> {
   }
 }
 
-export const localStorageService = new StorageService<UserData>('user');
+export const localStorageService = new StorageService<UserLocalStorageData>('user');

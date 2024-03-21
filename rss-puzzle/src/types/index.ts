@@ -5,11 +5,15 @@ export interface UserData {
   settings?: UserSettings;
 }
 
+export type UserLocalStorageData = { user: UserData; userStatistics: SentenceStatistics[] };
+
 export interface UserSettings {
   translateHint: boolean;
   pronunciationHint: boolean;
   backgroundHint: boolean;
 }
+
+export type SentenceStatistics = Pick<RoundSentence, 'textExample'> & { isHintUsed: boolean };
 
 export enum PagesId {
   login = 'login',
