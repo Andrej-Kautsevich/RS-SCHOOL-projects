@@ -7,6 +7,8 @@ import iconStyles from '../../../styles/icons.module.scss';
 import { Observer } from '../../../utils/Observer';
 import ButtonName, { GameButton } from './types';
 import ANIMATION_DURATION from './types/constants';
+import { router } from '../../../services/RouterService';
+import { PagesId } from '../../../types';
 
 export default class GameButtons extends BaseComponent {
   public buttons: Record<ButtonName, GameButton>;
@@ -71,8 +73,10 @@ export default class GameButtons extends BaseComponent {
           gameButtonStyles.gameButtonStatistics,
           gameButtonStyles.gameButtonHidden,
         ],
-        txt: 'Statistics',
-        onclick: () => {},
+        txt: 'Results',
+        onclick: () => {
+          router.navigateTo(PagesId.statistics);
+        },
       })),
     };
 

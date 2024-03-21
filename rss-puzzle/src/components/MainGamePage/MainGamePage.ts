@@ -148,6 +148,7 @@ export default class MainGamePage extends BaseComponent {
             card.toggleClass(cardStyles.card_completed);
           });
         });
+        this.gameButtons.transformButton(ButtonName.complete, ButtonName.statistics);
         this.showRoundInfo();
       }
     }

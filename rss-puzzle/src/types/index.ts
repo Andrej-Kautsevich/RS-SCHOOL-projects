@@ -15,6 +15,7 @@ export enum PagesId {
   login = 'login',
   start = 'start',
   main = 'main',
+  statistics = 'statistics',
 }
 
 export interface RoundSentence {

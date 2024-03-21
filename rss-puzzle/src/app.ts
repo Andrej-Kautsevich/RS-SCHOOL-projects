@@ -6,6 +6,7 @@ import { main } from './components/tags';
 import { PagesId } from './types';
 import { user } from './models/User';
 import MainGamePage from './components/MainGamePage/MainGamePage';
+import StatisticsPage from './components/StatisticsPage/StatisticsPage';
 
 class App {
   private loginEntry: UserNameEntry;
@@ -13,6 +14,8 @@ class App {
   private startScreen: StartScreen;
 
   private gamePage: MainGamePage;
+
+  private statisticsPage: StatisticsPage;
 
   private root: HTMLElement;
 
@@ -23,6 +26,8 @@ class App {
     this.loginEntry = new UserNameEntry();
     this.startScreen = new StartScreen();
     this.gamePage = new MainGamePage();
+    this.statisticsPage = new StatisticsPage();
+
     this.mainComponent = main.call(null, { className: 'main' });
 
     router.addRoute(PagesId.login, () => {
@@ -36,6 +41,9 @@ class App {
       this.renderPage(this.gamePage);
       this.gamePage.startNewLevel();
     });
+    router.addRoute(PagesId.statistics, () => {
+      this.renderPage(this.statisticsPage);
+    });
 
     this.start();
   }
@@ -43,7 +51,7 @@ class App {
   public start() {
     this.root.append(this.mainComponent.getNode());
     if (user.isAuth()) {
-      router.navigateTo(PagesId.start);
+      router.navigateTo(PagesId.main);
     } else {
       router.navigateTo(PagesId.login);
     }

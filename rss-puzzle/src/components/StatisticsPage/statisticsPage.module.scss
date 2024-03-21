@@ -1,0 +1,20 @@
+.statistics {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 50vw;
+  min-height: 50vh;
+  gap: var(--gutter);
+  padding: var(--gutter);
+  align-items: center;
+  border-radius: var(--elem-radius);
+  background: linear-gradient(var(--background-color), var(--background-color-dark));
+  box-shadow: 0 0 20px 7px var(--accent-color);
+
+  &__title {
+    color: var(--accent-color);
+  }
+}
