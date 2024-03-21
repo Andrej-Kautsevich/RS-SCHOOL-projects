@@ -73,6 +73,11 @@
   &__text {
     font: 1em sans-serif;
   }
+
+  &__image {
+    max-width: 50%;
+    border-radius: 5px;
+  }
 }
 
 .game-button {

@@ -1,6 +1,6 @@
 import { statisticsPageObserver } from '../../utils/Observer';
 import { BaseComponent } from '../BaseComponent';
-import { button, div, h, span } from '../tags';
+import { button, div, h, img, span } from '../tags';
 import styles from './statisticsPage.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import gameButtonStyles from '../MainGamePage/GameButtons/GameButton.module.scss';
@@ -12,6 +12,10 @@ export default class StatisticsPage extends BaseComponent {
   private continueButton: BaseComponent;
 
   private sentencesStats: BaseComponent;
+
+  private artMiniature: BaseComponent<HTMLImageElement>;
+
+  private artSrc: string = '';
 
   private knownSentences: SentenceStatistics[] = [];
 
@@ -39,7 +43,9 @@ export default class StatisticsPage extends BaseComponent {
 
     this.sentencesStats = div({ className: styles.statistics__sentences });
 
-    this.appendChildren([this.sentencesStats, this.continueButton]);
+    this.artMiniature = img(this.artSrc, { className: styles.statistics__image });
+
+    this.appendChildren([this.artMiniature, this.sentencesStats, this.continueButton]);
   }
 
   public setSentences(sentences: SentenceStatistics[]) {
@@ -51,6 +57,10 @@ export default class StatisticsPage extends BaseComponent {
       }
     });
     this.renderStatistics();
+  }
+
+  public setArtMiniature(src: string) {
+    this.artMiniature.getNode().src = src;
   }
 
   private renderStatistics() {

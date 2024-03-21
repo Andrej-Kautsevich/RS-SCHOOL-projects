@@ -284,6 +284,7 @@ export default class MainGamePage extends BaseComponent {
       this.setWords();
       this.createCards();
       this.startNewSentence();
+      localStorageService.saveData('artMiniature', this.image.src);
     };
   }
 

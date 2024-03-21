@@ -44,7 +44,13 @@ class App {
     });
     router.addRoute(PagesId.statistics, () => {
       const sentences = localStorageService.getData('userStatistics');
-      this.statisticsPage.setSentences(sentences);
+      const artMiniature = localStorageService.getData('artMiniature');
+      if (sentences) {
+        this.statisticsPage.setSentences(sentences);
+      }
+      if (artMiniature) {
+        this.statisticsPage.setArtMiniature(artMiniature);
+      }
       this.renderPage(this.statisticsPage);
     });
 

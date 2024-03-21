@@ -5,7 +5,11 @@ export interface UserData {
   settings?: UserSettings;
 }
 
-export type UserLocalStorageData = { user: UserData; userStatistics: SentenceStatistics[] };
+export type UserLocalStorageData = {
+  user: UserData;
+  userStatistics: SentenceStatistics[];
+  artMiniature: string;
+};
 
 export interface UserSettings {
   translateHint: boolean;
