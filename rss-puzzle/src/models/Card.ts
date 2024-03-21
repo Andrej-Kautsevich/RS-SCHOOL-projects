@@ -3,6 +3,7 @@ import styles from '../components/MainGamePage/MainGamePage.module.scss';
 import { div, span } from '../components/tags';
 import cardStyles from './card.module.scss';
 
+type CardIndex = 'first' | 'last';
 export default class Card extends BaseComponent {
   private word: string;
 
@@ -60,5 +61,14 @@ export default class Card extends BaseComponent {
 
   public toggleViability(isVisible: boolean) {
     this.imgWrapper.toggleClass(cardStyles.card_notVisible, !isVisible);
+  }
+
+  public applyModification(index: CardIndex) {
+    if (index === 'first') {
+      this.imgWrapper.addClasses([cardStyles.card__image_first]);
+    }
+    if (index === 'last') {
+      this.imgWrapper.addClasses([cardStyles.card__image_last]);
+    }
   }
 }

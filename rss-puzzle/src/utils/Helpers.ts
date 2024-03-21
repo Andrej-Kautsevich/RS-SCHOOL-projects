@@ -5,7 +5,7 @@ export const isNotNullable = <T>(element: T | null | undefined): element is T =>
 };
 
 export const isAuthUser = () => {
-  const userData = localStorageService.getData('login');
+  const userData = localStorageService.getData('user');
   if (userData) return true;
   return false;
 };

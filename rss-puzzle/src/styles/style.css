@@ -53,8 +53,16 @@ h6 {
   height: 100vh;
   margin: 0 auto;
   background-color: var(--main-color);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .hidden {
   display: none;
+}
+
+@media (max-width:900px) {
+  html {
+    font-size: 14px;
+  }
+  
 }

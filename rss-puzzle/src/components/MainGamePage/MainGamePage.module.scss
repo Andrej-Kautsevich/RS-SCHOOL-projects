@@ -63,3 +63,17 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: var(--text-primary);
 }
+
+@media (max-width: 900px) {
+  .game {
+    /* prettier-ignore */
+    grid-template: 
+  ". . ." 0.10fr
+  ". toolbar ." 1fr
+  "info gameBoard ." 10fr
+  ". sources ." 1fr
+  ". buttons ." 1fr
+  ". . ." 0.10fr
+  / 0.25fr minmax(50dvw, 3fr) 0.25fr;
+  }
+}

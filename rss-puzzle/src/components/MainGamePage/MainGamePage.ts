@@ -64,7 +64,14 @@ export default class MainGamePage extends BaseComponent {
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
 
-    statisticsPageObserver.subscribe({ update: this.startNextRound.bind(this) });
+    statisticsPageObserver.subscribe({
+      update: () => {
+        this.gameButtons.transformButton(ButtonName.continue, ButtonName.check);
+        this.gameButtons.completeButton.removeAttribute('disabled');
+        this.gameButtons.transformButton(ButtonName.statistics, ButtonName.complete);
+        this.startNextRound.bind(this);
+      },
+    });
 
     this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
 
@@ -93,11 +100,17 @@ export default class MainGamePage extends BaseComponent {
       const offsetY = -(gameBoardHeight / this.words.length) * index;
       const cardsLine: Card[] = [];
       const totalLength = wordRound.reduce((total, word) => total + word.length, 0);
-      wordRound.forEach((word) => {
+      wordRound.forEach((word, idx) => {
         const width = (word.length / totalLength) * 100;
 
         const card = new Card(word, width, this.image.src, offsetX, offsetY, gameBoardWidth, gameBoardHeight);
         offsetX -= (gameBoardWidth * width) / 100;
+        if (idx === 0) {
+          card.applyModification('first');
+        }
+        if (idx === wordRound.length - 1) {
+          card.applyModification('last');
+        }
         card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
         cardsLine.push(card);
       });
@@ -201,6 +214,7 @@ export default class MainGamePage extends BaseComponent {
     }
 
     if (this.currentRoundSentence > this.round.words.length - 1) {
+      this.gameButtons.transformButton(ButtonName.statistics, ButtonName.complete);
       this.startNextRound();
       return;
     }

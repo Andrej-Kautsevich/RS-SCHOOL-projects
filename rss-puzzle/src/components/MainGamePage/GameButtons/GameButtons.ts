@@ -14,13 +14,13 @@ import { localStorageService } from '../../../services/LocalStorageService';
 export default class GameButtons extends BaseComponent {
   public buttons: Record<ButtonName, GameButton>;
 
-  private checkButton: GameButton;
+  public checkButton: GameButton;
 
-  private continueButton: GameButton;
+  public continueButton: GameButton;
 
-  private completeButton: GameButton;
+  public completeButton: GameButton;
 
-  private statisticsButton: GameButton;
+  public statisticsButton: GameButton;
 
   public observer = new Observer<void>();
 
