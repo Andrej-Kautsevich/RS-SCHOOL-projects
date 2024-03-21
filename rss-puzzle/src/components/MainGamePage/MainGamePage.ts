@@ -172,6 +172,7 @@ export default class MainGamePage extends BaseComponent {
     const data: SentenceStatistics = {
       isHintUsed: this.isHintUsed,
       textExample: this.roundSentences[this.currentRoundSentence].textExample,
+      audioExample: this.roundSentences[this.currentRoundSentence].audioExample,
     };
 
     statistics.push(data);

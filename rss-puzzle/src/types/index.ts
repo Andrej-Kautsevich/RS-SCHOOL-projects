@@ -13,7 +13,8 @@ export interface UserSettings {
   backgroundHint: boolean;
 }
 
-export type SentenceStatistics = Pick<RoundSentence, 'textExample'> & { isHintUsed: boolean };
+export type SentenceStatistics = Pick<RoundSentence, 'textExample'> &
+  Pick<RoundSentence, 'audioExample'> & { isHintUsed: boolean };
 
 export enum PagesId {
   login = 'login',

@@ -65,7 +65,13 @@
   }
 
   &__item {
+    display: flex;
+    align-items: center;
     margin: 10px 0;
+  }
+
+  &__text {
+    font: 1em sans-serif;
   }
 }
 
@@ -74,6 +80,7 @@
   --size: 1rem;
   transition: opacity var(--animation-duration) ease;
   opacity: 1;
+  padding: 0.5rem;
 
   &__icon {
     opacity: 0;
@@ -97,5 +104,35 @@
 
   &_hidden {
     opacity: 0 !important;
+  }
+}
+
+.sound-button {
+  display: flex;
+  margin: 0 1rem;
+  --size: 1rem;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 50%;
+  transition: box-shadow 250ms ease;
+  cursor: pointer;
+
+  &_active {
+    animation: shadow-pulse 1s infinite;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 2px 0px rgba(106, 91, 37, 0.61);
+  }
+  70% {
+    box-shadow: 0 0 1px 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    box-shadow: 0 0 2px 0px rgba(204, 169, 44, 0);
   }
 }

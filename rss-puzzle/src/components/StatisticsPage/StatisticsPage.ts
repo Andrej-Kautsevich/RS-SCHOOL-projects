@@ -13,9 +13,9 @@ export default class StatisticsPage extends BaseComponent {
 
   private sentencesStats: BaseComponent;
 
-  private knownSentences: string[] = [];
+  private knownSentences: SentenceStatistics[] = [];
 
-  private unknownSentences: string[] = [];
+  private unknownSentences: SentenceStatistics[] = [];
 
   constructor() {
     super({ className: styles.statistics }, h(1, { className: styles.statistics__title, txt: 'Game statistics' }));
@@ -45,9 +45,9 @@ export default class StatisticsPage extends BaseComponent {
   public setSentences(sentences: SentenceStatistics[]) {
     sentences.forEach((sentence) => {
       if (sentence.isHintUsed) {
-        this.unknownSentences.push(sentence.textExample);
+        this.unknownSentences.push(sentence);
       } else {
-        this.knownSentences.push(sentence.textExample);
+        this.knownSentences.push(sentence);
       }
     });
     this.renderStatistics();
@@ -58,13 +58,43 @@ export default class StatisticsPage extends BaseComponent {
       div(
         { classNames: [styles.statistics__name, styles.statistics__name_known], txt: 'I know:' },
         ...this.knownSentences.map((sentence) =>
-          div({ classNames: [styles.statistics__item, styles.statistics__item], txt: sentence }),
+          div(
+            { classNames: [styles.statistics__item, styles.statistics__item] },
+            button(
+              {
+                classNames: [styles.soundButton],
+                onclick: () => {
+                  const hint = new Audio(`./${sentence.audioExample}`);
+                  hint.play();
+                  // hint.onplay = () => this.toggleClass(styles.soundButtonActive);
+                  // hint.onended = () => this.toggleClass(styles.soundButtonActive);
+                },
+              },
+              span({ classNames: [iconStyles.icon, iconStyles.icon_sound] }),
+            ),
+            span({ className: styles.statistics__text, txt: sentence.textExample }),
+          ),
         ),
       ),
       div(
         { classNames: [styles.statistics__name, styles.statistics__name_unknown], txt: "I Don't know:" },
         ...this.unknownSentences.map((sentence) =>
-          div({ classNames: [styles.statistics__item, styles.statistics__item], txt: sentence }),
+          div(
+            { classNames: [styles.statistics__item] },
+            button(
+              {
+                classNames: [styles.soundButton],
+                onclick: () => {
+                  const hint = new Audio(`./${sentence.audioExample}`);
+                  hint.play();
+                  // hint.onplay = () => this.toggleClass(styles.soundButtonActive);
+                  // hint.onended = () => this.toggleClass(styles.soundButtonActive);
+                },
+              },
+              span({ classNames: [iconStyles.icon, iconStyles.icon_sound] }),
+            ),
+            span({ className: styles.statistics__text, txt: sentence.textExample }),
+          ),
         ),
       ),
     ]);
