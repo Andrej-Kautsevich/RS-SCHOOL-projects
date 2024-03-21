@@ -12,6 +12,7 @@ import AUTO_COMPLETE_DELAY from './types/constants';
 import { getSentencesFromRound } from './utils';
 import Toolbar from './Toolbar/Toolbar';
 import ButtonName from './GameButtons/types';
+import { statisticsPageObserver } from '../../utils/Observer';
 
 export default class MainGamePage extends BaseComponent {
   private toolbar: Toolbar;
@@ -59,7 +60,12 @@ export default class MainGamePage extends BaseComponent {
 
     this.sources = div({ className: styles.gameSources });
     this.gameUIManager = new GameUIManager(this.sources);
+
+    statisticsPageObserver.subscribe({ update: this.startNextRound.bind(this) });
+
     this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
+
+    this.startNewLevel();
   }
 
   private toggleBackground() {
@@ -177,9 +183,7 @@ export default class MainGamePage extends BaseComponent {
     }
 
     if (this.currentRoundSentence > this.round.words.length - 1) {
-      this.toolbar.switcher.checkRoundComplete(this.currentRoundCount);
-      this.currentRoundCount += 1;
-      this.startNewRound(this.currentRoundCount);
+      this.startNextRound();
       return;
     }
     this.startNewSentence();
@@ -259,6 +263,12 @@ export default class MainGamePage extends BaseComponent {
       this.createCards();
       this.startNewSentence();
     };
+  }
+
+  private startNextRound() {
+    this.toolbar.switcher.checkRoundComplete(this.currentRoundCount);
+    this.currentRoundCount += 1;
+    this.startNewRound(this.currentRoundCount);
   }
 
   public startNewLevel(level: number = 0) {

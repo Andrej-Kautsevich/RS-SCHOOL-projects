@@ -21,3 +21,5 @@ export class Observer<T> {
     this.observers.forEach((observer) => observer.update(data));
   }
 }
+
+export const statisticsPageObserver = new Observer<void>();
