@@ -17,6 +17,8 @@ export default class Card extends BaseComponent {
 
   private sizeY: number;
 
+  public id: string;
+
   constructor(
     word: string,
     width: number,
@@ -25,9 +27,10 @@ export default class Card extends BaseComponent {
     offsetY: number,
     sizeX: number,
     sizeY: number,
+    id: string,
   ) {
     super(
-      { classNames: [styles.game__card, cardStyles.card] },
+      { classNames: [styles.game__card, cardStyles.card], id, draggable: true },
       span({ classNames: [cardStyles.card__text], txt: word }),
     );
 
@@ -35,6 +38,7 @@ export default class Card extends BaseComponent {
     this.offsetY = offsetY;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
+    this.id = id;
 
     this.imgWrapper = div({ className: cardStyles.card__image });
     this.imgWrapper.getNode().style.backgroundImage = `url(${image})`;

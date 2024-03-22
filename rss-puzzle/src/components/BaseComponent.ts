@@ -1,4 +1,4 @@
-import { isNotNullable } from '../utils/helpers';
+import { isNotNullable } from '../utils/Helpers';
 
 export type Props<T extends HTMLElement = HTMLElement> = Partial<
   Omit<T, 'style' | 'dataset' | 'classList' | 'children' | 'tagName'>

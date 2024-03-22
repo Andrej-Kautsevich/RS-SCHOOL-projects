@@ -9,7 +9,7 @@ import GameUIManager from './GameUIManager/GameUIManager';
 import styles from './MainGamePage.module.scss';
 import cardStyles from '../../models/card.module.scss';
 import AUTO_COMPLETE_DELAY from './types/constants';
-import { getSentencesFromRound } from './utils';
+import { getSentencesFromRound, handleDragOver, handleDragStart, handleDrop } from './utils';
 import Toolbar from './Toolbar/Toolbar';
 import ButtonName from './GameButtons/types';
 import { statisticsPageObserver } from '../../utils/Observer';
@@ -76,6 +76,8 @@ export default class MainGamePage extends BaseComponent {
     this.appendChildren([this.toolbar, this.gameBoard, this.sources, this.gameButtons]);
 
     this.startNewLevel();
+
+    this.bindListeners();
   }
 
   private toggleBackground() {
@@ -103,7 +105,16 @@ export default class MainGamePage extends BaseComponent {
       wordRound.forEach((word, idx) => {
         const width = (word.length / totalLength) * 100;
 
-        const card = new Card(word, width, this.image.src, offsetX, offsetY, gameBoardWidth, gameBoardHeight);
+        const card = new Card(
+          word,
+          width,
+          this.image.src,
+          offsetX,
+          offsetY,
+          gameBoardWidth,
+          gameBoardHeight,
+          `${index}_${idx}`,
+        );
         offsetX -= (gameBoardWidth * width) / 100;
         if (idx === 0) {
           card.applyModification('first');
@@ -112,6 +123,7 @@ export default class MainGamePage extends BaseComponent {
           card.applyModification('last');
         }
         card.getNode().addEventListener('click', this.moveCardToGameBoard.bind(this, card), { once: true });
+        card.getNode().addEventListener('dragstart', handleDragStart.bind(this, card));
         cardsLine.push(card);
       });
       this.cards.push(cardsLine);
@@ -136,6 +148,25 @@ export default class MainGamePage extends BaseComponent {
     this.gameButtons.buttons.Check.setAttribute('disabled', 'true');
     card.removeClasses([cardStyles.card_true, cardStyles.card_false]);
   };
+
+  public dropCard(cardId: string) {
+    this.cards[this.currentRoundSentence].forEach((card) => {
+      if (card.id === cardId) {
+        if (card.getNode().parentElement === this.gameBoard.getSentenceLine().getNode()) {
+          this.moveCardToSources(card);
+        } else {
+          this.moveCardToGameBoard(card);
+        }
+      }
+    });
+  }
+
+  private bindListeners() {
+    this.gameBoard.getNode().addEventListener('drop', (event) => handleDrop(event, this.dropCard.bind(this)));
+    this.gameBoard.getNode().addEventListener('dragover', handleDragOver.bind(this));
+    this.sources.getNode().addEventListener('drop', (event) => handleDrop(event, this.dropCard.bind(this)));
+    this.sources.getNode().addEventListener('dragover', handleDragOver.bind(this));
+  }
 
   private checkSentenceWords() {
     let isMatching = true;
@@ -204,7 +235,6 @@ export default class MainGamePage extends BaseComponent {
     this.currentRoundSentence += 1;
 
     this.gameButtons.transformButton(ButtonName.continue, ButtonName.check);
-    // this.gameButtons.buttons.Continue.setAttribute('disabled', 'true');
     this.gameButtons.buttons.Complete.removeAttribute('disabled');
     this.gameButtons.observer.unsubscribeAll();
     this.gameButtons.observer.subscribe({ update: this.checkSentenceWords.bind(this) });
