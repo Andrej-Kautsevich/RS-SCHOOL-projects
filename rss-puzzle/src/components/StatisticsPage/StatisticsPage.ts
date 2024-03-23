@@ -74,7 +74,9 @@ export default class StatisticsPage extends BaseComponent {
               {
                 classNames: [styles.soundButton],
                 onclick: () => {
-                  const hint = new Audio(`./${sentence.audioExample}`);
+                  const hint = new Audio(
+                    `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/${sentence.audioExample}`,
+                  );
                   hint.play();
                   // hint.onplay = () => this.toggleClass(styles.soundButtonActive);
                   // hint.onended = () => this.toggleClass(styles.soundButtonActive);
