@@ -49,7 +49,7 @@ export default class Pronunciation extends BaseComponent {
   }
 
   public addAudio(audioSrc: string) {
-    this.hint = new Audio(`./${audioSrc}`);
+    this.hint = new Audio(`${audioSrc}`);
     this.hint.onplay = () => this.hintIcon.toggleClass(iconStyles.icon_pulsate);
     this.hint.onended = () => this.hintIcon.toggleClass(iconStyles.icon_pulsate);
   }
