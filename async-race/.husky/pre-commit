@@ -1,0 +1,3 @@
+cd async-race
+
+npx lint-staged

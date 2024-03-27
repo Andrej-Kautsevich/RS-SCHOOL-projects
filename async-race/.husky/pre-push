@@ -1,0 +1,4 @@
+cd async-race
+
+npx validate-branch-name -r '(feat|fix|chore|refactor)/(\d+)_[A-Za-z-]+'
+npm run lint 
