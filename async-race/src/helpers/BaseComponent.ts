@@ -15,7 +15,7 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
 
   protected children: BaseComponent[] = [];
 
-  constructor(props: Props<T>, ...children: (BaseComponent | HTMLElement)[]) {
+  constructor(props: Props<T>, ...children: (BaseComponent | Node)[]) {
     const node = document.createElement(props.tag ?? 'div') as T;
     // Assign properties from props to the node
     Object.assign(node, props);
@@ -36,7 +36,7 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
   /**
    * Appends a child component to the current component.
    */
-  public append(child: BaseComponent | HTMLElement): void {
+  public append(child: BaseComponent | Node): void {
     if (child instanceof BaseComponent) {
       this.children.push(child);
       this.node.append(child.getNode());
@@ -45,7 +45,7 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public appendChildren(children: (BaseComponent | HTMLElement | null)[]): void {
+  public appendChildren(children: (BaseComponent | Node | null)[]): void {
     children.filter(isNotNullable).forEach((el) => {
       this.append(el);
     });
