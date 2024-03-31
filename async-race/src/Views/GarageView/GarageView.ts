@@ -4,11 +4,14 @@ import { button, div, h, span } from '../../helpers/tags';
 import Car from '../../Models/Car/Car';
 import styles from './garageView.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
+import CreateCarView from './manageCarView/CreateCarView';
+import Observer from '../../helpers/Observer';
+import UpdateCarView from './manageCarView/updateCarView';
 
 export default class GarageView {
   private garagePage: BaseComponent;
 
-  private raceTracks: BaseComponent;
+  private garageItems: BaseComponent;
 
   private title: BaseComponent<HTMLHeadingElement>;
 
@@ -18,25 +21,49 @@ export default class GarageView {
 
   public prevButton: BaseComponent<HTMLButtonElement>;
 
+  public createCarForm: CreateCarView;
+
+  public updateCarForm: UpdateCarView;
+
+  public observer: Observer<unknown> = Observer.getInstance();
+
   constructor() {
     this.garagePage = div({ className: styles.garage });
+    this.createCarForm = new CreateCarView();
+    this.updateCarForm = new UpdateCarView();
+    const garageForms = div(
+      { classNames: [styles.garage__forms] },
+      this.createCarForm.getForm(),
+      this.updateCarForm.getForm(),
+    );
+
     this.title = h(2, { className: styles.garage__title, txt: 'Garage' });
-    this.raceTracks = div({ classNames: [styles.raceTracks] });
+    this.garageItems = div({ classNames: [styles.garage__items] });
 
     this.pagination = div({ classNames: [styles.garage__pagination, styles.pagination] });
     this.prevButton = button({ classNames: [buttonStyles.button], txt: 'Prev' });
     this.nextButton = button({ classNames: [buttonStyles.button], txt: 'Next' });
 
-    this.garagePage.appendChildren([this.title, this.raceTracks]);
+    this.garagePage.appendChildren([garageForms, this.title, this.garageItems]);
   }
 
   public drawCars(cars: Car[]) {
-    this.raceTracks.destroyChildren();
+    this.garageItems.destroyChildren();
     cars.forEach((car) => {
-      const raceTrack = div({ classNames: [styles.raceTrack] });
-      const flag = createSVGUse('flag', [styles.raceTrackFlag]);
-      raceTrack.appendChildren([car.getNode(), flag]);
-      this.raceTracks.append(raceTrack);
+      const garageItem = div({ classNames: [styles.garage__item, styles.car] });
+      const deleteBtn = button({ classNames: [buttonStyles.button], txt: 'Delete' });
+      deleteBtn.addListener('click', () => {
+        this.observer.notify('delete', car.id);
+      });
+      const selectBtn = button({ classNames: [buttonStyles.button], txt: 'Select' });
+      selectBtn.addListener('click', () => {
+        this.observer.notify('select', car.id);
+      });
+      const info = div({ className: styles.car__info }, deleteBtn, selectBtn, span({ txt: car.name }));
+
+      const road = div({ className: styles.car__road }, car.getNode(), createSVGUse('flag', [styles.car__flag]));
+      garageItem.appendChildren([info, road]);
+      this.garageItems.append(garageItem);
     });
   }
 

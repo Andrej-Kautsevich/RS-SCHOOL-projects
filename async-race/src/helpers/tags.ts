@@ -1,6 +1,6 @@
 import { BaseComponent, ElementFnProps } from './BaseComponent';
 
-export const div = (props: ElementFnProps, ...children: (BaseComponent | HTMLElement)[]) => {
+export const div = (props: ElementFnProps, ...children: (BaseComponent | Node)[]) => {
   return new BaseComponent<HTMLDivElement>({ ...props }, ...children);
 };
 

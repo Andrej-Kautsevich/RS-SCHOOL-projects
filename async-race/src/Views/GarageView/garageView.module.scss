@@ -3,6 +3,10 @@
   flex-direction: column;
   width: 100%;
 
+  &__create {
+    margin-top: 1rem;
+  }
+
   &__title {
     font-size: 2rem;
   }
@@ -12,21 +16,34 @@
   }
 }
 
-.race-tracks {
+.garage__items {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
+  padding: 1rem 0;
 }
 
-.race-track {
+.garage__item {
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 3px;
-  border-bottom: 3px dashed var(--color-white);
+  flex-direction: column;
+}
 
-  &_flag {
+.car {
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__road {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    border-bottom: 3px dashed var(--color-white);
+  }
+
+  &__flag {
     width: 50px;
     height: 50px;
   }

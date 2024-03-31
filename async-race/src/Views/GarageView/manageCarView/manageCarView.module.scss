@@ -1,0 +1,24 @@
+.create {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+  height: 40px;
+
+  &__name {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    color: var(--color-white);
+    padding: 0px 10px;
+    height: 100%;
+  }
+
+  &__color {
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    height: 100%;
+    width: 60px;
+    cursor: pointer;
+  }
+}
