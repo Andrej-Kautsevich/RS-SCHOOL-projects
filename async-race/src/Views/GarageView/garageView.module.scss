@@ -29,6 +29,19 @@
   flex-direction: column;
 }
 
+.garage__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 1rem;
+  font-size: 1.5rem;
+
+  button {
+    max-width: fit-content;
+  }
+}
+
 .car {
   &__info {
     display: flex;

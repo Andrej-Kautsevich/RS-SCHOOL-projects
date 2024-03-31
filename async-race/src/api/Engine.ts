@@ -1,6 +1,6 @@
 import ApiModel from './ApiModel';
-import { API_METHODS, API_URLS, URL_PARAMS } from './types/enums';
-import { CarInterface, EngineInterface, EngineStatus } from './types/types';
+import { API_METHODS, API_URLS, URL_PARAMS } from '../types/enums';
+import { CarInterface, EngineInterface, EngineStatus } from '../types/types';
 
 export default class Engine extends ApiModel {
   /**

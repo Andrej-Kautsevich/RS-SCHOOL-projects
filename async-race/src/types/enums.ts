@@ -21,3 +21,5 @@ export const URL_PARAMS = {
   ID: 'id',
   STATUS: 'status',
 } as const;
+
+export const GENERATE_CARS_NUMBER = 100;

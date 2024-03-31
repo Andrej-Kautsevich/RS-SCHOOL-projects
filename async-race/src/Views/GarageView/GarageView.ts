@@ -7,6 +7,7 @@ import buttonStyles from '../../styles/button.module.scss';
 import CreateCarView from './manageCarView/CreateCarView';
 import Observer from '../../helpers/Observer';
 import UpdateCarView from './manageCarView/updateCarView';
+import GarageButtonsView from './garageButtonsVIew/GarageButtonsView';
 
 export default class GarageView {
   private garagePage: BaseComponent;
@@ -21,6 +22,8 @@ export default class GarageView {
 
   public prevButton: BaseComponent<HTMLButtonElement>;
 
+  public garageButtons: GarageButtonsView;
+
   public createCarForm: CreateCarView;
 
   public updateCarForm: UpdateCarView;
@@ -31,6 +34,7 @@ export default class GarageView {
     this.garagePage = div({ className: styles.garage });
     this.createCarForm = new CreateCarView();
     this.updateCarForm = new UpdateCarView();
+    this.garageButtons = new GarageButtonsView();
     const garageForms = div(
       { classNames: [styles.garage__forms] },
       this.createCarForm.getForm(),
@@ -44,7 +48,7 @@ export default class GarageView {
     this.prevButton = button({ classNames: [buttonStyles.button], txt: 'Prev' });
     this.nextButton = button({ classNames: [buttonStyles.button], txt: 'Next' });
 
-    this.garagePage.appendChildren([garageForms, this.title, this.garageItems]);
+    this.garagePage.appendChildren([garageForms, this.garageButtons.getNode(), this.title, this.garageItems]);
   }
 
   public drawCars(cars: Car[]) {

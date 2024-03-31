@@ -1,4 +1,4 @@
-import { CarInterface } from '../../api/types/types';
+import { CarInterface } from '../../types/types';
 import { BaseComponent } from '../../helpers/BaseComponent';
 import { div } from '../../helpers/tags';
 import createSVGUse from '../../helpers/createSVGUse';

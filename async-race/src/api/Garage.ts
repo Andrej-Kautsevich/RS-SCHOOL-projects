@@ -1,6 +1,6 @@
 import ApiModel from './ApiModel';
-import { API_METHODS, API_URLS, URL_PARAMS } from './types/enums';
-import { CarInterface } from './types/types';
+import { API_METHODS, API_URLS, URL_PARAMS } from '../types/enums';
+import { CarInterface } from '../types/types';
 
 export default class Garage extends ApiModel {
   public static async getCars(page?: number, limit?: number): Promise<{ cars: CarInterface[]; totalCount: number }> {

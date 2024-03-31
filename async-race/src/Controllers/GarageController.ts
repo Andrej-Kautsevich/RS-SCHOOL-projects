@@ -1,4 +1,5 @@
 import GarageModel from '../Models/GarageModel';
+import { GENERATE_CARS_NUMBER } from '../types/enums';
 import GarageView from '../Views/GarageView/GarageView';
 
 export default class GarageController {
@@ -24,6 +25,7 @@ export default class GarageController {
     this.setPaginationListeners();
     this.setCarCreateListeners();
     this.setCarUpdateListeners();
+    this.setCarGenerateListeners();
   }
 
   private handleCarsButtons() {
@@ -84,6 +86,13 @@ export default class GarageController {
 
       await this.garageModel.updateCarById({ name, color, id });
       this.garageView.updateCarForm.clearForm();
+      this.renderPage();
+    });
+  }
+
+  private setCarGenerateListeners() {
+    this.garageView.garageButtons.generateCarsButton.addListener('click', async () => {
+      await this.garageModel.generateCars(GENERATE_CARS_NUMBER);
       this.renderPage();
     });
   }

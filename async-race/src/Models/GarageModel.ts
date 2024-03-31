@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import Garage from '../api/Garage';
-import { CarInterface } from '../api/types/types';
+import { CarInterface } from '../types/types';
 import Car from './Car/Car';
+import generateCarData from './utils/generateCarData';
 
 export default class GarageModel {
   public cars: Car[] = [];
@@ -42,6 +43,13 @@ export default class GarageModel {
       return true;
     } catch (error) {
       throw new Error(`${error}`);
+    }
+  }
+
+  public async generateCars(quantity = 100) {
+    for (let i = 0; i < quantity; i += 1) {
+      const car = generateCarData();
+      this.createCar(car);
     }
   }
 }

@@ -1,6 +1,6 @@
 import ApiModel from './ApiModel';
-import { API_METHODS, API_URLS, URL_PARAMS } from './types/enums';
-import { WinnerInterface, WinnersQueryParams } from './types/types';
+import { API_METHODS, API_URLS, URL_PARAMS } from '../types/enums';
+import { WinnerInterface, WinnersQueryParams } from '../types/types';
 
 export default class Winners extends ApiModel {
   public static async getWinners(params?: WinnersQueryParams): Promise<WinnerInterface[]> {
