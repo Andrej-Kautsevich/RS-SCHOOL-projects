@@ -8,6 +8,8 @@ import CreateCarView from './manageCarView/CreateCarView';
 import Observer from '../../helpers/Observer';
 import UpdateCarView from './manageCarView/updateCarView';
 import GarageButtonsView from './garageButtonsVIew/GarageButtonsView';
+import { CarInterface } from '../../types/types';
+import { WINNER_TIME_DISPLAY } from '../../types/enums';
 
 export default class GarageView {
   private garagePage: BaseComponent;
@@ -73,6 +75,7 @@ export default class GarageView {
       car.setRoad(road);
       car.setCarWidth(carWidth);
     });
+    return cars;
   }
 
   public drawPagination(page: number, totalPages: number) {
@@ -90,17 +93,27 @@ export default class GarageView {
     this.title.setTextContent(`Garage (${totalCars})`);
   }
 
+  public showWinner(car: CarInterface, time: number) {
+    const fixedTime = Math.ceil(time / 10) / 100;
+    const winnerWrapper = div({ classNames: [styles.garage__winner], txt: `${car.name} wins in time: ${fixedTime}s` });
+    this.garagePage.append(winnerWrapper);
+    setTimeout(() => {
+      winnerWrapper.destroy();
+    }, WINNER_TIME_DISPLAY);
+  }
+
   public getPage() {
     return this.garagePage.getNode();
   }
 
   public async renderPage(cars: Car[], currentPage: number, total: number) {
-    this.drawCars(cars);
+    const renderedCars = this.drawCars(cars);
     let totalPages = 1;
     if (total) {
       totalPages = Math.ceil(total / 7);
     }
     this.drawTitle(total);
     this.drawPagination(currentPage, totalPages);
+    return renderedCars;
   }
 }

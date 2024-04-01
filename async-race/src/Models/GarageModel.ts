@@ -7,6 +7,8 @@ import generateCarData from './utils/generateCarData';
 export default class GarageModel {
   public cars: Car[] = [];
 
+  public renderedCars: Car[] = [];
+
   public async getCars(page = 1, limit = 7) {
     const carsData = await Garage.getCars(page, limit);
     this.cars = carsData.cars.map((carData) => new Car(carData));

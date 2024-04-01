@@ -8,9 +8,16 @@ export default class GarageButtonsView {
 
   public generateCarsButton: BaseComponent<HTMLButtonElement>;
 
+  public startRaceButton: BaseComponent<HTMLButtonElement>;
+
+  public resetRaceButton: BaseComponent<HTMLButtonElement>;
+
   constructor() {
     this.generateCarsButton = button({ classNames: [buttonStyles.button], txt: 'Generate cars' });
-    this.buttonsWrapper.appendChildren([this.generateCarsButton]);
+    this.startRaceButton = button({ classNames: [buttonStyles.button], txt: 'Start race' });
+    this.resetRaceButton = button({ classNames: [buttonStyles.button], txt: 'Reset race' });
+    this.resetRaceButton.getNode().disabled = true;
+    this.buttonsWrapper.appendChildren([this.generateCarsButton, this.startRaceButton, this.resetRaceButton]);
   }
 
   public getNode() {

@@ -54,17 +54,15 @@ export default class Car implements CarInterface {
 
   private setEngineListeners() {
     this.engineButtons.startButton.addListener('click', () => {
-      this.engineButtons.startButton.getNode().disabled = true;
       this.observer.notify('start', this);
     });
     this.engineButtons.stopButton.addListener('click', () => {
-      this.engineButtons.startButton.getNode().disabled = false;
-      this.engineButtons.stopButton.getNode().disabled = true;
       this.observer.notify('stop', this);
     });
   }
 
   public async startEngine() {
+    this.engineButtons.startButton.getNode().disabled = true;
     const response = await Engine.startStopCarEngine({ id: this.id }, 'started');
     this.engineButtons.stopButton.getNode().disabled = false;
     return response;
@@ -73,13 +71,17 @@ export default class Car implements CarInterface {
   public async drive(duration: number) {
     this.animation = this.setAnimation(duration);
     try {
-      await Engine.switchToDriveCarEngine({ id: this.id });
+      const promise = await Engine.switchToDriveCarEngine({ id: this.id });
+      return promise;
     } catch (error) {
       this.animation.pause();
     }
+    return Promise.reject();
   }
 
   public async stop() {
+    this.engineButtons.startButton.getNode().disabled = false;
+    this.engineButtons.stopButton.getNode().disabled = true;
     this.animation?.cancel();
     await Engine.startStopCarEngine({ id: this.id }, 'stopped');
   }

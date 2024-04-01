@@ -27,6 +27,8 @@ export default class GarageController {
     this.setCarCreateListeners();
     this.setCarUpdateListeners();
     this.setCarGenerateListeners();
+    this.setStartRaceListeners();
+    this.setResetRaceListeners();
   }
 
   private handleCarsButtons() {
@@ -104,13 +106,45 @@ export default class GarageController {
     });
   }
 
+  private setStartRaceListeners() {
+    this.garageView.garageButtons.startRaceButton.addListener('click', async () => {
+      try {
+        this.garageView.garageButtons.startRaceButton.getNode().disabled = true;
+        const startTimes: Record<number, number> = {};
+        const promises = this.garageModel.renderedCars.map((car) => {
+          startTimes[car.id] = Date.now();
+          return this.startEngine(car).then((result) => {
+            return { ...result, id: car.id };
+          });
+        });
+        const winner = await Promise.any(promises);
+        const winnerTime = Date.now() - startTimes[winner.id];
+        this.garageView.showWinner(winner, winnerTime);
+        await Promise.all(promises).catch(() => {});
+      } finally {
+        this.garageView.garageButtons.resetRaceButton.getNode().disabled = false;
+      }
+    });
+  }
+
+  private setResetRaceListeners() {
+    this.garageView.garageButtons.resetRaceButton.addListener('click', async () => {
+      this.garageView.garageButtons.resetRaceButton.getNode().disabled = true;
+      const promises = this.garageModel.renderedCars.map((car) => this.stopEngine(car));
+      await Promise.all(promises);
+      this.garageView.garageButtons.startRaceButton.getNode().disabled = false;
+    });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   private async startEngine(car: Car) {
     const params = await car.startEngine();
     if (params) {
       const duration = params.distance / params.velocity;
       await car.drive(duration);
+      return car;
     }
+    throw new Error('Engine start failed');
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -124,7 +158,7 @@ export default class GarageController {
 
   public async renderPage() {
     const { cars, total } = await this.getCars(this.currentPage);
-    this.garageView.renderPage(cars, this.currentPage, total);
+    this.garageModel.renderedCars = await this.garageView.renderPage(cars, this.currentPage, total);
   }
 
   private async init() {

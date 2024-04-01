@@ -23,3 +23,5 @@ export const URL_PARAMS = {
 } as const;
 
 export const GENERATE_CARS_NUMBER = 100;
+
+export const WINNER_TIME_DISPLAY = 3000;

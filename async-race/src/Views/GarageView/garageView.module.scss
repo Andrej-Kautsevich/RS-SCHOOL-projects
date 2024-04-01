@@ -25,9 +25,10 @@
 }
 
 .garage__items {
-  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 1rem;
   padding: 1rem 0;
 }
@@ -39,8 +40,7 @@
 
 .garage__buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   padding: 1rem 0;
   gap: 1rem;
   font-size: 1.5rem;
@@ -48,6 +48,19 @@
   button {
     max-width: fit-content;
   }
+}
+
+.garage__winner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background-color: var(--accent-color);
+  padding: 1rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .car {
