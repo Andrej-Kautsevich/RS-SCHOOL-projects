@@ -15,13 +15,13 @@ export default class Car implements CarInterface {
 
   public id: number;
 
-  private roadWidth: number = 0;
-
   private carWidth: number = 0;
 
   private carNode: BaseComponent;
 
   public engineButtons: EngineButtonsView = new EngineButtonsView();
+
+  private roadTrack: BaseComponent | null = null;
 
   public observer: Observer<unknown> = Observer.getInstance();
 
@@ -31,7 +31,7 @@ export default class Car implements CarInterface {
     this.name = carData.name;
     this.color = carData.color;
     this.id = carData.id;
-    const carIMG = createSVGUse('sport_car');
+    const carIMG = createSVGUse('car');
     carIMG.setAttribute('fill', this.color.toString());
 
     this.carNode = div({ classNames: [styles.car] });
@@ -44,8 +44,8 @@ export default class Car implements CarInterface {
     return this.carNode.getNode();
   }
 
-  public setRoadWidth(roadWidth: number) {
-    this.roadWidth = roadWidth;
+  public setRoad(roadTrack: BaseComponent) {
+    this.roadTrack = roadTrack;
   }
 
   public setCarWidth(carWidth: number) {
@@ -85,11 +85,15 @@ export default class Car implements CarInterface {
   }
 
   private setAnimation(duration: number): Animation {
-    return this.carNode
-      .getNode()
-      .animate([{ transform: `translateX(0)` }, { transform: `translateX(${this.roadWidth - this.carWidth}px)` }], {
-        duration,
-        fill: 'forwards',
-      });
+    const roadWidth = this.roadTrack?.getNode().clientWidth;
+    if (roadWidth) {
+      return this.carNode
+        .getNode()
+        .animate([{ transform: `translateX(0)` }, { transform: `translateX(${roadWidth - this.carWidth}px)` }], {
+          duration,
+          fill: 'forwards',
+        });
+    }
+    throw new Error('road is not defined!');
   }
 }

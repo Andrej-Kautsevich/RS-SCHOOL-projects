@@ -69,9 +69,8 @@ export default class GarageView {
       garageItem.appendChildren([info, car.engineButtons.getNode(), road]);
       this.garageItems.append(garageItem);
 
-      const roadWidth = road.getNode().clientWidth;
       const carWidth = car.getNode().clientWidth;
-      car.setRoadWidth(roadWidth);
+      car.setRoad(road);
       car.setCarWidth(carWidth);
     });
   }

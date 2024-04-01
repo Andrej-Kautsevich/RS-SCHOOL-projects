@@ -21,14 +21,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
   background-color: var(--main-color);
 }
 
 .main {
-  width: 95%;
+  width: 100%;
+  padding: 0 1rem;
   max-width: var(--content-width);
   color: var(--text-color-main);
 }
