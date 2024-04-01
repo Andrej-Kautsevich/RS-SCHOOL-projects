@@ -1,3 +1,11 @@
+:root {
+  --engine-start-button-bg: #326232;
+  --engine-start-button-hover: #559555;
+
+  --engine-stop-button-bg: #623232;
+  --engine-stop-button-hover: #955555;
+}
+
 .garage {
   display: flex;
   flex-direction: column;
@@ -43,10 +51,30 @@
 }
 
 .car {
+  gap: 1rem;
+
   &__info {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  &__engine {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .button {
+      &_start {
+        --button-bg: var(--engine-start-button-bg);
+        --button-hover: var(--engine-start-button-hover);
+      }
+
+      &_stop {
+        --button-bg: var(--engine-stop-button-bg);
+        --button-hover: var(--engine-stop-button-hover);
+      }
+    }
   }
 
   &__road {

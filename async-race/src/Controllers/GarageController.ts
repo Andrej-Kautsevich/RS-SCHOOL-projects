@@ -1,3 +1,4 @@
+import Car from '../Models/Car/Car';
 import GarageModel from '../Models/GarageModel';
 import { GENERATE_CARS_NUMBER } from '../types/enums';
 import GarageView from '../Views/GarageView/GarageView';
@@ -34,6 +35,12 @@ export default class GarageController {
     });
     this.garageView.observer.subscribe('select', (data) => {
       if (typeof data === 'number') this.selectCar(data);
+    });
+    this.garageView.observer.subscribe('start', (data) => {
+      if (data instanceof Car) this.startEngine(data);
+    });
+    this.garageView.observer.subscribe('stop', (data) => {
+      if (data instanceof Car) this.stopEngine(data);
     });
   }
 
@@ -95,6 +102,20 @@ export default class GarageController {
       await this.garageModel.generateCars(GENERATE_CARS_NUMBER);
       this.renderPage();
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private async startEngine(car: Car) {
+    const params = await car.startEngine();
+    if (params) {
+      const duration = params.distance / params.velocity;
+      await car.drive(duration);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private async stopEngine(car: Car) {
+    await car.stop();
   }
 
   public getPage() {

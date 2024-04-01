@@ -66,8 +66,13 @@ export default class GarageView {
       const info = div({ className: styles.car__info }, deleteBtn, selectBtn, span({ txt: car.name }));
 
       const road = div({ className: styles.car__road }, car.getNode(), createSVGUse('flag', [styles.car__flag]));
-      garageItem.appendChildren([info, road]);
+      garageItem.appendChildren([info, car.engineButtons.getNode(), road]);
       this.garageItems.append(garageItem);
+
+      const roadWidth = road.getNode().clientWidth;
+      const carWidth = car.getNode().clientWidth;
+      car.setRoadWidth(roadWidth);
+      car.setCarWidth(carWidth);
     });
   }
 
