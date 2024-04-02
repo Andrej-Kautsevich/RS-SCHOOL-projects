@@ -30,6 +30,26 @@
     outline: 2px solid var(--table-border);
     padding: 0.25rem;
     text-align: center;
+
+    &_sortable {
+      cursor: pointer;
+    }
+
+    &_sort_asc {
+      &::after {
+        content: '↓';
+        position: absolute;
+        margin-left: 0.25rem;
+      }
+    }
+
+    &_sort_desc {
+      &::after {
+        content: '↑';
+        position: absolute;
+        margin-left: 0.25rem;
+      }
+    }
   }
 
   &__car {

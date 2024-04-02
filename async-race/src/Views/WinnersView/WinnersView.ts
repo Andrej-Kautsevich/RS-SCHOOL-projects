@@ -1,9 +1,10 @@
 import { BaseComponent } from '../../helpers/BaseComponent';
 import { button, div, h, span, table, tbody, td, thead, tr } from '../../helpers/tags';
-import { Winner } from '../../types/types';
+import { Winner, WinnersQueryParams, WinnersQueryParamsOrder, WinnersQueryParamsSort } from '../../types/types';
 import styles from './winnersView.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import createSVGUse from '../../helpers/createSVGUse';
+import Observer from '../../helpers/Observer';
 
 export default class WinnersView {
   private winnersPage: BaseComponent;
@@ -17,6 +18,8 @@ export default class WinnersView {
   public nextButton: BaseComponent<HTMLButtonElement>;
 
   public prevButton: BaseComponent<HTMLButtonElement>;
+
+  public observer: Observer<unknown> = Observer.getInstance();
 
   constructor() {
     this.winnersPage = div({ classNames: [styles.winners, styles.hidden] });
@@ -38,8 +41,40 @@ export default class WinnersView {
     this.winnersPage.toggleClass(styles.hidden);
   }
 
-  private drawTable(winners: Winner[]) {
+  public drawTable(winners: Winner[], params: WinnersQueryParams) {
     this.table.destroyChildren();
+
+    const winsTd = td({
+      classNames: [styles.table__td, styles.table__td_sortable],
+      id: 'winsTd',
+      txt: 'Wins',
+      onclick: () => {
+        this.observer.notify('sortWins', '');
+      },
+    });
+    if (params?.sort === WinnersQueryParamsSort.wins) {
+      if (params.order === WinnersQueryParamsOrder.DESC) {
+        winsTd.addClasses([styles.table__td_sort_desc]);
+      } else {
+        winsTd.addClasses([styles.table__td_sort_asc]);
+      }
+    }
+
+    const timeTd = td({
+      classNames: [styles.table__td, styles.table__td_sortable],
+      id: 'timeTd',
+      txt: 'Time',
+      onclick: () => {
+        this.observer.notify('sortTime', '');
+      },
+    });
+    if (params?.sort === WinnersQueryParamsSort.time) {
+      if (params.order === WinnersQueryParamsOrder.DESC) {
+        timeTd.addClasses([styles.table__td_sort_desc]);
+      } else {
+        timeTd.addClasses([styles.table__td_sort_asc]);
+      }
+    }
 
     const tableHead = thead(
       { className: styles.table__head },
@@ -48,8 +83,8 @@ export default class WinnersView {
         td({ className: styles.table__td, txt: 'ID' }),
         td({ className: styles.table__td, txt: 'Car' }),
         td({ className: styles.table__td, txt: 'Name' }),
-        td({ className: styles.table__td, txt: 'Wins' }),
-        td({ className: styles.table__td, txt: 'Time' }),
+        winsTd,
+        timeTd,
       ),
     );
     this.table.append(tableHead);
@@ -66,7 +101,7 @@ export default class WinnersView {
         td({ className: styles.table__td }, div({ className: styles.table__car }, carIMG)),
         td({ className: styles.table__td, txt: winner.name }),
         td({ className: styles.table__td, txt: winner.wins.toString() }),
-        td({ className: styles.table__td, txt: winner.time.toString() }),
+        td({ className: styles.table__td, txt: winner.time.toFixed(2).toString() }),
       );
       tableBody.append(row);
     });
@@ -88,8 +123,8 @@ export default class WinnersView {
     this.winnersPage.append(this.pagination);
   }
 
-  public renderPage(winners: Winner[], currentPage: number, total: number) {
-    this.drawTable(winners);
+  public renderPage(winners: Winner[], currentPage: number, total: number, params: WinnersQueryParams) {
+    this.drawTable(winners, params);
     this.drawTitle(total);
     let totalPages = 1;
     if (total) {

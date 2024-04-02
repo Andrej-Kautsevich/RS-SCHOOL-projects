@@ -23,6 +23,17 @@ export type Winner = WinnerInterface & Pick<CarInterface, 'color' | 'name'>;
 export interface WinnersQueryParams {
   page: number;
   limit: number;
-  sort: 'id' | 'wins' | 'time';
-  order: 'ASC' | 'DESC';
+  sort: WinnersQueryParamsSort;
+  order: WinnersQueryParamsOrder;
+}
+
+export enum WinnersQueryParamsOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
+export enum WinnersQueryParamsSort {
+  id = 'id',
+  wins = 'wins',
+  time = 'time',
 }
