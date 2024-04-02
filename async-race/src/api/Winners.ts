@@ -3,7 +3,9 @@ import { API_METHODS, API_URLS, URL_PARAMS } from '../types/enums';
 import { WinnerInterface, WinnersQueryParams } from '../types/types';
 
 export default class Winners extends ApiModel {
-  public static async getWinners(params?: WinnersQueryParams): Promise<WinnerInterface[]> {
+  public static async getWinners(
+    params?: WinnersQueryParams,
+  ): Promise<{ winners: WinnerInterface[]; totalCount: number }> {
     const url = new URL(API_URLS.WINNERS);
     if (params) {
       if (params.limit) url.searchParams.set(URL_PARAMS.LIMIT, params.limit.toString());
@@ -11,7 +13,16 @@ export default class Winners extends ApiModel {
       if (params.page) url.searchParams.set(URL_PARAMS.PAGE, params.page.toString());
       if (params.sort) url.searchParams.set(URL_PARAMS.SORT, params.sort.toString());
     }
-    return this.fetchAPI(url, { method: API_METHODS.GET });
+    const response = await fetch(url, { method: API_METHODS.GET });
+    const winners = await response.json();
+
+    const totalCountHeader = response.headers.get('X-Total-Count');
+    if (totalCountHeader === null) {
+      throw new Error('X-Total-Count header not found');
+    }
+    const totalCount = parseInt(totalCountHeader, 10);
+
+    return { winners, totalCount };
   }
 
   public static async getWinnerById(winner: Pick<WinnerInterface, 'id'>): Promise<WinnerInterface> {

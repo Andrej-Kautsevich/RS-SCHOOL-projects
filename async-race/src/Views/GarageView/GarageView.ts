@@ -94,8 +94,7 @@ export default class GarageView {
   }
 
   public showWinner(car: CarInterface, time: number) {
-    const fixedTime = Math.ceil(time / 10) / 100;
-    const winnerWrapper = div({ classNames: [styles.garage__winner], txt: `${car.name} wins in time: ${fixedTime}s` });
+    const winnerWrapper = div({ classNames: [styles.garage__winner], txt: `${car.name} wins in time: ${time}s` });
     this.garagePage.append(winnerWrapper);
     setTimeout(() => {
       winnerWrapper.destroy();
@@ -115,5 +114,9 @@ export default class GarageView {
     this.drawTitle(total);
     this.drawPagination(currentPage, totalPages);
     return renderedCars;
+  }
+
+  public toggleVisibility() {
+    this.garagePage.toggleClass(styles.hidden);
   }
 }

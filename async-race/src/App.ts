@@ -1,24 +1,35 @@
 import GarageController from './Controllers/GarageController';
 import { BaseComponent } from './helpers/BaseComponent';
 import { main } from './helpers/tags';
+import Header from './Components/HeaderView/Header';
+import WinnersController from './Controllers/WinnersController';
 
 class App {
   private root: HTMLElement;
 
   private mainComponent: BaseComponent;
 
+  private header: Header;
+
   private garageController: GarageController;
+
+  private winnersController: WinnersController;
 
   constructor() {
     this.root = document.body;
     this.mainComponent = main({ className: 'main' });
-
     this.garageController = new GarageController();
+    this.winnersController = new WinnersController();
+    this.header = new Header(this.garageController, this.winnersController);
 
-    this.mainComponent.append(this.garageController.getPage());
+    this.mainComponent.appendChildren([this.garageController.getPage(), this.winnersController.getPage()]);
   }
 
   public async init() {
+    this.garageController.observer.subscribe('updateWinners', () => {
+      this.winnersController.renderPage();
+    });
+    this.root.append(this.header.getNode());
     this.root.append(this.mainComponent.getNode());
   }
 }

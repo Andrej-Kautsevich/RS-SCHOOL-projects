@@ -1,3 +1,4 @@
+import Observer from '../helpers/Observer';
 import Car from '../Models/Car/Car';
 import GarageModel from '../Models/GarageModel';
 import { GENERATE_CARS_NUMBER } from '../types/enums';
@@ -9,6 +10,8 @@ export default class GarageController {
   private garageView: GarageView;
 
   public currentPage: number = 1;
+
+  public observer: Observer<unknown> = Observer.getInstance();
 
   constructor() {
     this.garageModel = new GarageModel();
@@ -95,6 +98,7 @@ export default class GarageController {
 
       await this.garageModel.updateCarById({ name, color, id });
       this.garageView.updateCarForm.clearForm();
+      this.observer.notify('updateWinners', '');
       this.renderPage();
     });
   }
@@ -119,7 +123,9 @@ export default class GarageController {
         });
         const winner = await Promise.any(promises);
         const winnerTime = Date.now() - startTimes[winner.id];
-        this.garageView.showWinner(winner, winnerTime);
+        const fixedTime = Math.ceil(winnerTime / 10) / 100;
+        this.garageView.showWinner(winner, fixedTime);
+        await this.garageModel.setWinner(winner.id, fixedTime).then(() => this.observer.notify('updateWinners', ''));
         await Promise.all(promises).catch(() => {});
       } finally {
         this.garageView.garageButtons.resetRaceButton.getNode().disabled = false;
@@ -159,6 +165,10 @@ export default class GarageController {
   public async renderPage() {
     const { cars, total } = await this.getCars(this.currentPage);
     this.garageModel.renderedCars = await this.garageView.renderPage(cars, this.currentPage, total);
+  }
+
+  public toggleVisibility() {
+    this.garageView.toggleVisibility();
   }
 
   private async init() {

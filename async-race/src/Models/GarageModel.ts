@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import Garage from '../api/Garage';
+import Winners from '../api/Winners';
 import { CarInterface } from '../types/types';
 import Car from './Car/Car';
 import generateCarData from './utils/generateCarData';
@@ -49,9 +50,23 @@ export default class GarageModel {
   }
 
   public async generateCars(quantity = 100) {
-    for (let i = 0; i < quantity; i += 1) {
+    const carPromises = Array.from({ length: quantity }, async () => {
       const car = generateCarData();
-      this.createCar(car);
+      return this.createCar(car);
+    });
+    await Promise.all(carPromises);
+  }
+
+  public async setWinner(id: number, time: number) {
+    try {
+      const winner = await Winners.getWinnerById({ id });
+      if (winner.time > time) {
+        winner.time = time;
+      }
+      winner.wins += 1;
+      await Winners.updateWinnerById(winner);
+    } catch (error) {
+      await Winners.createWinner({ id, wins: 1, time });
     }
   }
 }

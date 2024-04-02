@@ -18,6 +18,8 @@ export interface WinnerInterface {
   time: number;
 }
 
+export type Winner = WinnerInterface & Pick<CarInterface, 'color' | 'name'>;
+
 export interface WinnersQueryParams {
   page: number;
   limit: number;

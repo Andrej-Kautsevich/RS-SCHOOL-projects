@@ -16,6 +16,10 @@ export const main = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['main']>({ ...props, tag: 'main' }, ...children);
 };
 
+export const header = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['header']>({ ...props, tag: 'header' }, ...children);
+};
+
 export const form = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLFormElement>({ ...props, tag: 'form' }, ...children);
 };
@@ -50,4 +54,24 @@ export const h = (level: HeadingLevel, props: ElementFnProps, ...children: BaseC
 
 export const img = (source: string, props?: ElementFnProps<HTMLImageElement>) => {
   return new BaseComponent<HTMLImageElement>({ ...props, src: source, tag: 'img' });
+};
+
+export const table = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['table']>({ ...props, tag: 'table' }, ...children);
+};
+
+export const thead = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['thead']>({ ...props, tag: 'thead' }, ...children);
+};
+
+export const tbody = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['tbody']>({ ...props, tag: 'tbody' }, ...children);
+};
+
+export const tr = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['tr']>({ ...props, tag: 'tr' }, ...children);
+};
+
+export const td = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['td']>({ ...props, tag: 'td' }, ...children);
 };
