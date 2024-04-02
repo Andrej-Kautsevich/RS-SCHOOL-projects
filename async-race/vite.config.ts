@@ -7,7 +7,15 @@ const SRC_PATH = path.resolve(__dirname, 'src');
 const SVG_FOLDER_PATH = path.resolve(SRC_PATH, 'assets', 'img');
 
 export default defineConfig({
-  plugins: [tsconfigPaths(), createSvgSpritePlugin({ svgFolder: SVG_FOLDER_PATH })],
+  plugins: [
+    tsconfigPaths(),
+    createSvgSpritePlugin({
+      svgFolder: SVG_FOLDER_PATH,
+      transformIndexHtmlTag: {
+        injectTo: 'head',
+      },
+    }),
+  ],
   css: {
     modules: {
       localsConvention: 'camelCase',
