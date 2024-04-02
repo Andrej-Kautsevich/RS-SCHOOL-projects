@@ -29,6 +29,7 @@ export default class GarageModel {
   public async deleteCar(carId: Pick<CarInterface, 'id'>) {
     try {
       await Garage.deleteCar(carId);
+      await Winners.deleteWinnerById(carId);
       return true;
     } catch (error) {
       throw new Error(`${error}`);

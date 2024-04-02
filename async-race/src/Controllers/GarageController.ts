@@ -52,6 +52,7 @@ export default class GarageController {
   private async deleteCar(carId: number) {
     const car = { id: carId };
     await this.garageModel.deleteCar(car);
+    this.observer.notify('updateWinners', '');
     this.renderPage();
   }
 
