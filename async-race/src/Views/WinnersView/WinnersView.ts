@@ -80,7 +80,7 @@ export default class WinnersView {
       { className: styles.table__head },
       tr(
         { className: styles.table__tr },
-        td({ className: styles.table__td, txt: 'ID' }),
+        td({ className: styles.table__td, txt: '№' }),
         td({ className: styles.table__td, txt: 'Car' }),
         td({ className: styles.table__td, txt: 'Name' }),
         winsTd,
@@ -90,14 +90,14 @@ export default class WinnersView {
     this.table.append(tableHead);
 
     const tableBody = tbody({ className: styles.table__body });
-    winners.forEach((winner) => {
+    winners.forEach((winner, index) => {
       const carIMG = createSVGUse('car');
       carIMG.setAttribute('fill', winner.color?.toString());
       carIMG.classList.add(styles.table__car);
 
       const row = tr(
         { className: styles.table__tr },
-        td({ className: styles.table__td, txt: winner.id.toString() }),
+        td({ className: styles.table__td, txt: (index + 1).toString() }),
         td({ className: styles.table__td }, div({ className: styles.table__car }, carIMG)),
         td({ className: styles.table__td, txt: winner.name }),
         td({ className: styles.table__td, txt: winner.wins.toString() }),
