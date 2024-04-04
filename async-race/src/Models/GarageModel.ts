@@ -29,7 +29,8 @@ export default class GarageModel {
   public async deleteCar(carId: Pick<CarInterface, 'id'>) {
     try {
       await Garage.deleteCar(carId);
-      await Winners.deleteWinnerById(carId);
+      const winner = await Winners.getWinnerById(carId);
+      if (winner) await Winners.deleteWinnerById(carId);
       return true;
     } catch (error) {
       throw new Error(`${error}`);
@@ -61,13 +62,13 @@ export default class GarageModel {
   public async setWinner(id: number, time: number) {
     try {
       const winner = await Winners.getWinnerById({ id });
-      if (winner.time > time) {
-        winner.time = time;
-      }
-      winner.wins += 1;
-      await Winners.updateWinnerById(winner);
+      if (winner) {
+        winner.wins += 1;
+        if (winner.time > time) winner.time = time;
+        await Winners.updateWinnerById(winner);
+      } else await Winners.createWinner({ id, wins: 1, time });
     } catch (error) {
-      await Winners.createWinner({ id, wins: 1, time });
+      throw new Error();
     }
   }
 }

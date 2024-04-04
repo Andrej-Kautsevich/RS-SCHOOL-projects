@@ -20,19 +20,10 @@ export default class UpdateCarView {
     this.submitButton = button({ classNames: [buttonStyles.button], type: 'submit', txt: 'Update' });
     this.submitButton.getNode().disabled = true;
     this.form.appendChildren([this.carNameInput, this.carColorInput, this.submitButton]);
-
-    this.addListeners();
   }
 
   public getForm() {
     return this.form;
-  }
-
-  private addListeners() {
-    this.carNameInput.addListener('input', () => {
-      const carName = this.carNameInput.getNode().value;
-      this.submitButton.getNode().disabled = carName.trim() === '';
-    });
   }
 
   public clearForm() {

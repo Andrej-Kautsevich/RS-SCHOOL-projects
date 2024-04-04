@@ -57,16 +57,15 @@ export default class GarageView {
     this.garageItems.destroyChildren();
     cars.forEach((car) => {
       const garageItem = div({ classNames: [styles.garage__item, styles.car] });
-      const deleteBtn = button({ classNames: [buttonStyles.button], txt: 'Delete' });
-      deleteBtn.addListener('click', () => {
+      const info = car.getManageButtons();
+      car.manageButtons.deleteBtn.addListener('click', () => {
         this.observer.notify('delete', car.id);
       });
-      const selectBtn = button({ classNames: [buttonStyles.button], txt: 'Select' });
-      selectBtn.addListener('click', () => {
+      car.manageButtons.selectBtn.addListener('click', () => {
+        this.updateCarForm.submitButton.getNode().disabled = false;
         this.observer.notify('select', car.id);
       });
-      const info = div({ className: styles.car__info }, deleteBtn, selectBtn, span({ txt: car.name }));
-
+      info.append(span({ txt: car.name }));
       const road = div({ className: styles.car__road }, car.getNode(), createSVGUse('flag', [styles.car__flag]));
       garageItem.appendChildren([info, car.engineButtons.getNode(), road]);
       this.garageItems.append(garageItem);
@@ -114,6 +113,23 @@ export default class GarageView {
     this.drawTitle(total);
     this.drawPagination(currentPage, totalPages);
     return renderedCars;
+  }
+
+  public disableButtons(cars: Car[]) {
+    cars.forEach((car) => {
+      car.manageButtons.disableButtons(true);
+    });
+    this.garageButtons.generateCarsButton.getNode().disabled = true;
+    this.garageButtons.startRaceButton.getNode().disabled = true;
+    this.createCarForm.submitButton.getNode().disabled = true;
+    this.updateCarForm.submitButton.getNode().disabled = true;
+  }
+
+  public enableButtons(cars: Car[]) {
+    this.garageButtons.generateCarsButton.getNode().disabled = false;
+    cars.forEach((car) => {
+      car.manageButtons.disableButtons(false);
+    });
   }
 
   public toggleVisibility() {

@@ -13,6 +13,8 @@ export default class GarageController {
 
   public observer: Observer<unknown> = Observer.getInstance();
 
+  private raceMode: boolean = false;
+
   constructor() {
     this.garageModel = new GarageModel();
     this.garageView = new GarageView();
@@ -114,49 +116,68 @@ export default class GarageController {
   private setStartRaceListeners() {
     this.garageView.garageButtons.startRaceButton.addListener('click', async () => {
       try {
-        this.garageView.garageButtons.startRaceButton.getNode().disabled = true;
+        this.raceMode = true;
+        this.garageView.garageButtons.resetRaceButton.getNode().disabled = false;
+        this.garageView.disableButtons(this.garageModel.renderedCars);
         const startTimes: Record<number, number> = {};
         const promises = this.garageModel.renderedCars.map((car) => {
           startTimes[car.id] = Date.now();
-          return this.startEngine(car).then((result) => {
-            return { ...result, id: car.id };
-          });
+          return this.startEngine(car)
+            .then((result) => {
+              if (result !== 'canceled') return { car, result, id: car.id };
+              return Promise.reject();
+            })
+            .catch();
         });
-        const winner = await Promise.any(promises);
-        const winnerTime = Date.now() - startTimes[winner.id];
-        const fixedTime = Math.ceil(winnerTime / 10) / 100;
-        this.garageView.showWinner(winner, fixedTime);
-        await this.garageModel.setWinner(winner.id, fixedTime).then(() => this.observer.notify('updateWinners', ''));
+        const winner = await Promise.any(promises).catch(() => {});
+        if (winner) {
+          const winnerTime = Date.now() - startTimes[winner.car.id];
+          const fixedTime = Math.ceil(winnerTime / 10) / 100;
+          this.garageView.showWinner(winner.car, fixedTime);
+          await this.garageModel.setWinner(winner.id, fixedTime).then(() => this.observer.notify('updateWinners', ''));
+        }
         await Promise.all(promises).catch(() => {});
+      } catch (error) {
+        if (error instanceof AggregateError) {
+          throw new Error();
+        }
+        throw new Error();
       } finally {
-        this.garageView.garageButtons.resetRaceButton.getNode().disabled = false;
+        this.raceMode = false;
       }
     });
   }
 
   private setResetRaceListeners() {
-    this.garageView.garageButtons.resetRaceButton.addListener('click', async () => {
-      this.garageView.garageButtons.resetRaceButton.getNode().disabled = true;
-      const promises = this.garageModel.renderedCars.map((car) => this.stopEngine(car));
-      await Promise.all(promises);
-      this.garageView.garageButtons.startRaceButton.getNode().disabled = false;
-    });
+    this.garageView.garageButtons.resetRaceButton.addListener('click', async () => this.resetRace());
+  }
+
+  private async resetRace() {
+    this.garageView.garageButtons.resetRaceButton.getNode().disabled = true;
+    const promises = this.garageModel.renderedCars.map((car) => this.stopEngine(car));
+    await Promise.all(promises);
+    this.garageView.enableButtons(this.garageModel.renderedCars);
+    this.garageView.garageButtons.startRaceButton.getNode().disabled = false;
   }
 
   // eslint-disable-next-line class-methods-use-this
   private async startEngine(car: Car) {
-    const params = await car.startEngine();
-    if (params) {
-      const duration = params.distance / params.velocity;
-      await car.drive(duration);
-      return car;
+    try {
+      const params = await car.startEngine();
+      if (params) {
+        const duration = params.distance / params.velocity;
+        const promise = await car.drive(duration);
+        return promise;
+      }
+    } catch {
+      throw new Error();
     }
-    throw new Error('Engine start failed');
+    throw new Error();
   }
 
   // eslint-disable-next-line class-methods-use-this
   private async stopEngine(car: Car) {
-    await car.stop();
+    await car.stop(this.raceMode);
   }
 
   public getPage() {

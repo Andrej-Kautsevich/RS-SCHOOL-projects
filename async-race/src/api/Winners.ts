@@ -25,9 +25,16 @@ export default class Winners extends ApiModel {
     return { winners, totalCount };
   }
 
-  public static async getWinnerById(winner: Pick<WinnerInterface, 'id'>): Promise<WinnerInterface> {
+  public static async getWinnerById(winner: Pick<WinnerInterface, 'id'>): Promise<WinnerInterface | null> {
     const url = new URL(`${API_URLS.WINNERS}${winner.id}`);
-    return this.fetchAPI(url, { method: API_METHODS.GET });
+    try {
+      return await this.fetchAPI(url, { method: API_METHODS.GET });
+    } catch (error) {
+      if (error instanceof Error) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   public static async createWinner(winner: WinnerInterface): Promise<WinnerInterface> {
