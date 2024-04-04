@@ -5,9 +5,8 @@ import { WinnersQueryParams } from '../types/types';
 
 export default class WinnersModel {
   public async getWinners(params: WinnersQueryParams) {
-    const winners = await Winners.getWinners(params);
-    const total = winners.totalCount;
-    return { winners, total };
+    const { winners, totalCount } = await Winners.getWinners(params);
+    return { winners, totalCount };
   }
 
   public async getWinnerCar(id: number) {

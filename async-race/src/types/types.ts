@@ -1,3 +1,5 @@
+import { WinnersQueryParamsSort, WinnersQueryParamsOrder } from './enums';
+
 export type EngineStatus = 'started' | 'stopped';
 
 export interface EngineInterface {
@@ -27,13 +29,7 @@ export interface WinnersQueryParams {
   order: WinnersQueryParamsOrder;
 }
 
-export enum WinnersQueryParamsOrder {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-
-export enum WinnersQueryParamsSort {
-  id = 'id',
-  wins = 'wins',
-  time = 'time',
+export interface GarageQueryParams {
+  page?: number;
+  limit?: number;
 }

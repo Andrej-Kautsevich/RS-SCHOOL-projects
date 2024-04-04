@@ -22,11 +22,11 @@ export default class UpdateCarView {
     this.form.appendChildren([this.carNameInput, this.carColorInput, this.submitButton]);
   }
 
-  public getForm() {
+  public getForm(): BaseComponent {
     return this.form;
   }
 
-  public clearForm() {
+  public clearForm(): void {
     this.carNameInput.getNode().value = '';
     this.submitButton.getNode().disabled = true;
   }

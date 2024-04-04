@@ -20,17 +20,11 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     // Assign properties from props to the node
     Object.assign(node, props);
 
-    if (props.txt) {
-      node.textContent = props.txt;
-    }
-    if (props.classNames) {
-      node.classList.add(...props.classNames);
-    }
+    if (props.txt) node.textContent = props.txt;
+    if (props.classNames) node.classList.add(...props.classNames);
     this.node = node;
 
-    if (children) {
-      this.appendChildren(children);
-    }
+    this.appendChildren(children);
   }
 
   /**
@@ -40,15 +34,14 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     if (child instanceof BaseComponent) {
       this.children.push(child);
       this.node.append(child.getNode());
-    } else {
-      this.node.append(child);
-    }
+    } else this.node.append(child);
   }
 
+  /**
+   * Append children nodes
+   */
   public appendChildren(children: (BaseComponent | Node | null)[]): void {
-    children.filter(isNotNullable).forEach((el) => {
-      this.append(el);
-    });
+    children.filter(isNotNullable).forEach((el) => this.append(el));
   }
 
   /**
@@ -122,9 +115,7 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
    * Destroys all child components associated with the current component.
    */
   destroyChildren() {
-    this.children.forEach((child) => {
-      child.destroy();
-    });
+    this.children.forEach((child) => child.destroy());
     this.children.length = 0;
   }
 

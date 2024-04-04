@@ -1,5 +1,6 @@
 import WinnersModel from '../Models/WinnersModel';
-import { WinnersQueryParamsOrder, WinnersQueryParams, WinnersQueryParamsSort } from '../types/types';
+import { WinnersQueryParams, Winner } from '../types/types';
+import { WinnersQueryParamsSort, WinnersQueryParamsOrder, ObserverEvents, WINNERS_PER_PAGE } from '../types/enums';
 import WinnersView from '../Views/WinnersView/WinnersView';
 
 export default class WinnersController {
@@ -9,7 +10,7 @@ export default class WinnersController {
 
   private params: WinnersQueryParams = {
     page: 1,
-    limit: 10,
+    limit: WINNERS_PER_PAGE,
     sort: WinnersQueryParamsSort.id,
     order: WinnersQueryParamsOrder.ASC,
   };
@@ -20,7 +21,7 @@ export default class WinnersController {
     this.init();
   }
 
-  private setPaginationListeners() {
+  private setPaginationListeners(): void {
     this.winnersView.prevButton.addListener('click', () => {
       this.params.page -= 1;
       this.renderPage();
@@ -31,26 +32,23 @@ export default class WinnersController {
     });
   }
 
-  private handleSortClick() {
-    this.winnersView.observer.subscribe('sortTime', async () => {
-      if (this.params.sort === WinnersQueryParamsSort.time) {
-        this.toggleSortOrder();
-      }
-      this.params.sort = WinnersQueryParamsSort.time;
-      const { winners } = await this.getWinners();
-      this.winnersView.drawTable(winners, this.params);
-    });
-    this.winnersView.observer.subscribe('sortWins', async () => {
-      if (this.params.sort === WinnersQueryParamsSort.wins) {
-        this.toggleSortOrder();
-      }
-      this.params.sort = WinnersQueryParamsSort.wins;
-      const { winners } = await this.getWinners();
-      this.winnersView.drawTable(winners, this.params);
-    });
+  private handleSortClick(): void {
+    this.winnersView.observer.subscribe(ObserverEvents.sortTime, async () =>
+      this.sortTable(WinnersQueryParamsSort.time),
+    );
+    this.winnersView.observer.subscribe(ObserverEvents.sortWins, async () =>
+      this.sortTable(WinnersQueryParamsSort.wins),
+    );
   }
 
-  private toggleSortOrder() {
+  private async sortTable(sort: WinnersQueryParamsSort): Promise<void> {
+    if (this.params.sort === sort) this.toggleSortOrder();
+    this.params.sort = sort;
+    const { winners } = await this.getWinners();
+    this.winnersView.drawTable(winners, this.params);
+  }
+
+  private toggleSortOrder(): void {
     if (this.params.order === WinnersQueryParamsOrder.ASC) {
       this.params.order = WinnersQueryParamsOrder.DESC;
     } else {
@@ -58,31 +56,31 @@ export default class WinnersController {
     }
   }
 
-  public getPage() {
+  public getPage(): HTMLElement {
     return this.winnersView.getPage();
   }
 
-  public toggleVisibility() {
+  public toggleVisibility(): void {
     this.winnersView.toggleVisibility();
   }
 
-  private async getWinners() {
-    const { winners, total } = await this.winnersModel.getWinners(this.params);
+  private async getWinners(): Promise<{ winners: Winner[]; total: number }> {
+    const { winners, totalCount } = await this.winnersModel.getWinners(this.params);
     const updatedWinners = await Promise.all(
-      winners.winners.map(async (winner) => {
+      winners.map(async (winner) => {
         const { name, color } = await this.winnersModel.getWinnerCar(winner.id);
         return { ...winner, name, color };
       }),
     );
-    return { winners: updatedWinners, total };
+    return { winners: updatedWinners, total: totalCount };
   }
 
-  public async renderPage() {
+  public async renderPage(): Promise<void> {
     const { winners, total } = await this.getWinners();
     this.winnersView.renderPage(winners, this.params.page, total, this.params);
   }
 
-  private async init() {
+  private async init(): Promise<void> {
     await this.renderPage();
     this.setPaginationListeners();
     this.handleSortClick();

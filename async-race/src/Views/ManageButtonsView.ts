@@ -17,11 +17,11 @@ export default class ManageButtonsView {
     this.info.appendChildren([this.deleteBtn, this.selectBtn]);
   }
 
-  public getNode() {
+  public getNode(): BaseComponent {
     return this.info;
   }
 
-  public disableButtons(state: boolean) {
+  public disableButtons(state: boolean): void {
     this.deleteBtn.getNode().disabled = state;
     this.selectBtn.getNode().disabled = state;
   }

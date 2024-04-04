@@ -17,7 +17,12 @@ export default class EngineButtonsView {
     this.buttonsWrapper.appendChildren([this.startButton, this.stopButton]);
   }
 
-  public getNode() {
+  public getNode(): BaseComponent {
     return this.buttonsWrapper;
+  }
+
+  public resetButtons(): void {
+    this.startButton.getNode().disabled = false;
+    this.stopButton.getNode().disabled = true;
   }
 }

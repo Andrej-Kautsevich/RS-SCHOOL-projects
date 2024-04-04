@@ -10,7 +10,7 @@ export default class Header {
 
   public winnersButton: BaseComponent<HTMLButtonElement>;
 
-  private header: BaseComponent;
+  private header: BaseComponent<HTMLHeadElement>;
 
   constructor(
     private garageController: GarageController,
@@ -25,11 +25,11 @@ export default class Header {
     this.setListeners();
   }
 
-  public getNode() {
+  public getNode(): HTMLElement {
     return this.header.getNode();
   }
 
-  private setListeners() {
+  private setListeners(): void {
     this.winnersButton.addListener('click', () => {
       this.handleWinnersButton();
     });
@@ -38,14 +38,14 @@ export default class Header {
     });
   }
 
-  private handleWinnersButton() {
+  private handleWinnersButton(): void {
     this.winnersButton.getNode().disabled = true;
     this.garageButton.getNode().disabled = false;
     this.garageController.toggleVisibility();
     this.winnersController.toggleVisibility();
   }
 
-  private handleGarageButton() {
+  private handleGarageButton(): void {
     this.garageButton.getNode().disabled = true;
     this.winnersButton.getNode().disabled = false;
     this.garageController.toggleVisibility();

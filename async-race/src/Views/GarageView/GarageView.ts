@@ -9,7 +9,7 @@ import Observer from '../../helpers/Observer';
 import UpdateCarView from './manageCarView/updateCarView';
 import GarageButtonsView from './garageButtonsVIew/GarageButtonsView';
 import { CarInterface } from '../../types/types';
-import { WINNER_TIME_DISPLAY } from '../../types/enums';
+import { ObserverEvents, WINNER_TIME_DISPLAY } from '../../types/enums';
 
 export default class GarageView {
   private garagePage: BaseComponent;
@@ -53,17 +53,17 @@ export default class GarageView {
     this.garagePage.appendChildren([garageForms, this.garageButtons.getNode(), this.title, this.garageItems]);
   }
 
-  public drawCars(cars: Car[]) {
+  private drawCars(cars: Car[]): Car[] {
     this.garageItems.destroyChildren();
     cars.forEach((car) => {
       const garageItem = div({ classNames: [styles.garage__item, styles.car] });
       const info = car.getManageButtons();
       car.manageButtons.deleteBtn.addListener('click', () => {
-        this.observer.notify('delete', car.id);
+        this.observer.notify(ObserverEvents.delete, car.id);
       });
       car.manageButtons.selectBtn.addListener('click', () => {
         this.updateCarForm.submitButton.getNode().disabled = false;
-        this.observer.notify('select', car.id);
+        this.observer.notify(ObserverEvents.select, car.id);
       });
       info.append(span({ txt: car.name }));
       const road = div({ className: styles.car__road }, car.getNode(), createSVGUse('flag', [styles.car__flag]));
@@ -77,7 +77,7 @@ export default class GarageView {
     return cars;
   }
 
-  public drawPagination(page: number, totalPages: number) {
+  private drawPagination(page: number, totalPages: number): void {
     this.pagination?.destroyChildren();
 
     const paginationText = span({ classNames: [styles.pagination__text], txt: `Page: ${page} / ${totalPages}` });
@@ -88,11 +88,11 @@ export default class GarageView {
     this.garagePage.append(this.pagination);
   }
 
-  public drawTitle(totalCars: number) {
+  private drawTitle(totalCars: number): void {
     this.title.setTextContent(`Garage (${totalCars})`);
   }
 
-  public showWinner(car: CarInterface, time: number) {
+  public showWinner(car: CarInterface, time: number): void {
     const winnerWrapper = div({ classNames: [styles.garage__winner], txt: `${car.name} wins in time: ${time}s` });
     this.garagePage.append(winnerWrapper);
     setTimeout(() => {
@@ -100,22 +100,20 @@ export default class GarageView {
     }, WINNER_TIME_DISPLAY);
   }
 
-  public getPage() {
+  public getPage(): HTMLElement {
     return this.garagePage.getNode();
   }
 
-  public async renderPage(cars: Car[], currentPage: number, total: number) {
+  public renderPage(cars: Car[], currentPage: number, total?: number): Car[] {
     const renderedCars = this.drawCars(cars);
     let totalPages = 1;
-    if (total) {
-      totalPages = Math.ceil(total / 7);
-    }
-    this.drawTitle(total);
+    if (total) totalPages = Math.ceil(total / 7);
+    this.drawTitle(total ?? 0);
     this.drawPagination(currentPage, totalPages);
     return renderedCars;
   }
 
-  public disableButtons(cars: Car[]) {
+  public disableButtons(cars: Car[]): void {
     cars.forEach((car) => {
       car.manageButtons.disableButtons(true);
     });
@@ -125,14 +123,15 @@ export default class GarageView {
     this.updateCarForm.submitButton.getNode().disabled = true;
   }
 
-  public enableButtons(cars: Car[]) {
+  public enableButtons(cars: Car[]): void {
     this.garageButtons.generateCarsButton.getNode().disabled = false;
     cars.forEach((car) => {
       car.manageButtons.disableButtons(false);
+      car.engineButtons.resetButtons();
     });
   }
 
-  public toggleVisibility() {
+  public toggleVisibility(): void {
     this.garagePage.toggleClass(styles.hidden);
   }
 }

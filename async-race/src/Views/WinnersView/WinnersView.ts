@@ -1,6 +1,7 @@
 import { BaseComponent } from '../../helpers/BaseComponent';
 import { button, div, h, span, table, tbody, td, thead, tr } from '../../helpers/tags';
-import { Winner, WinnersQueryParams, WinnersQueryParamsOrder, WinnersQueryParamsSort } from '../../types/types';
+import { Winner, WinnersQueryParams } from '../../types/types';
+import { WinnersQueryParamsOrder, WinnersQueryParamsSort, ObserverEvents } from '../../types/enums';
 import styles from './winnersView.module.scss';
 import buttonStyles from '../../styles/button.module.scss';
 import createSVGUse from '../../helpers/createSVGUse';
@@ -33,15 +34,15 @@ export default class WinnersView {
     this.winnersPage.appendChildren([this.title, this.table]);
   }
 
-  public getPage() {
+  public getPage(): HTMLElement {
     return this.winnersPage.getNode();
   }
 
-  public toggleVisibility() {
+  public toggleVisibility(): void {
     this.winnersPage.toggleClass(styles.hidden);
   }
 
-  public drawTable(winners: Winner[], params: WinnersQueryParams) {
+  public drawTable(winners: Winner[], params: WinnersQueryParams): void {
     this.table.destroyChildren();
 
     const winsTd = td({
@@ -49,7 +50,7 @@ export default class WinnersView {
       id: 'winsTd',
       txt: 'Wins',
       onclick: () => {
-        this.observer.notify('sortWins', '');
+        this.observer.notify(ObserverEvents.sortWins, '');
       },
     });
     if (params?.sort === WinnersQueryParamsSort.wins) {
@@ -65,7 +66,7 @@ export default class WinnersView {
       id: 'timeTd',
       txt: 'Time',
       onclick: () => {
-        this.observer.notify('sortTime', '');
+        this.observer.notify(ObserverEvents.sortTime, '');
       },
     });
     if (params?.sort === WinnersQueryParamsSort.time) {
@@ -108,11 +109,11 @@ export default class WinnersView {
     this.table.append(tableBody);
   }
 
-  public drawTitle(totalWinners: number) {
+  private drawTitle(totalWinners: number): void {
     this.title.setTextContent(`Winners (${totalWinners})`);
   }
 
-  public drawPagination(page: number, totalPages: number) {
+  private drawPagination(page: number, totalPages: number): void {
     this.pagination?.destroyChildren();
 
     const paginationText = span({ classNames: [styles.pagination__text], txt: `Page: ${page} / ${totalPages}` });
@@ -123,13 +124,11 @@ export default class WinnersView {
     this.winnersPage.append(this.pagination);
   }
 
-  public renderPage(winners: Winner[], currentPage: number, total: number, params: WinnersQueryParams) {
+  public renderPage(winners: Winner[], currentPage: number, total: number, params: WinnersQueryParams): void {
     this.drawTable(winners, params);
     this.drawTitle(total);
     let totalPages = 1;
-    if (total) {
-      totalPages = Math.ceil(total / 10);
-    }
+    if (total) totalPages = Math.ceil(total / 10);
     this.drawPagination(currentPage, totalPages);
   }
 }

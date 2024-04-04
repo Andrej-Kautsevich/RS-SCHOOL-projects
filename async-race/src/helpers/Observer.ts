@@ -1,3 +1,5 @@
+import { ObserverEvents } from '../types/enums';
+
 type ObserverFunction<T> = (data: T) => void;
 
 export default class Observer<T> {
@@ -9,19 +11,17 @@ export default class Observer<T> {
 
   private listeners: Record<string, ObserverFunction<T>[]> = {};
 
-  subscribe(event: string, callback: ObserverFunction<T>): void {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
+  subscribe(event: ObserverEvents, callback: ObserverFunction<T>): void {
+    if (!this.listeners[event]) this.listeners[event] = [];
     this.listeners[event].push(callback);
   }
 
-  unsubscribe(event: string, callback: ObserverFunction<T>): void {
+  unsubscribe(event: ObserverEvents, callback: ObserverFunction<T>): void {
     if (!this.listeners[event]) return;
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  notify(event: string, data: T): void {
+  notify(event: ObserverEvents, data: T): void {
     if (!this.listeners[event]) return;
     this.listeners[event].forEach((callback) => callback(data));
   }

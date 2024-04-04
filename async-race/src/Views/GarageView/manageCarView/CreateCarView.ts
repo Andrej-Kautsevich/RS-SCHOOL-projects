@@ -24,11 +24,11 @@ export default class CreateCarView {
     this.addListeners();
   }
 
-  public getForm() {
+  public getForm(): BaseComponent {
     return this.form;
   }
 
-  private addListeners() {
+  private addListeners(): void {
     this.carNameInput.addListener('input', () => {
       const carName = this.carNameInput.getNode().value;
       this.submitButton.getNode().disabled = carName.trim() === '';

@@ -8,6 +8,7 @@ export default class Engine extends ApiModel {
    *
    * @param car car ID
    * @param status engine status
+   * @param signal signal to abort fetch
    * @returns returns it's actual velocity and distance
    */
   public static async startStopCarEngine(
@@ -26,6 +27,7 @@ export default class Engine extends ApiModel {
    * Before using this request you need to switch engine status to the 'started' status first.
    *
    * @param car car ID
+   * @param signal signal to abort fetch
    * @returns returns success status
    */
   public static async switchToDriveCarEngine(

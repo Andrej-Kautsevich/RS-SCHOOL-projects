@@ -22,6 +22,26 @@ export const URL_PARAMS = {
   STATUS: 'status',
 } as const;
 
-export const GENERATE_CARS_NUMBER = 100;
+export enum ObserverEvents {
+  updateWinners = 'updateWinners',
+  delete = 'delete',
+  select = 'select',
+  start = 'start',
+  stop = 'stop',
+  sortTime = 'sortTime',
+  sortWins = 'sortWins',
+}
+export enum WinnersQueryParamsOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+export enum WinnersQueryParamsSort {
+  id = 'id',
+  wins = 'wins',
+  time = 'time',
+}
 
+export const GENERATE_CARS_NUMBER = 100;
 export const WINNER_TIME_DISPLAY = 3000;
+export const CARS_PER_PAGE = 7;
+export const WINNERS_PER_PAGE = 10;

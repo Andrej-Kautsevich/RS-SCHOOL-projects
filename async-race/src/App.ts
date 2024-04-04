@@ -3,6 +3,7 @@ import { BaseComponent } from './helpers/BaseComponent';
 import { main } from './helpers/tags';
 import Header from './Components/HeaderView/Header';
 import WinnersController from './Controllers/WinnersController';
+import { ObserverEvents } from './types/enums';
 
 class App {
   private root: HTMLElement;
@@ -25,10 +26,8 @@ class App {
     this.mainComponent.appendChildren([this.garageController.getPage(), this.winnersController.getPage()]);
   }
 
-  public async init() {
-    this.garageController.observer.subscribe('updateWinners', () => {
-      this.winnersController.renderPage();
-    });
+  public init(): void {
+    this.garageController.observer.subscribe(ObserverEvents.updateWinners, () => this.winnersController.renderPage());
     this.root.append(this.header.getNode());
     this.root.append(this.mainComponent.getNode());
   }

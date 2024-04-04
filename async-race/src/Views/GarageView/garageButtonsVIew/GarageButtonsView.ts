@@ -20,7 +20,7 @@ export default class GarageButtonsView {
     this.buttonsWrapper.appendChildren([this.generateCarsButton, this.startRaceButton, this.resetRaceButton]);
   }
 
-  public getNode() {
+  public getNode(): BaseComponent {
     return this.buttonsWrapper;
   }
 }

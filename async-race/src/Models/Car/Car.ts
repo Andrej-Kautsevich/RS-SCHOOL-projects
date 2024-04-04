@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { CarInterface } from '../../types/types';
+import { CarInterface, EngineInterface } from '../../types/types';
 import { BaseComponent } from '../../helpers/BaseComponent';
 import { div } from '../../helpers/tags';
 import createSVGUse from '../../helpers/createSVGUse';
@@ -8,6 +8,7 @@ import Engine from '../../api/Engine';
 import EngineButtonsView from '../../Views/EngineButtonsView';
 import Observer from '../../helpers/Observer';
 import ManageButtonsView from '../../Views/ManageButtonsView';
+import { ObserverEvents } from '../../types/enums';
 
 export default class Car implements CarInterface {
   public name: string;
@@ -45,32 +46,42 @@ export default class Car implements CarInterface {
     this.setEngineListeners();
   }
 
-  public getNode() {
+  public getNode(): HTMLElement {
     return this.carNode.getNode();
   }
 
-  public getManageButtons() {
+  public getManageButtons(): BaseComponent {
     return this.manageButtons.getNode();
   }
 
-  public setRoad(roadTrack: BaseComponent) {
+  public setRoad(roadTrack: BaseComponent): void {
     this.roadTrack = roadTrack;
   }
 
-  public setCarWidth(carWidth: number) {
+  public setCarWidth(carWidth: number): void {
     this.carWidth = carWidth;
   }
 
-  private setEngineListeners() {
-    this.engineButtons.startButton.addListener('click', () => {
-      this.observer.notify('start', this);
-    });
-    this.engineButtons.stopButton.addListener('click', () => {
-      this.observer.notify('stop', this);
-    });
+  private setEngineListeners(): void {
+    this.engineButtons.startButton.addListener('click', () => this.observer.notify(ObserverEvents.start, this));
+    this.engineButtons.stopButton.addListener('click', () => this.observer.notify(ObserverEvents.stop, this));
   }
 
-  public async startEngine() {
+  public async startDrive(): Promise<Pick<EngineInterface, 'status'> | 'canceled'> {
+    try {
+      const params = await this.startEngine();
+      if (params) {
+        const duration = params.distance / params.velocity;
+        const promise = await this.drive(duration);
+        return promise;
+      }
+    } catch {
+      throw new Error();
+    }
+    throw new Error();
+  }
+
+  public async startEngine(): Promise<Omit<EngineInterface, 'status'>> {
     this.controller = new AbortController();
 
     this.engineButtons.startButton.getNode().disabled = true;
@@ -83,7 +94,7 @@ export default class Car implements CarInterface {
     }
   }
 
-  public async drive(duration: number) {
+  public async drive(duration: number): Promise<Pick<EngineInterface, 'status'> | 'canceled'> {
     this.animation = this.setAnimation(duration);
     this.controller = new AbortController();
     try {
@@ -95,7 +106,7 @@ export default class Car implements CarInterface {
     }
   }
 
-  public async stop(raceMode: boolean) {
+  public async stop(raceMode: boolean): Promise<void> {
     if (this.controller) {
       this.controller.abort();
       this.controller = null;
