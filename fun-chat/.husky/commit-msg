@@ -1,0 +1,3 @@
+cd fun-chat
+
+npx --no -- commitlint --edit $1
