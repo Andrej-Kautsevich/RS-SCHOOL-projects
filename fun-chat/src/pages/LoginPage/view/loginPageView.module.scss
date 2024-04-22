@@ -1,0 +1,14 @@
+.login-page {
+  position: relative;
+}
+
+.error {
+  position: fixed;
+  right: 0;
+  color: var(--color-red);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-red);
+  transform: translateX(110%);
+  letter-spacing: 1px;
+}

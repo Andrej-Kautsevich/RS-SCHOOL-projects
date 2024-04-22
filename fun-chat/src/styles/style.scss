@@ -1,0 +1,49 @@
+@import url(normalize.scss);
+
+:root {
+  --content-width: 1440px;
+  --tablet-width: 900px;
+  --mobile-width: 650px;
+
+  --main-color: #b2afaf;
+  --accent-color: #202020;
+  --text-color-main: #f5deb3;
+  --color-white: #f6f6f6;
+  --color-red: #c71212;
+
+  --button-primary-default: #6f634d;
+  --button-primary-hover: #8c806b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 1rem;
+  background-color: var(--main-color);
+}
+
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+}

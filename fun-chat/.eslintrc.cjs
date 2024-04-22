@@ -34,5 +34,5 @@ module.exports = {
     'prettier/prettier': 'error',
   },
   noInlineConfig: true,
-  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'commitlint.config.js'],
 };

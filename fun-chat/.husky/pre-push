@@ -1,4 +1,4 @@
-cd async-race
+cd fun-chat
 
 npx validate-branch-name -r '(feat|fix|chore|refactor)/[A-Za-z-]+'
 npm run lint 

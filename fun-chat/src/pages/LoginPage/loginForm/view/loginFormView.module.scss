@@ -1,0 +1,51 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0 auto;
+
+  &.form {
+    .form__field {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .form__label {
+      margin-bottom: 0.5em;
+    }
+
+    .form__input {
+      border: 1px solid var(--border-primary);
+      border-radius: 5px;
+
+      &:invalid:not(:placeholder-shown) {
+        color: var(--color-red);
+        outline-color: var(--color-red);
+        border-color: var(--color-red);
+      }
+
+      &:invalid:focus:not(:placeholder-shown) {
+        &~.form__requirements {
+          max-height: fit-content;
+          padding: 0 1em 1em;
+          text-align: center;
+        }
+      }
+    }
+
+    .form__button {
+      font-size: 1.25em;
+    }
+
+    .form__requirements {
+      max-height: 0;
+      max-width: 300px;
+      transition: 0.28s;
+      overflow: hidden;
+      color: var(--color-red);
+      font-style: italic;
+    }
+  }
+}
