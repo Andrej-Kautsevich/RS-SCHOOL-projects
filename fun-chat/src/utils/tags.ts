@@ -12,6 +12,10 @@ export const span = (props: ElementFnProps) => {
   return new BaseComponent<HTMLSpanElement>({ ...props, tag: 'span' });
 };
 
+export const a = (props: ElementFnProps<HTMLAnchorElement>, ...children: (BaseComponent | Node)[]) => {
+  return new BaseComponent<HTMLAnchorElement>({ ...props, tag: 'a' }, ...children);
+};
+
 export const main = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['main']>({ ...props, tag: 'main' }, ...children);
 };
@@ -20,7 +24,11 @@ export const header = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['header']>({ ...props, tag: 'header' }, ...children);
 };
 
-export const form = (props: ElementFnProps, ...children: BaseComponent[]) => {
+export const footer = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLElementTagNameMap['footer']>({ ...props, tag: 'footer' }, ...children);
+};
+
+export const form = (props: ElementFnProps<HTMLFormElement>, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLFormElement>({ ...props, tag: 'form' }, ...children);
 };
 
@@ -30,6 +38,10 @@ export const label = (props: ElementFnProps<HTMLLabelElement>, ...children: (Bas
 
 export const input = (props: ElementFnProps<HTMLInputElement>) => {
   return new BaseComponent<HTMLInputElement>({ ...props, tag: 'input' });
+};
+
+export const textarea = (props: ElementFnProps<HTMLTextAreaElement>) => {
+  return new BaseComponent<HTMLTextAreaElement>({ ...props, tag: 'textarea' });
 };
 
 export const select = (props: ElementFnProps<HTMLSelectElement>, ...children: (BaseComponent | HTMLElement)[]) => {
@@ -74,4 +86,12 @@ export const tr = (props: ElementFnProps, ...children: BaseComponent[]) => {
 
 export const td = (props: ElementFnProps, ...children: BaseComponent[]) => {
   return new BaseComponent<HTMLElementTagNameMap['td']>({ ...props, tag: 'td' }, ...children);
+};
+
+export const ul = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLUListElement>({ ...props, tag: 'ul' }, ...children);
+};
+
+export const li = (props: ElementFnProps, ...children: BaseComponent[]) => {
+  return new BaseComponent<HTMLDataListElement>({ ...props, tag: 'li' }, ...children);
 };

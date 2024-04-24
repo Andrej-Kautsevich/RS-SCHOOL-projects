@@ -9,9 +9,11 @@ export default class WebSocketService {
 
   private connection: WebSocket | null = null;
 
+  // private isOpen = false;
+
   constructor() {
     if (this.connection === null) {
-      this.createSocket();
+      this.connectSocket();
     }
   }
 
@@ -31,9 +33,13 @@ export default class WebSocketService {
     return false;
   }
 
-  private createSocket() {
+  private connectSocket() {
     this.connection = new WebSocket(API_URL);
-    this.connection.onopen = () => this.setListeners();
+    this.connection.onopen = () => {
+      // this.isOpen = true;
+      this.observer.notify(ObserverEvents.socketOpen, '');
+      this.setListeners();
+    };
   }
 
   private setListeners() {
@@ -54,16 +60,62 @@ export default class WebSocketService {
 
   private handleAuthentication(message: ServerMessage) {
     switch (message.type) {
+      case AppError.ERROR: {
+        this.observer.notify(ObserverEvents.loginResponse, message);
+        this.observer.notify(ObserverEvents.logoutResponse, message);
+        break;
+      }
       case UserActions.LOGIN: {
         this.observer.notify(ObserverEvents.loginResponse, message);
         break;
       }
-      case AppError.ERROR: {
-        this.observer.notify(ObserverEvents.loginResponse, message);
+      case UserActions.LOGOUT: {
+        this.observer.notify(ObserverEvents.logoutResponse, message);
         break;
       }
-      case UserActions.LOGOUT: {
-        // console.log('logout');
+      default:
+        this.handleExternalAuthentication(message);
+    }
+  }
+
+  private handleExternalAuthentication(message: ServerMessage) {
+    switch (message.type) {
+      case UserActions.LOGIN_EXTERNAL: {
+        this.observer.notify(ObserverEvents.externalLoginResponse, message);
+        break;
+      }
+      case UserActions.LOGOUT_EXTERNAL: {
+        this.observer.notify(ObserverEvents.externalLogoutResponse, message);
+        break;
+      }
+      default:
+        this.handleGetUsers(message);
+    }
+  }
+
+  private handleGetUsers(message: ServerMessage) {
+    switch (message.type) {
+      case UserActions.ALL_ACTIVE: {
+        this.observer.notify(ObserverEvents.allActiveUsers, message);
+        break;
+      }
+      case UserActions.ALL_INACTIVE: {
+        this.observer.notify(ObserverEvents.allInactiveUsers, message);
+        break;
+      }
+      default:
+        this.handleMessages(message);
+    }
+  }
+
+  private handleMessages(message: ServerMessage) {
+    switch (message.type) {
+      case UserActions.MESSAGE_HISTORY: {
+        this.observer.notify(ObserverEvents.messageHistory, message);
+        break;
+      }
+      case UserActions.MESSAGE_SEND: {
+        this.observer.notify(ObserverEvents.messageSend, message);
         break;
       }
       default:

@@ -1,0 +1,55 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  padding: 1%;
+
+  &_from {
+    width: 60%;
+    background: #f5f5f5;
+    align-self: flex-end;
+
+    .message__text {
+      background: #eeeeee;
+    }
+  }
+
+  &_to {
+    width: 40%;
+    background: #b5c9b5;
+
+    .message__text {
+      background: #c2d7c2;
+    }
+  }
+
+  &__info {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+    justify-content: space-between;
+    width: 80%;
+  }
+
+  &__text {
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 2% 0 0;
+    padding: 3%;
+    text-align: justify;
+    width: 100%;
+    word-break: break-all;
+  }
+
+  &__state {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.7rem;
+    justify-content: space-between;
+    width: 80%;
+  }
+}

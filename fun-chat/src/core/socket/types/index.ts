@@ -3,10 +3,13 @@ export const API_URL = 'ws://127.0.0.1:4000';
 export const enum UserActions {
   LOGIN = 'USER_LOGIN',
   LOGOUT = 'USER_LOGOUT',
-  LOGIN_ANOTHER = 'USER_EXTERNAL_LOGIN',
-  LOGOUT_ANOTHER = 'USER_EXTERNAL_LOGOUT',
+  LOGIN_EXTERNAL = 'USER_EXTERNAL_LOGIN',
+  LOGOUT_EXTERNAL = 'USER_EXTERNAL_LOGOUT',
   ALL_ACTIVE = 'USER_ACTIVE',
   ALL_INACTIVE = 'USER_INACTIVE',
+  MESSAGE_HISTORY = 'MSG_FROM_USER',
+  MESSAGE_SEND = 'MSG_SEND',
+  SELECT_USER = 'SELECT_USER',
 }
 
 export const enum AppError {
@@ -19,11 +22,34 @@ export type ServerMessage = {
   payload: {
     error?: string;
     user?: User;
-  };
+    users?: User[];
+    message?: Message;
+    messages?: Message[];
+  } | null;
 };
 
 export type User = {
   login: string;
   password?: string;
   isLogined?: boolean;
+};
+
+export type Message = {
+  id: string;
+  from: string;
+  to: string;
+  text: string;
+  datetime: number;
+  status: MessageStatus;
+};
+
+type MessageStatus = {
+  isDelivered: boolean;
+  isReaded: boolean;
+  isEdited: boolean;
+};
+
+export type Dialog = {
+  login: string;
+  messages: Message[];
 };

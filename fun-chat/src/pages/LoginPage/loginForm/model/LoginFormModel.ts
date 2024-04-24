@@ -1,3 +1,4 @@
+import StorageService from '../../../../core/sessionStorage/SessionStorageService';
 import { loginUser } from '../../../../core/socket/actions/user-actions';
 import WebSocketService from '../../../../core/socket/model/WebSocketService';
 import { User } from '../../../../core/socket/types';
@@ -8,9 +9,12 @@ export default class LoginFormModel {
 
   private socket = WebSocketService.getInstance();
 
+  private sessionStorageService = StorageService.getInstance();
+
+  private user: User | null = null;
+
   constructor() {
     this.view = new LoginFormView();
-
     this.setupForm();
   }
 
@@ -38,12 +42,14 @@ export default class LoginFormModel {
     const login = this.view.loginInput.getNode().value;
     const password = this.view.passwordInput.getNode().value;
 
-    const user: User = {
+    this.user = {
       login,
       password,
     };
 
-    this.socket.sendMessage(loginUser(user));
+    this.socket.sendMessage(loginUser(this.user));
+    this.sessionStorageService.saveData('user', this.user);
+
     this.view.clearForm();
   }
 }
