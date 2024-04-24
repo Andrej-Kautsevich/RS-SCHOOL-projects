@@ -1,7 +1,7 @@
-import { ServerMessage } from '../core/socket/types';
+import { ServerResponse } from '../core/socket/types';
 
-const isFromServerMessage = (message: unknown): null | ServerMessage => {
-  const isValidMessage = (msg: unknown): msg is ServerMessage =>
+const isFromServerMessage = (message: unknown): null | ServerResponse => {
+  const isValidMessage = (msg: unknown): msg is ServerResponse =>
     typeof msg === 'object' && msg !== null && 'type' in msg && 'id' in msg && 'payload' in msg;
 
   if (isValidMessage(message)) {

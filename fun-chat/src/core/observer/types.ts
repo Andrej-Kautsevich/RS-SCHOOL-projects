@@ -9,6 +9,7 @@ enum ObserverEvents {
   allInactiveUsers = 'allInactiveUsers',
   messageHistory = 'messageHistory',
   messageSend = 'messageSend',
+  messageRead = 'messageRead',
   openDialog = 'openDialog',
 }
 

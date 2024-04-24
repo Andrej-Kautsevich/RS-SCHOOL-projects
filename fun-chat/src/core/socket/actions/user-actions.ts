@@ -1,4 +1,4 @@
-import { ServerMessage, User, UserActions } from '../types';
+import { Message, ServerMessage, User, UserActions } from '../types';
 import generateId from '../utils/idGenerator';
 
 export type UserAction = {
@@ -45,5 +45,21 @@ export const messageHistory = (currentUser: User): ServerMessage => ({
     user: {
       login: currentUser.login,
     },
+  },
+});
+
+export const messageRead = (message: Message) => ({
+  id: generateId(),
+  type: UserActions.MESSAGE_READ,
+  payload: {
+    message,
+  },
+});
+
+export const sendMessage = (message: Pick<Message, 'to' | 'text'>) => ({
+  id: generateId(),
+  type: UserActions.MESSAGE_SEND,
+  payload: {
+    message,
   },
 });

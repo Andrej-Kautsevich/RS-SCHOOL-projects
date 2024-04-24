@@ -54,6 +54,7 @@
       font-size: 2rem;
       align-items: center;
       justify-content: center;
+      text-align: center;
     }
 
     &::-webkit-scrollbar {
@@ -64,6 +65,30 @@
     &::-webkit-scrollbar-thumb {
       border: 1px solid;
       border-radius: 3px;
+    }
+  }
+
+  &__divider {
+    font-size: 0.7rem;
+    position: relative;
+    text-align: center;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: 5px 0;
+
+    span {
+      background-color: var(--main-color);
+      position: relative;
+      padding: 0 5%;
+    }
+
+    &::before {
+      content: ' ';
+      border-bottom: 1px solid;
+      left: 0;
+      position: absolute;
+      top: 8px;
+      width: 100%;
     }
   }
 
@@ -79,11 +104,16 @@
     outline: none;
     padding: 5px 5%;
     width: 70%;
-    border: 1px solid var(--main-color);
+    border: 1px solid var(--accent-color);
     border-radius: 10px;
     background-color: #ffffff8c;
     letter-spacing: 1px;
     resize: none;
+
+    &:disabled {
+      border-color: var(--main-color);
+      background-color: #ffffff5f;
+    }
 
     &::-webkit-scrollbar {
       height: 10px;

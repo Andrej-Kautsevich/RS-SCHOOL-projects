@@ -4,7 +4,7 @@ import Router from '../../../../core/router/Router';
 import StorageService from '../../../../core/sessionStorage/SessionStorageService';
 import { logoutUser } from '../../../../core/socket/actions/user-actions';
 import WebSocketService from '../../../../core/socket/model/WebSocketService';
-import { AppError, ServerMessage } from '../../../../core/socket/types';
+import { AppError, ServerResponse } from '../../../../core/socket/types';
 import generateId from '../../../../core/socket/utils/idGenerator';
 import isFromServerMessage from '../../../../utils/isFromServerMessage';
 import PAGES from '../../../types';
@@ -62,7 +62,7 @@ export default class HeaderModel {
     });
   }
 
-  private logoutHandler(serverMessage: ServerMessage) {
+  private logoutHandler(serverMessage: ServerResponse) {
     if (serverMessage.type === AppError.ERROR) {
       throw new Error(`Server error: ${serverMessage.payload?.error}`);
     }

@@ -103,11 +103,17 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
     this.node.classList.remove(...classNames);
   }
 
-  public addListener(event: string, listener: EventListener, options = false): void {
-    this.node.addEventListener(event, listener, options);
+  // interface EventListener = {}
+
+  public addListener<K extends keyof HTMLElementEventMap>(
+    event: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => void,
+    options = false,
+  ): void {
+    this.node.addEventListener<K>(event, listener, options);
   }
 
-  public removeListener(event: string, listener: EventListener, options = false): void {
+  public removeListener(event: keyof HTMLElementEventMap, listener: EventListener, options = false): void {
     this.node.removeEventListener(event, listener, options);
   }
 

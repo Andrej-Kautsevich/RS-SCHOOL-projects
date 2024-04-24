@@ -1,6 +1,6 @@
 import Observer from '../../observer/Observer';
 import ObserverEvents from '../../observer/types';
-import { API_URL, AppError, ServerMessage, UserActions } from '../types';
+import { API_URL, AppError, ServerMessage, ServerResponse, UserActions } from '../types';
 
 export default class WebSocketService {
   private observer = Observer.getInstance();
@@ -8,6 +8,8 @@ export default class WebSocketService {
   private static instance: WebSocketService;
 
   private connection: WebSocket | null = null;
+
+  // private isOpen = false;
 
   constructor() {
     if (this.connection === null) {
@@ -57,13 +59,13 @@ export default class WebSocketService {
 
   private setListeners() {
     this.connection?.addEventListener('message', (messageEvent: MessageEvent) => {
-      const message: ServerMessage = JSON.parse(messageEvent.data);
+      const message: ServerResponse = JSON.parse(messageEvent.data);
 
       this.handleServerResponse(message);
     });
   }
 
-  private handleServerResponse(message: ServerMessage) {
+  private handleServerResponse(message: ServerResponse) {
     if ('type' in message && 'payload' in message) {
       this.handleAuthentication(message);
     } else {
@@ -71,7 +73,7 @@ export default class WebSocketService {
     }
   }
 
-  private handleAuthentication(message: ServerMessage) {
+  private handleAuthentication(message: ServerResponse) {
     switch (message.type) {
       case AppError.ERROR: {
         this.observer.notify(ObserverEvents.loginResponse, message);
@@ -91,7 +93,7 @@ export default class WebSocketService {
     }
   }
 
-  private handleExternalAuthentication(message: ServerMessage) {
+  private handleExternalAuthentication(message: ServerResponse) {
     switch (message.type) {
       case UserActions.LOGIN_EXTERNAL: {
         this.observer.notify(ObserverEvents.externalLoginResponse, message);
@@ -106,7 +108,7 @@ export default class WebSocketService {
     }
   }
 
-  private handleGetUsers(message: ServerMessage) {
+  private handleGetUsers(message: ServerResponse) {
     switch (message.type) {
       case UserActions.ALL_ACTIVE: {
         this.observer.notify(ObserverEvents.allActiveUsers, message);
@@ -121,7 +123,7 @@ export default class WebSocketService {
     }
   }
 
-  private handleMessages(message: ServerMessage) {
+  private handleMessages(message: ServerResponse) {
     switch (message.type) {
       case UserActions.MESSAGE_HISTORY: {
         this.observer.notify(ObserverEvents.messageHistory, message);
@@ -129,6 +131,10 @@ export default class WebSocketService {
       }
       case UserActions.MESSAGE_SEND: {
         this.observer.notify(ObserverEvents.messageSend, message);
+        break;
+      }
+      case UserActions.MESSAGE_READ: {
+        this.observer.notify(ObserverEvents.messageRead, message);
         break;
       }
       default:

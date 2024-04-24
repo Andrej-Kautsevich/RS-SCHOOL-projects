@@ -9,6 +9,7 @@ export const enum UserActions {
   ALL_INACTIVE = 'USER_INACTIVE',
   MESSAGE_HISTORY = 'MSG_FROM_USER',
   MESSAGE_SEND = 'MSG_SEND',
+  MESSAGE_READ = 'MSG_READ',
   SELECT_USER = 'SELECT_USER',
 }
 
@@ -16,7 +17,7 @@ export const enum AppError {
   ERROR = 'ERROR',
 }
 
-export type ServerMessage = {
+export type ServerResponse = {
   id: string | null;
   type: AppError | UserActions;
   payload: {
@@ -25,6 +26,15 @@ export type ServerMessage = {
     users?: User[];
     message?: Message;
     messages?: Message[];
+  } | null;
+};
+
+export type ServerMessage = {
+  id: string | null;
+  type: UserActions;
+  payload: {
+    user?: Partial<User>;
+    message?: Partial<Message>;
   } | null;
 };
 

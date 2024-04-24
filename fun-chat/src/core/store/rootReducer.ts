@@ -1,5 +1,5 @@
-import { User, UserActions } from '../socket/types';
-import { Reducer, State, Action } from './types';
+import { Dialog, User, UserActions } from '../socket/types';
+import { Reducer, State, Action, StoreActions } from './types';
 
 const rootReducer: Reducer<State, Action> = (state: State, action: Action): State => {
   switch (action.type) {
@@ -27,6 +27,12 @@ const rootReducer: Reducer<State, Action> = (state: State, action: Action): Stat
         ...state,
         selectedUser: action.payload as User,
       };
+    case StoreActions.OPEN_DIALOG: {
+      return {
+        ...state,
+        openedDialog: action.payload as Dialog,
+      };
+    }
     default:
       return state;
   }

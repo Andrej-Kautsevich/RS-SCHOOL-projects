@@ -7,6 +7,7 @@ export type State = {
   selectedUser: User | null;
   allUsers: User[];
   currentUserDialogs: Dialog[];
+  openedDialog: Dialog | null;
 };
 
 export const initialState: State = {
@@ -16,13 +17,18 @@ export const initialState: State = {
   selectedUser: null,
   allUsers: [],
   currentUserDialogs: [],
+  openedDialog: null,
 };
 
 export type Action = {
-  type: UserActions;
-  payload: User | User[];
+  type: UserActions | StoreActions;
+  payload: User | User[] | Dialog;
 };
 
 export interface Reducer<T, U> {
   (state: T, action: U): T;
+}
+
+export const enum StoreActions {
+  OPEN_DIALOG = 'OPEN_DIALOG',
 }

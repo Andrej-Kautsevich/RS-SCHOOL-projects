@@ -40,13 +40,6 @@ export default class AppModel {
     return this.view.getHTML();
   }
 
-  private checkConnection() {
-    this.waiter.showWaiter();
-    this.observer.subscribe(ObserverEvents.socketOpen, () => {
-      this.initPages();
-    });
-  }
-
   private initPages() {
     const loginPage = new LoginPageModel(this.router);
     const mainPage = new MainPageModel(this.router);
@@ -69,10 +62,6 @@ export default class AppModel {
     ];
 
     this.router.setRoutes(routes);
-
-    const connection = this.socket.getConnection();
-
-    if (connection) connection.onopen = () => this.redirectUser();
   }
 
   private checkAuth(): boolean {
