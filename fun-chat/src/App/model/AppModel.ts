@@ -4,6 +4,7 @@ import Router from '../../core/router/Router';
 import StorageService from '../../core/sessionStorage/SessionStorageService';
 import { loginUser } from '../../core/socket/actions/user-actions';
 import WebSocketService from '../../core/socket/model/WebSocketService';
+import AboutPageModel from '../../pages/AboutPage/model/AboutPageModel';
 import ConnectionWaiterModel from '../../pages/components/Connection-waiter/model/ConnectionWaiterModel';
 import LoginPageModel from '../../pages/LoginPage/model/LoginPageModel';
 import MainPageModel from '../../pages/MainPage/model/MainPageModel';
@@ -31,9 +32,9 @@ export default class AppModel {
     this.waiter = new ConnectionWaiterModel(this.root);
     this.setConnectionWaiter();
     this.initPages();
-    // console.log(
-    // 'Привет, если есть возможность, можешь проверить позже, активно дорабатываю всё что не успел. Можешь связаться со мной в Discord (@prakapro), затягивать не буду',
-    // );
+    console.log(
+      'Привет, если есть возможность, можешь проверить позже, активно дорабатываю всё что не успел. Можешь связаться со мной в Discord (@prakapro), затягивать не буду',
+    );
   }
 
   public getHTML(): HTMLElement {
@@ -43,6 +44,7 @@ export default class AppModel {
   private initPages() {
     const loginPage = new LoginPageModel(this.router);
     const mainPage = new MainPageModel(this.router);
+    const aboutPage = new AboutPageModel();
 
     const routes = [
       {
@@ -57,6 +59,13 @@ export default class AppModel {
         callback: () => {
           this.root.innerHTML = '';
           mainPage.openPage(this.root);
+        },
+      },
+      {
+        path: PAGES.ABOUT,
+        callback: () => {
+          this.root.innerHTML = '';
+          aboutPage.openPage(this.root);
         },
       },
     ];

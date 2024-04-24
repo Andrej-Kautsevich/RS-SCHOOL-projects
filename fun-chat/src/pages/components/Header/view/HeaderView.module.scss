@@ -20,4 +20,9 @@
   &__heading {
     margin-right: 0.5rem;
   }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+  }
 }

@@ -27,6 +27,7 @@ export default class LoginPageModel {
     this.view = new LoginPageView(this.loginForm);
 
     this.setUserLoginHandler();
+    this.setButtonsHandler();
   }
 
   public openPage(root: HTMLElement) {
@@ -40,6 +41,14 @@ export default class LoginPageModel {
 
   public getPage() {
     return this.view.getPage();
+  }
+
+  private setButtonsHandler() {
+    this.view.aboutPageButton.addListener('click', () => this.aboutPageButtonHandler());
+  }
+
+  private aboutPageButtonHandler() {
+    this.router.navigateTo(PAGES.ABOUT);
   }
 
   private setUserLoginHandler() {

@@ -41,11 +41,12 @@ export default class HeaderModel {
   private init() {
     this.setUser();
     this.observer.subscribe(ObserverEvents.loginResponse, () => this.setUser());
-    this.setLogoutButtonHandler();
+    this.setButtonsHandler();
   }
 
-  private setLogoutButtonHandler() {
+  private setButtonsHandler() {
     this.view.logoutButton.addListener('click', () => this.logoutButtonHandler());
+    this.view.aboutPageButton.addListener('click', () => this.aboutPageButtonHandler());
   }
 
   private logoutButtonHandler() {
@@ -60,6 +61,10 @@ export default class HeaderModel {
         this.logoutHandler(serverMessage);
       }
     });
+  }
+
+  private aboutPageButtonHandler() {
+    this.router.navigateTo(PAGES.ABOUT);
   }
 
   private logoutHandler(serverMessage: ServerResponse) {
