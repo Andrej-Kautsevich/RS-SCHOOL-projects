@@ -4,6 +4,7 @@ import Router from '../../core/router/Router';
 import StorageService from '../../core/sessionStorage/SessionStorageService';
 import { loginUser } from '../../core/socket/actions/user-actions';
 import WebSocketService from '../../core/socket/model/WebSocketService';
+import ConnectionWaiterModel from '../../pages/components/Connection-waiter/model/ConnectionWaiterModel';
 import LoginPageModel from '../../pages/LoginPage/model/LoginPageModel';
 import MainPageModel from '../../pages/MainPage/model/MainPageModel';
 import PAGES from '../../pages/types';
@@ -13,6 +14,8 @@ export default class AppModel {
   private view: AppView;
 
   private root: HTMLElement;
+
+  private waiter: ConnectionWaiterModel;
 
   private router: Router = new Router();
 
@@ -25,10 +28,12 @@ export default class AppModel {
   constructor() {
     this.view = new AppView();
     this.root = this.getHTML();
-    this.checkConnection();
-    console.log(
-      'Привет, если есть возможность, можешь проверить позже, активно дорабатываю всё что не успел. Можешь связаться со мной в Discord (@prakapro), затягивать не буду',
-    );
+    this.waiter = new ConnectionWaiterModel(this.root);
+    this.setConnectionWaiter();
+    this.initPages();
+    // console.log(
+    // 'Привет, если есть возможность, можешь проверить позже, активно дорабатываю всё что не успел. Можешь связаться со мной в Discord (@prakapro), затягивать не буду',
+    // );
   }
 
   public getHTML(): HTMLElement {
@@ -36,8 +41,8 @@ export default class AppModel {
   }
 
   private checkConnection() {
+    this.waiter.showWaiter();
     this.observer.subscribe(ObserverEvents.socketOpen, () => {
-      // TODO: add reconnection to server modal window
       this.initPages();
     });
   }
@@ -65,11 +70,9 @@ export default class AppModel {
 
     this.router.setRoutes(routes);
 
-    if (this.checkAuth()) {
-      this.router.navigateTo(PAGES.MAIN);
-    } else {
-      this.router.navigateTo(PAGES.LOGIN);
-    }
+    const connection = this.socket.getConnection();
+
+    if (connection) connection.onopen = () => this.redirectUser();
   }
 
   private checkAuth(): boolean {
@@ -78,5 +81,21 @@ export default class AppModel {
       this.socket.sendMessage(loginUser(user));
     }
     return !!user;
+  }
+
+  private redirectUser() {
+    if (this.checkAuth()) {
+      this.router.navigateTo(PAGES.MAIN);
+    } else {
+      this.router.navigateTo(PAGES.LOGIN);
+    }
+  }
+
+  private setConnectionWaiter() {
+    this.observer.subscribe(ObserverEvents.socketOpen, () => {
+      this.waiter.hideWaiter();
+      this.redirectUser();
+    });
+    this.observer.subscribe(ObserverEvents.socketClose, () => this.waiter.showWaiter());
   }
 }

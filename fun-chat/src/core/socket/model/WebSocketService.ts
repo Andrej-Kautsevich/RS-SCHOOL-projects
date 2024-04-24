@@ -9,8 +9,6 @@ export default class WebSocketService {
 
   private connection: WebSocket | null = null;
 
-  // private isOpen = false;
-
   constructor() {
     if (this.connection === null) {
       this.connectSocket();
@@ -34,12 +32,27 @@ export default class WebSocketService {
   }
 
   private connectSocket() {
+    let timeout: NodeJS.Timeout;
+
+    const reconnect = () => {
+      timeout = setTimeout(() => this.connectSocket(), 1000);
+    };
     this.connection = new WebSocket(API_URL);
+
     this.connection.onopen = () => {
-      // this.isOpen = true;
       this.observer.notify(ObserverEvents.socketOpen, '');
+      clearTimeout(timeout);
       this.setListeners();
     };
+
+    this.connection.onclose = () => {
+      this.observer.notify(ObserverEvents.socketClose, '');
+      reconnect();
+    };
+  }
+
+  public getConnection() {
+    return this.connection;
   }
 
   private setListeners() {
