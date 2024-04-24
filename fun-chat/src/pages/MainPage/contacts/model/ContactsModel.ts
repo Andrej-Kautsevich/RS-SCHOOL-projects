@@ -158,7 +158,6 @@ export default class ContactsModel {
     this.observer.subscribe(ObserverEvents.allInactiveUsers, (message) => this.getAllUsersHandler(message));
 
     this.observer.subscribe(ObserverEvents.loginResponse, () => this.getUsers());
-    this.observer.subscribe(ObserverEvents.logoutResponse, () => this.getUsers());
 
     this.observer.subscribe(ObserverEvents.externalLoginResponse, () => this.getUsers());
     this.observer.subscribe(ObserverEvents.externalLogoutResponse, () => this.getUsers());

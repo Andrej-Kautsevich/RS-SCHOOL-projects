@@ -40,8 +40,8 @@ export default class HeaderModel {
 
   private init() {
     this.setUser();
-    this.observer.subscribe(ObserverEvents.loginResponse, () => this.setUser());
     this.setButtonsHandler();
+    this.subscribeToEvents();
   }
 
   private setButtonsHandler() {
@@ -55,12 +55,6 @@ export default class HeaderModel {
 
     const id = generateId();
     this.socket.sendMessage(logoutUser(id, user));
-    this.observer.subscribe(ObserverEvents.logoutResponse, (message) => {
-      const serverMessage = isFromServerMessage(message);
-      if (serverMessage && serverMessage.id === id) {
-        this.logoutHandler(serverMessage);
-      }
-    });
   }
 
   private aboutPageButtonHandler() {
@@ -75,5 +69,16 @@ export default class HeaderModel {
       this.sessionStorageService.removeData('user');
       this.router.navigateTo(PAGES.LOGIN);
     }
+  }
+
+  private subscribeToEvents() {
+    this.observer.subscribe(ObserverEvents.loginResponse, () => this.setUser());
+
+    this.observer.subscribe(ObserverEvents.logoutResponse, (message) => {
+      const serverMessage = isFromServerMessage(message);
+      if (serverMessage) {
+        this.logoutHandler(serverMessage);
+      }
+    });
   }
 }
