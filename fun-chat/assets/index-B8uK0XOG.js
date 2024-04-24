@@ -78,7 +78,7 @@ class se {
     return this.routes.find((o) => o.path === e);
   }
   loadInitialRoute() {
-    const t = window.location.pathname.split("/").slice(1).join("/");
+    const t = window.location.pathname.split("/").slice(2).join("/");
     this.loadRoute(t);
   }
   setRoutes(e) {
