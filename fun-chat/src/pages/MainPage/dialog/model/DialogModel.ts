@@ -106,6 +106,7 @@ export default class DialogModel {
     }
     formInput.getNode().value = '';
     formButton.disabled = true;
+    this.dialogHandler();
   }
 
   private sendMessage(value: string) {
@@ -159,8 +160,8 @@ export default class DialogModel {
     this.observer.subscribe(ObserverEvents.externalLogoutResponse, (response) => this.updateDialogTitle(response));
     this.observer.subscribe(ObserverEvents.externalLoginResponse, (response) => this.updateDialogTitle(response));
 
-    const dialogWindow = this.view.getDialogWindow();
-    dialogWindow.addListener('click', () => this.dialogHandler());
-    dialogWindow.addListener('wheel', () => this.dialogHandler());
+    const dialogMessagesArea = this.view.getDialogMessagesArea();
+    dialogMessagesArea.addListener('click', () => this.dialogHandler());
+    dialogMessagesArea.addListener('wheel', () => this.dialogHandler());
   }
 }

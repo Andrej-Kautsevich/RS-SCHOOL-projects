@@ -75,7 +75,7 @@ export default class MessageView {
 
   private createMessageStatus() {
     const { isDelivered, isReaded } = this.message.status;
-    let status;
+    let status = 'sent';
     if (isDelivered) status = 'delivered';
     if (isReaded) status = 'reded';
     return span({ className: styles.message__status, txt: status });

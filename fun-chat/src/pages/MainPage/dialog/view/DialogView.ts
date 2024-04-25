@@ -11,7 +11,7 @@ export default class DialogView {
 
   private dialogUser: BaseComponent;
 
-  private dialogMessages: BaseComponent;
+  private dialogMessagesArea: BaseComponent;
 
   private messageDivider: BaseComponent;
 
@@ -23,7 +23,7 @@ export default class DialogView {
 
   constructor() {
     this.dialogUser = div({ className: styles.dialog__user });
-    this.dialogMessages = div({
+    this.dialogMessagesArea = div({
       classNames: [styles.dialog__messages, styles.dialog__messages_empty],
       txt: 'Select user to start messaging',
     });
@@ -38,11 +38,15 @@ export default class DialogView {
     });
     this.dialogForm = form({ className: styles.dialog__form }, this.formInput, this.formButton);
 
-    this.dialogWindow = div({ className: styles.dialog }, this.dialogUser, this.dialogMessages, this.dialogForm);
+    this.dialogWindow = div({ className: styles.dialog }, this.dialogUser, this.dialogMessagesArea, this.dialogForm);
   }
 
   public getDialogWindow() {
     return this.dialogWindow;
+  }
+
+  public getDialogMessagesArea() {
+    return this.dialogMessagesArea;
   }
 
   public getFormInput() {
@@ -58,16 +62,16 @@ export default class DialogView {
   }
 
   public drawMessages(messages?: Message[]) {
-    this.dialogMessages.getNode().innerHTML = '';
+    this.dialogMessagesArea.getNode().innerHTML = '';
 
     let firstUnreadMessage: unknown = null;
     const { currentUser } = storeModel.getState();
 
     if (messages?.length) {
-      this.dialogMessages.removeClasses([styles.dialog__messages_empty]);
+      this.dialogMessagesArea.removeClasses([styles.dialog__messages_empty]);
       messages.forEach((message) => {
         const messageElement = new MessageModel(message);
-        this.dialogMessages.append(messageElement.getMessageElement().getNode());
+        this.dialogMessagesArea.append(messageElement.getMessageElement().getNode());
         if (!message.status.isReaded && !firstUnreadMessage && message.to === currentUser?.login) {
           firstUnreadMessage = messageElement;
         }
@@ -76,10 +80,10 @@ export default class DialogView {
         firstUnreadMessage.getMessageElement().getNode().before(this.messageDivider.getNode());
         this.messageDivider.getNode().scrollIntoView();
       } else {
-        this.dialogMessages.getNode().scrollTop = this.dialogMessages.getNode().scrollHeight;
+        this.dialogMessagesArea.getNode().scrollTop = this.dialogMessagesArea.getNode().scrollHeight;
       }
     } else {
-      this.dialogMessages.append(div({ className: styles.dialog__empty, txt: 'Write your first message' }));
+      this.dialogMessagesArea.append(div({ className: styles.dialog__empty, txt: 'Write your first message' }));
     }
   }
 
