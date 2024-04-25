@@ -127,10 +127,8 @@ export default class ContactsModel {
         const editedMessage = dialog.messages.find((msg) => msg.id === incomeMessage?.id);
 
         if (editedMessage && incomeMessage) {
-          // const currentDialog = dialog;
           editedMessage.text = incomeMessage?.text;
           editedMessage.status.isEdited = incomeMessage.status.isEdited;
-          console.log(currentUserDialogs);
           this.observer.notify(ObserverEvents.updateDialog, '');
         }
       });

@@ -33,9 +33,6 @@ export default class AppModel {
     this.waiter = new ConnectionWaiterModel(this.root);
     this.setConnectionWaiter();
     this.initPages();
-    console.log(
-      'Привет, если есть возможность, можешь проверить позже, активно дорабатываю всё что не успел. Можешь связаться со мной в Discord (@prakapro), затягивать не буду',
-    );
   }
 
   public getHTML(): HTMLElement {

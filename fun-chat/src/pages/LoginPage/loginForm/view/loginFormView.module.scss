@@ -27,7 +27,7 @@
       }
 
       &:invalid:focus:not(:placeholder-shown) {
-        &~.form__requirements {
+        & ~ .form__requirements {
           max-height: fit-content;
           padding: 0 1em 1em;
           text-align: center;
