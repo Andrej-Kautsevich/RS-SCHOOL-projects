@@ -2,13 +2,19 @@ import { Message } from '../../../../core/socket/types';
 import storeModel from '../../../../core/store/StoreModel';
 import { BaseComponent } from '../../../../utils/BaseComponent';
 import dateFormat from '../../../../utils/dateFormate';
-import { div, span } from '../../../../utils/tags';
+import { button, div, span } from '../../../../utils/tags';
 import styles from './MessageView.module.scss';
 
 export default class MessageView {
   private messageElement: BaseComponent;
 
   private message: Message;
+
+  private messageContext: BaseComponent;
+
+  private deleteButton: BaseComponent<HTMLButtonElement>;
+
+  private editButton: BaseComponent<HTMLButtonElement>;
 
   private messageText: BaseComponent;
 
@@ -28,11 +34,28 @@ export default class MessageView {
     this.messageLogin = this.createMessageLogin();
     this.messageStatus = this.createMessageStatus();
     this.messageEdited = this.createMessageEdited();
+
+    this.deleteButton = button({ className: styles.button, txt: 'delete' });
+    this.editButton = button({ className: styles.button, txt: 'edit' });
+    this.messageContext = this.createMessageContext();
+
     this.messageElement = this.createMessageElement();
   }
 
   public getMessage() {
     return this.messageElement;
+  }
+
+  public getMessageContext() {
+    return this.messageContext;
+  }
+
+  public getDeleteButton() {
+    return this.deleteButton;
+  }
+
+  public getEditButton() {
+    return this.editButton;
   }
 
   private createMessageText() {
@@ -66,17 +89,26 @@ export default class MessageView {
   private createMessageElement() {
     const messageElement = div({ className: styles.message });
     const messageInfo = div({ className: styles.message__info }, this.messageLogin, this.messageDate);
-    const messageState = div({ className: styles.message__state }, this.messageEdited, this.messageStatus);
+    const messageState = div({ className: styles.message__state }, this.messageEdited);
 
     messageElement.appendChildren([messageInfo, this.messageText]);
 
     const { currentUser } = storeModel.getState();
 
     if (currentUser?.login === this.message.from) {
-      messageElement.append(messageState);
+      messageState.append(this.messageStatus);
       messageElement.addClasses([styles.message_from]);
     } else messageElement.addClasses([styles.message_to]);
 
+    messageElement.appendChildren([messageState, this.messageContext]);
     return messageElement;
+  }
+
+  private createMessageContext() {
+    return div({ classNames: [styles.message__context, styles.hidden] }, this.deleteButton, this.editButton);
+  }
+
+  public toggleContextVisibility() {
+    this.messageContext.toggleClass(styles.hidden);
   }
 }

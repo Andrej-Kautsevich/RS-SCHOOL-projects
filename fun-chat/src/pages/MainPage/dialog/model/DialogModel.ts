@@ -1,7 +1,8 @@
 import Observer from '../../../../core/observer/Observer';
 import ObserverEvents from '../../../../core/observer/types';
-import { messageRead, sendMessage } from '../../../../core/socket/actions/user-actions';
+import { messageRead, sendEditMessage, sendMessage } from '../../../../core/socket/actions/user-actions';
 import WebSocketService from '../../../../core/socket/model/WebSocketService';
+import { Message } from '../../../../core/socket/types';
 import { setOpenedDialog } from '../../../../core/store/actions';
 import storeModel from '../../../../core/store/StoreModel';
 import isFromServerMessage from '../../../../utils/isFromServerMessage';
@@ -95,7 +96,14 @@ export default class DialogModel {
     const { value } = formInput.getNode();
     const formButton = this.view.getFormButton().getNode();
     if (!value) return;
-    this.sendMessage(value);
+
+    const messageID = formInput.getNode().dataset.id;
+    if (messageID) {
+      delete formInput.getNode().dataset.id;
+      this.sendEditMessage(value, messageID);
+    } else {
+      this.sendMessage(value);
+    }
     formInput.getNode().value = '';
     formButton.disabled = true;
   }
@@ -111,6 +119,14 @@ export default class DialogModel {
     }
   }
 
+  private sendEditMessage(text: string, id: string) {
+    const message: Pick<Message, 'id' | 'text'> = {
+      id,
+      text,
+    };
+    this.socket.sendMessage(sendEditMessage(message));
+  }
+
   private handleReadResponse(response: unknown) {
     const serverMessage = isFromServerMessage(response);
     if (serverMessage) {
@@ -122,10 +138,24 @@ export default class DialogModel {
     }
   }
 
+  private editMessage(messageID: string) {
+    const { openedDialog } = storeModel.getState();
+    const message = openedDialog?.messages.find((msg) => msg.id === messageID);
+
+    if (message) {
+      const input = this.view.getFormInput().getNode();
+      input.value = message.text;
+      input.dataset.id = messageID;
+      input.focus();
+    }
+  }
+
   private subscribeToEvents() {
     this.observer.subscribe(ObserverEvents.openDialog, () => this.openDialog());
+    this.observer.subscribe(ObserverEvents.openMessageEdit, (messageID) => this.editMessage(String(messageID)));
     this.observer.subscribe(ObserverEvents.messageSend, () => this.drawMessages());
     this.observer.subscribe(ObserverEvents.messageRead, (response) => this.handleReadResponse(response));
+    this.observer.subscribe(ObserverEvents.updateDialog, () => this.drawMessages());
     this.observer.subscribe(ObserverEvents.externalLogoutResponse, (response) => this.updateDialogTitle(response));
     this.observer.subscribe(ObserverEvents.externalLoginResponse, (response) => this.updateDialogTitle(response));
 

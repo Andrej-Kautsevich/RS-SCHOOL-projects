@@ -63,3 +63,19 @@ export const sendMessage = (message: Pick<Message, 'to' | 'text'>) => ({
     message,
   },
 });
+
+export const sendEditMessage = (message: Pick<Message, 'id' | 'text'>): ServerMessage => ({
+  id: generateId(),
+  type: UserActions.MESSAGE_EDIT,
+  payload: {
+    message,
+  },
+});
+
+export const deleteMessage = (message: Pick<Message, 'id'>): ServerMessage => ({
+  id: generateId(),
+  type: UserActions.MESSAGE_DELETE,
+  payload: {
+    message,
+  },
+});

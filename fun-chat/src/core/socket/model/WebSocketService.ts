@@ -137,6 +137,14 @@ export default class WebSocketService {
         this.observer.notify(ObserverEvents.messageRead, message);
         break;
       }
+      case UserActions.MESSAGE_DELETE: {
+        this.observer.notify(ObserverEvents.messageDelete, message);
+        break;
+      }
+      case UserActions.MESSAGE_EDIT: {
+        this.observer.notify(ObserverEvents.messageEdit, message);
+        break;
+      }
       default:
     }
   }

@@ -10,7 +10,11 @@ enum ObserverEvents {
   messageHistory = 'messageHistory',
   messageSend = 'messageSend',
   messageRead = 'messageRead',
+  messageDelete = 'messageDelete',
+  messageEdit = 'messageEdit',
   openDialog = 'openDialog',
+  updateDialog = 'updateDialog',
+  openMessageEdit = 'openMessageEdit',
 }
 
 export default ObserverEvents;

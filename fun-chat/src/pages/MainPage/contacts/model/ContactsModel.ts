@@ -98,6 +98,45 @@ export default class ContactsModel {
     }
   }
 
+  private handleDeleteResponse(response: unknown) {
+    const serverMessage = isFromServerMessage(response);
+    if (serverMessage) {
+      const { currentUserDialogs } = storeModel.getState();
+
+      const incomeMessage = serverMessage.payload?.message;
+      currentUserDialogs.forEach((dialog) => {
+        const savedMessage = dialog.messages.find((msg) => msg.id === incomeMessage?.id);
+
+        if (savedMessage) {
+          const currentDialog = dialog;
+          currentDialog.messages = dialog.messages.filter((msg) => msg.id !== savedMessage.id);
+          this.observer.notify(ObserverEvents.updateDialog, '');
+          this.drawUsers();
+        }
+      });
+    }
+  }
+
+  private handleEditResponse(response: unknown) {
+    const serverMessage = isFromServerMessage(response);
+    if (serverMessage) {
+      const { currentUserDialogs } = storeModel.getState();
+
+      const incomeMessage = serverMessage.payload?.message;
+      currentUserDialogs.forEach((dialog) => {
+        const editedMessage = dialog.messages.find((msg) => msg.id === incomeMessage?.id);
+
+        if (editedMessage && incomeMessage) {
+          // const currentDialog = dialog;
+          editedMessage.text = incomeMessage?.text;
+          editedMessage.status.isEdited = incomeMessage.status.isEdited;
+          console.log(currentUserDialogs);
+          this.observer.notify(ObserverEvents.updateDialog, '');
+        }
+      });
+    }
+  }
+
   private getAllUsersHandler(message: unknown) {
     const serverMessage = isFromServerMessage(message);
     if (serverMessage && serverMessage.payload?.users) {
@@ -163,5 +202,7 @@ export default class ContactsModel {
     this.observer.subscribe(ObserverEvents.messageHistory, (message) => this.handleMessages(message));
     this.observer.subscribe(ObserverEvents.messageSend, (message) => this.handleSendResponse(message));
     this.observer.subscribe(ObserverEvents.messageRead, (response) => this.handleReadResponse(response));
+    this.observer.subscribe(ObserverEvents.messageDelete, (response) => this.handleDeleteResponse(response));
+    this.observer.subscribe(ObserverEvents.messageEdit, (response) => this.handleEditResponse(response));
   }
 }
