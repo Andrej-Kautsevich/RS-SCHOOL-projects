@@ -45,6 +45,8 @@ export default class MainPageModel {
       this.router.navigateTo(PAGES.LOGIN);
     } else {
       root.append(this.getPage());
+      this.userList.getUsers();
+      this.header.setUser();
     }
   }
 

@@ -4,8 +4,9 @@ import Router from '../../../../core/router/Router';
 import StorageService from '../../../../core/sessionStorage/SessionStorageService';
 import { logoutUser } from '../../../../core/socket/actions/user-actions';
 import WebSocketService from '../../../../core/socket/model/WebSocketService';
-import { AppError, ServerResponse } from '../../../../core/socket/types';
+import { ServerResponse } from '../../../../core/socket/types';
 import generateId from '../../../../core/socket/utils/idGenerator';
+import storeModel from '../../../../core/store/StoreModel';
 import isFromServerMessage from '../../../../utils/isFromServerMessage';
 import PAGES from '../../../types';
 import HeaderView from '../view/HeaderView';
@@ -31,10 +32,10 @@ export default class HeaderModel {
     return this.view.getHeader();
   }
 
-  private setUser() {
-    const user = this.sessionStorageService.getData('user');
-    if (user) {
-      this.view.setUser(user.login);
+  public setUser() {
+    const { currentUser } = storeModel.getState();
+    if (currentUser) {
+      this.view.setUser(currentUser.login);
     }
   }
 
@@ -62,9 +63,6 @@ export default class HeaderModel {
   }
 
   private logoutHandler(serverMessage: ServerResponse) {
-    if (serverMessage.type === AppError.ERROR) {
-      throw new Error(`Server error: ${serverMessage.payload?.error}`);
-    }
     if (serverMessage.payload?.user?.isLogined === false) {
       this.sessionStorageService.removeData('user');
       this.router.navigateTo(PAGES.LOGIN);

@@ -72,6 +72,11 @@ export default class LoginPageModel {
   }
 
   private handleSuccessLogin(user: User) {
+    const storageUser = this.sessionStorageService.getData('user');
+    if (storageUser) {
+      storageUser.isLogined = true;
+      this.sessionStorageService.saveData('user', storageUser);
+    }
     this.router.navigateTo(PAGES.MAIN);
     storeModel.dispatch(setCurrentUser(user));
   }

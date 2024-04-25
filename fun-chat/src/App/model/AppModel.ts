@@ -18,7 +18,7 @@ export default class AppModel {
 
   private waiter: ConnectionWaiterModel;
 
-  private router: Router = new Router();
+  private router: Router;
 
   private observer = Observer.getInstance();
 
@@ -29,6 +29,7 @@ export default class AppModel {
   constructor() {
     this.view = new AppView();
     this.root = this.getHTML();
+    this.router = new Router();
     this.waiter = new ConnectionWaiterModel(this.root);
     this.setConnectionWaiter();
     this.initPages();
@@ -55,6 +56,13 @@ export default class AppModel {
         },
       },
       {
+        path: PAGES.DEFAULT,
+        callback: () => {
+          this.root.innerHTML = '';
+          loginPage.openPage(this.root);
+        },
+      },
+      {
         path: PAGES.MAIN,
         callback: () => {
           this.root.innerHTML = '';
@@ -75,7 +83,7 @@ export default class AppModel {
 
   private checkAuth(): boolean {
     const user = this.sessionStorageService.getData('user');
-    if (user) {
+    if (user?.isLogined) {
       this.socket.sendMessage(loginUser(user));
     }
     return !!user;

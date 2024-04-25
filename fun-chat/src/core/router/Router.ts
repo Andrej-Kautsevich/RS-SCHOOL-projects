@@ -7,11 +7,15 @@ type Route = {
   callback: RouteHandler;
 };
 
+const PATH_SEGMENTS_TO_KEEP = 2;
+
 export default class Router {
   private routes: Route[] = [];
 
   constructor() {
     window.addEventListener('popstate', () => this.loadInitialRoute());
+
+    window.addEventListener('DOMContentLoaded', () => this.loadInitialRoute());
   }
 
   // private getCurrentURL() {
@@ -26,7 +30,7 @@ export default class Router {
 
   private loadInitialRoute() {
     const pathnameSplit = window.location.pathname.split('/');
-    const pathSeg = pathnameSplit.slice(0).join('/');
+    const pathSeg = pathnameSplit.slice(PATH_SEGMENTS_TO_KEEP + 1).join('/');
 
     this.loadRoute(pathSeg);
   }
@@ -44,7 +48,10 @@ export default class Router {
   }
 
   public navigateTo(path: PAGES) {
-    window.history.pushState({}, '', path);
+    const currentPath = window.location.pathname;
+    const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+    const url = `${basePath}/${path}`;
+    window.history.pushState({}, '', url);
     this.loadRoute(path);
   }
 }

@@ -35,7 +35,7 @@ export default class ContactsModel {
     return this.view.getContacts();
   }
 
-  private getUsers() {
+  public getUsers() {
     this.socket.sendMessage(allActiveUsers());
     this.socket.sendMessage(allInactiveUsers());
   }
@@ -156,8 +156,6 @@ export default class ContactsModel {
   private subscribeToEvents() {
     this.observer.subscribe(ObserverEvents.allActiveUsers, (message) => this.getAllUsersHandler(message));
     this.observer.subscribe(ObserverEvents.allInactiveUsers, (message) => this.getAllUsersHandler(message));
-
-    this.observer.subscribe(ObserverEvents.loginResponse, () => this.getUsers());
 
     this.observer.subscribe(ObserverEvents.externalLoginResponse, () => this.getUsers());
     this.observer.subscribe(ObserverEvents.externalLogoutResponse, () => this.getUsers());
