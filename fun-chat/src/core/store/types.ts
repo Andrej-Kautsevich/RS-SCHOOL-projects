@@ -31,4 +31,5 @@ export interface Reducer<T, U> {
 
 export const enum StoreActions {
   OPEN_DIALOG = 'OPEN_DIALOG',
+  ALL_USERS = 'ALL_USERS',
 }

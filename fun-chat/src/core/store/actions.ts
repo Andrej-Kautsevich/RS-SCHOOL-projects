@@ -11,6 +11,11 @@ export const setCurrentUnauthorizedUsers = (users: User[]): Action => ({
   payload: users,
 });
 
+export const setAllUsers = (users: User[]): Action => ({
+  type: StoreActions.ALL_USERS,
+  payload: users,
+});
+
 export const setCurrentUserDialogs = (dialogs: Dialog[]): Action => ({
   type: UserActions.MESSAGE_HISTORY,
   payload: dialogs,

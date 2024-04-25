@@ -18,7 +18,7 @@ export default class FooterView {
         href: 'https://github.com/Andrej-Kautsevich',
         target: 'blank',
       },
-      span({ txt: 'My Github' }),
+      span({ txt: 'Andrej-Kautsevich' }),
     );
 
     const date = span({ className: styles.footer__date, textContent: '2024' });

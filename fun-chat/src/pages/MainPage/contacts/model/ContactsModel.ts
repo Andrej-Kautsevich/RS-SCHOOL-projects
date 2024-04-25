@@ -9,10 +9,10 @@ import {
 import WebSocketService from '../../../../core/socket/model/WebSocketService';
 import { Message, User, UserActions } from '../../../../core/socket/types';
 import {
+  setAllUsers,
   setCurrentAuthorizedUsers,
   setCurrentUnauthorizedUsers,
   setCurrentUserDialogs,
-  // setOpenedDialog,
   setSelectedUser,
 } from '../../../../core/store/actions';
 import storeModel from '../../../../core/store/StoreModel';
@@ -29,6 +29,7 @@ export default class ContactsModel {
   constructor() {
     this.view = new ContactsView();
     this.subscribeToEvents();
+    this.setSearchInputHandler();
   }
 
   public getUserList() {
@@ -153,6 +154,7 @@ export default class ContactsModel {
           currentUserDialogs.push({ login: user.login, messages: [] });
         }
       });
+      storeModel.dispatch(setAllUsers(users));
       storeModel.dispatch(setCurrentUserDialogs(currentUserDialogs));
       users.map((user) => this.getMessagesFromUser(user));
     }
@@ -165,29 +167,42 @@ export default class ContactsModel {
   private drawUsers() {
     this.view.clearList();
 
-    const { currentAuthorizedUsers, currentUnauthorizedUsers, currentUser, currentUserDialogs } = storeModel.getState();
-    const users = [...currentAuthorizedUsers, ...currentUnauthorizedUsers].filter(
-      (user) => user.login !== currentUser?.login,
-    );
+    const { allUsers, currentUser } = storeModel.getState();
+    const users = allUsers.filter((user) => user.login !== currentUser?.login);
 
-    const unreadMessageCounts = new Map();
-    currentUserDialogs.forEach((dialog) => {
-      const unreadMessagesCount = dialog.messages.filter(
+    users.forEach((user) => this.drawUser(user));
+  }
+
+  private drawUser(user: User) {
+    const { currentUser, currentUserDialogs } = storeModel.getState();
+    const userDialog = currentUserDialogs.find((dialog) => dialog.login === user.login);
+
+    let unreadMessagesCount;
+    if (userDialog) {
+      unreadMessagesCount = userDialog.messages.filter(
         (message) => message.from !== currentUser?.login && !message.status.isReaded,
       ).length;
-      unreadMessageCounts.set(dialog.login, unreadMessagesCount);
-    });
-
-    users.forEach((user) => {
-      const unreadMessagesCount = unreadMessageCounts.get(user.login);
-      const userItem = this.view.drawUser(user, unreadMessagesCount);
-      userItem.addListener('click', () => this.UserDialogHandler(user));
-    });
+    }
+    const userItem = this.view.drawUser(user, unreadMessagesCount);
+    userItem.addListener('click', () => this.UserDialogHandler(user));
   }
 
   private UserDialogHandler(user: User) {
     storeModel.dispatch(setSelectedUser(user));
     this.observer.notify(ObserverEvents.openDialog, '');
+  }
+
+  private setSearchInputHandler() {
+    this.view.getSearchInput().addListener('input', () => this.searchInputHandler());
+  }
+
+  private searchInputHandler() {
+    const { allUsers } = storeModel.getState();
+
+    const inputValue = this.view.getSearchInput().getNode().value.toLowerCase().trim();
+    const findUsers = allUsers.filter((user) => user.login.toLowerCase().includes(inputValue));
+    this.view.clearList();
+    findUsers.forEach((user) => this.drawUser(user));
   }
 
   private subscribeToEvents() {

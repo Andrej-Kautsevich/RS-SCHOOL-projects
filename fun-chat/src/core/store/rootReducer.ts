@@ -33,6 +33,12 @@ const rootReducer: Reducer<State, Action> = (state: State, action: Action): Stat
         openedDialog: action.payload as Dialog,
       };
     }
+    case StoreActions.ALL_USERS: {
+      return {
+        ...state,
+        allUsers: action.payload as User[],
+      };
+    }
     default:
       return state;
   }

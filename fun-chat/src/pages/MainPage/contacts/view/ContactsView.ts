@@ -1,6 +1,6 @@
 import { User } from '../../../../core/socket/types';
 import { BaseComponent } from '../../../../utils/BaseComponent';
-import { div, li, span, ul } from '../../../../utils/tags';
+import { div, input, li, span, ul } from '../../../../utils/tags';
 import styles from './ContactsView.module.scss';
 
 export default class ContactsView {
@@ -8,13 +8,20 @@ export default class ContactsView {
 
   private userList: BaseComponent<HTMLUListElement>;
 
+  private searchInput: BaseComponent<HTMLInputElement>;
+
   constructor() {
     this.userList = ul({ className: styles.contacts__users });
-    this.contacts = div({ className: styles.contacts }, this.userList);
+    this.searchInput = input({ className: styles.contacts__search, type: 'search', placeholder: 'Search...' });
+    this.contacts = div({ className: styles.contacts }, this.searchInput, this.userList);
   }
 
   public getContacts() {
     return this.contacts;
+  }
+
+  public getSearchInput() {
+    return this.searchInput;
   }
 
   public drawUser(user: User, unreadMessagesCount?: number) {
